@@ -1,0 +1,54 @@
+<!-- @dsCard height=288 -->
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>beloVET</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@800&family=Onest:wght@400&display=swap">
+<style>
+  html, body { margin: 0; height: 100%; }
+  body { background: var(--sky-soft, #EAF2FA); color: var(--navy, #0F2B45); overflow: hidden; }
+  .cover { position: relative; width: 960px; height: 288px; overflow: hidden; }
+  .art { position: absolute; top: 0; left: 480px; width: 480px; height: 288px; overflow: hidden; }
+  .art svg { display: block; width: 480px; height: 288px; }
+  .navy { fill: var(--navy, #0F2B45); }
+  .blue { fill: var(--blue, #3780C0); }
+  .orange { fill: var(--orange, #FD5D2E); }
+  .sky { fill: var(--sky, #DCEAF4); }
+  .ground { fill: var(--sky-soft, #EAF2FA); }
+  .lg { rx: var(--radius-lg, 20px); }
+  .pill { rx: var(--radius-lg, 20px); }
+  .words { position: absolute; left: 48px; bottom: 48px; max-width: 440px; }
+  .name { margin: 0; font: 800 104px/0.92 "Manrope", "Segoe UI", Arial, sans-serif; letter-spacing: -0.04em; color: var(--navy, #0F2B45); }
+  .tag { margin: 12px 0 0 4px; font: 400 14px/20px "Onest", "Segoe UI", Arial, sans-serif; color: var(--muted, #4E6275); }
+</style>
+</head>
+<body>
+<div class="cover" id="root">
+  <div class="art" aria-hidden="true">
+    <svg viewBox="0 0 480 288" width="480" height="288">
+      <!--
+        blocks      navy 176×256 slab bled off the top (the brand's ink, the biggest) · blue disc r=96 bled off the right edge · sky 144×160 tint · orange 96×40 pill once (one orange per screen) — ≈40% of 960×288
+        arrangement one tall navy slab with satellites, like the logo: the dark dog above, the lighter cat curled below-right
+        pattern     literal motif from the mark's curves (ear, curled tail): quarter-discs of radius space-12 cut into the slab in ground, and one in blue on the sky tint
+        scales      sides in space-2 multiples; gaps space-4 / space-6; corners radius-lg; pill rx radius-lg (half of 40); arcs r = space-12 (48)
+      -->
+      <rect class="sky lg" x="24" y="104" width="144" height="160" rx="20"/>
+      <rect class="orange pill" x="24" y="40" width="96" height="40" rx="20"/>
+      <rect class="navy lg" x="192" y="-32" width="176" height="256" rx="20"/>
+      <circle class="blue" cx="432" cy="216" r="96"/>
+      <!-- quarter-discs cut from the slab: the ear and the tail curl -->
+      <path class="ground" d="M368 64 A48 48 0 0 1 320 112 L368 112 Z"/>
+      <path class="ground" d="M192 176 A48 48 0 0 1 240 224 L192 224 Z"/>
+      <path class="blue" d="M24 264 A48 48 0 0 1 72 216 L72 264 Z"/>
+      <path class="navy" d="M168 104 A48 48 0 0 1 120 152 L168 152 Z"/>
+    </svg>
+  </div>
+  <div class="words">
+    <h1 class="name">beloVET</h1>
+    <p class="tag">ветеринарный врач-хирург · Люберцы</p>
+  </div>
+</div>
+<script>/* обложка статична */</script>
+</body>
+</html>
