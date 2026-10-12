@@ -1,0 +1,685 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- Прототип: убрать noindex перед запуском -->
+<meta name="robots" content="noindex, nofollow">
+<title>Владислав Белорыбец — ветеринарный хирург в Люберцах | beloVET</title>
+<meta name="description" content="Ветеринарный врач-хирург Владислав Белорыбец. Плановые и экстренные операции кошкам и собакам в Люберцах, ул. Вертолётчиков, 11. Цены на операции.">
+<link rel="icon" type="image/png" href="assets/logo-symbol.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Onest:wght@400;500;600&display=swap">
+<style>
+/* Layout: левый край, сетка 12 колонок; герой = имя хирурга + фото; прайс — строками с точечными выносками, как в бланке клиники */
+:root {
+  color-scheme: light;
+  --navy: #0F2B45;
+  --navy-hover: #1A3D5E;
+  --blue: #3780C0;
+  --blue-text: #2867A3;
+  --orange: #FD5D2E;
+  --orange-hover: #E84E21;
+  --orange-text: #C8401A;
+  --orange-tint: #FFEDE7;
+  --bg: #FFFFFF;
+  --bg-soft: #F4F7FB;
+  --blue-tint: #EAF2FA;
+  --line: #D6E1EC;
+  --text: #0F2B45;
+  --muted: #4E6275;
+
+  --font-display: "Montserrat", "Arial Black", Arial, sans-serif;
+  --font-body: "Onest", "Segoe UI", Roboto, Arial, sans-serif;
+
+  --wrap: 1160px;
+  --gutter: clamp(16px, 4vw, 40px);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 400 17px/1.55 var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3 { font-family: var(--font-display); margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+h2 { font-size: clamp(26px, 3.4vw, 38px); font-weight: 800; line-height: 1.15; }
+h3 { font-size: 19px; font-weight: 700; line-height: 1.3; }
+p { margin: 0; }
+a { color: var(--blue-text); }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+.wrap { max-width: var(--wrap); margin-inline: auto; padding-inline: var(--gutter); }
+.section { padding-block: clamp(56px, 8vw, 96px); }
+.section-head { display: grid; gap: 12px; max-width: 720px; margin-bottom: 40px; }
+.section-head p { color: var(--muted); }
+.label {
+  font: 600 13px/1.2 var(--font-body);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--blue-text);
+}
+.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* Поля, которые заполнит врач */
+.fill {
+  background: var(--orange-tint);
+  color: var(--orange-text);
+  border-bottom: 1px dashed var(--orange-text);
+  padding: 0 4px;
+  border-radius: 2px;
+  font-style: normal;
+}
+.proto-bar {
+  background: var(--navy);
+  color: #fff;
+  font-size: 13px;
+  padding-block: 8px;
+}
+.proto-bar .wrap { display: flex; gap: 8px 16px; flex-wrap: wrap; align-items: center; }
+.proto-bar .fill { background: #fff; }
+
+/* Кнопки */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 52px; padding: 0 24px;
+  font: 700 17px/1 var(--font-body);
+  text-decoration: none; border-radius: 6px; border: 2px solid transparent;
+  cursor: pointer; transition: background-color .15s, border-color .15s, color .15s;
+}
+.btn-main { background: var(--orange); color: #fff; font-size: 19px; }
+.btn-main:hover { background: var(--orange-hover); }
+.btn-line { border-color: var(--navy); color: var(--navy); background: transparent; }
+.btn-line:hover { background: var(--navy); color: #fff; }
+.btn-light { border-color: #fff; color: #fff; }
+.btn-light:hover { background: #fff; color: var(--navy); }
+
+/* Шапка */
+.header {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+  background: rgba(255,255,255,.96);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(6px);
+}
+.header .wrap { display: flex; align-items: center; gap: 24px; min-height: 72px; }
+.brand { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.brand img.symbol { width: 40px; height: 40px; }
+.brand img.word { width: 150px; height: auto; }
+.nav { display: flex; gap: 22px; margin-left: auto; }
+.nav a { color: var(--text); text-decoration: none; font-weight: 500; font-size: 15px; white-space: nowrap; }
+.nav a:hover { color: var(--blue-text); }
+.header-phone { display: grid; text-align: right; font-size: 13px; color: var(--muted); line-height: 1.3; }
+.header-phone strong { font: 700 17px/1.3 var(--font-body); color: var(--text); }
+@media (max-width: 1120px) { .nav { display: none; } .header-phone { margin-left: auto; } }
+@media (max-width: 560px) { .header-phone { display: none; } .brand img.word { width: 130px; } }
+
+/* Герой */
+.hero { padding-block: clamp(32px, 5vw, 64px) clamp(48px, 6vw, 80px); }
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(28px, 4vw, 56px); align-items: center; }
+.hero-text { display: grid; gap: 22px; min-width: 0; }
+.hero h1 { display: grid; gap: 6px; }
+.hero h1 .name { font-size: clamp(38px, 6vw, 68px); font-weight: 800; line-height: 1.02; }
+.hero h1 .role { font-size: clamp(20px, 2.4vw, 28px); font-weight: 700; color: var(--orange-text); letter-spacing: 0; }
+.hero .lead { font-size: clamp(18px, 1.6vw, 20px); max-width: 600px; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.hero-facts {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 8px 0 0; border-top: 1px solid var(--line);
+}
+.hero-facts div { padding: 14px 16px 0 0; display: grid; gap: 2px; }
+.hero-facts dt { font-size: 13px; color: var(--muted); }
+.hero-facts dd { margin: 0; font-weight: 600; }
+.hero-photo { position: relative; margin: 0; }
+.hero-photo img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 30%; border-radius: 4px; }
+.hero-photo figcaption {
+  position: absolute; left: 16px; bottom: 16px; right: 16px;
+  background: #fff; padding: 12px 14px; border-radius: 4px; font-size: 14px; line-height: 1.4;
+  box-shadow: 0 6px 20px rgba(15,43,69,.14);
+}
+.hero-photo figcaption b { display: block; font-size: 15px; }
+@media (max-width: 860px) {
+  .hero .wrap { grid-template-columns: 1fr; }
+  .hero-photo { order: -1; }
+  .hero-photo img { aspect-ratio: 4 / 3; }
+  .hero-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Экстренно */
+.urgent { background: var(--orange-tint); border-block: 1px solid #F8CDBE; }
+.urgent .wrap { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 32px 56px; padding-block: 48px; }
+.urgent-call { display: grid; gap: 14px; align-content: start; }
+.urgent-call .label { color: var(--orange-text); }
+.urgent-call .phone { font: 800 clamp(26px, 3vw, 34px)/1.1 var(--font-display); }
+.urgent ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 32px; }
+.urgent li { padding: 14px 0; border-bottom: 1px solid #F3C3B2; min-width: 0; }
+.urgent li b { display: block; }
+.urgent li span { color: var(--muted); font-size: 15px; }
+@media (max-width: 860px) { .urgent .wrap { grid-template-columns: 1fr; } }
+@media (max-width: 560px) { .urgent ul { grid-template-columns: 1fr; } }
+
+/* Направления и цены */
+.ops-note {
+  display: flex; flex-wrap: wrap; gap: 6px 24px; align-items: baseline;
+  padding: 14px 18px; background: var(--blue-tint); border-radius: 4px; margin-bottom: 40px; font-size: 15px;
+}
+.ops-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px 56px; }
+.ops-group { min-width: 0; }
+.ops-group h3 { padding-bottom: 10px; border-bottom: 2px solid var(--navy); display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+.ops-group h3 a { font: 500 14px var(--font-body); white-space: nowrap; }
+.ops-group > p { color: var(--muted); font-size: 15px; margin-top: 10px; }
+.price-list { list-style: none; margin: 8px 0 0; padding: 0; }
+.price-list li { display: flex; align-items: baseline; gap: 8px; padding: 9px 0; border-bottom: 1px solid var(--line); }
+.price-list .what { min-width: 0; }
+.price-list .what small { display: block; color: var(--muted); font-size: 14px; }
+.price-list .dots { flex: 1; border-bottom: 1px dotted #A9B8C6; transform: translateY(-4px); min-width: 16px; }
+.price-list .num { font-weight: 600; }
+@media (max-width: 860px) { .ops-grid { grid-template-columns: 1fr; } }
+.ops-foot { margin-top: 40px; display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; }
+
+/* Смета */
+.estimate { background: var(--bg-soft); }
+.estimate .wrap { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 40px 56px; align-items: start; }
+.sum { border: 1px solid var(--line); background: #fff; border-radius: 4px; overflow: hidden; }
+.sum-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; padding: 16px 20px; border-bottom: 1px solid var(--line); }
+.sum-row:last-child { border-bottom: 0; }
+.sum-row p { color: var(--muted); font-size: 15px; }
+.sum-row .num { font-weight: 600; text-align: right; }
+.sum-row.total { background: var(--navy); color: #fff; }
+.sum-row.total p { color: #C9D6E3; }
+.sum-op { display: grid; gap: 6px; }
+.sum-op label { font-weight: 600; }
+.sum-op select {
+  font: 500 16px var(--font-body); color: var(--text);
+  padding: 10px 12px; border: 1px solid var(--line); border-radius: 4px; background: #fff; max-width: 100%;
+}
+@media (max-width: 860px) { .estimate .wrap { grid-template-columns: 1fr; } }
+
+/* Путь пациента */
+.path { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); counter-reset: step; }
+.path li { counter-increment: step; display: grid; gap: 8px; align-content: start; padding: 0 20px 0 0; position: relative; min-width: 0; }
+.path li::before {
+  content: counter(step);
+  font: 800 15px/1 var(--font-display);
+  width: 36px; height: 36px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: #fff; color: var(--navy); border: 2px solid var(--navy);
+  position: relative; z-index: 1;
+}
+.path li::after { content: ""; position: absolute; top: 17px; left: 36px; right: 0; height: 2px; background: var(--line); }
+.path li:last-child::after { display: none; }
+.path .when { font-size: 13px; color: var(--blue-text); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+.path p { font-size: 15px; color: var(--muted); }
+@media (max-width: 900px) {
+  .path { grid-template-columns: 1fr; gap: 0; }
+  .path li { grid-template-columns: 36px minmax(0, 1fr); column-gap: 16px; padding: 0 0 24px; }
+  .path li > * { grid-column: 2; }
+  .path li::before { grid-row: 1 / span 3; grid-column: 1; }
+  .path li::after { top: 36px; bottom: 0; left: 17px; right: auto; width: 2px; height: auto; }
+}
+
+/* Второе мнение */
+.second { background: var(--navy); color: #fff; }
+.second .wrap { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 40px 56px; align-items: center; }
+.second .label { color: #8FBCE6; }
+.second h2 { color: #fff; }
+.second p { color: #C9D6E3; }
+.second ol { margin: 0; padding-left: 22px; display: grid; gap: 10px; color: #E3EBF3; }
+.second .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+@media (max-width: 860px) { .second .wrap { grid-template-columns: 1fr; } }
+
+/* Случаи */
+.cases { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.case { border: 1px solid var(--line); border-radius: 4px; display: grid; grid-template-rows: auto 1fr; min-width: 0; }
+.case .xray {
+  aspect-ratio: 4 / 3; background: #1B2733; color: #8A9BAC;
+  display: grid; place-items: center; font-size: 14px; text-align: center; padding: 16px;
+  border-radius: 4px 4px 0 0;
+}
+.case dl { margin: 0; padding: 18px 20px 22px; display: grid; gap: 12px; }
+.case dt { font-size: 13px; color: var(--muted); }
+.case dd { margin: 2px 0 0; }
+@media (max-width: 900px) { .cases { grid-template-columns: 1fr; } }
+
+/* О хирурге */
+.about .wrap { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 40px 56px; align-items: start; }
+.about img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 4px; display: block; }
+.about-text { display: grid; gap: 20px; min-width: 0; }
+.about dl { margin: 0; display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 12px 24px; border-top: 1px solid var(--line); padding-top: 20px; }
+.about dt { color: var(--muted); }
+.about dd { margin: 0; }
+@media (max-width: 860px) { .about .wrap { grid-template-columns: 1fr; } .about dl { grid-template-columns: 1fr; gap: 2px; } .about dd { margin-bottom: 10px; } }
+
+/* Для клиник */
+.clinics { background: var(--bg-soft); }
+.clinics .wrap { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: 40px 56px; }
+.clinics ul { margin: 0; padding-left: 20px; display: grid; gap: 8px; }
+.clinics .box { background: #fff; border: 1px solid var(--line); border-radius: 4px; padding: 24px; display: grid; gap: 14px; align-content: start; }
+@media (max-width: 860px) { .clinics .wrap { grid-template-columns: 1fr; } }
+
+/* Отзывы и контакты */
+.reviews { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.review-src { border: 1px dashed #A9B8C6; border-radius: 4px; padding: 24px; display: grid; gap: 10px; }
+@media (max-width: 700px) { .reviews { grid-template-columns: 1fr; } }
+
+.contacts .wrap { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: 40px 56px; }
+.contacts dl { margin: 0; display: grid; gap: 18px; }
+.contacts dt { font-size: 13px; color: var(--muted); }
+.contacts dd { margin: 2px 0 0; font-size: 19px; font-weight: 600; }
+.map-card {
+  background: var(--blue-tint); border-radius: 4px; padding: 28px; display: grid; gap: 14px; align-content: start;
+}
+.map-card .addr { font: 800 clamp(22px, 2.6vw, 28px)/1.2 var(--font-display); }
+@media (max-width: 860px) { .contacts .wrap { grid-template-columns: 1fr; } }
+
+.footer { border-top: 1px solid var(--line); padding-block: 32px 96px; font-size: 14px; color: var(--muted); }
+.footer .wrap { display: flex; flex-wrap: wrap; gap: 16px 40px; justify-content: space-between; }
+.footer img { width: 140px; }
+
+/* Нижняя панель на телефоне */
+.mobile-bar { display: none; }
+@media (max-width: 700px) {
+  .mobile-bar {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px));
+    background: #fff; border-top: 1px solid var(--line);
+  }
+  .mobile-bar .btn { min-height: 48px; font-size: 16px; padding: 0 12px; }
+}
+</style>
+</head>
+<body>
+
+<div class="proto-bar">
+  <div class="wrap">
+    <span>Прототип главной страницы.</span>
+    <span>Так выделено то, что нужно уточнить у врача: <span class="fill">пример</span></span>
+  </div>
+</div>
+
+<header class="header">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="beloVET, на главную">
+      <img class="symbol" src="assets/logo-symbol.png" alt="">
+      <img class="word" src="assets/logo-wordmark.png" alt="beloVET, ветеринарный врач-хирург">
+    </a>
+    <nav class="nav" aria-label="Разделы">
+      <a href="#operations">Операции и цены</a>
+      <a href="#urgent">Экстренно</a>
+      <a href="#second">Второе мнение</a>
+      <a href="#clinics">Для клиник</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+    <div class="header-phone">
+      <strong class="num"><span class="fill">+7 (___) ___-__-__</span></strong>
+      <span>Люберцы, Вертолётчиков, 11</span>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-text">
+        <span class="label">Люберцы · ул. Вертолётчиков, 11</span>
+        <h1>
+          <span class="name">Владислав Белорыбец</span>
+          <span class="role">ветеринарный врач-хирург</span>
+        </h1>
+        <p class="lead">Оперирую кошек и собак: брюшная полость, опухоли, мочевыводящие пути, переломы, кесарево сечение. Плановые и экстренные операции. По приглашению работаю в клиниках Москвы и области.</p>
+        <div class="hero-actions">
+          <a class="btn btn-main" href="#contacts">Записаться на консультацию</a>
+          <a class="btn btn-line" href="#second">Прислать снимки и анализы</a>
+        </div>
+        <dl class="hero-facts">
+          <div><dt>Оперирую</dt><dd><span class="fill">__ лет</span></dd></div>
+          <div><dt>Операций</dt><dd><span class="fill">более ____</span></dd></div>
+          <div><dt>Приём</dt><dd><span class="fill">дни, часы</span></dd></div>
+          <div><dt>Экстренно</dt><dd>по телефону</dd></div>
+        </dl>
+      </div>
+      <figure class="hero-photo">
+        <img src="assets/doctor-table.jpg" alt="Владислав Белорыбец в смотровой">
+        <figcaption><b>Операционная и стационар</b>на базе клиники <span class="fill">название</span> в Люберцах</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="urgent" id="urgent" aria-labelledby="urgent-h">
+    <div class="wrap">
+      <div class="urgent-call">
+        <span class="label">Экстренная операция</span>
+        <h2 id="urgent-h">Позвоните до того, как выехать</h2>
+        <p>Расскажите, что случилось. Я скажу, можно ли оперировать сейчас, куда ехать и что взять с собой.</p>
+        <span class="phone num"><span class="fill">+7 (___) ___-__-__</span></span>
+        <p class="num" style="font-size:15px;color:var(--muted)">Экстренные звонки: <span class="fill">часы</span></p>
+      </div>
+      <ul>
+        <li><b>Проглотил предмет</b><span>рвота, отказ от еды, болит живот</span></li>
+        <li><b>Вздулся живот у крупной собаки</b><span>беспокойство, пустые позывы к рвоте. Возможен заворот желудка</span></li>
+        <li><b>Роды остановились</b><span>схватки есть, а щенок или котёнок не выходит</span></li>
+        <li><b>Кот не может помочиться</b><span>часто садится в лоток, мочи нет или капли</span></li>
+        <li><b>Выделения из петли у нестерилизованной самки</b><span>жажда, вялость. Так проявляется пиометра</span></li>
+        <li><b>Травма</b><span>перелом, рваная рана, укус, падение с высоты</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="operations" aria-labelledby="ops-h">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="label">Операции и цены</span>
+        <h2 id="ops-h">Что я оперирую</h2>
+        <p>Здесь самые частые операции. Полный прайс — больше 150 позиций, он на отдельной странице.</p>
+      </div>
+
+      <div class="ops-note">
+        <span>Цена операции указана <b>без наркоза</b>.</span>
+        <span>Наркоз: <b class="num">3 400 – 13 800 ₽</b>, степень определяет анестезиолог после осмотра.</span>
+      </div>
+
+      <div class="ops-grid">
+        <div class="ops-group">
+          <h3>Брюшная полость <a href="#">Подробнее</a></h3>
+          <p>Инородные тела, непроходимость, заворот желудка, опухоли селезёнки и печени.</p>
+          <ul class="price-list">
+            <li><span class="what">Удаление инородного тела из кишечника</span><span class="dots"></span><span class="num">20 000 ₽</span></li>
+            <li><span class="what">Удаление инородного тела из желудка<small>кошка / собака</small></span><span class="dots"></span><span class="num">17 250 / 23 000 ₽</span></li>
+            <li><span class="what">Резекция кишечника</span><span class="dots"></span><span class="num">25 000 ₽</span></li>
+            <li><span class="what">Заворот желудка с гастропексией</span><span class="dots"></span><span class="num">34 500 ₽</span></li>
+            <li><span class="what">Удаление селезёнки<small>кошка / собака</small></span><span class="dots"></span><span class="num">17 250 / 23 000 ₽</span></li>
+            <li><span class="what">Удаление доли печени<small>кошка / собака</small></span><span class="dots"></span><span class="num">25 000 / 30 000 ₽</span></li>
+          </ul>
+        </div>
+
+        <div class="ops-group">
+          <h3>Опухоли <a href="#">Подробнее</a></h3>
+          <p>Удаляю опухоли кожи, молочной железы, ротовой полости, надпочечника. Материал отправляем на гистологию.</p>
+          <ul class="price-list">
+            <li><span class="what">Опухоль мягких тканей<small>до 3 см / 3–5 см / более 5 см</small></span><span class="dots"></span><span class="num">10 000 – 23 000 ₽</span></li>
+            <li><span class="what">Мастэктомия, одна сторона<small>кошка</small></span><span class="dots"></span><span class="num">17 250 ₽</span></li>
+            <li><span class="what">Мастэктомия, одна сторона<small>собака: до 10 / 10–25 / более 25 кг</small></span><span class="dots"></span><span class="num">17 250 – 40 250 ₽</span></li>
+            <li><span class="what">Опухоль ротовой полости с резекцией челюсти</span><span class="dots"></span><span class="num">от 17 250 ₽</span></li>
+            <li><span class="what">Удаление надпочечника</span><span class="dots"></span><span class="num">30 000 ₽</span></li>
+          </ul>
+        </div>
+
+        <div class="ops-group">
+          <h3>Мочевыводящие пути <a href="#">Подробнее</a></h3>
+          <p>Камни мочевого пузыря, закупорка уретры у котов, удаление почки.</p>
+          <ul class="price-list">
+            <li><span class="what">Удаление камней из мочевого пузыря</span><span class="dots"></span><span class="num">15 000 ₽</span></li>
+            <li><span class="what">Уретростомия у кота</span><span class="dots"></span><span class="num">17 000 ₽</span></li>
+            <li><span class="what">Уретростомия у собаки</span><span class="dots"></span><span class="num">20 000 ₽</span></li>
+            <li><span class="what">Удаление почки</span><span class="dots"></span><span class="num">23 000 ₽</span></li>
+          </ul>
+        </div>
+
+        <div class="ops-group">
+          <h3>Переломы и суставы <a href="#">Подробнее</a></h3>
+          <p>Остеосинтез пластиной и аппаратом внешней фиксации, вывих бедра, ампутация.</p>
+          <ul class="price-list">
+            <li><span class="what">Остеосинтез пластиной</span><span class="dots"></span><span class="num">32 000 ₽</span></li>
+            <li><span class="what">Остеосинтез аппаратом внешней фиксации</span><span class="dots"></span><span class="num">24 000 ₽</span></li>
+            <li><span class="what">Резекция головки бедренной кости</span><span class="dots"></span><span class="num">23 000 ₽</span></li>
+            <li><span class="what">Вывих тазобедренного сустава, фиксация по Слокуму</span><span class="dots"></span><span class="num">28 000 ₽</span></li>
+            <li><span class="what">Ампутация конечности<small>кошка / собака</small></span><span class="dots"></span><span class="num">от 17 250 ₽</span></li>
+          </ul>
+        </div>
+
+        <div class="ops-group">
+          <h3>Роды, пиометра, стерилизация <a href="#">Подробнее</a></h3>
+          <p>Кесарево сечение, воспаление матки, промежностная грыжа у кобелей.</p>
+          <ul class="price-list">
+            <li><span class="what">Кесарево сечение<small>кошка / собака до 10 кг / более 25 кг</small></span><span class="dots"></span><span class="num">17 250 – 34 500 ₽</span></li>
+            <li><span class="what">Удаление матки при пиометре<small>кошка, собака до 10 кг</small></span><span class="dots"></span><span class="num">15 000 ₽</span></li>
+            <li><span class="what">Промежностная грыжа<small>кастрация, пластика, фиксация органов</small></span><span class="dots"></span><span class="num">38 500 ₽</span></li>
+            <li><span class="what">Стерилизация собаки<small>любой вес</small></span><span class="dots"></span><span class="num">11 500 ₽</span></li>
+            <li><span class="what">Стерилизация кошки</span><span class="dots"></span><span class="num">10 350 ₽</span></li>
+          </ul>
+        </div>
+
+        <div class="ops-group">
+          <h3>Раны и пластика кожи <a href="#">Подробнее</a></h3>
+          <p>Укусы, рваные раны, абсцессы, закрытие дефектов кожи после удаления опухолей.</p>
+          <ul class="price-list">
+            <li><span class="what">Первичная обработка раны</span><span class="dots"></span><span class="num">3 000 – 8 000 ₽</span></li>
+            <li><span class="what">Пластика кожи</span><span class="dots"></span><span class="num">10 000 – 35 000 ₽</span></li>
+            <li><span class="what">Гематома ушной раковины</span><span class="dots"></span><span class="num">10 000 ₽</span></li>
+            <li><span class="what">Вскрытие абсцесса</span><span class="dots"></span><span class="num">1 150 – 8 750 ₽</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ops-foot">
+        <a class="btn btn-line" href="#">Полный прайс</a>
+        <span style="color:var(--muted);font-size:15px">Где указан диапазон, цена зависит от категории сложности. Её определяю после осмотра.</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section estimate" aria-labelledby="est-h">
+    <div class="wrap">
+      <div class="section-head" style="margin-bottom:0">
+        <span class="label">Смета</span>
+        <h2 id="est-h">Из чего складывается итоговая сумма</h2>
+        <p>Смету называю после осмотра, до операции. Если во время операции план меняется, сначала связываюсь с владельцем.</p>
+      </div>
+      <div class="sum">
+        <div class="sum-row">
+          <div class="sum-op">
+            <label for="op">Операция</label>
+            <select id="op">
+              <option value="20000">Инородное тело в кишечнике</option>
+              <option value="34500">Заворот желудка с гастропексией</option>
+              <option value="17000">Уретростомия у кота</option>
+              <option value="17250">Кесарево сечение, кошка</option>
+              <option value="32000">Остеосинтез пластиной</option>
+              <option value="11500">Стерилизация собаки</option>
+            </select>
+          </div>
+          <span class="num" id="op-price">20 000 ₽</span>
+        </div>
+        <div class="sum-row">
+          <div><b>Наркоз</b><p>Степень 1–5 по риску. При стерилизации — 3 400 ₽</p></div>
+          <span class="num">3 400 – 13 800 ₽</span>
+        </div>
+        <div class="sum-row">
+          <div><b>Обследование, стационар, препараты</b><p>По показаниям, по прайсу клиники</p></div>
+          <span class="num">отдельно</span>
+        </div>
+        <div class="sum-row total">
+          <div><b>Операция с наркозом</b><p>без обследования и стационара</p></div>
+          <span class="num" id="op-total">24 000 – 33 800 ₽</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="path-h">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="label">Как всё проходит</span>
+        <h2 id="path-h">От консультации до снятия швов</h2>
+      </div>
+      <ol class="path">
+        <li><span class="when">День обращения</span><h3>Консультация</h3><p>Осматриваю, смотрю анализы и снимки, которые уже есть. Объясняю, нужна ли операция.</p></li>
+        <li><span class="when">По показаниям</span><h3>Обследование</h3><p>Анализ крови, УЗИ, рентген — только то, что влияет на решение и на наркоз.</p></li>
+        <li><span class="when">День операции</span><h3>Операция</h3><p>Наркоз подбирает анестезиолог. После операции звоню владельцу.</p></li>
+        <li><span class="when">Часы или дни</span><h3>Стационар</h3><p>Пациент остаётся под наблюдением, пока это нужно. Домой — с письменными рекомендациями.</p></li>
+        <li><span class="when">10–14 день</span><h3>Контроль</h3><p>Осмотр, снятие швов, при необходимости — повторные снимки.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section second" id="second" aria-labelledby="second-h">
+    <div class="wrap">
+      <div>
+        <span class="label">Второе мнение</span>
+        <h2 id="second-h" style="margin-top:12px">Вам предложили операцию, и вы сомневаетесь</h2>
+        <p style="margin-top:16px;max-width:560px">Пришлите документы в мессенджер. Посмотрю и отвечу, нужна ли операция, какая и сколько примерно она будет стоить. Окончательное решение — только после осмотра.</p>
+        <div class="actions">
+          <a class="btn btn-main" href="#">Написать в WhatsApp</a>
+          <a class="btn btn-light" href="#">Написать в Telegram</a>
+        </div>
+      </div>
+      <div>
+        <p style="color:#fff;font-weight:600;margin-bottom:12px">Что прислать</p>
+        <ol>
+          <li>Заключение врача, который предложил операцию</li>
+          <li>Анализы крови за последние 2 недели</li>
+          <li>Снимки рентгена, УЗИ или КТ: файлы или фото экрана</li>
+          <li>Вид, возраст и вес питомца</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="cases-h">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="label">Клинические случаи</span>
+        <h2 id="cases-h">Операции, которые я провёл</h2>
+        <p>Публикуются с согласия владельцев. Снимки без крови и открытых тканей.</p>
+      </div>
+      <div class="cases">
+        <article class="case">
+          <div class="xray">Рентген до / после<br><span class="fill">фото</span></div>
+          <dl>
+            <div><dt>Пациент</dt><dd><span class="fill">кличка, вид, возраст, вес</span></dd></div>
+            <div><dt>С чем пришли</dt><dd><span class="fill">жалобы, диагноз</span></dd></div>
+            <div><dt>Что сделали</dt><dd><span class="fill">операция</span></dd></div>
+            <div><dt>Результат</dt><dd><span class="fill">через сколько дней ходит, ест, выписан</span></dd></div>
+          </dl>
+        </article>
+        <article class="case">
+          <div class="xray">Рентген до / после<br><span class="fill">фото</span></div>
+          <dl>
+            <div><dt>Пациент</dt><dd><span class="fill">кличка, вид, возраст, вес</span></dd></div>
+            <div><dt>С чем пришли</dt><dd><span class="fill">жалобы, диагноз</span></dd></div>
+            <div><dt>Что сделали</dt><dd><span class="fill">операция</span></dd></div>
+            <div><dt>Результат</dt><dd><span class="fill">через сколько дней ходит, ест, выписан</span></dd></div>
+          </dl>
+        </article>
+        <article class="case">
+          <div class="xray">Рентген до / после<br><span class="fill">фото</span></div>
+          <dl>
+            <div><dt>Пациент</dt><dd><span class="fill">кличка, вид, возраст, вес</span></dd></div>
+            <div><dt>С чем пришли</dt><dd><span class="fill">жалобы, диагноз</span></dd></div>
+            <div><dt>Что сделали</dt><dd><span class="fill">операция</span></dd></div>
+            <div><dt>Результат</dt><dd><span class="fill">через сколько дней ходит, ест, выписан</span></dd></div>
+          </dl>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section about" aria-labelledby="about-h" style="padding-top:0">
+    <div class="wrap">
+      <img src="assets/doctor-notes.jpg" alt="Владислав Белорыбец заполняет карту пациента">
+      <div class="about-text">
+        <span class="label">О хирурге</span>
+        <h2 id="about-h">Владислав Белорыбец</h2>
+        <p><span class="fill">2–3 предложения от первого лица: почему хирургия, какие операции любит и делает чаще всего, как общается с владельцами.</span></p>
+        <dl>
+          <dt>Образование</dt><dd><span class="fill">вуз, год</span></dd>
+          <dt>Опыт</dt><dd><span class="fill">с какого года оперирует, где работал</span></dd>
+          <dt>Обучение</dt><dd><span class="fill">курсы, стажировки, конференции</span></dd>
+          <dt>Где принимает</dt><dd>Люберцы, ул. Вертолётчиков, 11, клиника <span class="fill">название</span></dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="section clinics" id="clinics" aria-labelledby="clinics-h">
+    <div class="wrap">
+      <div class="section-head" style="margin-bottom:0">
+        <span class="label">Для клиник</span>
+        <h2 id="clinics-h">Хирург по приглашению</h2>
+        <p>Приезжаю в клиники Москвы и Московской области на плановые и сложные операции, когда у вас нет своего хирурга нужного профиля.</p>
+      </div>
+      <div class="box">
+        <h3>Как договориться</h3>
+        <ul>
+          <li>Пришлите вид и вес животного, диагноз, анализы и снимки</li>
+          <li>Отвечу, возьмусь ли за операцию, назову дату и стоимость</li>
+          <li>От клиники: операционная, анестезия, ассистент <span class="fill">уточнить</span></li>
+        </ul>
+        <a class="btn btn-line" href="#contacts" style="justify-self:start">Связаться</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="reviews-h">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="label">Отзывы</span>
+        <h2 id="reviews-h">Что пишут владельцы</h2>
+        <p>Здесь будут ссылки на настоящие отзывы. Придуманные отзывы на сайт не ставим.</p>
+      </div>
+      <div class="reviews">
+        <div class="review-src"><h3>Яндекс Карты</h3><p><span class="fill">рейтинг, число отзывов, ссылка</span></p></div>
+        <div class="review-src"><h3>2ГИС</h3><p><span class="fill">рейтинг, число отзывов, ссылка</span></p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section contacts" id="contacts" aria-labelledby="contacts-h" style="padding-top:0">
+    <div class="wrap">
+      <div style="display:grid;gap:28px;align-content:start">
+        <div class="section-head" style="margin-bottom:0">
+          <span class="label">Запись</span>
+          <h2 id="contacts-h">Записаться на консультацию</h2>
+        </div>
+        <dl>
+          <div><dt>Телефон</dt><dd class="num"><span class="fill">+7 (___) ___-__-__</span></dd></div>
+          <div><dt>WhatsApp и Telegram</dt><dd><span class="fill">номер или ссылка</span></dd></div>
+          <div><dt>Часы приёма</dt><dd><span class="fill">дни, часы</span></dd></div>
+        </dl>
+      </div>
+      <div class="map-card">
+        <span class="label">Адрес</span>
+        <span class="addr">Люберцы, ул. Вертолётчиков, 11</span>
+        <p>Клиника <span class="fill">название</span>. <span class="fill">Ориентир, вход, парковка</span></p>
+        <a class="btn btn-line" style="justify-self:start" href="https://yandex.ru/maps/?text=%D0%9B%D1%8E%D0%B1%D0%B5%D1%80%D1%86%D1%8B%2C%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%20%D0%92%D0%B5%D1%80%D1%82%D0%BE%D0%BB%D1%91%D1%82%D1%87%D0%B8%D0%BA%D0%BE%D0%B2%2C%2011" target="_blank" rel="noopener">Открыть в Яндекс Картах</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <img src="assets/logo-wordmark.png" alt="beloVET">
+    <p style="max-width:560px">Владислав Белорыбец, ветеринарный врач-хирург. Цены на сайте не являются публичной офертой: итоговая стоимость согласуется после осмотра.</p>
+  </div>
+</footer>
+
+<div class="mobile-bar">
+  <a class="btn btn-main" href="#urgent">Позвонить</a>
+  <a class="btn btn-line" href="#second">Написать</a>
+</div>
+
+<script>
+(function () {
+  var sel = document.getElementById('op');
+  var price = document.getElementById('op-price');
+  var total = document.getElementById('op-total');
+  function fmt(n) { return n.toLocaleString('ru-RU').replace(/ /g, ' ') + ' ₽'; }
+  function update() {
+    var v = Number(sel.value);
+    price.textContent = fmt(v);
+    // стерилизация: отдельный тариф наркоза; остальные операции: степени 1–5
+    total.textContent = v === 11500
+      ? fmt(v + 3400)
+      : fmt(v + 4000).replace(' ₽', '') + ' – ' + fmt(v + 13800);
+  }
+  sel.addEventListener('change', update);
+  update();
+})();
+</script>
+</body>
+</html>
