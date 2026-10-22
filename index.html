@@ -1281,10 +1281,20 @@ var SCHEDULE = {
   });
   var all = document.getElementById("rv-all");
   var more = grid.querySelectorAll(".rv-more").length;
-  if (!more) all.hidden = true; else all.textContent = "Показать ещё " + more + " " + (more % 10 === 1 && more % 100 !== 11 ? "отзыв" : (more % 10 >= 2 && more % 10 <= 4 && (more % 100 < 10 || more % 100 >= 20)) ? "отзыва" : "отзывов");
+  var moreLabel = "Показать ещё " + more + " " + (more % 10 === 1 && more % 100 !== 11 ? "отзыв" : (more % 10 >= 2 && more % 10 <= 4 && (more % 100 < 10 || more % 100 >= 20)) ? "отзыва" : "отзывов");
+  if (!more) all.hidden = true; else all.textContent = moreLabel;
+  all.setAttribute("aria-expanded", "false");
   all.addEventListener("click", function () {
-    grid.classList.add("all"); all.hidden = true;
-    grid.querySelectorAll(".rv-more").forEach(function (card) { card.checkClamp(); });
+    var open = !grid.classList.contains("all");
+    grid.classList.toggle("all", open);
+    all.textContent = open ? "Свернуть отзывы" : moreLabel;
+    all.setAttribute("aria-expanded", String(open));
+    if (open) {
+      grid.querySelectorAll(".rv-more").forEach(function (card) { card.checkClamp(); });
+    } else {
+      // свернули — возвращаемся к началу блока, чтобы посетитель не потерялся на странице
+      document.getElementById("reviews").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    }
   });
   var box = document.getElementById("lightbox"), img = box.querySelector("img");
   grid.addEventListener("click", function (e) {
