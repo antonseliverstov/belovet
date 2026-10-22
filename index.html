@@ -240,6 +240,8 @@ dialog::backdrop { background: rgba(15, 43, 69, .55); }
 .menu nav { display: grid; }
 .menu nav a { padding: 14px 0; border-bottom: 1px solid var(--line); color: var(--navy); text-decoration: none; font: 700 22px var(--font-display); }
 .menu .phone { font: 800 26px/1.2 var(--font-display); color: var(--navy); text-decoration: none; }
+.menu .mail { margin-top: -18px; color: var(--blue-text); font-weight: 600; text-decoration: none; }
+.menu:focus, .menu:focus-visible { outline: none; }
 .menu-sched { background: var(--paper); border-radius: var(--radius-lg); padding: 20px; display: grid; gap: 12px; }
 .menu-actions { display: grid; gap: 10px; }
 @media (max-width: 760px) {
@@ -405,7 +407,7 @@ dialog::backdrop { background: rgba(15, 43, 69, .55); }
   </div>
 </header>
 
-<dialog class="menu" id="menu" aria-label="Меню">
+<dialog class="menu" id="menu" aria-label="Меню" tabindex="-1">
   <div class="menu-in">
     <div class="menu-top">
       <a class="logo" href="#top" data-close-menu><img class="sym" src="assets/logo-symbol.png" alt=""><img class="word" src="assets/logo-wordmark.png" alt="beloVET, ветеринарный врач-хирург"></a>
@@ -419,6 +421,7 @@ dialog::backdrop { background: rgba(15, 43, 69, .55); }
       <a href="#contacts" data-close-menu>Контакты</a>
     </nav>
     <a class="phone" href="tel:+79392557771">+7 (939) 255-77-71</a>
+    <a class="mail" href="mailto:vladislav@belovet.ru">vladislav@belovet.ru</a>
     <div class="menu-sched">
       <span class="label">Где принимаю</span>
       <p class="where-title">Люберцы, ул.&nbsp;Вертолётчиков,&nbsp;11</p>
@@ -776,11 +779,12 @@ dialog::backdrop { background: rgba(15, 43, 69, .55); }
       <div class="second">
         <div class="copy">
           <span class="label">Второе мнение</span>
-          <h2 id="second-h">Вам предложили операцию, и вы сомневаетесь</h2>
-          <p>Пришлите документы в мессенджер. Посмотрю и отвечу, нужна ли операция и сколько она будет стоить.</p>
+          <h2 id="second-h">Предложили оперировать, но есть сомнения?</h2>
+          <p>Пришлите документы в мессенджер или на почту. Посмотрю и отвечу, нужна ли операция и сколько она будет стоить.</p>
           <div class="row">
             <a class="btn btn-primary" href="#second">Написать в WhatsApp</a>
             <a class="btn btn-outline" href="#second">Telegram</a>
+            <a class="btn btn-outline" href="mailto:vladislav@belovet.ru">vladislav@belovet.ru</a>
           </div>
         </div>
         <ol>
@@ -836,6 +840,7 @@ dialog::backdrop { background: rgba(15, 43, 69, .55); }
         <dl>
           <div><dt>Телефон</dt><dd class="num"><a href="tel:+79392557771" style="color:#fff;text-decoration:none">+7 (939) 255-77-71</a></dd></div>
           <div><dt>WhatsApp и Telegram</dt><dd><span class="fill">номер</span></dd></div>
+          <div><dt>Почта</dt><dd><a href="mailto:vladislav@belovet.ru" style="color:#fff;text-decoration:none">vladislav@belovet.ru</a></dd></div>
           <div><dt>Приём</dt><dd><button class="sched-link" type="button" data-open-where>Смотреть график</button></dd></div>
         </dl>
       </div>
@@ -846,7 +851,7 @@ dialog::backdrop { background: rgba(15, 43, 69, .55); }
 <footer class="footer">
   <div class="wrap">
     <img src="assets/logo-wordmark.png" alt="beloVET">
-    <p style="max-width:540px">Владислав Белорыбец, ветеринарный врач-хирург. Цены на сайте не являются публичной офертой: итоговая стоимость согласуется после осмотра. <a href="privacy.html">Политика конфиденциальности</a></p>
+    <p style="max-width:540px">Владислав Белорыбец, ветеринарный врач-хирург. Цены на сайте не являются публичной офертой: итоговая стоимость согласуется после осмотра. <a href="mailto:vladislav@belovet.ru">vladislav@belovet.ru</a> · <a href="privacy.html">Политика конфиденциальности</a></p>
   </div>
 </footer>
 
@@ -949,7 +954,7 @@ var SCHEDULE = {
 // Мобильное меню
 (function () {
   var menu = document.getElementById('menu');
-  document.getElementById('burger').addEventListener('click', function () { menu.showModal(); });
+  document.getElementById('burger').addEventListener('click', function () { menu.showModal(); menu.focus(); }); // фокус на окно — без рамки вокруг логотипа
   menu.querySelectorAll('[data-close-menu]').forEach(function (el) { el.addEventListener('click', function () { menu.close(); }); });
   window.addEventListener('resize', function () { if (menu.open && innerWidth > 760) menu.close(); });
 })();
