@@ -338,6 +338,37 @@ dialog::backdrop { background: rgba(15, 43, 69, .55); }
 .clinics .row { justify-content: flex-start; }
 @media (max-width: 900px) { .clinics { grid-template-columns: minmax(0, 1fr); } }
 
+/* Отзывы */
+.rv-top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 20px 32px; margin-bottom: 32px; }
+.rv-grid { columns: 3 300px; column-gap: 16px; }
+.rv { break-inside: avoid; margin: 0 0 16px; background: var(--paper); border-radius: 20px; padding: 22px; display: grid; gap: 12px; }
+.rv-more { display: none; }
+.rv-grid.all .rv-more { display: grid; }
+.rv-head { display: flex; align-items: center; gap: 12px; }
+.rv-ava { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; flex-shrink: 0; background: var(--sky); font: 800 18px var(--font-display); color: var(--navy); }
+.rv:nth-child(3n+2) .rv-ava { background: #FFE2D8; }
+.rv:nth-child(3n) .rv-ava { background: #EFE8DA; }
+.rv-who { display: grid; min-width: 0; line-height: 1.3; }
+.rv-who b { font-weight: 700; }
+.rv-who time { font-size: 13px; color: var(--muted); }
+.rv-stars { margin-left: auto; color: var(--orange); letter-spacing: 2px; font-size: 15px; white-space: nowrap; }
+.rv-tag { justify-self: start; display: inline-flex; padding: 5px 12px; border-radius: 999px; background: var(--sky-soft); color: var(--navy); font-size: 14px; font-weight: 600; text-decoration: none; }
+a.rv-tag:hover { background: var(--sky); }
+.rv-text { display: grid; gap: 8px; font-size: 16px; line-height: 1.55; color: #22394f; }
+.rv-text.clamp { max-height: 12.4em; overflow: hidden; -webkit-mask-image: linear-gradient(#000 70%, transparent); mask-image: linear-gradient(#000 70%, transparent); }
+.rv-toggle { justify-self: start; padding: 0; border: 0; background: none; color: var(--blue-text); font: 600 15px var(--font-body); cursor: pointer; }
+.rv-toggle[hidden] { display: none; }
+.rv-photos { display: flex; flex-wrap: wrap; gap: 8px; }
+.rv-ph { padding: 0; border: 0; border-radius: 12px; overflow: hidden; width: 84px; height: 84px; cursor: zoom-in; background: var(--sky); }
+.rv-ph img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .2s; }
+.rv-ph:hover img { transform: scale(1.06); }
+@media (prefers-reduced-motion: reduce) { .rv-ph img { transition: none; } }
+.rv-all { display: flex; margin: 8px auto 0; }
+.rv-all[hidden] { display: none; }
+.lightbox { padding: 0; background: transparent; max-width: min(92vw, 720px); max-height: 90vh; overflow: visible; }
+.lightbox img { display: block; max-width: 100%; max-height: 86vh; border-radius: 16px; }
+.lightbox .x { top: -16px; right: -16px; }
+
 /* Контакты */
 .contacts { background: var(--navy); color: #fff; border-radius: var(--radius-lg); padding: clamp(28px, 5vw, 64px); display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 40px 56px; }
 .contacts .label { color: #9CC3E8; }
@@ -377,7 +408,7 @@ dialog::backdrop { background: rgba(15, 43, 69, .55); }
     <a class="logo" href="#top"><img class="sym" src="assets/logo-symbol.png" alt=""><img class="word" src="assets/logo-wordmark.png" alt="beloVET, ветеринарный врач-хирург"></a>
     <nav class="nav" aria-label="Разделы">
       <a href="#about">О враче</a>
-      <a href="#steps">Как проходит</a>
+      <a href="#reviews">Отзывы</a>
       <a href="#prices">Цены</a>
       <a href="#urgent">Экстренно</a>
       <a href="#contacts">Контакты</a>
@@ -416,6 +447,7 @@ dialog::backdrop { background: rgba(15, 43, 69, .55); }
     <nav aria-label="Разделы">
       <a href="#about" data-close-menu>О враче</a>
       <a href="#steps" data-close-menu>Как проходит</a>
+      <a href="#reviews" data-close-menu>Отзывы</a>
       <a href="#prices" data-close-menu>Цены</a>
       <a href="#urgent" data-close-menu>Экстренно</a>
       <a href="#contacts" data-close-menu>Контакты</a>
@@ -437,6 +469,8 @@ dialog::backdrop { background: rgba(15, 43, 69, .55); }
     </div>
   </div>
 </dialog>
+
+<dialog class="lightbox" id="lightbox" aria-label="Фото из отзыва"><button class="x" type="button" data-close-lightbox aria-label="Закрыть">×</button><img alt="Фото из отзыва"></dialog>
 
 <dialog class="modal" id="form-dialog" aria-labelledby="fd-title">
   <form class="modal-in lead-form" id="fd-form" novalidate>
@@ -559,7 +593,7 @@ dialog::backdrop { background: rgba(15, 43, 69, .55); }
         <div class="results" id="op-results" aria-live="polite" hidden></div>
         <div class="cats" id="op-cats">
         <!-- SURGERY:START -->
-        <details class="cat" open>
+        <details class="cat">
           <summary><span>Общая хирургия</span><small>18</small></summary>
           <ul class="price-list">
             <li><a href="operations/amputaciya-konechnosti.html"><span class="what">Ампутация конечности<small>кошка</small></span><span class="num">23 000 ₽</span></a></li>
@@ -825,6 +859,138 @@ dialog::backdrop { background: rgba(15, 43, 69, .55); }
     </div>
   </section>
 
+  <section class="section" id="reviews" aria-labelledby="reviews-h" style="padding-top:0">
+    <div class="wrap">
+      <div class="rv-top">
+        <div class="head" style="margin-bottom:0">
+          <span class="label">Отзывы</span>
+          <h2 id="reviews-h">Что пишут владельцы</h2>
+          <p>Отзывы о работе Владислава из карточки клиники «Добрый Доктор» на Яндекс Картах.</p>
+        </div>
+        <a class="btn btn-outline" href="https://yandex.ru/maps/?text=%D0%94%D0%BE%D0%B1%D1%80%D1%8B%D0%B9%20%D0%94%D0%BE%D0%BA%D1%82%D0%BE%D1%80%2C%20%D0%9B%D1%8E%D0%B1%D0%B5%D1%80%D1%86%D1%8B%2C%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%20%D0%92%D0%B5%D1%80%D1%82%D0%BE%D0%BB%D1%91%D1%82%D1%87%D0%B8%D0%BA%D0%BE%D0%B2%2C%2011" target="_blank" rel="noopener">Все отзывы на Яндекс Картах</a>
+      </div>
+      <div class="rv-grid" id="rv-grid">
+        <!-- REVIEWS:START -->
+        <article class="rv">
+          <header class="rv-head"><span class="rv-ava" aria-hidden="true">Ю</span><span class="rv-who"><b>Юлия А.</b><time>28 декабря 2024</time></span><span class="rv-stars" role="img" aria-label="Оценка 5 из 5">★★★★★</span></header>
+          <a class="rv-tag" href="operations/kesarevo-sechenie.html">Кесарево сечение →</a>
+          <div class="rv-text clamp"><p>Клиника хорошая! Я как владелец питомника канадских сфинксов, могу сказать, что все врачи там профессионалы своего дела. Однажды был случай, что наша любимая Карамелька начала рожать-6 котят родила сама и на этом родовая деятельность закончилась, но я поняла, что родила она еще не всех. Позвонила в клинику, рассказала ситуацию. Врачи сказали срочно везти мать и котят в клинику. Привезла, на смене был Белорыбец Владислав Викторович, который тут же оперативно провел ультразвук, сделал рентген, который показал, что один котенок застрял и на этом остановилась родовая деятельность. Владислав тут же начал делать кесарево сечение и спас жизнь еще двум котятам и нашей любимой Карамельке. Это один из случаев, когда в этой клинике спасали моих кошек, за что огромная благодарность всему персоналу этой клиники!Если вы любите своих животных и хотите спасти им жизнь, то обращайтесь только в эту клинику.Здесь работают неравнодушные люди, которые обязательно вам помогут!</p></div><button class="rv-toggle" type="button" hidden>Читать полностью</button>
+          <div class="rv-photos"><button class="rv-ph" type="button" data-src="assets/reviews/yulia-1.jpg" aria-label="Открыть фото"><img src="assets/reviews/yulia-1.jpg" alt="Фото из отзыва" loading="lazy" width="84" height="84"></button></div>
+        </article>
+        <article class="rv">
+          <header class="rv-head"><span class="rv-ava" aria-hidden="true">В</span><span class="rv-who"><b>Вера О.</b><time>19 сентября 2025</time></span><span class="rv-stars" role="img" aria-label="Оценка 5 из 5">★★★★★</span></header>
+          <a class="rv-tag" href="operations/osteosintez.html">Перелом лапы →</a>
+          <div class="rv-text clamp"><p>Хочу оставить положительно отзыв о клинике, о её сотрудниках и в частности о враче Владиславе Викторовиче. Моя кошка сломала лапу, привезли её ночью, на нервах.. Всех успокоили, кошке помогли, сделали операцию, поставили спицу, все рассказали, объяснили. Прошло полтора месяца, кошка отлично себя чувствует, не хромает. Рекомендую эту клинику и этого врача. Больше спасибо</p></div><button class="rv-toggle" type="button" hidden>Читать полностью</button>
+          <div class="rv-photos"><button class="rv-ph" type="button" data-src="assets/reviews/vera-1.jpg" aria-label="Открыть фото"><img src="assets/reviews/vera-1.jpg" alt="Фото из отзыва" loading="lazy" width="84" height="84"></button><button class="rv-ph" type="button" data-src="assets/reviews/vera-2.jpg" aria-label="Открыть фото"><img src="assets/reviews/vera-2.jpg" alt="Фото из отзыва" loading="lazy" width="84" height="84"></button><button class="rv-ph" type="button" data-src="assets/reviews/vera-3.jpg" aria-label="Открыть фото"><img src="assets/reviews/vera-3.jpg" alt="Фото из отзыва" loading="lazy" width="84" height="84"></button></div>
+        </article>
+        <article class="rv">
+          <header class="rv-head"><span class="rv-ava" aria-hidden="true">М</span><span class="rv-who"><b>Марта Н.</b><time>12 июля 2026</time></span><span class="rv-stars" role="img" aria-label="Оценка 5 из 5">★★★★★</span></header>
+          <a class="rv-tag" href="operations/enterotomiya.html">Инородное тело в кишечнике →</a>
+          <div class="rv-text clamp"><p>Доверяю этой клинике на все 100%. Однажды выбрали ее за круглосуточный график и возможность приема без предварительной записи, и теперь продолжаем выбирать за ответственное отношение к животным.</p><p>Особая благодарность Владиславу Викторовичу за оперативно проведенную операцию по извлечению инородных предметов из кишечника собаки. Под присмотром профессионалов быстро идем на поправку.</p></div><button class="rv-toggle" type="button" hidden>Читать полностью</button>
+          <div class="rv-photos"><button class="rv-ph" type="button" data-src="assets/reviews/marta-1.jpg" aria-label="Открыть фото"><img src="assets/reviews/marta-1.jpg" alt="Фото из отзыва" loading="lazy" width="84" height="84"></button></div>
+        </article>
+        <article class="rv">
+          <header class="rv-head"><span class="rv-ava" aria-hidden="true">А</span><span class="rv-who"><b>Алиса В.</b><time>16 октября 2026</time></span><span class="rv-stars" role="img" aria-label="Оценка 5 из 5">★★★★★</span></header>
+          <a class="rv-tag" href="operations/osteosintez.html">Переломы →</a>
+          <div class="rv-text clamp"><p>…У меня 4 животных. Каждого из них осматривал глав врач и Владислав Викторович.</p><p>Спас мою кошку Марту,проводил операции для нее даже в не рабочее время. Доктор искренне заинтересован состоянием и здоровьем вашего питомца.</p><p>Марта лежала почти месяц в стационаре,справилась со всеми своими переломами,ушибами, в то время,когда другая ветклиника говорила: «ей ничего не поможет»,но Владислав Викторович и его коллеги показали мастерство высшего уровня!!!</p><p>Рекомендую эту ветеринарную клинику и Владислава Викторовича.</p></div><button class="rv-toggle" type="button" hidden>Читать полностью</button>
+          <div class="rv-photos"><button class="rv-ph" type="button" data-src="assets/reviews/alisa-1.jpg" aria-label="Открыть фото"><img src="assets/reviews/alisa-1.jpg" alt="Фото из отзыва" loading="lazy" width="84" height="84"></button><button class="rv-ph" type="button" data-src="assets/reviews/alisa-2.jpg" aria-label="Открыть фото"><img src="assets/reviews/alisa-2.jpg" alt="Фото из отзыва" loading="lazy" width="84" height="84"></button><button class="rv-ph" type="button" data-src="assets/reviews/alisa-3.jpg" aria-label="Открыть фото"><img src="assets/reviews/alisa-3.jpg" alt="Фото из отзыва" loading="lazy" width="84" height="84"></button></div>
+        </article>
+        <article class="rv">
+          <header class="rv-head"><span class="rv-ava" aria-hidden="true">О</span><span class="rv-who"><b>Ольга К.</b><time>17 апреля 2026</time></span><span class="rv-stars" role="img" aria-label="Оценка 5 из 5">★★★★★</span></header>
+          <span class="rv-tag">Травма после ДТП</span>
+          <div class="rv-text clamp"><p>Неделю назад нашего Красавчика сбила машина. Сразу прибежали в клинику, в этот день к нашему счастьюработал Белорыбец Владислав Викторович. Доктор оперативно сделал рентген, выявил повреждения, оказал первую помощь, положил под капельницу, обрисовал какие могут быть последствия, ответил на все наши что? как ? и почему?</p><p>В стационаре пробыли 2 дня, далее поехали в другую клинику на МРТ и КТ, для подтверждения диагноза ЧМТ. Очень ценно, что Доктор просил звонить в Клинику и рассказывать как у нас дела, поддерживал, советовал как лучше поступить, максимально проникся травмой нашего пёсика, проявил профессионализм и человеческие качества, что большая редкость в наше время.</p><p>Сейчас мы снова вернулись в стационар Клиники, нам назначили терапию, ходим на капельницы и уколы, динамика положительная есть и мы верим, что наш Злюка будет бегать как раньше.</p><p>От всего сердца большая благодарность Владиславу Викторовичу и всей команде Клиникидай Бог Вам здоровья, терпения и побольше благодарных пациентов</p><p>Дополняю отзыв 16.04</p><p>Всё самое страшное позади, наш пёсик идёт на поправку, бегает и потихоньку вспоминает свою собачью жизнь и повадки до травмы, что нас ооочень радуетэто значит - лечение подобрано верно, огромное спасибо что подарили 2ю жизнь</p></div><button class="rv-toggle" type="button" hidden>Читать полностью</button>
+          <div class="rv-photos"><button class="rv-ph" type="button" data-src="assets/reviews/olga-1.jpg" aria-label="Открыть фото"><img src="assets/reviews/olga-1.jpg" alt="Фото из отзыва" loading="lazy" width="84" height="84"></button><button class="rv-ph" type="button" data-src="assets/reviews/olga-2.jpg" aria-label="Открыть фото"><img src="assets/reviews/olga-2.jpg" alt="Фото из отзыва" loading="lazy" width="84" height="84"></button></div>
+        </article>
+        <article class="rv">
+          <header class="rv-head"><span class="rv-ava" aria-hidden="true">Е</span><span class="rv-who"><b>Екатерина Б.</b><time>26 апреля 2024</time></span><span class="rv-stars" role="img" aria-label="Оценка 5 из 5">★★★★★</span></header>
+          <a class="rv-tag" href="operations/enterotomiya.html">Инородное тело: нитки →</a>
+          <div class="rv-text clamp"><p>Словами не выразить нашу огромную благодарность заботливому и внимательному врачу Владиславу Викторовичу Белорыбец за спасение жизни нашей маленькой кошечки сфинкса Лилу! Вы наш герой! … Владислав Викторович внимательно выслушал наши жалобы, осмотрел Лилу, сделал рентген. Диагноз был поставлен четко и оперативно, врач сказал что присутствует инородный предмет и решил не терять время и делать операцию, сказал что уже поздно обратились, котенок сильно обезвожен. Мы доверились ему полностью, хотя было очень страшно за нашу малышку. Персонал нас подбадривал и юморил, мы очень переживали и страшно боялись за нашу доченьку, пережили большой стресс. Операция была сложная, но все прошло успешно. Выяснилось что наша Лилу наелась ниток!! Врач показал нам эти нитки. Шок не описать словами. После операции 2 дня наша Лилу оставалась под наблюдением в клинике, мы ее навещали, врачи давали все необходимые рекомендации, показывали видео что все хорошо. После нам назначили дополнительное лечение, которое мы проводили дома и приезжали в клинику на уколы и обработку шва. Прошло уже почти 2 недели после операции, наша малышка довольно быстро пошла на поправку, наконец швы сняли, кошечка заметно лучше себя чувствует, игривая, кушает хорошо, а мы очень счастливы что все прошло благополучно и самое страшное уже позади, теперь будем внимательнее следить за нашим котеребенком. Спасибо наш замечательный добрый доктор Владислав Викторович, чувствуется с какой заботой и любовью вы относитесь к нашим питомцам, нам очень повезло что попали на вашу смену, всего вам самого наилучшего, вы действительно очень хороший профессионал и небезразличный человек, это сейчас очень редко встретишь и дорогого стоит!!! Мы нашли своего врача которому можно довериться, теперь только к вам, спасибо, спасибо и еще раз спасибо!</p></div><button class="rv-toggle" type="button" hidden>Читать полностью</button>
+          
+        </article>
+        <article class="rv rv-more">
+          <header class="rv-head"><span class="rv-ava" aria-hidden="true">Э</span><span class="rv-who"><b>Эля Т.</b><time>22 апреля 2026</time></span><span class="rv-stars" role="img" aria-label="Оценка 5 из 5">★★★★★</span></header>
+          <span class="rv-tag">Операция</span>
+          <div class="rv-text clamp"><p>Большое спасибо главному врачу Белорыбец Владиславу Викторовичу за бережное отношение, профессионализм и консультацию. Врач верно определил диагноз , успешно провел операцию и наша Терри теперь здорова.</p></div><button class="rv-toggle" type="button" hidden>Читать полностью</button>
+          <div class="rv-photos"><button class="rv-ph" type="button" data-src="assets/reviews/elya-1.jpg" aria-label="Открыть фото"><img src="assets/reviews/elya-1.jpg" alt="Фото из отзыва" loading="lazy" width="84" height="84"></button><button class="rv-ph" type="button" data-src="assets/reviews/elya-2.jpg" aria-label="Открыть фото"><img src="assets/reviews/elya-2.jpg" alt="Фото из отзыва" loading="lazy" width="84" height="84"></button></div>
+        </article>
+        <article class="rv rv-more">
+          <header class="rv-head"><span class="rv-ava" aria-hidden="true">М</span><span class="rv-who"><b>МММ Г.</b><time>31 мая 2026</time></span><span class="rv-stars" role="img" aria-label="Оценка 5 из 5">★★★★★</span></header>
+          <span class="rv-tag">Помощь псу-волонтёру</span>
+          <div class="rv-text clamp"><p>Огромное спасибо хирургу Владиславу Викторович за профессиональную работу и за доброе отношение к животным.</p><p>Волонтёрский слепой возрастной пёс Рыжий без вашей помощи мог погибнуть. Здоровья вам, благополучия и долгих лет</p></div><button class="rv-toggle" type="button" hidden>Читать полностью</button>
+          <div class="rv-photos"><button class="rv-ph" type="button" data-src="assets/reviews/mmm-1.jpg" aria-label="Открыть фото"><img src="assets/reviews/mmm-1.jpg" alt="Фото из отзыва" loading="lazy" width="84" height="84"></button><button class="rv-ph" type="button" data-src="assets/reviews/mmm-2.jpg" aria-label="Открыть фото"><img src="assets/reviews/mmm-2.jpg" alt="Фото из отзыва" loading="lazy" width="84" height="84"></button></div>
+        </article>
+        <article class="rv rv-more">
+          <header class="rv-head"><span class="rv-ava" aria-hidden="true">А</span><span class="rv-who"><b>Анна Х.</b><time>27 апреля 2026</time></span><span class="rv-stars" role="img" aria-label="Оценка 5 из 5">★★★★★</span></header>
+          <span class="rv-tag">Экстренная помощь</span>
+          <div class="rv-text clamp"><p>Хочу выразить мою глубочайшую благодарность Владиславу Викторвичу и коллективу вет.клиники Добрый Доктор за спасение моего Голдена!Ситуация была критической,если бы не Владислав Викторович !Его профессионализм, компетенция и скорейшая своевременная диагностика пациента!Слава Богу ,что у нас есть такие специалисты,которым можно безоговорочно доверить жизнь своего питомца и знать ,что она в надёжных рукахСейчас мой &quot;хвостик&quot; бегает !Здоров,весел и счастлив)Быстро встал на лапыи радуется жизни !СПАСИБО !ВАМ!ОГРОМНОЕ!</p></div><button class="rv-toggle" type="button" hidden>Читать полностью</button>
+          
+        </article>
+        <article class="rv rv-more">
+          <header class="rv-head"><span class="rv-ava" aria-hidden="true">Ж</span><span class="rv-who"><b>Жанна Г.</b><time>28 октября 2025</time></span><span class="rv-stars" role="img" aria-label="Оценка 5 из 5">★★★★★</span></header>
+          <span class="rv-tag">Удаление новообразования</span>
+          <div class="rv-text clamp"><p>Наблюдаем мопса в этой клинике. Персонал компетентный, внимательный. Работают круглосуточно.</p><p>Удаляли очень сложное новообразование. Спасибо врачу Белорыбец В. В. Все сделал на высшем уровне. Сейчас лечимся, уже есть улучшения. Клинику рекомедую</p></div><button class="rv-toggle" type="button" hidden>Читать полностью</button>
+          
+        </article>
+        <article class="rv rv-more">
+          <header class="rv-head"><span class="rv-ava" aria-hidden="true">И</span><span class="rv-who"><b>Инна И.</b><time>24 сентября 2026</time></span><span class="rv-stars" role="img" aria-label="Оценка 5 из 5">★★★★★</span></header>
+          <span class="rv-tag">Тяжёлое состояние, роды</span>
+          <div class="rv-text clamp"><p>Хочу выразить огромную благодарность врачу Владиславу Викторовичу и всей команде клиники!</p><p>Владислав Викторович — не просто профессионал с золотыми руками, а человек с большим сердцем. Он вылечил моего котёнка, помог моей кошке Лилу, которая находилась в тяжёлом состоянии, и спас ещё одну кошку — Агушу. Его опыт, чуткость и внимание к каждой детали — это то, что отличает настоящего доктора.</p><p>Отдельно хочу поблагодарить весь персонал. Даня — спасибо за чуткость и поддержку. Администратор Ирина — за помощь в родах, за то, что растирала котят вместо мамы, когда Лилу не могла подойти. Это бесценно. Вы все — команда, которая делает невероятно важное дело.</p><p>Спасибо за вашу заботу, терпение и любовь к животным. Вы спасли не одну жизнь. Низкий поклон вам за это.</p><p>Рекомендую клинику всем, кто любит своих питомцев и хочет доверить их в надёжные руки.</p></div><button class="rv-toggle" type="button" hidden>Читать полностью</button>
+          
+        </article>
+        <article class="rv rv-more">
+          <header class="rv-head"><span class="rv-ava" aria-hidden="true">В</span><span class="rv-who"><b>Влада Ш.</b><time>27 декабря 2024</time></span><span class="rv-stars" role="img" aria-label="Оценка 5 из 5">★★★★★</span></header>
+          <span class="rv-tag">Травма лапы</span>
+          <div class="rv-text clamp"><p>Сердечно благодарю ветеринарную клинику «Добрый Доктор» и отдельная благодарность Доброму Доктору – Былорыбец Владиславу Викторовичу, за его неоценимую помощь! Наш котенок Луна попала в неприятную ситуацию — она застряла в заборе и повредила лапку. Мы были в ужасе, но Владислав Викторович проявил невероятное терпение и заботу. Он не только вылечил Луну, но и объяснил нам, как правильно ухаживать за ней в период восстановления. Теперь наша малышка снова прыгает и играет. Вы — настоящие профессионалы!</p></div><button class="rv-toggle" type="button" hidden>Читать полностью</button>
+          
+        </article>
+        <article class="rv rv-more">
+          <header class="rv-head"><span class="rv-ava" aria-hidden="true">А</span><span class="rv-who"><b>Алана П.</b><time>9 октября 2025</time></span><span class="rv-stars" role="img" aria-label="Оценка 5 из 5">★★★★★</span></header>
+          <span class="rv-tag">Лечение</span>
+          <div class="rv-text clamp"><p>Всем здравствуйте! Хочу выразить огромную благодарность врачу Владиславу за его грамотный подход к лечению наших маленьких друзей. У моего кота достаточно давно начались проблемы с пищеварением, обращались во многие клиники, но лечение ограничивалось снятием симптома на 1-2 дня . Владислав же помог нам: назначил препараты, корм и теперь котик чувствует себя прекрасно!</p></div><button class="rv-toggle" type="button" hidden>Читать полностью</button>
+          
+        </article>
+        <article class="rv rv-more">
+          <header class="rv-head"><span class="rv-ava" aria-hidden="true">И</span><span class="rv-who"><b>Ирина К.</b><time>31 мая 2024</time></span><span class="rv-stars" role="img" aria-label="Оценка 5 из 5">★★★★★</span></header>
+          <span class="rv-tag">Лечение</span>
+          <div class="rv-text clamp"><p>Первый раз были в вашей клинике в феврале. Обратились с больными ушками нашей девочки-лабрадора! Доктор Владислав Викторович внимательно остотрел мою малышку, поставил диагноз и прописал лечение. Мы пролечились и наши ушки теперь здоровы! Спасибо большое доктору и клинике в целом за бережное и внимательное отношение к нашим питомцам! Вернёмся к вам на прививки)))</p></div><button class="rv-toggle" type="button" hidden>Читать полностью</button>
+          <div class="rv-photos"><button class="rv-ph" type="button" data-src="assets/reviews/irina-1.jpg" aria-label="Открыть фото"><img src="assets/reviews/irina-1.jpg" alt="Фото из отзыва" loading="lazy" width="84" height="84"></button></div>
+        </article>
+        <article class="rv rv-more">
+          <header class="rv-head"><span class="rv-ava" aria-hidden="true">И</span><span class="rv-who"><b>Иван Ф.</b><time>1 декабря 2024</time></span><span class="rv-stars" role="img" aria-label="Оценка 5 из 5">★★★★★</span></header>
+          
+          <div class="rv-text clamp"><p>Отличная клиника, всех своих питомцев лечим только там. Белорыбец Владислав Викторович - врач от бога. Ездим только к нему, прекрасное отношение и сопереживание. Рекомендую на все 100%</p></div><button class="rv-toggle" type="button" hidden>Читать полностью</button>
+          
+        </article>
+        <article class="rv rv-more">
+          <header class="rv-head"><span class="rv-ava" aria-hidden="true">Д</span><span class="rv-who"><b>Дарья К.</b><time>3 июня 2025</time></span><span class="rv-stars" role="img" aria-label="Оценка 5 из 5">★★★★★</span></header>
+          <span class="rv-tag">Приём</span>
+          <div class="rv-text clamp"><p>Очень понравилась ветклиника. Приём был проведён быстро и оперативно. Первый раз собака даже не отреагировала на прививку от бешенства. Даже не успела понять что уже всё. Потрясающий врач Белорыбец В.В.. Спасибо огромное за приём! Будем Вас обязательно рекомендовать!</p><p>P.S. Все сотрудники ветклиники «Добрый доктор» очень дружелюбные, всё объясняют, если нужно проконсультируют!</p></div><button class="rv-toggle" type="button" hidden>Читать полностью</button>
+          
+        </article>
+        <article class="rv rv-more">
+          <header class="rv-head"><span class="rv-ava" aria-hidden="true">A</span><span class="rv-who"><b>Arina L.</b><time>30 октября 2024</time></span><span class="rv-stars" role="img" aria-label="Оценка 5 из 5">★★★★★</span></header>
+          
+          <div class="rv-text clamp"><p>Спасибо большое врачу Владиславу Викторовичу, который неоднократно помогал нашим котам и крыске</p><p>Профессионализм на высшем уровне. Все быстро и качественно.</p><p>Всем рекомендую</p></div><button class="rv-toggle" type="button" hidden>Читать полностью</button>
+          
+        </article>
+        <article class="rv rv-more">
+          <header class="rv-head"><span class="rv-ava" aria-hidden="true">Н</span><span class="rv-who"><b>Наталья С.</b><time>26 июля 2025</time></span><span class="rv-stars" role="img" aria-label="Оценка 5 из 5">★★★★★</span></header>
+          
+          <div class="rv-text clamp"><p>Хочу поблагодарить врача Белорыбец Владислава Викторович. Замечательный профессионал. И очень добрый человек.</p></div><button class="rv-toggle" type="button" hidden>Читать полностью</button>
+          
+        </article>
+        <article class="rv rv-more">
+          <header class="rv-head"><span class="rv-ava" aria-hidden="true">M</span><span class="rv-who"><b>Müll T.</b><time>24 июля 2026</time></span><span class="rv-stars" role="img" aria-label="Оценка 5 из 5">★★★★★</span></header>
+          
+          <div class="rv-text clamp"><p>Замечательная клиника. Неоднократно обращались туда за помощью и с вопросами. Очень приветливый и отзывчивый персонал. Всегда квалифицированная помощь и быстрое решение вопроса.Отдельные спасибо ,доктору Белорыбец В . В.</p></div><button class="rv-toggle" type="button" hidden>Читать полностью</button>
+          
+        </article>
+        <!-- REVIEWS:END -->
+      </div>
+      <button class="btn btn-dark rv-all" id="rv-all" type="button">Показать все отзывы</button>
+    </div>
+  </section>
+
   <section class="section" id="contacts" aria-labelledby="contacts-h" style="padding-top:0">
     <div class="wrap">
       <div class="contacts">
@@ -1068,6 +1234,32 @@ var SCHEDULE = {
       note.textContent = 'Форма пока не подключена к отправке. Позвоните, пожалуйста: +7 (939) 255-77-71.';
     });
   });
+})();
+
+// Отзывы: сворачивание длинных текстов, «показать все», просмотр фото
+(function () {
+  var grid = document.getElementById("rv-grid");
+  if (!grid) return;
+  grid.querySelectorAll(".rv").forEach(function (card) {
+    var text = card.querySelector(".rv-text"), btn = card.querySelector(".rv-toggle");
+    function check() { btn.hidden = !(text.classList.contains("clamp") && text.scrollHeight > text.clientHeight + 4); }
+    btn.addEventListener("click", function () { text.classList.remove("clamp"); btn.hidden = true; });
+    check(); window.addEventListener("resize", check);
+  });
+  var all = document.getElementById("rv-all");
+  var more = grid.querySelectorAll(".rv-more").length;
+  if (!more) all.hidden = true; else all.textContent = "Показать ещё " + more + " " + (more % 10 === 1 && more % 100 !== 11 ? "отзыв" : (more % 10 >= 2 && more % 10 <= 4 && (more % 100 < 10 || more % 100 >= 20)) ? "отзыва" : "отзывов");
+  all.addEventListener("click", function () {
+    grid.classList.add("all"); all.hidden = true;
+    grid.querySelectorAll(".rv-more .rv-toggle").forEach(function (b) { var t = b.previousElementSibling; b.hidden = !(t.scrollHeight > t.clientHeight + 4); });
+  });
+  var box = document.getElementById("lightbox"), img = box.querySelector("img");
+  grid.addEventListener("click", function (e) {
+    var ph = e.target.closest(".rv-ph"); if (!ph) return;
+    img.src = ph.dataset.src; box.showModal();
+  });
+  box.querySelector("[data-close-lightbox]").addEventListener("click", function () { box.close(); });
+  box.addEventListener("click", function (e) { if (e.target === box) box.close(); });
 })();
 
 // Уведомление о cookie
