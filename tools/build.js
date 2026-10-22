@@ -289,25 +289,28 @@ function homeBlock() {
 // ---------- отзывы на главной ----------
 const REVIEWS = require('../data/reviews');
 const SHOWN = 6; // сколько отзывов видно до кнопки «Показать ещё»
-// эмодзи убираем, а на их место ставим пробел — иначе слипаются слова («счастью😊работал»)
-const clean = t => t.replace(/‼️?/g, '! ')
-  .replace(/[\p{Extended_Pictographic}\u{1F3FB}-\u{1F3FF}️‍]+/gu, ' ')
-  .replace(/[ \t]{2,}/g, ' ').replace(/ +\n/g, '\n').trim();
+// Карточки повторяют вид отзыва на Яндекс Картах: аватар, имя, «N отзывов · Знаток города», звёзды, дата, текст, фото
+const LETTER_BG = ['#F06E00', '#2BB24C', '#1E98FF', '#B051E2', '#E5413D', '#00A3A3']; // буквенные аватары как у Яндекса
+const STAR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg>';
 function reviewsBlock() {
   for (const r of REVIEWS) {
     if (r.slug && !slugs.has(r.slug)) throw new Error('Отзыв ссылается на несуществующую операцию: ' + r.slug);
-    for (const ph of r.photos || []) if (!fs.existsSync(path.join(ROOT, 'assets', 'reviews', ph))) throw new Error('Нет фото отзыва: ' + ph);
+    for (const ph of [...(r.photos || []), ...(r.avatar ? [r.avatar] : [])]) if (!fs.existsSync(path.join(ROOT, 'assets', 'reviews', ph))) throw new Error('Нет файла отзыва: ' + ph);
   }
   return REVIEWS.map((r, i) => {
-    const paras = clean(r.text).split(/\n+/).map(p => '<p>' + esc(p.trim()) + '</p>').join('');
-    const tag = r.tag ? (r.slug ? `<a class="rv-tag" href="operations/${r.slug}.html">${esc(r.tag)} →</a>` : `<span class="rv-tag">${esc(r.tag)}</span>`) : '';
-    const photos = (r.photos || []).length ? `<div class="rv-photos">${r.photos.map(p => `<button class="rv-ph" type="button" data-src="assets/reviews/${p}" aria-label="Открыть фото"><img src="assets/reviews/${p}" alt="Фото из отзыва" loading="lazy" width="84" height="84"></button>`).join('')}</div>` : '';
+    const paras = r.text.trim().split(/\n+/).map(p => '<p>' + esc(p.trim()) + '</p>').join('');
+    const ava = r.avatar
+      ? `<img class="rv-ava" src="assets/reviews/${r.avatar}" alt="" width="48" height="48" loading="lazy">`
+      : `<span class="rv-ava rv-letter" style="background:${LETTER_BG[[...r.name].reduce((n, ch) => n + ch.codePointAt(0), 0) % LETTER_BG.length]}" aria-hidden="true">${esc(r.name.charAt(0).toUpperCase())}</span>`;
+    const photos = (r.photos || []).length ? `<div class="rv-photos">${r.photos.map(p => `<button class="rv-ph" type="button" data-src="assets/reviews/${p}" aria-label="Открыть фото"><img src="assets/reviews/${p}" alt="Фото из отзыва" loading="lazy" width="120" height="120"></button>`).join('')}</div>` : '';
+    const tag = r.tag ? `<div class="rv-case">${r.slug ? `<a href="operations/${r.slug}.html">${esc(r.tag)} →</a>` : `<span>${esc(r.tag)}</span>`}</div>` : '';
     return `
         <article class="rv${i >= SHOWN ? ' rv-more' : ''}">
-          <header class="rv-head"><span class="rv-ava" aria-hidden="true">${esc(r.name.charAt(0).toUpperCase())}</span><span class="rv-who"><b>${esc(r.name)}</b><time>${esc(r.date)}</time></span><span class="rv-stars" role="img" aria-label="Оценка 5 из 5">★★★★★</span></header>
-          ${tag}
-          <div class="rv-text clamp">${paras}</div><button class="rv-toggle" type="button" hidden>Читать полностью</button>
+          <header class="rv-head">${ava}<span class="rv-who"><span class="rv-name">${esc(r.name)}</span><span class="rv-meta">${esc(r.meta || '')}</span></span></header>
+          <div class="rv-rate"><span class="rv-stars" role="img" aria-label="Оценка 5 из 5">${STAR.repeat(5)}</span><time>${esc(r.date)}</time></div>
+          <div class="rv-text clamp">${paras}</div><button class="rv-toggle" type="button" hidden>ещё</button>
           ${photos}
+          ${tag}
         </article>`;
   }).join('');
 }
