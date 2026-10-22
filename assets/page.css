@@ -69,7 +69,13 @@ p { margin: 0; }
 .cover-price span { color: var(--muted); }
 .cover-price b { font: 800 28px var(--font-display); }
 .cover-price .btn { margin-left: auto; }
-@media (max-width: 560px) { .cover-price .btn { margin-left: 0; width: 100%; } }
+@media (max-width: 560px) {
+  .cover-price .btn { margin-left: 0; width: 100%; }
+  .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .facts div { padding: 10px 12px; }
+  .facts dd { font-size: 15px; }
+  .cover-mark { width: 240px; right: -60px; }
+}
 
 /* Раскладка: оглавление + текст */
 .layout { display: grid; grid-template-columns: 260px minmax(0, 720px); gap: 60px; padding-block: 48px 72px; align-items: start; }
