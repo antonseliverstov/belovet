@@ -355,7 +355,8 @@ dialog::backdrop { background: rgba(15, 43, 69, .55); }
 .rv-tag { justify-self: start; display: inline-flex; padding: 5px 12px; border-radius: 999px; background: var(--sky-soft); color: var(--navy); font-size: 14px; font-weight: 600; text-decoration: none; }
 a.rv-tag:hover { background: var(--sky); }
 .rv-text { display: grid; gap: 8px; font-size: 16px; line-height: 1.55; color: #22394f; }
-.rv-text.clamp { max-height: 12.4em; overflow: hidden; -webkit-mask-image: linear-gradient(#000 70%, transparent); mask-image: linear-gradient(#000 70%, transparent); }
+.rv-text.clamp { max-height: 12.4em; overflow: hidden; }
+.rv-text.clamp.over { -webkit-mask-image: linear-gradient(#000 70%, transparent); mask-image: linear-gradient(#000 70%, transparent); }
 .rv-toggle { justify-self: start; padding: 0; border: 0; background: none; color: var(--blue-text); font: 600 15px var(--font-body); cursor: pointer; }
 .rv-toggle[hidden] { display: none; }
 .rv-photos { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -1242,8 +1243,13 @@ var SCHEDULE = {
   if (!grid) return;
   grid.querySelectorAll(".rv").forEach(function (card) {
     var text = card.querySelector(".rv-text"), btn = card.querySelector(".rv-toggle");
-    function check() { btn.hidden = !(text.classList.contains("clamp") && text.scrollHeight > text.clientHeight + 4); }
-    btn.addEventListener("click", function () { text.classList.remove("clamp"); btn.hidden = true; });
+    function check() {
+      var over = text.classList.contains("clamp") && text.scrollHeight > text.clientHeight + 4;
+      text.classList.toggle("over", over); // затухание — только если текст правда обрезан
+      btn.hidden = !over;
+    }
+    card.checkClamp = check;
+    btn.addEventListener("click", function () { text.classList.remove("clamp", "over"); btn.hidden = true; });
     check(); window.addEventListener("resize", check);
   });
   var all = document.getElementById("rv-all");
@@ -1251,7 +1257,7 @@ var SCHEDULE = {
   if (!more) all.hidden = true; else all.textContent = "Показать ещё " + more + " " + (more % 10 === 1 && more % 100 !== 11 ? "отзыв" : (more % 10 >= 2 && more % 10 <= 4 && (more % 100 < 10 || more % 100 >= 20)) ? "отзыва" : "отзывов");
   all.addEventListener("click", function () {
     grid.classList.add("all"); all.hidden = true;
-    grid.querySelectorAll(".rv-more .rv-toggle").forEach(function (b) { var t = b.previousElementSibling; b.hidden = !(t.scrollHeight > t.clientHeight + 4); });
+    grid.querySelectorAll(".rv-more").forEach(function (card) { card.checkClamp(); });
   });
   var box = document.getElementById("lightbox"), img = box.querySelector("img");
   grid.addEventListener("click", function (e) {
