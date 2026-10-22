@@ -1272,10 +1272,16 @@ var SCHEDULE = {
       btn.hidden = !over;
     }
     card.checkClamp = check;
-    // как на Яндексе: «ещё» раскрывает текст, «Скрыть» сворачивает обратно
+    card.collapse = function () {
+      if (text.classList.contains("clamp")) return;
+      text.classList.add("clamp"); btn.textContent = "ещё"; check();
+    };
+    // как на Яндексе: «ещё» раскрывает текст, «Скрыть» сворачивает обратно.
+    // Открыт всегда один отзыв: при раскрытии нового остальные сворачиваются сами.
     btn.addEventListener("click", function () {
-      if (text.classList.contains("clamp")) { text.classList.remove("clamp", "over"); btn.textContent = "Скрыть"; }
-      else { text.classList.add("clamp"); btn.textContent = "ещё"; check(); }
+      if (!text.classList.contains("clamp")) { card.collapse(); return; }
+      grid.querySelectorAll(".rv").forEach(function (other) { if (other !== card && other.collapse) other.collapse(); });
+      text.classList.remove("clamp", "over"); btn.textContent = "Скрыть";
     });
     check(); window.addEventListener("resize", check);
   });
