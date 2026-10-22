@@ -157,7 +157,7 @@ function pageHtml(p) {
     + (a.redFlags && a.redFlags.length ? `<aside class="note note-alarm"><b>Срочно к врачу, если:</b><ul>${a.redFlags.map(r => `<li>${esc(r)}</li>`).join('')}</ul><p>Запись: <a href="${PHONE_HREF}">${PHONE}</a>. По экстренной записи приеду в клинику за 15 минут в любое время, даже ночью. Тяжёлых пациентов принимаем без очереди.</p></aside>` : ''));
   body += sec('ceny', 'Варианты и цены',
     (a.types || []).map(t => `<h3>${esc(t[0])}</h3><p>${esc(t[1])}</p>`).join('')
-    + `<div class="table"><table><caption>${esc(p.title)}: стоимость</caption><thead><tr><th>Вариант</th><th>Цена</th></tr></thead><tbody>${p.prices.map(x => `<tr><td>${esc(x.v ? cap(x.v) : p.title)}</td><td class="num">${rub(x.p)}</td></tr>`).join('')}</tbody></table></div>`
+    + `<div class="table"><table><caption>${esc(p.title)}: стоимость</caption><thead><tr><th>Вариант</th><th class="num">Цена</th></tr></thead><tbody>${p.prices.map(x => `<tr><td>${esc(x.v ? cap(x.v) : p.title)}</td><td class="num">${rub(x.p)}</td></tr>`).join('')}</tbody></table></div>`
     + `<p class="small">${esc(priceNote)}</p>`);
   if (p.cat !== 'anest') body += sec('podgotovka', 'Обследование и подготовка',
     `<ul>${[...(a.prep || []), ...(isOp ? PREP_BASE : [])].map(x => `<li>${esc(cap(x))}</li>`).join('')}</ul>`);
