@@ -289,9 +289,10 @@ function homeBlock() {
 // ---------- отзывы на главной ----------
 const REVIEWS = require('../data/reviews');
 const SHOWN = 6; // сколько отзывов видно до кнопки «Показать ещё»
-const clean = t => t.replace(/‼️?/g, '!')
-  .replace(/[\p{Extended_Pictographic}\u{1F3FB}-\u{1F3FF}️‍]/gu, '')
-  .replace(/[ \t]{2,}/g, ' ').trim();
+// эмодзи убираем, а на их место ставим пробел — иначе слипаются слова («счастью😊работал»)
+const clean = t => t.replace(/‼️?/g, '! ')
+  .replace(/[\p{Extended_Pictographic}\u{1F3FB}-\u{1F3FF}️‍]+/gu, ' ')
+  .replace(/[ \t]{2,}/g, ' ').replace(/ +\n/g, '\n').trim();
 function reviewsBlock() {
   for (const r of REVIEWS) {
     if (r.slug && !slugs.has(r.slug)) throw new Error('Отзыв ссылается на несуществующую операцию: ' + r.slug);
