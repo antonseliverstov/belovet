@@ -36,7 +36,7 @@ module.exports = function blog(ctx) {
       if (t === 'ul') return `<ul>${b[1].map(x => `<li>${esc(cap(x))}</li>`).join('')}</ul>`;
       if (t === 'ol') return `<ol class="steps">${b[1].map(x => `<li>${esc(x)}</li>`).join('')}</ol>`;
       if (t === 'note') return `<aside class="note"><b>${esc(b[1])}</b><p>${esc(b[2])}</p></aside>`;
-      if (t === 'alarm') return `<aside class="note note-alarm"><b>${esc(b[1])}</b><ul>${b[2].map(x => `<li>${esc(x)}</li>`).join('')}</ul><p>Запись: <a href="${PHONE_HREF}">${PHONE}</a>. В тяжёлых случаях примем без очереди. Если клиника закрыта, не ждите утра — езжайте в ближайшую круглосуточную ветклинику.</p></aside>`;
+      if (t === 'alarm') return `<aside class="note note-alarm"><b>${esc(b[1])}</b><ul>${b[2].map(x => `<li>${esc(x)}</li>`).join('')}</ul><p>Запись: <a href="${PHONE_HREF}">${PHONE}</a>. По экстренной записи приеду в клинику за 15 минут, даже вне графика. Тяжёлых пациентов принимаем без очереди.</p></aside>`;
       if (t === 'table') return `<div class="table"><table><caption>${esc(b[1])}</caption><thead><tr>${b[2].map(x => `<th>${esc(x)}</th>`).join('')}</tr></thead><tbody>${b[3].map(r => `<tr>${r.map(c => `<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
       if (t === 'op') return opCard(b[1], '../');
       throw new Error('Неизвестный блок ' + t);
@@ -123,7 +123,7 @@ ${header('../')}
       <div class="body">
 ${body}
 <div class="cta">
-  <div><p class="cta-title">Остались вопросы?</p><p class="cta-text">Опишите ситуацию и прикрепите анализы или снимки — отвечу, что делать дальше. Экстренная запись: <a href="${PHONE_HREF}" style="color:#fff">${PHONE}</a>, тяжёлых пациентов принимаю без очереди.</p></div>
+  <div><p class="cta-title">Остались вопросы?</p><p class="cta-text">Опишите ситуацию и прикрепите анализы или снимки — отвечу, что делать дальше. Экстренная запись: <a href="${PHONE_HREF}" style="color:#fff">${PHONE}</a>, приеду в клинику за 15 минут, даже вне графика. Тяжёлых пациентов принимаю без очереди.</p></div>
   <div class="cta-actions"><a class="btn btn-primary" href="../index.html?form=ask">Задать вопрос врачу</a><a class="btn btn-light" href="../index.html?form=book">Записаться на приём</a></div>
 </div>
 <h2 id="istochniki">Источники</h2>

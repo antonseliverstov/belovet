@@ -458,7 +458,7 @@ dialog::backdrop { background: rgba(15, 43, 69, .55); }
         <p class="where-clinic">Ветеринарная клиника «Добрый Доктор»</p>
         <p class="where-next" id="where-next"></p>
         <div class="cal" id="cal" aria-label="Дни приёма"></div>
-        <p class="where-note">Часы приёма: с 10:00 до 22:00. В остальные дни оперирую по приглашению в клиниках Москвы и области.</p>
+        <p class="where-note">Часы приёма: с 10:00 до 22:00. В остальные дни оперирую по приглашению в клиниках Москвы и области. По экстренной записи приеду в клинику за 15 минут, даже вне графика.</p>
         <div class="row">
           <button class="btn btn-primary" type="button" data-form="book">Записаться</button>
           <a class="btn btn-outline" href="https://yandex.ru/maps/?text=%D0%9B%D1%8E%D0%B1%D0%B5%D1%80%D1%86%D1%8B%2C%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%20%D0%92%D0%B5%D1%80%D1%82%D0%BE%D0%BB%D1%91%D1%82%D1%87%D0%B8%D0%BA%D0%BE%D0%B2%2C%2011" target="_blank" rel="noopener">Маршрут</a>
@@ -493,7 +493,7 @@ dialog::backdrop { background: rgba(15, 43, 69, .55); }
       <p class="where-clinic">Ветеринарная клиника «Добрый Доктор»</p>
       <p class="where-next" data-next></p>
       <div class="cal" data-cal aria-label="Дни приёма"></div>
-      <p class="where-note">Часы приёма: с 10:00 до 22:00. В остальные дни оперирую по приглашению в клиниках Москвы и области.</p>
+      <p class="where-note">Часы приёма: с 10:00 до 22:00. В остальные дни оперирую по приглашению в клиниках Москвы и области. По экстренной записи приеду в клинику за 15 минут, даже вне графика.</p>
     </div>
     <div class="menu-actions">
       <button class="btn btn-dark" type="button" data-form="book">Записаться на приём</button>
@@ -588,7 +588,7 @@ dialog::backdrop { background: rgba(15, 43, 69, .55); }
           <p class="form-note" role="status"></p>
         </form>
         <div class="urgent-call">
-          <span>В тяжёлых случаях примем без очереди</span>
+          <span>Приём с 10:00 до 22:00, но по экстренной записи приеду в клинику за 15 минут. Тяжёлых пациентов — без очереди</span>
           <a class="phone num" href="tel:+79392557771">+7 (939) 255-77-71</a>
         </div>
       </div>
@@ -1202,7 +1202,7 @@ var SCHEDULE = {
   var FORMS = {
     book:   { title: 'Записаться на приём', sub: 'Перезвоню и подберу время приёма.' },
     ask:    { title: 'Задать вопрос врачу', sub: 'Опишите ситуацию — отвечу по телефону или в мессенджере.', label: 'Вопрос', ph: 'Ваш вопрос' },
-    urgent: { title: 'Экстренная запись на приём', sub: 'Тяжёлых пациентов принимаем без очереди. Опишите, что случилось, и перезвоню, или позвоните сами: +7 (939) 255-77-71.', label: 'Что случилось', ph: 'Опишите случай' }
+    urgent: { title: 'Экстренная запись на приём', sub: 'Приеду в клинику за 15 минут, даже вне графика. Тяжёлых пациентов принимаем без очереди. Опишите, что случилось, и перезвоню, или позвоните сами: +7 (939) 255-77-71.', label: 'Что случилось', ph: 'Опишите случай' }
   };
   var dialog = document.getElementById('form-dialog');
   var form = document.getElementById('fd-form');

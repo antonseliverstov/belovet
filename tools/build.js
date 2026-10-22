@@ -154,7 +154,7 @@ function pageHtml(p) {
   body += sec('chto-eto', 'Что это за операция', (a.what || [p.lead]).map(t => `<p>${esc(t)}</p>`).join('\n'));
   body += sec('kogda', isOp ? 'Когда нужна операция' : 'Когда это нужно',
     `<ul>${p.indications.map(i => `<li>${esc(i)}</li>`).join('')}</ul>`
-    + (a.redFlags && a.redFlags.length ? `<aside class="note note-alarm"><b>Срочно к врачу, если:</b><ul>${a.redFlags.map(r => `<li>${esc(r)}</li>`).join('')}</ul><p>Запись: <a href="${PHONE_HREF}">${PHONE}</a>. В тяжёлых случаях примем без очереди. Если клиника закрыта, не ждите утра — езжайте в ближайшую круглосуточную ветклинику.</p></aside>` : ''));
+    + (a.redFlags && a.redFlags.length ? `<aside class="note note-alarm"><b>Срочно к врачу, если:</b><ul>${a.redFlags.map(r => `<li>${esc(r)}</li>`).join('')}</ul><p>Запись: <a href="${PHONE_HREF}">${PHONE}</a>. По экстренной записи приеду в клинику за 15 минут, даже вне графика. Тяжёлых пациентов принимаем без очереди.</p></aside>` : ''));
   body += sec('ceny', 'Варианты и цены',
     (a.types || []).map(t => `<h3>${esc(t[0])}</h3><p>${esc(t[1])}</p>`).join('')
     + `<div class="table"><table><caption>${esc(p.title)}: стоимость</caption><thead><tr><th>Вариант</th><th>Цена</th></tr></thead><tbody>${p.prices.map(x => `<tr><td>${esc(x.v ? cap(x.v) : p.title)}</td><td class="num">${rub(x.p)}</td></tr>`).join('')}</tbody></table></div>`
@@ -407,12 +407,12 @@ function notFoundHtml() {
     <header class="article-head">
       <span class="label">Ошибка 404</span>
       <h1>Такой страницы нет</h1>
-      <p class="lead">Возможно, адрес изменился. Все операции и цены собраны на главной, там же есть поиск по симптомам. Если питомцу плохо, звоните ${PHONE}: в тяжёлых случаях примем без очереди.</p>
+      <p class="lead">Возможно, адрес изменился. Все операции и цены собраны на главной, там же есть поиск по симптомам. Если питомцу плохо, звоните ${PHONE}: по экстренной записи приеду в клинику за 15 минут, тяжёлых пациентов принимаем без очереди.</p>
     </header>
     <section class="cards">
       <a class="card" href="${B}#prices"><b>Операции и цены</b><span class="card-text">Поиск по названию операции или симптому</span><span class="card-more">Открыть →</span></a>
       <a class="card" href="${B}blog/index.html"><b>Блог для владельцев</b><span class="card-text">Подготовка, восстановление, тревожные признаки</span><span class="card-more">Читать →</span></a>
-      <a class="card" href="${B}?form=urgent"><b>Экстренная запись</b><span class="card-text">Тяжёлых пациентов принимаем без очереди</span><span class="card-more">Оставить заявку →</span></a>
+      <a class="card" href="${B}?form=urgent"><b>Экстренная запись</b><span class="card-text">Приеду в клинику за 15 минут, тяжёлых — без очереди</span><span class="card-more">Оставить заявку →</span></a>
     </section>
   </div>
 </main>
