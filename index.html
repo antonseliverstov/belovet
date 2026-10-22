@@ -159,17 +159,79 @@ body.where-open .mbar { display: none; }
   .perks li { border-right: 0; margin-right: 0; padding-right: 20px; }
 }
 
-/* Экстренно */
-.urgent { background: var(--paper); border-radius: var(--radius-lg); padding: clamp(24px, 4vw, 48px); display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 32px 56px; }
+/* Экстренно: оранжевый блок. Белый — только крупный жирный текст (3.1:1), остальное тёмно-синим (4.7:1) */
+.urgent { background: var(--orange); color: var(--navy); border-radius: var(--radius-lg); padding: clamp(24px, 4vw, 48px); display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 32px 56px; }
 .urgent-call { display: grid; gap: 16px; align-content: start; }
-.urgent-call .phone { font: 800 clamp(26px, 3vw, 34px)/1.1 var(--font-display); }
-.urgent-call .hours { color: var(--muted); font-size: 15px; }
-.signs { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-.signs li { background: var(--sky-soft); border-radius: var(--radius-md); padding: 14px 16px; min-width: 0; }
-.signs b { display: block; font-weight: 600; }
-.signs span { font-size: 15px; color: var(--muted); }
-@media (max-width: 900px) { .urgent { grid-template-columns: 1fr; } }
-@media (max-width: 560px) { .signs { grid-template-columns: 1fr; } }
+.urgent-call h2 { color: #fff; font-size: clamp(28px, 3.4vw, 38px); }
+.urgent-call .phone { font: 800 clamp(26px, 3vw, 34px)/1.1 var(--font-display); color: #fff; text-decoration: none; }
+.urgent-call .hours { font-size: 15px; }
+.urgent .fill { color: var(--navy); border-color: var(--navy); }
+.urgent .btn-dark { justify-self: start; }
+@media (max-width: 900px) { .urgent { grid-template-columns: minmax(0, 1fr); } }
+
+/* Формы заявок */
+.lead-form { display: grid; gap: 14px; align-content: start; }
+.lead-form .grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
+.lead-form .grid .msg { grid-column: 2; grid-row: 1 / span 2; }
+.field { display: grid; gap: 6px; min-width: 0; }
+.field[hidden] { display: none; }
+.field span { font-size: 14px; font-weight: 600; }
+.field input, .field textarea { width: 100%; min-height: 52px; padding: 14px 16px; border: 2px solid transparent; border-radius: 12px; background: var(--paper); color: var(--navy); font: 400 16px/1.4 var(--font-body); }
+.field textarea { height: 100%; min-height: 124px; resize: vertical; }
+.field input::placeholder, .field textarea::placeholder { color: var(--muted); }
+.field input:focus, .field textarea:focus { outline: none; border-color: var(--navy); }
+.consent { display: grid; gap: 8px; }
+.check { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; line-height: 1.4; cursor: pointer; }
+.check input { width: 20px; height: 20px; margin: 1px 0 0; accent-color: var(--navy); flex-shrink: 0; }
+.check a { color: inherit; }
+.form-note { font-size: 15px; font-weight: 600; }
+.form-note:empty { display: none; }
+@media (max-width: 560px) {
+  .lead-form .grid { grid-template-columns: minmax(0, 1fr); }
+  .lead-form .grid .msg { grid-column: auto; grid-row: auto; }
+}
+
+/* Окна с формами и меню */
+dialog { border: 0; padding: 0; color: var(--navy); }
+dialog::backdrop { background: rgba(15, 43, 69, .55); }
+.modal { width: min(480px, calc(100vw - 32px)); border-radius: 24px; background: var(--cream); }
+.modal-in { padding: 28px; display: grid; gap: 18px; }
+.modal h2 { font-size: 26px; padding-right: 44px; }
+.modal .sub { color: var(--muted); font-size: 15px; margin-top: -8px; }
+.modal .field input, .modal .field textarea { background: var(--paper); border-color: var(--line); }
+.modal .field input:focus, .modal .field textarea:focus { border-color: var(--navy); }
+.x { position: absolute; top: 16px; right: 16px; width: 40px; height: 40px; border: 0; border-radius: 50%; background: var(--paper); color: var(--navy); font-size: 24px; line-height: 1; cursor: pointer; }
+.x:hover { background: var(--sky); }
+.modal .btn, .menu .btn { width: 100%; }
+
+.burger { display: none; margin-left: auto; width: 48px; height: 48px; border: 0; border-radius: 14px; background: var(--paper); cursor: pointer; place-items: center; }
+.burger span, .burger span::before, .burger span::after { display: block; width: 22px; height: 2px; border-radius: 2px; background: var(--navy); position: relative; content: ""; }
+.burger span::before { position: absolute; top: -7px; }
+.burger span::after { position: absolute; top: 7px; }
+.menu { width: 100%; max-width: 100%; height: 100%; max-height: 100%; margin: 0; background: var(--cream); }
+.menu-in { padding: 16px var(--gutter) 32px; display: grid; gap: 28px; }
+.menu-top { display: flex; align-items: center; justify-content: space-between; min-height: 56px; }
+.menu-top .logo { display: flex; align-items: center; gap: 8px; }
+.menu-top .sym { width: 34px; } .menu-top .word { width: 120px; }
+.menu-top .x { position: static; }
+.menu nav { display: grid; }
+.menu nav a { padding: 14px 0; border-bottom: 1px solid var(--line); color: var(--navy); text-decoration: none; font: 700 22px var(--font-display); }
+.menu .phone { font: 800 26px/1.2 var(--font-display); color: var(--navy); text-decoration: none; }
+.menu-sched { background: var(--paper); border-radius: var(--radius-lg); padding: 20px; display: grid; gap: 12px; }
+.menu-actions { display: grid; gap: 10px; }
+@media (max-width: 760px) {
+  .header .nav, .header .where, .header .call { display: none; }
+  .burger { display: grid; }
+  .header .logo .word { width: 132px; } .header .logo .sym { width: 36px; }
+  .header .wrap { min-height: 72px; }
+}
+
+/* Cookie */
+.cookie { position: fixed; z-index: 35; left: 16px; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); max-width: 720px; margin-inline: auto; background: var(--navy); color: #fff; border-radius: 18px; padding: 16px 18px; display: flex; gap: 12px 20px; align-items: center; flex-wrap: wrap; box-shadow: 0 12px 36px rgba(15, 43, 69, .3); }
+.cookie p { flex: 1 1 320px; font-size: 14px; line-height: 1.45; color: #E3EBF3; }
+.cookie a { color: #fff; }
+.cookie .btn { min-height: 44px; padding: 0 22px; font-size: 15px; }
+@media (max-width: 700px) { .cookie { bottom: calc(84px + env(safe-area-inset-bottom, 0px)); } }
 
 /* Операции */
 .dirs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
@@ -253,6 +315,8 @@ body.where-open .mbar { display: none; }
 .footer { padding-block: 32px 104px; font-size: 14px; color: var(--muted); }
 .footer .wrap { display: flex; flex-wrap: wrap; gap: 16px 40px; justify-content: space-between; align-items: center; }
 .footer img { width: 140px; display: block; }
+.footer a { color: var(--muted); }
+.cookie[hidden] { display: none; }
 
 /* Нижняя панель на телефоне */
 .mbar { display: none; }
@@ -291,14 +355,62 @@ body.where-open .mbar { display: none; }
         <div class="cal" id="cal" aria-label="Дни приёма"></div>
         <p class="where-note">Часы приёма: <span class="fill">с __ до __</span>. В остальные дни оперирую по приглашению в клиниках Москвы и области.</p>
         <div class="row">
-          <a class="btn btn-primary" href="#contacts">Записаться</a>
+          <button class="btn btn-primary" type="button" data-form="book">Записаться</button>
           <a class="btn btn-outline" href="https://yandex.ru/maps/?text=%D0%9B%D1%8E%D0%B1%D0%B5%D1%80%D1%86%D1%8B%2C%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%20%D0%92%D0%B5%D1%80%D1%82%D0%BE%D0%BB%D1%91%D1%82%D1%87%D0%B8%D0%BA%D0%BE%D0%B2%2C%2011" target="_blank" rel="noopener">Маршрут</a>
         </div>
       </div>
     </div>
-    <a class="btn btn-primary call" href="#contacts">Записаться</a>
+    <button class="btn btn-primary call" type="button" data-form="book">Записаться</button>
+    <button class="burger" type="button" id="burger" aria-label="Открыть меню" aria-controls="menu"><span></span></button>
   </div>
 </header>
+
+<dialog class="menu" id="menu" aria-label="Меню">
+  <div class="menu-in">
+    <div class="menu-top">
+      <a class="logo" href="#top" data-close-menu><img class="sym" src="assets/logo-symbol.png" alt=""><img class="word" src="assets/logo-wordmark.png" alt="beloVET, ветеринарный врач-хирург"></a>
+      <button class="x" type="button" data-close-menu aria-label="Закрыть меню">×</button>
+    </div>
+    <nav aria-label="Разделы">
+      <a href="#about" data-close-menu>О враче</a>
+      <a href="#operations" data-close-menu>Операции</a>
+      <a href="#prices" data-close-menu>Цены</a>
+      <a href="#urgent" data-close-menu>Экстренно</a>
+      <a href="#contacts" data-close-menu>Контакты</a>
+    </nav>
+    <a class="phone" href="tel:+79392557771">+7 (939) 255-77-71</a>
+    <div class="menu-sched">
+      <span class="label">Где принимаю</span>
+      <p class="where-title">Люберцы, ул.&nbsp;Вертолётчиков,&nbsp;11</p>
+      <p class="where-next" data-next></p>
+      <div class="cal" data-cal aria-label="Дни приёма"></div>
+      <p class="where-note">Часы приёма: <span class="fill">с __ до __</span>. В остальные дни оперирую по приглашению в клиниках Москвы и области.</p>
+    </div>
+    <div class="menu-actions">
+      <button class="btn btn-dark" type="button" data-form="book">Записаться на приём</button>
+      <button class="btn btn-outline" type="button" data-form="ask">Задать вопрос врачу</button>
+      <button class="btn btn-primary" type="button" data-form="urgent">Экстренная операция</button>
+    </div>
+  </div>
+</dialog>
+
+<dialog class="modal" id="form-dialog" aria-labelledby="fd-title">
+  <form class="modal-in lead-form" id="fd-form" novalidate>
+    <button class="x" type="button" data-close-dialog aria-label="Закрыть">×</button>
+    <h2 id="fd-title">Записаться на приём</h2>
+    <p class="sub" id="fd-sub"></p>
+    <label class="field"><span>Имя</span><input name="name" autocomplete="name" required placeholder="Как к вам обращаться"></label>
+    <label class="field"><span>Телефон</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="+7 (___) ___-__-__" data-phone></label>
+    <label class="field" data-only="book"><span>Кличка питомца</span><input name="pet" placeholder="Например, Барни"></label>
+    <label class="field" data-only="ask urgent"><span id="fd-msg-label">Сообщение</span><textarea name="message" rows="4"></textarea></label>
+    <div class="consent">
+      <label class="check"><input type="checkbox" name="privacy" required><span>Ознакомлен с <a href="privacy.html" target="_blank">политикой конфиденциальности</a></span></label>
+      <label class="check"><input type="checkbox" name="consent" required><span>Даю <a href="privacy.html#consent" target="_blank">согласие на обработку персональных данных</a></span></label>
+    </div>
+    <button class="btn btn-primary" type="submit">Отправить</button>
+    <p class="form-note" role="status"></p>
+  </form>
+</dialog>
 
 <main id="top">
 
@@ -312,8 +424,8 @@ body.where-open .mbar { display: none; }
           <p>По приглашению оперирую в ветеринарных клиниках Москвы и области.</p>
         </div>
         <div class="row" style="gap:16px">
-          <a class="btn btn-dark" href="#contacts">Записаться на приём<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
-          <a class="btn btn-ghost" href="#second">Задать вопрос врачу</a>
+          <button class="btn btn-dark" type="button" data-form="book">Записаться на приём<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></button>
+          <button class="btn btn-ghost" type="button" data-form="ask">Задать вопрос врачу</button>
         </div>
         <ul class="perks">
           <li><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l6.5-6.5"/><path d="M9.5 14.5 19.2 4.8a2 2 0 0 1 2.8 2.8L13 14.5z"/><path d="M8 13l3 3"/></svg></span>Плановые<br>операции</li>
@@ -333,20 +445,24 @@ body.where-open .mbar { display: none; }
     <div class="wrap">
       <div class="urgent">
         <div class="urgent-call">
-          <span class="chip chip-urgent" style="background:var(--sky-soft)">Экстренная операция</span>
-          <h2 id="urgent-h">Позвоните до выезда</h2>
-          <p>Скажу, можно ли оперировать сейчас и что взять с собой.</p>
-          <span class="phone num"><span class="fill">+7 (___) ___-__-__</span></span>
+          <h2 id="urgent-h">Экстренная операция</h2>
+          <p>Позвоните до выезда или оставьте заявку. Скажу, можно ли оперировать сейчас и что взять с собой.</p>
+          <a class="phone num" href="tel:+79392557771">+7 (939) 255-77-71</a>
           <span class="hours">Принимаю звонки: <span class="fill">часы</span></span>
         </div>
-        <ul class="signs">
-          <li><b>Проглотил предмет</b><span>рвота, отказ от еды</span></li>
-          <li><b>Вздулся живот у крупной собаки</b><span>возможен заворот желудка</span></li>
-          <li><b>Роды остановились</b><span>схватки есть, малыш не выходит</span></li>
-          <li><b>Кот не может помочиться</b><span>садится в лоток, мочи нет</span></li>
-          <li><b>Выделения из петли</b><span>жажда, вялость: так проявляется пиометра</span></li>
-          <li><b>Травма</b><span>перелом, рана, укус, падение</span></li>
-        </ul>
+        <form class="lead-form" data-kind="urgent" novalidate>
+          <div class="grid">
+            <label class="field"><span>Имя</span><input name="name" autocomplete="name" required placeholder="Как к вам обращаться"></label>
+            <label class="field"><span>Телефон</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="+7 (___) ___-__-__" data-phone></label>
+            <label class="field msg"><span>Сообщение</span><textarea name="message" required placeholder="Опишите случай"></textarea></label>
+          </div>
+          <button class="btn btn-dark" type="submit">Отправить</button>
+          <div class="consent">
+            <label class="check"><input type="checkbox" name="privacy" required><span>Ознакомлен с <a href="privacy.html" target="_blank">политикой конфиденциальности</a></span></label>
+            <label class="check"><input type="checkbox" name="consent" required><span>Даю <a href="privacy.html#consent" target="_blank">согласие на обработку персональных данных</a></span></label>
+          </div>
+          <p class="form-note" role="status"></p>
+        </form>
       </div>
     </div>
   </section>
@@ -472,12 +588,12 @@ body.where-open .mbar { display: none; }
           <h2 id="contacts-h" class="addr">Люберцы, ул.&nbsp;Вертолётчиков,&nbsp;11</h2>
           <p>Клиника <span class="fill">название</span>. <span class="fill">Ориентир и парковка</span></p>
           <div class="row">
-            <a class="btn btn-primary" href="#contacts">Записаться</a>
+            <button class="btn btn-primary" type="button" data-form="book">Записаться</button>
             <a class="btn btn-outline" href="https://yandex.ru/maps/?text=%D0%9B%D1%8E%D0%B1%D0%B5%D1%80%D1%86%D1%8B%2C%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%20%D0%92%D0%B5%D1%80%D1%82%D0%BE%D0%BB%D1%91%D1%82%D1%87%D0%B8%D0%BA%D0%BE%D0%B2%2C%2011" target="_blank" rel="noopener">Маршрут</a>
           </div>
         </div>
         <dl>
-          <div><dt>Телефон</dt><dd class="num"><span class="fill">+7 (___) ___-__-__</span></dd></div>
+          <div><dt>Телефон</dt><dd class="num"><a href="tel:+79392557771" style="color:#fff;text-decoration:none">+7 (939) 255-77-71</a></dd></div>
           <div><dt>WhatsApp и Telegram</dt><dd><span class="fill">номер</span></dd></div>
           <div><dt>Приём</dt><dd><button class="sched-link" type="button" data-open-where>Смотреть график</button></dd></div>
         </dl>
@@ -489,13 +605,18 @@ body.where-open .mbar { display: none; }
 <footer class="footer">
   <div class="wrap">
     <img src="assets/logo-wordmark.png" alt="beloVET">
-    <p style="max-width:540px">Владислав Белорыбец, ветеринарный врач-хирург. Цены на сайте не являются публичной офертой: итоговая стоимость согласуется после осмотра.</p>
+    <p style="max-width:540px">Владислав Белорыбец, ветеринарный врач-хирург. Цены на сайте не являются публичной офертой: итоговая стоимость согласуется после осмотра. <a href="privacy.html">Политика конфиденциальности</a></p>
   </div>
 </footer>
 
 <div class="mbar">
-  <a class="btn btn-primary" href="#contacts">Записаться</a>
-  <a class="btn btn-dark" href="#urgent">Экстренно</a>
+  <button class="btn btn-primary" type="button" data-form="book">Записаться</button>
+  <button class="btn btn-dark" type="button" data-form="urgent">Экстренно</button>
+</div>
+
+<div class="cookie" id="cookie" role="region" aria-label="Уведомление о cookie" hidden>
+  <p>Сайт использует файлы cookie, чтобы работать корректно. Продолжая пользоваться сайтом, вы соглашаетесь с <a href="privacy.html#cookie" target="_blank">политикой конфиденциальности</a>.</p>
+  <button class="btn btn-primary" type="button" id="cookie-ok">Принять</button>
 </div>
 
 <script>
@@ -558,6 +679,9 @@ var SCHEDULE = {
   } else {
     cal.hidden = true;
   }
+  // Тот же график — в мобильном меню
+  document.querySelectorAll('[data-cal]').forEach(function (el) { el.innerHTML = cal.innerHTML; el.hidden = cal.hidden; });
+  document.querySelectorAll('[data-next]').forEach(function (el) { el.textContent = next.textContent; });
 
   function setOpen(open) {
     panel.hidden = !open;
@@ -579,6 +703,101 @@ var SCHEDULE = {
   });
   document.addEventListener('click', function () { if (!panel.hidden) setOpen(false); });
   document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape' && !panel.hidden) { setOpen(false); btn.focus(); } });
+})();
+
+// Мобильное меню
+(function () {
+  var menu = document.getElementById('menu');
+  document.getElementById('burger').addEventListener('click', function () { menu.showModal(); });
+  menu.querySelectorAll('[data-close-menu]').forEach(function (el) { el.addEventListener('click', function () { menu.close(); }); });
+  window.addEventListener('resize', function () { if (menu.open && innerWidth > 760) menu.close(); });
+})();
+
+// Окна с формами: запись, вопрос врачу, экстренная операция
+(function () {
+  var FORMS = {
+    book:   { title: 'Записаться на приём', sub: 'Перезвоню и подберу время приёма.' },
+    ask:    { title: 'Задать вопрос врачу', sub: 'Опишите ситуацию — отвечу по телефону или в мессенджере.', label: 'Вопрос', ph: 'Ваш вопрос' },
+    urgent: { title: 'Экстренная операция', sub: 'Если состояние тяжёлое, лучше позвоните сразу: +7 (939) 255-77-71.', label: 'Что случилось', ph: 'Опишите случай' }
+  };
+  var dialog = document.getElementById('form-dialog');
+  var form = document.getElementById('fd-form');
+  var menu = document.getElementById('menu');
+
+  function open(kind) {
+    var cfg = FORMS[kind];
+    form.reset();
+    form.dataset.kind = kind;
+    form.querySelector('.form-note').textContent = '';
+    document.getElementById('fd-title').textContent = cfg.title;
+    document.getElementById('fd-sub').textContent = cfg.sub;
+    form.querySelectorAll('[data-only]').forEach(function (el) {
+      var on = el.dataset.only.split(' ').indexOf(kind) !== -1;
+      el.hidden = !on;
+      var input = el.querySelector('input, textarea');
+      input.disabled = !on;
+      input.required = on && input.tagName === 'TEXTAREA';
+    });
+    if (cfg.label) {
+      document.getElementById('fd-msg-label').textContent = cfg.label;
+      form.message.placeholder = cfg.ph;
+    }
+    if (menu.open) menu.close();
+    var where = document.getElementById('where-panel');
+    if (!where.hidden) { where.hidden = true; document.body.classList.remove('where-open'); document.getElementById('where-btn').setAttribute('aria-expanded', 'false'); }
+    dialog.showModal();
+  }
+  document.querySelectorAll('[data-form]').forEach(function (el) {
+    el.addEventListener('click', function (ev) { ev.stopPropagation(); open(el.dataset.form); });
+  });
+  dialog.querySelector('[data-close-dialog]').addEventListener('click', function () { dialog.close(); });
+  dialog.addEventListener('click', function (ev) { if (ev.target === dialog) dialog.close(); }); // клик по затемнению
+})();
+
+// Маска телефона и отправка форм
+(function () {
+  function formatPhone(value) {
+    var d = value.replace(/\D/g, '');
+    if (d.charAt(0) === '8') d = '7' + d.slice(1);
+    if (d.charAt(0) !== '7') d = '7' + d;
+    d = d.slice(0, 11);
+    var out = '+7';
+    if (d.length > 1) out += ' (' + d.slice(1, 4);
+    if (d.length >= 4) out += ')';
+    if (d.length > 4) out += ' ' + d.slice(4, 7);
+    if (d.length > 7) out += '-' + d.slice(7, 9);
+    if (d.length > 9) out += '-' + d.slice(9, 11);
+    return out;
+  }
+  document.querySelectorAll('[data-phone]').forEach(function (input) {
+    input.addEventListener('input', function () { input.value = input.value ? formatPhone(input.value) : ''; });
+    input.addEventListener('focus', function () { if (!input.value) input.value = '+7 ('; });
+    input.addEventListener('blur', function () { if (input.value.replace(/\D/g, '').length <= 1) input.value = ''; });
+  });
+
+  document.querySelectorAll('.lead-form').forEach(function (form) {
+    form.addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      var note = form.querySelector('.form-note');
+      var phone = form.querySelector('[data-phone]');
+      phone.setCustomValidity(phone.value.replace(/\D/g, '').length === 11 ? '' : 'Введите номер полностью');
+      if (!form.reportValidity()) return;
+      // Отправка не подключена: статичный сайт. Подключить Telegram-бота, почту или CRM — см. README.
+      note.textContent = 'Форма пока не подключена к отправке. Позвоните, пожалуйста: +7 (939) 255-77-71.';
+    });
+  });
+})();
+
+// Уведомление о cookie
+(function () {
+  var box = document.getElementById('cookie');
+  var seen = false;
+  try { seen = localStorage.getItem('belovet-cookie') === 'ok'; } catch (e) {}
+  if (!seen) box.hidden = false;
+  document.getElementById('cookie-ok').addEventListener('click', function () {
+    box.hidden = true;
+    try { localStorage.setItem('belovet-cookie', 'ok'); } catch (e) {}
+  });
 })();
 </script>
 
