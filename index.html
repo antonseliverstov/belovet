@@ -95,7 +95,8 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--blue-text); out
 .where { position: relative; }
 .where-btn { display: grid; text-align: left; gap: 1px; padding: 6px 18px; min-height: 44px; border: 0; border-radius: var(--radius-pill); background: var(--paper); color: var(--navy); font: inherit; cursor: pointer; }
 .where-btn:hover { background: var(--sky); }
-.where-addr { font: 700 15px/1.2 var(--font-display); }
+.where-addr { font: 700 15px/1.2 var(--font-display); white-space: nowrap; }
+body.where-open .mbar { display: none; }
 .where-status { font-size: 13px; line-height: 1.2; color: var(--muted); }
 .where-status.on { color: var(--blue-text); font-weight: 600; }
 .where-panel { position: absolute; right: 0; top: calc(100% + 10px); width: min(380px, calc(100vw - 32px)); background: var(--paper); border-radius: var(--radius-lg); box-shadow: 0 16px 48px rgba(15, 43, 69, .18); padding: 24px; display: grid; gap: 12px; z-index: 40; }
@@ -488,7 +489,7 @@ var SCHEDULE = {
   if (nextDay && +nextDay === +today) {
     status.textContent = 'Сегодня принимаю';
     status.classList.add('on');
-    next.textContent = 'Сегодня принимаю';
+    next.textContent = 'Сегодня, ' + today.getDate() + ' ' + MONTHS_GEN[today.getMonth()] + ', принимаю';
   } else if (nextDay) {
     var label = nextDay.getDate() + ' ' + MONTHS_GEN[nextDay.getMonth()];
     status.textContent = 'Приём ' + label;
@@ -523,6 +524,7 @@ var SCHEDULE = {
   function setOpen(open) {
     panel.hidden = !open;
     btn.setAttribute('aria-expanded', String(open));
+    document.body.classList.toggle('where-open', open);
   }
   btn.addEventListener('click', function (ev) { ev.stopPropagation(); setOpen(panel.hidden); });
   document.querySelectorAll('[data-open-where]').forEach(function (el) {
