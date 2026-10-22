@@ -22,6 +22,7 @@
   --orange: #FD5D2E;
   --orange-hover: #E84E21;
   --sky-soft: #EAF2FA;
+  --cream: #F9F6EF;
   --sky: #DCEAF4;
   --paper: #FFFFFF;
   --muted: #4E6275;
@@ -43,7 +44,7 @@
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 88px; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-body { margin: 0; background: var(--sky-soft); color: var(--navy); font: 400 17px/1.55 var(--font-body); -webkit-font-smoothing: antialiased; }
+body { margin: 0; background: var(--cream); color: var(--navy); font: 400 17px/1.55 var(--font-body); -webkit-font-smoothing: antialiased; }
 img { max-width: 100%; }
 h1, h2, h3 { margin: 0; font-family: var(--font-display); text-wrap: balance; }
 h2 { font-size: clamp(26px, 3.2vw, 32px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; }
@@ -60,7 +61,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--blue-text); out
 .fill { border-bottom: 2px dashed var(--muted); color: var(--muted); font-style: normal; }
 
 /* Кнопки, капсулы, бейдж врача — компоненты брендбука */
-.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 26px; border-radius: var(--radius-pill); border: 2px solid transparent; font: 700 17px/1 var(--font-body); text-decoration: none; white-space: nowrap; cursor: pointer; transition: background-color .15s, color .15s; }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 26px; border-radius: 16px; border: 2px solid transparent; font: 700 17px/1 var(--font-body); text-decoration: none; white-space: nowrap; cursor: pointer; transition: background-color .15s, color .15s; }
 .btn-primary { background: var(--orange); color: #fff; }
 .btn-primary:hover { background: var(--orange-hover); }
 .btn-dark { background: var(--navy); color: #fff; }
@@ -81,25 +82,31 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--blue-text); out
 .proto .fill { color: #fff; border-color: #fff; }
 
 /* Шапка */
-.header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: rgba(234, 242, 250, .94); backdrop-filter: blur(8px); }
-.header .wrap { display: flex; align-items: center; gap: 28px; min-height: 76px; }
-.header .logo img { width: 150px; display: block; }
-.nav { display: flex; gap: 24px; margin-left: auto; }
-.nav a { color: var(--navy); text-decoration: none; font: 600 15px var(--font-display); white-space: nowrap; }
+.header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: rgba(249, 246, 239, .94); backdrop-filter: blur(8px); }
+.header .wrap { display: flex; align-items: center; gap: 32px; min-height: 88px; }
+.header .logo { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.header .logo .sym { width: 48px; height: auto; }
+.header .logo .word { width: 168px; height: auto; }
+.nav { display: flex; gap: 30px; margin-inline: auto; }
+.nav a { color: var(--navy); text-decoration: none; font: 500 16px var(--font-body); white-space: nowrap; }
 .nav a:hover { color: var(--blue-text); }
-.header .btn { min-height: 44px; padding: 0 20px; font-size: 15px; }
+.header .btn { min-height: 48px; padding: 0 26px; font-size: 16px; }
 @media (max-width: 1180px) { .nav { display: none; } .where { margin-left: auto; } }
-@media (max-width: 560px) { .header .call { display: none; } }
+@media (max-width: 640px) { .header .call { display: none; } .header .logo .word { width: 132px; } .header .logo .sym { width: 38px; } }
 
-/* Адрес и график в шапке */
-.where { position: relative; }
-.where-btn { display: grid; text-align: left; gap: 1px; padding: 6px 18px; min-height: 44px; border: 0; border-radius: var(--radius-pill); background: var(--paper); color: var(--navy); font: inherit; cursor: pointer; }
-.where-btn:hover { background: var(--sky); }
-.where-addr { font: 700 15px/1.2 var(--font-display); white-space: nowrap; }
+/* Телефон и график в шапке */
+.where { position: relative; display: flex; align-items: center; gap: 10px; }
+.where-ico { width: 24px; height: 24px; color: var(--blue); flex-shrink: 0; }
+.where-txt { display: grid; gap: 2px; }
+.where-phone { font: 700 17px/1.2 var(--font-body); color: var(--navy); text-decoration: none; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.where-btn { padding: 0; border: 0; background: none; text-align: left; color: var(--muted); font: 400 13px/1.25 var(--font-body); cursor: pointer; text-decoration: underline dotted; text-underline-offset: 3px; white-space: nowrap; }
+.where-btn:hover { color: var(--navy); }
+.where-btn .on { color: var(--blue-text); font-weight: 600; }
 body.where-open .mbar { display: none; }
-.where-status { font-size: 13px; line-height: 1.2; color: var(--muted); }
-.where-status.on { color: var(--blue-text); font-weight: 600; }
-.where-panel { position: absolute; right: 0; top: calc(100% + 10px); width: min(380px, calc(100vw - 32px)); background: var(--paper); border-radius: var(--radius-lg); box-shadow: 0 16px 48px rgba(15, 43, 69, .18); padding: 24px; display: grid; gap: 12px; z-index: 40; }
+.where-panel { position: absolute; right: 0; top: calc(100% + 14px); width: min(380px, calc(100vw - 32px)); background: var(--paper); border-radius: var(--radius-lg); box-shadow: 0 16px 48px rgba(15, 43, 69, .18); padding: 24px; display: grid; gap: 12px; z-index: 40; }
+.where-panel[hidden] { display: none; }
+.where-close { position: absolute; top: 14px; right: 14px; width: 36px; height: 36px; border: 0; border-radius: 50%; background: var(--sky-soft); color: var(--navy); font-size: 22px; line-height: 1; cursor: pointer; }
+.where-close:hover { background: var(--sky); }
 .where-title { font: 800 22px/1.2 var(--font-display); letter-spacing: -0.01em; }
 .where-clinic, .where-note { font-size: 15px; color: var(--muted); }
 .where-next { font-weight: 600; }
@@ -119,17 +126,35 @@ body.where-open .mbar { display: none; }
 .cal-legend i.t { background: none; box-shadow: 0 0 0 2px var(--blue); }
 
 /* Первый экран */
-.hero .wrap { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 32px 56px; align-items: center; padding-block: clamp(32px, 5vw, 64px) clamp(64px, 8vw, 104px); }
-.hero-text { display: grid; gap: 26px; min-width: 0; }
-.hero h1 { max-width: 640px; font-size: clamp(36px, 5.6vw, 66px); font-weight: 800; line-height: 1.04; letter-spacing: -0.03em; }
-.hero h1 em { font-style: normal; color: var(--blue); }
-.hero .lead { font-size: 19px; line-height: 1.5; max-width: 470px; }
-.hero-photo { position: relative; margin: 0; }
-.hero-photo img { display: block; width: 100%; aspect-ratio: 618 / 853; object-fit: cover; border-radius: var(--radius-lg); background: var(--sky); }
-.hero-photo .doctor { position: absolute; left: 16px; bottom: 16px; padding: 12px 22px; display: grid; gap: 2px; }
+.hero { overflow: hidden; }
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 40px 56px; align-items: center; padding-block: clamp(24px, 4vw, 48px) clamp(64px, 8vw, 104px); }
+.hero-text { display: grid; gap: 28px; min-width: 0; }
+.hero .eyebrow { font: 700 15px/1.2 var(--font-body); letter-spacing: 0.04em; text-transform: uppercase; color: var(--blue-text); }
+.hero h1 { font-size: clamp(36px, 5.2vw, 62px); font-weight: 800; line-height: 1.12; letter-spacing: -0.03em; }
+.hero h1 em { font-style: normal; color: var(--blue); position: relative; white-space: nowrap; }
+.hero h1 em svg { position: absolute; left: -2%; bottom: -0.16em; width: 104%; height: 0.24em; overflow: visible; }
+.hero h1 em path { fill: none; stroke: var(--orange); stroke-width: 4; stroke-linecap: round; }
+.hero .lead { font-size: clamp(18px, 1.7vw, 22px); line-height: 1.45; max-width: 560px; }
+.hero .btn { min-height: 64px; padding: 0 34px; font-size: 18px; font-weight: 600; }
+.hero .btn svg { width: 22px; height: 22px; margin-left: 10px; }
+.hero .btn-ghost { border-color: var(--blue); color: var(--navy); background: transparent; }
+.hero .btn-ghost:hover { background: var(--paper); }
+.perks { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 16px 0; }
+.perks li { display: flex; align-items: center; gap: 14px; padding-right: 28px; margin-right: 28px; border-right: 1px solid #CDD6DF; font-size: 17px; line-height: 1.3; }
+.perks li:last-child { border-right: 0; margin-right: 0; padding-right: 0; }
+.perks .ico { width: 64px; height: 64px; border-radius: 50%; background: var(--sky); display: grid; place-items: center; flex-shrink: 0; }
+.perks .ico svg { width: 30px; height: 30px; color: var(--navy); }
+.hero-photo { position: relative; margin: 0; display: grid; gap: 22px; }
+.hero-photo .blob { position: absolute; z-index: 0; left: -22%; top: 2%; width: 140%; height: 100%; fill: var(--sky); }
+.hero-photo img { position: relative; z-index: 1; display: block; width: 100%; aspect-ratio: 618 / 760; object-fit: cover; object-position: 50% 12%; border-radius: 40px; border: 6px solid var(--paper); box-shadow: 0 18px 40px rgba(15, 43, 69, .10); background: var(--sky); }
+.hero-photo figcaption { position: relative; z-index: 1; padding-left: 18px; border-left: 4px solid var(--orange); display: grid; gap: 2px; margin-left: 10px; }
+.hero-photo figcaption b { font: 800 clamp(20px, 2vw, 26px)/1.2 var(--font-display); letter-spacing: -0.01em; }
+.hero-photo figcaption span { color: var(--blue-text); font-size: 17px; }
 @media (max-width: 860px) {
-  .hero .wrap { grid-template-columns: 1fr; }
-  .hero-photo img { aspect-ratio: 4 / 5; object-position: 50% 15%; }
+  .hero .wrap { grid-template-columns: minmax(0, 1fr); }
+  .hero-photo img { aspect-ratio: 4 / 5; }
+  .hero .btn { min-height: 56px; padding: 0 24px; font-size: 17px; }
+  .perks li { border-right: 0; margin-right: 0; padding-right: 20px; }
 }
 
 /* Экстренно */
@@ -241,20 +266,22 @@ body.where-open .mbar { display: none; }
 
 <header class="header">
   <div class="wrap">
-    <a class="logo" href="#top"><img src="assets/logo-wordmark.png" alt="beloVET, ветеринарный врач-хирург"></a>
+    <a class="logo" href="#top"><img class="sym" src="assets/logo-symbol.png" alt=""><img class="word" src="assets/logo-wordmark.png" alt="beloVET, ветеринарный врач-хирург"></a>
     <nav class="nav" aria-label="Разделы">
+      <a href="#about">О враче</a>
       <a href="#operations">Операции</a>
       <a href="#prices">Цены</a>
       <a href="#urgent">Экстренно</a>
-      <a href="#second">Второе мнение</a>
       <a href="#contacts">Контакты</a>
     </nav>
     <div class="where">
-      <button class="where-btn" id="where-btn" type="button" aria-expanded="false" aria-controls="where-panel">
-        <span class="where-addr">Вертолётчиков, 11</span>
-        <span class="where-status" id="where-status">График приёма</span>
-      </button>
+      <svg class="where-ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>
+      <div class="where-txt">
+        <a class="where-phone" href="tel:+79392557771">+7 (939) 255-77-71</a>
+        <button class="where-btn" id="where-btn" type="button" aria-expanded="false" aria-controls="where-panel">Вертолётчиков, 11 · <span id="where-status">график приёма</span></button>
+      </div>
       <div class="where-panel" id="where-panel" hidden>
+        <button class="where-close" type="button" id="where-close" aria-label="Закрыть">×</button>
         <span class="label">Где принимаю</span>
         <p class="where-title">Люберцы, ул.&nbsp;Вертолётчиков,&nbsp;11</p>
         <p class="where-clinic">Клиника <span class="fill">название</span></p>
@@ -267,7 +294,7 @@ body.where-open .mbar { display: none; }
         </div>
       </div>
     </div>
-    <a class="btn btn-outline call" href="#contacts">Позвонить</a>
+    <a class="btn btn-primary call" href="#contacts">Записаться</a>
   </div>
 </header>
 
@@ -276,17 +303,23 @@ body.where-open .mbar { display: none; }
   <section class="hero">
     <div class="wrap">
       <div class="hero-text">
-        <span class="chip">Ветеринарный врач-хирург</span>
-        <h1>Операции кошкам и собакам <em>в&nbsp;Люберцах</em></h1>
-        <p class="lead">Плановые и экстренные. Принимаю на Вертолётчиков, 11, по приглашению оперирую в любой клинике Москвы и области.</p>
-        <div class="row">
-          <a class="btn btn-primary" href="#contacts">Записаться</a>
-          <a class="btn btn-dark" href="#urgent">Экстренно</a>
+        <span class="eyebrow">Ветеринарный врач-хирург</span>
+        <h1>Операции кошкам и&nbsp;собакам <em>в&nbsp;Люберцах<svg viewBox="0 0 300 12" preserveAspectRatio="none" aria-hidden="true"><path d="M3 9 C 70 3, 190 2, 297 6"/></svg></em></h1>
+        <p class="lead">Плановые и экстренные операции с понятным планом на каждом этапе. По приглашению оперирую в клиниках Москвы и области.</p>
+        <div class="row" style="gap:16px">
+          <a class="btn btn-dark" href="#contacts">Записаться на приём<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+          <a class="btn btn-ghost" href="#second">Задать вопрос врачу</a>
         </div>
+        <ul class="perks">
+          <li><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l6.5-6.5"/><path d="M9.5 14.5 19.2 4.8a2 2 0 0 1 2.8 2.8L13 14.5z"/><path d="M8 13l3 3"/></svg></span>Плановые<br>операции</li>
+          <li><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>Экстренная<br>помощь</li>
+          <li><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 5-5.5 10.2-7.4 11.8a1 1 0 0 1-1.2 0C9.5 20.2 4 15 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg></span>Выезд<br>в клиники</li>
+        </ul>
       </div>
       <figure class="hero-photo">
+        <svg class="blob" viewBox="0 0 600 700" preserveAspectRatio="none" aria-hidden="true"><path d="M140 40 C 260 -20, 470 10, 560 120 C 640 220, 600 420, 560 540 C 520 650, 360 700, 230 670 C 110 640, 40 560, 70 440 C 95 340, 20 280, 30 190 C 40 110, 80 70, 140 40 Z"/></svg>
         <img src="assets/doctor-hero.jpg" alt="Владислав Белорыбец в клинике">
-        <figcaption class="doctor"><b>Владислав Белорыбец</b><span>ветеринарный врач-хирург</span></figcaption>
+        <figcaption><b>Владислав Белорыбец</b><span>ветеринарный врач-хирург</span></figcaption>
       </figure>
     </div>
   </section>
@@ -400,7 +433,7 @@ body.where-open .mbar { display: none; }
 
   <section class="section" aria-labelledby="about-h" style="padding-top:0">
     <div class="wrap">
-      <div class="about">
+      <div class="about" id="about">
         <img src="assets/doctor-notes.jpg" alt="Владислав Белорыбец">
         <div class="copy">
           <span class="label">О хирурге</span>
@@ -487,15 +520,15 @@ var SCHEDULE = {
   }
 
   if (nextDay && +nextDay === +today) {
-    status.textContent = 'Сегодня принимаю';
+    status.textContent = 'сегодня принимаю';
     status.classList.add('on');
     next.textContent = 'Сегодня, ' + today.getDate() + ' ' + MONTHS_GEN[today.getMonth()] + ', принимаю';
   } else if (nextDay) {
     var label = nextDay.getDate() + ' ' + MONTHS_GEN[nextDay.getMonth()];
-    status.textContent = 'Приём ' + label;
+    status.textContent = 'приём ' + label;
     next.textContent = 'Ближайший приём: ' + label + ', ' + DOW[nextDay.getDay()];
   } else {
-    status.textContent = 'График приёма';
+    status.textContent = 'график приёма';
     next.textContent = 'График на ближайшие дни уточняйте по телефону.';
   }
 
@@ -534,7 +567,11 @@ var SCHEDULE = {
       setOpen(true);
     });
   });
-  panel.addEventListener('click', function (ev) { ev.stopPropagation(); });
+  document.getElementById('where-close').addEventListener('click', function () { setOpen(false); btn.focus(); });
+  panel.addEventListener('click', function (ev) {
+    ev.stopPropagation();
+    if (ev.target.closest('a')) setOpen(false); // «Записаться» и «Маршрут» закрывают карточку
+  });
   document.addEventListener('click', function () { if (!panel.hidden) setOpen(false); });
   document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape' && !panel.hidden) { setOpen(false); btn.focus(); } });
 })();
