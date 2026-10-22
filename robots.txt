@@ -1,2 +1,5 @@
+# Прототип: перед запуском заменить «Disallow: /» на «Allow: /»
 User-agent: *
 Disallow: /
+
+Sitemap: https://antonseliverstov.github.io/belovet/sitemap.xml

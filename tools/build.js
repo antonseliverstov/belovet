@@ -20,6 +20,25 @@ const rub = n => n.toLocaleString('ru-RU').replace(/ /g, ' ') + ' ₽';
 const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
 const catName = id => CATEGORIES.find(c => c.id === id).name;
 const minPrice = p => Math.min(...p.prices.map(x => x.p));
+// обрезка по границе слова: Яндекс показывает около 160 знаков описания
+const clip = (t, n = 160) => t.length <= n ? t : t.slice(0, t.lastIndexOf(' ', n - 1)).replace(/[\s,.:;—-]+$/, '') + '…';
+// title: самый длинный вариант, который укладывается в 70 знаков
+const fitTitle = (...v) => v.find(t => t.length <= 70) || v[v.length - 1];
+// общие строки <head>: Open Graph, иконки, манифест
+const ogTags = (title, desc, url, type) => `<meta property="og:type" content="${type}">
+<meta property="og:site_name" content="beloVET">
+<meta property="og:title" content="${esc(title)}">
+<meta property="og:description" content="${esc(desc)}">
+<meta property="og:url" content="${url}">
+<meta property="og:image" content="${SITE}assets/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">`;
+const iconTags = prefix => `<link rel="icon" type="image/png" href="${prefix}assets/logo-symbol.png">
+<link rel="apple-touch-icon" href="${prefix}assets/apple-touch-icon.png">
+<link rel="manifest" href="${prefix}site.webmanifest">
+<meta name="theme-color" content="#0F2B45">`;
 const plural = (n, f) => f[(n % 10 === 1 && n % 100 !== 11) ? 0 : (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) ? 1 : 2];
 
 // ---------- проверки данных ----------
@@ -34,7 +53,7 @@ for (const p of PROCEDURES) {
 for (const k of Object.keys(ARTICLES)) if (!slugs.has(k)) throw new Error('Статья без процедуры: ' + k);
 
 // ---------- блог ----------
-const BLOG = require('./blog')({ ROOT, SITE, esc, rub, cap, plural, ver, SOURCES, PROCEDURES, PHONE, PHONE_HREF });
+const BLOG = require('./blog')({ ROOT, SITE, clip, fitTitle, ogTags, iconTags, esc, rub, cap, plural, ver, SOURCES, PROCEDURES, PHONE, PHONE_HREF });
 
 // ---------- шаблоны восстановления по типу вмешательства ----------
 const TIMELINES = {
@@ -178,10 +197,16 @@ function pageHtml(p) {
 
   const textWords = body.replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length;
   const minutes = Math.max(2, Math.round(textWords / 180));
-  const desc = `${p.title} у кошек и собак в Люберцах: ${p.lead.charAt(0).toLowerCase() + p.lead.slice(1)}`.slice(0, 250);
+  const desc = clip(`${p.title} у кошек и собак в Люберцах: ${p.lead.charAt(0).toLowerCase() + p.lead.slice(1)}`);
+  const url = `${SITE}operations/${p.slug}.html`;
+  const title = fitTitle(`${p.title} в Люберцах — цена, восстановление | beloVET`, `${p.title} в Люберцах — цена | beloVET`, `${p.title} в Люберцах | beloVET`, `${p.title} в Люберцах`);
   const ld = [
     { '@context': 'https://schema.org', '@type': 'MedicalWebPage', name: p.title, description: p.lead, dateModified: UPDATED.iso, inLanguage: 'ru',
       about: { '@type': 'MedicalProcedure', name: p.title, alternateName: p.aka } },
+    { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Главная', item: SITE },
+      { '@type': 'ListItem', position: 2, name: 'Ветеринарная хирургия', item: SITE + '#prices' },
+      { '@type': 'ListItem', position: 3, name: p.title, item: url }] },
     { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map(q => ({ '@type': 'Question', name: q[0], acceptedAnswer: { '@type': 'Answer', text: q[1] } })) }
   ];
   const tocHtml = `<ol>${toc.map(t => `<li><a href="#${t[0]}">${esc(t[1])}</a></li>`).join('')}</ol>`;
@@ -193,10 +218,11 @@ function pageHtml(p) {
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <!-- Прототип: убрать noindex перед запуском -->
 <meta name="robots" content="noindex, nofollow">
-<title>${esc(p.title)} у кошек и собак — показания, подготовка, восстановление, цена | beloVET</title>
+<title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}">
-<link rel="canonical" href="${SITE}operations/${p.slug}.html">
-<link rel="icon" type="image/png" href="../assets/logo-symbol.png">
+<link rel="canonical" href="${url}">
+${ogTags(title, desc, url, 'article')}
+${iconTags('../')}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Onest:wght@400;500;600;700&display=swap">
@@ -224,7 +250,7 @@ ${ld.map(x => `<script type="application/ld+json">${JSON.stringify(x)}</script>`
     </header>
 
     <section class="cover" aria-label="Коротко об операции">
-      <img class="cover-mark" src="../assets/logo-mark.png" alt="">
+      <img class="cover-mark" src="../assets/cover-mark.jpg" alt="" width="680" height="924">
       <div class="cover-in">
         <p class="cover-title">Коротко</p>
         <dl class="facts">${factsList.map(x => `<div><dt>${esc(x[0])}</dt><dd>${esc(cap(x[1]))}</dd></div>`).join('')}</dl>
@@ -325,6 +351,77 @@ function reviewsBlock() {
   }).join('');
 }
 
+// ---------- SEO-блок <head> для страниц, написанных вручную ----------
+function seoHead(html, name, block) {
+  const S = '<!-- SEO:START -->', E = '<!-- SEO:END -->';
+  const a = html.indexOf(S), b = html.indexOf(E);
+  if (a < 0 || b < 0) throw new Error(`В ${name} нет меток SEO:START / SEO:END`);
+  return html.slice(0, a + S.length) + '\n' + block + '\n' + html.slice(b);
+}
+function homeSeo() {
+  const title = 'Владислав Белорыбец — ветеринарный хирург в Люберцах | beloVET';
+  const desc = 'Ветеринарный врач-хирург Владислав Белорыбец. Плановые и экстренные операции кошкам и собакам в Люберцах, ул. Вертолётчиков, 11. Цены на операции.';
+  const tel = PHONE_HREF.replace('tel:', '');
+  const ld = { '@context': 'https://schema.org', '@graph': [
+    { '@type': 'VeterinaryCare', '@id': SITE + '#clinic', name: 'beloVET — ветеринарный хирург Владислав Белорыбец', url: SITE,
+      image: SITE + 'assets/og-image.jpg', logo: SITE + 'assets/icon-512.png', description: desc, telephone: tel, email: 'vladislav@belovet.ru',
+      address: { '@type': 'PostalAddress', streetAddress: 'ул. Вертолётчиков, 11', addressLocality: 'Люберцы', addressRegion: 'Московская область', addressCountry: 'RU' },
+      areaServed: [{ '@type': 'City', name: 'Люберцы' }, { '@type': 'City', name: 'Москва' }, { '@type': 'AdministrativeArea', name: 'Московская область' }],
+      contactPoint: { '@type': 'ContactPoint', contactType: 'экстренная хирургия', telephone: tel, availableLanguage: 'ru',
+        hoursAvailable: { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], opens: '00:00', closes: '23:59' } },
+      employee: { '@id': SITE + '#doctor' } },
+    { '@type': 'Person', '@id': SITE + '#doctor', name: 'Владислав Викторович Белорыбец', jobTitle: 'Ветеринарный врач-хирург', image: SITE + 'assets/doctor-hero.jpg', worksFor: { '@id': SITE + '#clinic' } },
+    { '@type': 'WebSite', '@id': SITE + '#site', name: 'beloVET', url: SITE, inLanguage: 'ru', publisher: { '@id': SITE + '#clinic' } }
+  ] };
+  return `<link rel="canonical" href="${SITE}">
+${ogTags(title, desc, SITE, 'website')}
+${iconTags('')}
+<script type="application/ld+json">${JSON.stringify(ld)}</script>`;
+}
+// 404: GitHub Pages отдаёт её по любому адресу, поэтому ссылки от корня сайта
+function notFoundHtml() {
+  const B = new URL(SITE).pathname;
+  const top = PROCEDURES.slice(0, 6);
+  return `<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Страница не найдена | beloVET</title>
+<link rel="icon" type="image/png" href="${B}assets/logo-symbol.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Onest:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="${B}assets/page.css?v=${ver('assets/page.css')}">
+</head>
+<body>
+<header class="header">
+  <div class="wrap">
+    <a class="logo" href="${B}"><img class="sym" src="${B}assets/logo-symbol.png" alt=""><img class="word" src="${B}assets/logo-wordmark.png" alt="beloVET, ветеринарный врач-хирург"></a>
+    <a class="phone num" href="${PHONE_HREF}">${PHONE}</a>
+    <a class="btn btn-primary" href="${B}?form=book">Записаться</a>
+  </div>
+</header>
+<main class="article">
+  <div class="wrap">
+    <header class="article-head">
+      <span class="label">Ошибка 404</span>
+      <h1>Такой страницы нет</h1>
+      <p class="lead">Возможно, адрес изменился. Все операции и цены собраны на главной, там же есть поиск по симптомам. Если питомцу плохо прямо сейчас, звоните ${PHONE}, круглосуточно.</p>
+    </header>
+    <section class="cards">
+      <a class="card" href="${B}#prices"><b>Операции и цены</b><span class="card-text">Поиск по названию операции или симптому</span><span class="card-more">Открыть →</span></a>
+      <a class="card" href="${B}blog/index.html"><b>Блог для владельцев</b><span class="card-text">Подготовка, восстановление, тревожные признаки</span><span class="card-more">Читать →</span></a>
+      <a class="card" href="${B}?form=urgent"><b>Экстренная операция</b><span class="card-text">Оставьте телефон, врач перезвонит</span><span class="card-more">Оставить заявку →</span></a>
+    </section>
+  </div>
+</main>
+</body>
+</html>
+`;
+}
+
 // ---------- запись ----------
 const opsDir = path.join(ROOT, 'operations');
 fs.mkdirSync(opsDir, { recursive: true });
@@ -349,7 +446,25 @@ const BS = '<!-- BLOG:START -->', BE = '<!-- BLOG:END -->';
 const ba = index.indexOf(BS), bb = index.indexOf(BE);
 if (ba < 0 || bb < 0) throw new Error('В index.html нет меток BLOG:START / BLOG:END');
 index = index.slice(0, ba + BS.length) + BLOG.homeBlock + '\n        ' + index.slice(bb);
+index = seoHead(index, 'index.html', homeSeo());
 fs.writeFileSync(indexPath, index);
+const privPath = path.join(ROOT, 'privacy.html');
+fs.writeFileSync(privPath, seoHead(fs.readFileSync(privPath, 'utf8'), 'privacy.html',
+  `<meta name="description" content="Как beloVET обрабатывает персональные данные из форм записи и вопросов врачу: какие данные собираем, зачем, сколько храним и как их удалить.">
+<link rel="canonical" href="${SITE}privacy.html">
+${iconTags('')}`));
+fs.writeFileSync(path.join(ROOT, '404.html'), notFoundHtml());
+fs.writeFileSync(path.join(ROOT, 'robots.txt'), `# Прототип: перед запуском заменить «Disallow: /» на «Allow: /»
+User-agent: *
+Disallow: /
+
+Sitemap: ${SITE}sitemap.xml
+`);
+fs.writeFileSync(path.join(ROOT, 'site.webmanifest'), JSON.stringify({
+  name: 'beloVET — ветеринарный хирург', short_name: 'beloVET', lang: 'ru', start_url: './', display: 'browser',
+  background_color: '#F9F6EF', theme_color: '#0F2B45',
+  icons: [{ src: 'assets/icon-192.png', sizes: '192x192', type: 'image/png' }, { src: 'assets/icon-512.png', sizes: '512x512', type: 'image/png' }]
+}, null, 2) + '\n');
 
 const urls = ['', 'privacy.html', ...PROCEDURES.map(p => 'operations/' + p.slug + '.html'), ...BLOG.urls];
 fs.writeFileSync(path.join(ROOT, 'sitemap.xml'),

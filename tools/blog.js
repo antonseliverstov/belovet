@@ -13,7 +13,7 @@ function loadPosts(ROOT) {
 }
 
 module.exports = function blog(ctx) {
-  const { ROOT, SITE, esc, rub, cap, plural, ver, SOURCES, PROCEDURES, PHONE, PHONE_HREF } = ctx;
+  const { ROOT, SITE, clip, fitTitle, ogTags, iconTags, esc, rub, cap, plural, ver, SOURCES, PROCEDURES, PHONE, PHONE_HREF } = ctx;
   const posts = loadPosts(ROOT).sort((a, b) => (b.date || '').localeCompare(a.date || '') || a.priority - b.priority);
   const proc = slug => PROCEDURES.find(p => p.slug === slug);
   const minPrice = p => Math.min(...p.prices.map(x => x.p));
@@ -70,13 +70,8 @@ module.exports = function blog(ctx) {
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}">
 <link rel="canonical" href="${url}">
-<meta property="og:type" content="${type}">
-<meta property="og:title" content="${esc(title)}">
-<meta property="og:description" content="${esc(desc)}">
-<meta property="og:url" content="${url}">
-<meta property="og:image" content="${SITE}assets/doctor-hero.jpg">
-<meta property="og:locale" content="ru_RU">
-<link rel="icon" type="image/png" href="${prefix}assets/logo-symbol.png">
+${ogTags(title, desc, url, type)}
+${iconTags(prefix)}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Onest:wght@400;500;600;700&display=swap">
@@ -92,10 +87,10 @@ ${extra || ''}
     const words = (p.lead + ' ' + body.replace(/<[^>]+>/g, ' ') + ' ' + p.faq.flat().join(' ')).split(/\s+/).filter(Boolean).length;
     const minutes = Math.max(2, Math.round(words / 180));
     const url = `${SITE}blog/${p.slug}.html`;
-    const desc = p.lead.length > 200 ? p.lead.slice(0, p.lead.lastIndexOf(' ', 197)) + '…' : p.lead;
+    const desc = clip(p.lead);
     const related = posts.filter(x => x.slug !== p.slug && (x.rubric === p.rubric || x.ops.some(o => p.ops.includes(o)))).slice(0, 3);
     const ld = [
-      { '@context': 'https://schema.org', '@type': 'BlogPosting', headline: p.title, description: desc, datePublished: p.date, dateModified: p.updated || p.date, inLanguage: 'ru', mainEntityOfPage: url, image: `${SITE}assets/doctor-hero.jpg`,
+      { '@context': 'https://schema.org', '@type': 'BlogPosting', headline: p.title, description: desc, datePublished: p.date, dateModified: p.updated || p.date, inLanguage: 'ru', mainEntityOfPage: url, image: `${SITE}assets/og-image.jpg`,
         author: { '@type': 'Person', name: 'Владислав Белорыбец', jobTitle: 'Ветеринарный врач-хирург' }, publisher: { '@type': 'Organization', name: 'beloVET', logo: { '@type': 'ImageObject', url: `${SITE}assets/logo-symbol.png` } },
         keywords: [p.query, ...p.more].join(', ') },
       { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
@@ -104,7 +99,7 @@ ${extra || ''}
         { '@type': 'ListItem', position: 3, name: p.title, item: url }] },
       { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: p.faq.map(q => ({ '@type': 'Question', name: q[0], acceptedAnswer: { '@type': 'Answer', text: q[1] } })) }
     ];
-    return `${head(`${p.title} | Блог beloVET`, desc, url, '../', 'article', ld.map(x => `<script type="application/ld+json">${JSON.stringify(x)}</script>`).join('\n'))}
+    return `${head(fitTitle(`${p.title} | Блог beloVET`, `${p.title} | beloVET`, p.title), desc, url, '../', 'article', ld.map(x => `<script type="application/ld+json">${JSON.stringify(x)}</script>`).join('\n'))}
 <body>
 ${header('../')}
 <main class="article">
@@ -117,7 +112,7 @@ ${header('../')}
       <p class="lead">${esc(p.lead)}</p>
     </header>
     <section class="cover cover-post" aria-label="Главное из статьи">
-      <img class="cover-mark" src="../assets/logo-mark.png" alt="">
+      <img class="cover-mark" src="../assets/cover-mark.jpg" alt="" width="680" height="924">
       <div class="cover-in">
         <p class="cover-title">Главное из статьи</p>
         <ul class="takeaways">${p.takeaways.map(t => `<li>${esc(t)}</li>`).join('')}</ul>
