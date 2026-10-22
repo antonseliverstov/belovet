@@ -88,7 +88,34 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--blue-text); out
 .nav a { color: var(--navy); text-decoration: none; font: 600 15px var(--font-display); white-space: nowrap; }
 .nav a:hover { color: var(--blue-text); }
 .header .btn { min-height: 44px; padding: 0 20px; font-size: 15px; }
-@media (max-width: 1040px) { .nav { display: none; } .header .btn { margin-left: auto; } }
+@media (max-width: 1180px) { .nav { display: none; } .where { margin-left: auto; } }
+@media (max-width: 560px) { .header .call { display: none; } }
+
+/* Адрес и график в шапке */
+.where { position: relative; }
+.where-btn { display: grid; text-align: left; gap: 1px; padding: 6px 18px; min-height: 44px; border: 0; border-radius: var(--radius-pill); background: var(--paper); color: var(--navy); font: inherit; cursor: pointer; }
+.where-btn:hover { background: var(--sky); }
+.where-addr { font: 700 15px/1.2 var(--font-display); }
+.where-status { font-size: 13px; line-height: 1.2; color: var(--muted); }
+.where-status.on { color: var(--blue-text); font-weight: 600; }
+.where-panel { position: absolute; right: 0; top: calc(100% + 10px); width: min(380px, calc(100vw - 32px)); background: var(--paper); border-radius: var(--radius-lg); box-shadow: 0 16px 48px rgba(15, 43, 69, .18); padding: 24px; display: grid; gap: 12px; z-index: 40; }
+.where-title { font: 800 22px/1.2 var(--font-display); letter-spacing: -0.01em; }
+.where-clinic, .where-note { font-size: 15px; color: var(--muted); }
+.where-next { font-weight: 600; }
+.where-panel .btn { min-height: 44px; font-size: 15px; }
+@media (max-width: 560px) { .where-panel { position: fixed; left: 16px; right: 16px; width: auto; top: 96px; } }
+
+.cal { display: grid; gap: 6px; }
+.cal-month { font: 700 15px var(--font-display); text-transform: capitalize; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; text-align: center; }
+.cal-grid .dow { font-size: 12px; color: var(--muted); padding-bottom: 2px; }
+.cal-grid .d { font-size: 14px; line-height: 34px; border-radius: 50%; font-variant-numeric: tabular-nums; color: var(--muted); }
+.cal-grid .d.work { background: var(--navy); color: #fff; font-weight: 600; }
+.cal-grid .d.past { opacity: .45; }
+.cal-grid .d.today { box-shadow: 0 0 0 2px var(--blue); }
+.cal-legend { display: flex; gap: 16px; font-size: 13px; color: var(--muted); }
+.cal-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--navy); margin-right: 6px; vertical-align: 0; }
+.cal-legend i.t { background: none; box-shadow: 0 0 0 2px var(--blue); }
 
 /* Первый экран */
 .hero .wrap { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 32px 56px; align-items: center; padding-block: clamp(32px, 5vw, 64px) clamp(64px, 8vw, 104px); }
@@ -192,6 +219,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--blue-text); out
 .contacts .btn-outline { border-color: #fff; color: #fff; }
 .contacts .btn-outline:hover { background: #fff; color: var(--navy); }
 .contacts .left { display: grid; gap: 16px; align-content: start; }
+.sched-link { padding: 0; border: 0; background: none; color: #fff; font: inherit; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
 @media (max-width: 900px) { .contacts { grid-template-columns: 1fr; } }
 
 .footer { padding-block: 32px 104px; font-size: 14px; color: var(--muted); }
@@ -220,7 +248,25 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--blue-text); out
       <a href="#second">Второе мнение</a>
       <a href="#contacts">Контакты</a>
     </nav>
-    <a class="btn btn-outline" href="#contacts">Позвонить</a>
+    <div class="where">
+      <button class="where-btn" id="where-btn" type="button" aria-expanded="false" aria-controls="where-panel">
+        <span class="where-addr">Вертолётчиков, 11</span>
+        <span class="where-status" id="where-status">График приёма</span>
+      </button>
+      <div class="where-panel" id="where-panel" hidden>
+        <span class="label">Где принимаю</span>
+        <p class="where-title">Люберцы, ул.&nbsp;Вертолётчиков,&nbsp;11</p>
+        <p class="where-clinic">Клиника <span class="fill">название</span></p>
+        <p class="where-next" id="where-next"></p>
+        <div class="cal" id="cal" aria-label="Дни приёма"></div>
+        <p class="where-note">Часы приёма: <span class="fill">с __ до __</span>. В остальные дни оперирую по приглашению в клиниках Москвы и области.</p>
+        <div class="row">
+          <a class="btn btn-primary" href="#contacts">Записаться</a>
+          <a class="btn btn-outline" href="https://yandex.ru/maps/?text=%D0%9B%D1%8E%D0%B1%D0%B5%D1%80%D1%86%D1%8B%2C%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%20%D0%92%D0%B5%D1%80%D1%82%D0%BE%D0%BB%D1%91%D1%82%D1%87%D0%B8%D0%BA%D0%BE%D0%B2%2C%2011" target="_blank" rel="noopener">Маршрут</a>
+        </div>
+      </div>
+    </div>
+    <a class="btn btn-outline call" href="#contacts">Позвонить</a>
   </div>
 </header>
 
@@ -229,9 +275,9 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--blue-text); out
   <section class="hero">
     <div class="wrap">
       <div class="hero-text">
-        <span class="chip">Люберцы · ул. Вертолётчиков, 11</span>
+        <span class="chip">Ветеринарный врач-хирург</span>
         <h1>Операции кошкам и собакам <em>в&nbsp;Люберцах</em></h1>
-        <p class="lead">Плановые и экстренные. Смета до операции, связь с хирургом после.</p>
+        <p class="lead">Плановые и экстренные. Принимаю на Вертолётчиков, 11, по приглашению оперирую в любой клинике Москвы и области.</p>
         <div class="row">
           <a class="btn btn-primary" href="#contacts">Записаться</a>
           <a class="btn btn-dark" href="#urgent">Экстренно</a>
@@ -372,7 +418,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--blue-text); out
         <div class="copy">
           <span class="label">Для клиник</span>
           <h2>Хирург по приглашению</h2>
-          <p>Приезжаю в клиники Москвы и области на плановые и сложные операции. Пришлите диагноз и снимки — назову дату и стоимость.</p>
+          <p>Приезжаю в вашу клинику: беру сложные операции, ассистирую вашим врачам, помогаю с хирургической тактикой. Пришлите диагноз и снимки — назову дату и стоимость.</p>
         </div>
         <div class="row"><a class="btn btn-dark" href="#contacts">Пригласить хирурга</a></div>
       </div>
@@ -394,7 +440,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--blue-text); out
         <dl>
           <div><dt>Телефон</dt><dd class="num"><span class="fill">+7 (___) ___-__-__</span></dd></div>
           <div><dt>WhatsApp и Telegram</dt><dd><span class="fill">номер</span></dd></div>
-          <div><dt>Приём</dt><dd><span class="fill">дни и часы</span></dd></div>
+          <div><dt>Приём</dt><dd><button class="sched-link" type="button" data-open-where>Смотреть график</button></dd></div>
         </dl>
       </div>
     </div>
@@ -412,6 +458,85 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--blue-text); out
   <a class="btn btn-primary" href="#contacts">Записаться</a>
   <a class="btn btn-dark" href="#urgent">Экстренно</a>
 </div>
+
+<script>
+// Дни приёма на Вертолётчиков, 11 — из графика клиники. Новый месяц: добавить строку "ГГГГ-ММ": [дни].
+var SCHEDULE = {
+  '2026-10': [2, 5, 6, 9, 10, 13, 14, 17, 18, 21, 22, 25, 29, 30]
+};
+
+(function () {
+  var MONTHS = ['январь','февраль','март','апрель','май','июнь','июль','август','сентябрь','октябрь','ноябрь','декабрь'];
+  var MONTHS_GEN = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+  var DOW = ['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'];
+  var btn = document.getElementById('where-btn');
+  var panel = document.getElementById('where-panel');
+  var status = document.getElementById('where-status');
+  var next = document.getElementById('where-next');
+  var cal = document.getElementById('cal');
+
+  function key(y, m) { return y + '-' + String(m + 1).padStart(2, '0'); }
+  function works(d) { var list = SCHEDULE[key(d.getFullYear(), d.getMonth())]; return !!list && list.indexOf(d.getDate()) !== -1; }
+
+  var today = new Date(); today.setHours(0, 0, 0, 0);
+  var nextDay = null;
+  for (var i = 0; i < 62; i++) {
+    var d = new Date(today); d.setDate(today.getDate() + i);
+    if (works(d)) { nextDay = d; break; }
+  }
+
+  if (nextDay && +nextDay === +today) {
+    status.textContent = 'Сегодня принимаю';
+    status.classList.add('on');
+    next.textContent = 'Сегодня принимаю';
+  } else if (nextDay) {
+    var label = nextDay.getDate() + ' ' + MONTHS_GEN[nextDay.getMonth()];
+    status.textContent = 'Приём ' + label;
+    next.textContent = 'Ближайший приём: ' + label + ', ' + DOW[nextDay.getDay()];
+  } else {
+    status.textContent = 'График приёма';
+    next.textContent = 'График на ближайшие дни уточняйте по телефону.';
+  }
+
+  // Календарь месяца: текущего, если в нём есть график, иначе ближайшего месяца с приёмом
+  var shown = SCHEDULE[key(today.getFullYear(), today.getMonth())] ? today : nextDay;
+  if (shown) {
+    var y = shown.getFullYear(), m = shown.getMonth();
+    var first = new Date(y, m, 1), days = new Date(y, m + 1, 0).getDate();
+    var offset = (first.getDay() + 6) % 7;
+    var html = '<div class="cal-month">' + MONTHS[m] + ' ' + y + '</div><div class="cal-grid">';
+    ['пн','вт','ср','чт','пт','сб','вс'].forEach(function (w) { html += '<span class="dow">' + w + '</span>'; });
+    for (var e = 0; e < offset; e++) html += '<span></span>';
+    for (var n = 1; n <= days; n++) {
+      var dt = new Date(y, m, n), cls = 'd';
+      if (works(dt)) cls += ' work';
+      if (dt < today) cls += ' past';
+      if (+dt === +today) cls += ' today';
+      html += '<span class="' + cls + '">' + n + '</span>';
+    }
+    html += '</div><div class="cal-legend"><span><i></i>принимаю</span><span><i class="t"></i>сегодня</span></div>';
+    cal.innerHTML = html;
+  } else {
+    cal.hidden = true;
+  }
+
+  function setOpen(open) {
+    panel.hidden = !open;
+    btn.setAttribute('aria-expanded', String(open));
+  }
+  btn.addEventListener('click', function (ev) { ev.stopPropagation(); setOpen(panel.hidden); });
+  document.querySelectorAll('[data-open-where]').forEach(function (el) {
+    el.addEventListener('click', function (ev) {
+      ev.stopPropagation();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setOpen(true);
+    });
+  });
+  panel.addEventListener('click', function (ev) { ev.stopPropagation(); });
+  document.addEventListener('click', function () { if (!panel.hidden) setOpen(false); });
+  document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape' && !panel.hidden) { setOpen(false); btn.focus(); } });
+})();
+</script>
 
 </body>
 </html>
