@@ -92,7 +92,8 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--blue-text); out
 .nav a:hover { color: var(--blue-text); }
 .header .btn { min-height: 48px; padding: 0 26px; font-size: 16px; }
 @media (max-width: 1180px) { .nav { display: none; } .where { margin-left: auto; } }
-@media (max-width: 640px) { .header .call { display: none; } .header .logo .word { width: 132px; } .header .logo .sym { width: 38px; } }
+@media (max-width: 640px) { .header .call { display: none; } .header .logo .word { width: 120px; } .header .logo .sym { width: 34px; } .header .wrap { gap: 12px; } .where-ico { display: none; } .where-phone { font-size: 15px; } }
+@media (max-width: 420px) { .where-street { display: none; } }
 
 /* Телефон и график в шапке */
 .where { position: relative; display: flex; align-items: center; gap: 10px; }
@@ -230,7 +231,7 @@ body.where-open .mbar { display: none; }
 .clinics .copy { display: grid; gap: 12px; }
 .clinics .copy p { color: var(--muted); max-width: 560px; }
 .clinics .row { justify-content: flex-start; }
-@media (max-width: 900px) { .clinics { grid-template-columns: 1fr; } }
+@media (max-width: 900px) { .clinics { grid-template-columns: minmax(0, 1fr); } }
 
 /* Контакты */
 .contacts { background: var(--navy); color: #fff; border-radius: var(--radius-lg); padding: clamp(28px, 5vw, 64px); display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 40px 56px; }
@@ -278,7 +279,7 @@ body.where-open .mbar { display: none; }
       <svg class="where-ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>
       <div class="where-txt">
         <a class="where-phone" href="tel:+79392557771">+7 (939) 255-77-71</a>
-        <button class="where-btn" id="where-btn" type="button" aria-expanded="false" aria-controls="where-panel">Вертолётчиков, 11 · <span id="where-status">график приёма</span></button>
+        <button class="where-btn" id="where-btn" type="button" aria-expanded="false" aria-controls="where-panel"><span class="where-street">Вертолётчиков, 11 · </span><span id="where-status">график приёма</span></button>
       </div>
       <div class="where-panel" id="where-panel" hidden>
         <button class="where-close" type="button" id="where-close" aria-label="Закрыть">×</button>
