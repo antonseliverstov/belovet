@@ -185,6 +185,22 @@ body.where-open .mbar { display: none; }
 .check input { width: 20px; height: 20px; margin: 1px 0 0; accent-color: var(--navy); flex-shrink: 0; }
 .check a { color: inherit; }
 .form-note { font-size: 15px; font-weight: 600; }
+.files { display: grid; gap: 8px; }
+.files-drop { position: relative; display: flex; align-items: center; gap: 14px; padding: 14px 16px; border: 2px dashed rgba(15, 43, 69, .45); border-radius: 12px; background: rgba(255, 255, 255, .55); cursor: pointer; transition: background-color .15s, border-color .15s; }
+.files-drop:hover, .files-drop.over { background: var(--paper); border-color: var(--navy); }
+.files-drop input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.files-drop:focus-within { outline: 3px solid var(--blue-text); outline-offset: 2px; }
+.files-drop svg { width: 26px; height: 26px; flex-shrink: 0; }
+.files-drop span { display: grid; gap: 2px; }
+.files-drop b { font-size: 16px; }
+.files-drop small { font-size: 14px; line-height: 1.35; }
+.files-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.files-list li { display: flex; align-items: center; gap: 10px; padding: 8px 10px 8px 14px; background: var(--paper); border-radius: 10px; font-size: 14px; }
+.files-list .fname { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.files-list .fsize { color: var(--muted); white-space: nowrap; }
+.files-list button { width: 28px; height: 28px; border: 0; border-radius: 50%; background: var(--sky-soft); color: var(--navy); font-size: 18px; line-height: 1; cursor: pointer; flex-shrink: 0; }
+.modal .files-drop { background: var(--paper); border-color: var(--line); }
+.modal .files-drop:hover, .modal .files-drop.over { border-color: var(--navy); }
 .form-note:empty { display: none; }
 @media (max-width: 560px) {
   .lead-form .grid { grid-template-columns: minmax(0, 1fr); }
@@ -421,6 +437,14 @@ dialog::backdrop { background: rgba(15, 43, 69, .55); }
     <label class="field"><span>Телефон</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="+7 (___) ___-__-__" data-phone></label>
     <label class="field" data-only="book"><span>Кличка питомца</span><input name="pet" placeholder="Например, Барни"></label>
     <label class="field" data-only="ask urgent"><span id="fd-msg-label">Сообщение</span><textarea name="message" rows="4"></textarea></label>
+    <div class="field" data-only="ask urgent"><div class="files" data-files>
+              <label class="files-drop" for="fd-files">
+                <input id="fd-files" name="files" type="file" multiple accept="image/*,.pdf,.doc,.docx,.dcm,.zip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.4 11.1-9.2 9.2a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"/></svg>
+                <span><b>Прикрепить файлы</b><small>Анализы, рентген, УЗИ, заключения, фото — перетащите сюда или нажмите</small></span>
+              </label>
+              <ul class="files-list"></ul>
+            </div></div>
     <div class="consent">
       <label class="check"><input type="checkbox" name="privacy" required><span>Ознакомлен с <a href="privacy.html" target="_blank">политикой конфиденциальности</a></span></label>
       <label class="check"><input type="checkbox" name="consent" required><span>Даю <a href="privacy.html#consent" target="_blank">согласие на обработку персональных данных</a></span></label>
@@ -464,7 +488,6 @@ dialog::backdrop { background: rgba(15, 43, 69, .55); }
       <div class="urgent">
         <div class="urgent-call">
           <h2 id="urgent-h">Экстренная операция</h2>
-          <p>Позвоните до выезда или оставьте заявку. Скажу, можно ли оперировать сейчас и что взять с собой.</p>
           <a class="phone num" href="tel:+79392557771">+7 (939) 255-77-71</a>
           <span class="hours">Экстренные звонки принимаю круглосуточно</span>
         </div>
@@ -474,6 +497,14 @@ dialog::backdrop { background: rgba(15, 43, 69, .55); }
             <label class="field"><span>Телефон</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="+7 (___) ___-__-__" data-phone></label>
             <label class="field msg"><span>Сообщение</span><textarea name="message" required placeholder="Опишите случай"></textarea></label>
           </div>
+          <div class="files" data-files>
+              <label class="files-drop" for="urgent-files">
+                <input id="urgent-files" name="files" type="file" multiple accept="image/*,.pdf,.doc,.docx,.dcm,.zip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.4 11.1-9.2 9.2a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"/></svg>
+                <span><b>Прикрепить файлы</b><small>Анализы, рентген, УЗИ, заключения, фото — перетащите сюда или нажмите</small></span>
+              </label>
+              <ul class="files-list"></ul>
+            </div>
           <button class="btn btn-dark" type="submit">Отправить</button>
           <div class="consent">
             <label class="check"><input type="checkbox" name="privacy" required><span>Ознакомлен с <a href="privacy.html" target="_blank">политикой конфиденциальности</a></span></label>
@@ -957,6 +988,38 @@ var SCHEDULE = {
   if (FORMS[fromLink]) open(fromLink);
   dialog.querySelector('[data-close-dialog]').addEventListener('click', function () { dialog.close(); });
   dialog.addEventListener('click', function (ev) { if (ev.target === dialog) dialog.close(); }); // клик по затемнению
+})();
+
+// Прикреплённые файлы: список с размером и удалением, перетаскивание
+(function () {
+  function size(b) { return b < 1048576 ? Math.max(1, Math.round(b / 1024)) + " КБ" : (b / 1048576).toFixed(1).replace(".", ",") + " МБ"; }
+  document.querySelectorAll("[data-files]").forEach(function (box) {
+    var input = box.querySelector("input[type=file]");
+    var drop = box.querySelector(".files-drop");
+    var list = box.querySelector(".files-list");
+    var store = new DataTransfer();
+    function render() {
+      input.files = store.files;
+      list.innerHTML = "";
+      Array.prototype.forEach.call(store.files, function (f, i) {
+        var li = document.createElement("li");
+        li.innerHTML = "<span class=\"fname\"></span><span class=\"fsize\">" + size(f.size) + "</span><button type=\"button\" aria-label=\"Убрать файл\">×</button>";
+        li.querySelector(".fname").textContent = f.name;
+        li.querySelector("button").addEventListener("click", function () {
+          var next = new DataTransfer();
+          Array.prototype.forEach.call(store.files, function (g, j) { if (j !== i) next.items.add(g); });
+          store = next; render();
+        });
+        list.appendChild(li);
+      });
+    }
+    function add(files) { Array.prototype.forEach.call(files, function (f) { store.items.add(f); }); render(); }
+    input.addEventListener("change", function () { var picked = Array.prototype.slice.call(input.files); input.files = store.files; add(picked); });
+    ["dragenter", "dragover"].forEach(function (t) { drop.addEventListener(t, function (e) { e.preventDefault(); drop.classList.add("over"); }); });
+    ["dragleave", "drop"].forEach(function (t) { drop.addEventListener(t, function (e) { e.preventDefault(); drop.classList.remove("over"); }); });
+    drop.addEventListener("drop", function (e) { add(e.dataTransfer.files); });
+    box.closest("form").addEventListener("reset", function () { store = new DataTransfer(); setTimeout(render); });
+  });
 })();
 
 // Маска телефона и отправка форм
