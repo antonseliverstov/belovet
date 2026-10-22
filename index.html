@@ -160,14 +160,21 @@ body.where-open .mbar { display: none; }
 }
 
 /* Экстренно: оранжевый блок. Белый — только крупный жирный текст (3.1:1), остальное тёмно-синим (4.7:1) */
-.urgent { background: var(--orange); color: var(--navy); border-radius: var(--radius-lg); padding: clamp(24px, 4vw, 48px); display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 32px 56px; }
-.urgent-call { display: grid; gap: 16px; align-content: start; }
-.urgent-call h2 { color: #fff; font-size: clamp(28px, 3.4vw, 38px); }
-.urgent-call .phone { font: 800 clamp(26px, 3vw, 34px)/1.1 var(--font-display); color: #fff; text-decoration: none; }
-.urgent-call .hours { font-size: 15px; }
-.urgent .fill { color: var(--navy); border-color: var(--navy); }
-.urgent .btn-dark { justify-self: start; }
-@media (max-width: 900px) { .urgent { grid-template-columns: minmax(0, 1fr); } }
+.urgent { background: var(--orange); color: var(--navy); border-radius: var(--radius-lg); padding: clamp(24px, 4vw, 48px); display: grid; gap: 28px; }
+.urgent h2 { color: #fff; font-size: clamp(28px, 3.4vw, 38px); white-space: nowrap; }
+.urgent .lead-form { gap: 16px; }
+.urgent .row2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+.urgent textarea { min-height: 120px; }
+.urgent .submit-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 32px; }
+.urgent .submit-row .btn { min-width: 200px; }
+.urgent-call { display: grid; gap: 4px; padding-top: 28px; border-top: 1px solid rgba(15, 43, 69, .2); }
+.urgent-call span { font-size: 15px; font-weight: 600; }
+.urgent-call .phone { font: 800 clamp(28px, 3.4vw, 38px)/1.1 var(--font-display); color: #fff; text-decoration: none; }
+@media (max-width: 560px) {
+  .urgent h2 { white-space: normal; }
+  .urgent .row2 { grid-template-columns: minmax(0, 1fr); }
+  .urgent .submit-row .btn { width: 100%; }
+}
 
 /* Формы заявок */
 .lead-form { display: grid; gap: 14px; align-content: start; }
@@ -486,32 +493,34 @@ dialog::backdrop { background: rgba(15, 43, 69, .55); }
   <section class="section" id="urgent" aria-labelledby="urgent-h" style="padding-top:0">
     <div class="wrap">
       <div class="urgent">
-        <div class="urgent-call">
-          <h2 id="urgent-h">Экстренная операция</h2>
-          <a class="phone num" href="tel:+79392557771">+7 (939) 255-77-71</a>
-          <span class="hours">Экстренные звонки принимаю круглосуточно</span>
-        </div>
+        <h2 id="urgent-h">Экстренная операция</h2>
         <form class="lead-form" data-kind="urgent" novalidate>
-          <div class="grid">
+          <div class="row2">
             <label class="field"><span>Имя</span><input name="name" autocomplete="name" required placeholder="Как к вам обращаться"></label>
             <label class="field"><span>Телефон</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="+7 (___) ___-__-__" data-phone></label>
-            <label class="field msg"><span>Сообщение</span><textarea name="message" required placeholder="Опишите случай"></textarea></label>
           </div>
+          <label class="field"><span>Сообщение</span><textarea name="message" required rows="4" placeholder="Опишите случай"></textarea></label>
           <div class="files" data-files>
-              <label class="files-drop" for="urgent-files">
-                <input id="urgent-files" name="files" type="file" multiple accept="image/*,.pdf,.doc,.docx,.dcm,.zip">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.4 11.1-9.2 9.2a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"/></svg>
-                <span><b>Прикрепить файлы</b><small>Анализы, рентген, УЗИ, заключения, фото — перетащите сюда или нажмите</small></span>
-              </label>
-              <ul class="files-list"></ul>
+            <label class="files-drop" for="urgent-files">
+              <input id="urgent-files" name="files" type="file" multiple accept="image/*,.pdf,.doc,.docx,.dcm,.zip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.4 11.1-9.2 9.2a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"/></svg>
+              <span><b>Прикрепить файлы</b><small>Анализы, рентген, УЗИ, заключения, фото — перетащите сюда или нажмите</small></span>
+            </label>
+            <ul class="files-list"></ul>
+          </div>
+          <div class="submit-row">
+            <div class="consent">
+              <label class="check"><input type="checkbox" name="privacy" required><span>Ознакомлен с <a href="privacy.html" target="_blank">политикой конфиденциальности</a></span></label>
+              <label class="check"><input type="checkbox" name="consent" required><span>Даю <a href="privacy.html#consent" target="_blank">согласие на обработку персональных данных</a></span></label>
             </div>
-          <button class="btn btn-dark" type="submit">Отправить</button>
-          <div class="consent">
-            <label class="check"><input type="checkbox" name="privacy" required><span>Ознакомлен с <a href="privacy.html" target="_blank">политикой конфиденциальности</a></span></label>
-            <label class="check"><input type="checkbox" name="consent" required><span>Даю <a href="privacy.html#consent" target="_blank">согласие на обработку персональных данных</a></span></label>
+            <button class="btn btn-dark" type="submit">Отправить</button>
           </div>
           <p class="form-note" role="status"></p>
         </form>
+        <div class="urgent-call">
+          <span>Экстренная связь, круглосуточно</span>
+          <a class="phone num" href="tel:+79392557771">+7 (939) 255-77-71</a>
+        </div>
       </div>
     </div>
   </section>
