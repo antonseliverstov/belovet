@@ -242,25 +242,42 @@ dialog::backdrop { background: rgba(15, 43, 69, .55); }
 @media (max-width: 900px) { .dirs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 560px) { .dirs { grid-template-columns: 1fr; } }
 
-/* Цены */
-.prices { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 32px 56px; align-items: start; }
-.price-list { list-style: none; margin: 0; padding: 0; background: var(--paper); border-radius: var(--radius-lg); padding: 8px 24px; }
-.price-list li { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); }
-.price-list li:last-child { border-bottom: 0; }
+/* Ветеринарная хирургия: поиск и категории */
+.surgery { display: grid; gap: 16px; }
+.search { position: relative; }
+.search svg { position: absolute; left: 20px; top: 50%; width: 22px; height: 22px; translate: 0 -50%; color: var(--muted); pointer-events: none; }
+.search input { width: 100%; min-height: 64px; padding: 0 20px 0 54px; border: 2px solid var(--line); border-radius: 18px; background: var(--paper); color: var(--navy); font: 400 18px/1.3 var(--font-body); }
+.search input::placeholder { color: var(--muted); }
+.search input:focus { outline: none; border-color: var(--blue); }
+.results { display: grid; gap: 8px; }
+.results[hidden] { display: none; }
+.results .hint { color: var(--muted); font-size: 15px; }
+.res { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 16px; align-items: center; padding: 16px 20px; background: var(--paper); border-radius: var(--radius-md); color: var(--navy); text-decoration: none; transition: background-color .15s; }
+.res:hover, .res:focus-visible { background: var(--sky); }
+.res b { font: 700 18px/1.3 var(--font-display); }
+.res .cat-name { grid-column: 1; font-size: 14px; color: var(--muted); }
+.res .num { grid-row: 1 / span 2; grid-column: 2; font-weight: 600; }
+.res mark { background: none; color: var(--blue-text); font-weight: 700; }
+.empty { padding: 20px; background: var(--paper); border-radius: var(--radius-md); display: grid; gap: 12px; justify-items: start; }
+.cats { display: grid; gap: 8px; }
+.cats[hidden] { display: none; }
+.cat { background: var(--paper); border-radius: var(--radius-md); }
+.cat summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 22px; cursor: pointer; list-style: none; font: 700 19px/1.3 var(--font-display); }
+.cat summary::-webkit-details-marker { display: none; }
+.cat summary::after { content: ""; width: 10px; height: 10px; border-right: 2px solid var(--navy); border-bottom: 2px solid var(--navy); rotate: 45deg; translate: 0 -3px; flex-shrink: 0; transition: rotate .15s; }
+.cat[open] summary::after { rotate: -135deg; translate: 0 3px; }
+.cat summary small { margin-left: auto; font: 500 14px var(--font-body); color: var(--muted); }
+.price-list { list-style: none; margin: 0; padding: 0 22px 10px; }
+.price-list li a { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 12px 0; border-top: 1px solid var(--line); color: var(--navy); text-decoration: none; }
+.price-list li a:hover .what { color: var(--blue-text); text-decoration: underline; text-underline-offset: 3px; }
 .price-list .what { min-width: 0; }
 .price-list small { display: block; font-size: 15px; color: var(--muted); }
 .price-list .num { font-weight: 600; }
-.sum { display: grid; gap: 16px; }
-.sum dl { margin: 0; display: grid; gap: 0; background: var(--sky); border-radius: var(--radius-lg); padding: 8px 24px; }
-.sum dl div { display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid #C7D9E8; }
-.sum dl div:last-child { border-bottom: 0; }
-.sum dt { min-width: 0; }
-.sum dt small { display: block; font-size: 15px; color: var(--muted); }
-.sum dd { margin: 0; font-weight: 600; text-align: right; }
-@media (max-width: 900px) { .prices { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 480px) {
-  .price-list, .sum dl { padding-inline: 16px; }
+  .price-list { padding-inline: 16px; }
+  .cat summary { padding: 16px; font-size: 17px; }
   .price-list .num { white-space: normal; text-align: right; }
+  .res { padding: 14px 16px; }
 }
 
 /* Как проходит */
@@ -449,7 +466,7 @@ dialog::backdrop { background: rgba(15, 43, 69, .55); }
           <h2 id="urgent-h">Экстренная операция</h2>
           <p>Позвоните до выезда или оставьте заявку. Скажу, можно ли оперировать сейчас и что взять с собой.</p>
           <a class="phone num" href="tel:+79392557771">+7 (939) 255-77-71</a>
-          <span class="hours">Принимаю звонки: <span class="fill">часы</span></span>
+          <span class="hours">Экстренные звонки принимаю круглосуточно</span>
         </div>
         <form class="lead-form" data-kind="urgent" novalidate>
           <div class="grid">
@@ -487,28 +504,228 @@ dialog::backdrop { background: rgba(15, 43, 69, .55); }
   <section class="section" id="prices" aria-labelledby="prices-h" style="padding-top:0">
     <div class="wrap">
       <div class="head">
-        <span class="label">Цены</span>
-        <h2 id="prices-h">Сколько стоит операция</h2>
-        <p>Смету называю после осмотра, до операции.</p>
+        <span class="label">Операции и цены</span>
+        <h2 id="prices-h">Ветеринарная хирургия</h2>
+        <p>Найдите операцию по названию или опишите, что случилось. Цены без наркоза: он от 3 400 до 13 800 ₽, степень определяет анестезиолог. Смету называю после осмотра.</p>
       </div>
-      <div class="prices">
-        <ul class="price-list">
-          <li><span class="what">Стерилизация собаки<small>любой вес</small></span><span class="num">11 500 ₽</span></li>
-          <li><span class="what">Удаление инородного тела из кишечника</span><span class="num">20 000 ₽</span></li>
-          <li><span class="what">Удаление камней из мочевого пузыря</span><span class="num">15 000 ₽</span></li>
-          <li><span class="what">Уретростомия у кота</span><span class="num">17 000 ₽</span></li>
-          <li><span class="what">Кесарево сечение<small>кошка / собака до 10 кг / более 25 кг</small></span><span class="num">17 250 – 34 500 ₽</span></li>
-          <li><span class="what">Мастэктомия, одна сторона<small>кошка / собака по весу</small></span><span class="num">17 250 – 40 250 ₽</span></li>
-          <li><span class="what">Остеосинтез пластиной</span><span class="num">32 000 ₽</span></li>
-          <li><span class="what">Заворот желудка с гастропексией</span><span class="num">34 500 ₽</span></li>
-        </ul>
-        <div class="sum">
-          <dl>
-            <div><dt>Операция<small>по прайсу, без наркоза</small></dt><dd class="num">по прайсу</dd></div>
-            <div><dt>Наркоз<small>степень определяет анестезиолог</small></dt><dd class="num">3 400 – 13 800 ₽</dd></div>
-            <div><dt>Анализы, стационар, препараты<small>по показаниям</small></dt><dd>по прайсу клиники</dd></div>
-          </dl>
-          <a class="btn btn-outline" href="#prices" style="justify-self:start">Полный прайс</a>
+      <div class="surgery">
+        <div class="search" role="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input id="op-search" type="search" autocomplete="off" placeholder="Например: кот не писает, стерилизация, проглотил носок" aria-label="Поиск операции" aria-controls="op-results">
+        </div>
+        <div class="results" id="op-results" aria-live="polite" hidden></div>
+        <div class="cats" id="op-cats">
+        <!-- SURGERY:START -->
+        <details class="cat" open>
+          <summary><span>Общая хирургия</span><small>18</small></summary>
+          <ul class="price-list">
+            <li><a href="operations/amputaciya-konechnosti.html"><span class="what">Ампутация конечности<small>кошка</small></span><span class="num">23 000 ₽</span></a></li>
+            <li><a href="operations/amputaciya-konechnosti.html"><span class="what">Ампутация конечности<small>собака, 1-я категория</small></span><span class="num">17 250 ₽</span></a></li>
+            <li><a href="operations/amputaciya-konechnosti.html"><span class="what">Ампутация конечности<small>собака, 2-я категория</small></span><span class="num">34 500 ₽</span></a></li>
+            <li><a href="operations/amputaciya-hvosta.html"><span class="what">Ампутация хвоста</span><span class="num">11 500 ₽</span></a></li>
+            <li><a href="operations/gematoma-ushnoj-rakoviny.html"><span class="what">Гематома ушной раковины<small>одно ухо</small></span><span class="num">10 000 ₽</span></a></li>
+            <li><a href="operations/drenirovanie-rany.html"><span class="what">Дренирование полости раны</span><span class="num">3 450 ₽</span></a></li>
+            <li><a href="operations/pervichnaya-obrabotka-rany.html"><span class="what">Первичная хирургическая обработка раны<small>1-я категория</small></span><span class="num">3 000 ₽</span></a></li>
+            <li><a href="operations/pervichnaya-obrabotka-rany.html"><span class="what">Первичная хирургическая обработка раны<small>2-я категория</small></span><span class="num">5 000 ₽</span></a></li>
+            <li><a href="operations/pervichnaya-obrabotka-rany.html"><span class="what">Первичная хирургическая обработка раны<small>3-я категория</small></span><span class="num">8 000 ₽</span></a></li>
+            <li><a href="operations/plastika-nosogubnoj-skladki.html"><span class="what">Пластика носогубной складки</span><span class="num">11 500 ₽</span></a></li>
+            <li><a href="operations/plastika-tverdogo-neba.html"><span class="what">Пластика твёрдого нёба</span><span class="num">28 750 ₽</span></a></li>
+            <li><a href="operations/rasshirenie-sluhovogo-prohoda.html"><span class="what">Расширение слухового прохода<small>1-я категория</small></span><span class="num">10 000 ₽</span></a></li>
+            <li><a href="operations/rasshirenie-sluhovogo-prohoda.html"><span class="what">Расширение слухового прохода<small>2-я категория</small></span><span class="num">17 000 ₽</span></a></li>
+            <li><a href="operations/kista-slyunnoj-zhelezy.html"><span class="what">Резекция кисты слюнной железы</span><span class="num">20 000 ₽</span></a></li>
+            <li><a href="operations/rinotomiya.html"><span class="what">Ринотомия<small>кошка</small></span><span class="num">23 000 ₽</span></a></li>
+            <li><a href="operations/rinotomiya.html"><span class="what">Ринотомия<small>собака</small></span><span class="num">25 000 ₽</span></a></li>
+            <li><a href="operations/atreziya-anusa.html"><span class="what">Атрезия ануса</span><span class="num">17 250 ₽</span></a></li>
+            <li><a href="operations/ezofagostoma.html"><span class="what">Эзофагостома<small>кошка или собака, временная</small></span><span class="num">3 450 ₽</span></a></li>
+          </ul>
+        </details>
+        <details class="cat">
+          <summary><span>Абдоминальная и торакальная хирургия</span><small>31</small></summary>
+          <ul class="price-list">
+            <li><a href="operations/adrenalektomiya.html"><span class="what">Адреналэктомия</span><span class="num">30 000 ₽</span></a></li>
+            <li><a href="operations/gastropeksiya.html"><span class="what">Гастропексия<small>открытая</small></span><span class="num">15 000 ₽</span></a></li>
+            <li><a href="operations/gastrotomiya.html"><span class="what">Гастротомия<small>кошка</small></span><span class="num">17 250 ₽</span></a></li>
+            <li><a href="operations/gastrotomiya.html"><span class="what">Гастротомия<small>собака</small></span><span class="num">23 000 ₽</span></a></li>
+            <li><a href="operations/diagnosticheskaya-laparotomiya.html"><span class="what">Диагностическая лапаротомия<small>кошка</small></span><span class="num">17 250 ₽</span></a></li>
+            <li><a href="operations/diagnosticheskaya-laparotomiya.html"><span class="what">Диагностическая лапаротомия<small>собака</small></span><span class="num">17 250 ₽</span></a></li>
+            <li><a href="operations/lobektomiya-pecheni.html"><span class="what">Лобэктомия печени<small>кошка</small></span><span class="num">25 000 ₽</span></a></li>
+            <li><a href="operations/lobektomiya-pecheni.html"><span class="what">Лобэктомия печени<small>собака</small></span><span class="num">30 000 ₽</span></a></li>
+            <li><a href="operations/zavorot-zheludka.html"><span class="what">Заворот желудка</span><span class="num">34 500 ₽</span></a></li>
+            <li><a href="operations/plastika-bryushnoj-stenki.html"><span class="what">Пластика мышц брюшной стенки<small>кошка</small></span><span class="num">11 500 ₽</span></a></li>
+            <li><a href="operations/plastika-bryushnoj-stenki.html"><span class="what">Пластика мышц брюшной стенки<small>собака</small></span><span class="num">11 500 ₽</span></a></li>
+            <li><a href="operations/rezekciya-kishechnika.html"><span class="what">Резекция кишечника<small>кошка</small></span><span class="num">25 000 ₽</span></a></li>
+            <li><a href="operations/rezekciya-kishechnika.html"><span class="what">Резекция кишечника<small>собака</small></span><span class="num">25 000 ₽</span></a></li>
+            <li><a href="operations/splenektomiya.html"><span class="what">Спленэктомия<small>кошка</small></span><span class="num">17 250 ₽</span></a></li>
+            <li><a href="operations/splenektomiya.html"><span class="what">Спленэктомия<small>собака</small></span><span class="num">23 000 ₽</span></a></li>
+            <li><a href="operations/inorodnoe-telo-pishevoda.html"><span class="what">Удаление инородного тела из грудного отдела пищевода</span><span class="num">26 100 ₽</span></a></li>
+            <li><a href="operations/drenazh-bryushnoj-polosti.html"><span class="what">Установка дренажа в брюшную полость</span><span class="num">6 800 ₽</span></a></li>
+            <li><a href="operations/drenazh-grudnoj-polosti.html"><span class="what">Установка дренажа в грудную полость</span><span class="num">11 500 ₽</span></a></li>
+            <li><a href="operations/vypadenie-pryamoj-kishki.html"><span class="what">Выпадение прямой кишки<small>1-я категория</small></span><span class="num">10 000 ₽</span></a></li>
+            <li><a href="operations/vypadenie-pryamoj-kishki.html"><span class="what">Выпадение прямой кишки<small>2-я категория</small></span><span class="num">15 000 ₽</span></a></li>
+            <li><a href="operations/vypadenie-pryamoj-kishki.html"><span class="what">Выпадение прямой кишки<small>3-я категория</small></span><span class="num">20 000 ₽</span></a></li>
+            <li><a href="operations/abscess-podzheludochnoj-zhelezy.html"><span class="what">Абсцесс поджелудочной железы</span><span class="num">30 000 ₽</span></a></li>
+            <li><a href="operations/diafragmalnaya-gryzha.html"><span class="what">Диафрагмальная грыжа<small>кошка</small></span><span class="num">28 750 ₽</span></a></li>
+            <li><a href="operations/diafragmalnaya-gryzha.html"><span class="what">Диафрагмальная грыжа<small>собака</small></span><span class="num">28 750 ₽</span></a></li>
+            <li><a href="operations/divertikul-pishevoda.html"><span class="what">Дивертикул пищевода<small>кошка</small></span><span class="num">17 250 ₽</span></a></li>
+            <li><a href="operations/divertikul-pishevoda.html"><span class="what">Дивертикул пищевода<small>собака</small></span><span class="num">23 000 ₽</span></a></li>
+            <li><a href="operations/pahovaya-gryzha.html"><span class="what">Паховая грыжа</span><span class="num">23 000 ₽</span></a></li>
+            <li><a href="operations/pupochnaya-gryzha.html"><span class="what">Пупочная грыжа<small>кошка</small></span><span class="num">8 050 ₽</span></a></li>
+            <li><a href="operations/pupochnaya-gryzha.html"><span class="what">Пупочная грыжа<small>собака</small></span><span class="num">8 050 ₽</span></a></li>
+            <li><a href="operations/enterotomiya.html"><span class="what">Энтеротомия<small>кошка</small></span><span class="num">20 000 ₽</span></a></li>
+            <li><a href="operations/enterotomiya.html"><span class="what">Энтеротомия<small>собака</small></span><span class="num">20 000 ₽</span></a></li>
+          </ul>
+        </details>
+        <details class="cat">
+          <summary><span>Онкологическая хирургия</span><small>34</small></summary>
+          <ul class="price-list">
+            <li><a href="operations/amputaciya-palca.html"><span class="what">Ампутация пальца при опухоли<small>кошка, 1-я категория</small></span><span class="num">5 750 ₽</span></a></li>
+            <li><a href="operations/amputaciya-palca.html"><span class="what">Ампутация пальца при опухоли<small>кошка, 2-я категория</small></span><span class="num">11 500 ₽</span></a></li>
+            <li><a href="operations/amputaciya-palca.html"><span class="what">Ампутация пальца при опухоли<small>собака</small></span><span class="num">9 400 ₽</span></a></li>
+            <li><a href="operations/amputaciya-palca.html"><span class="what">Ампутация пальца при опухоли<small>с удалением лимфоузла</small></span><span class="num">11 850 ₽</span></a></li>
+            <li><a href="operations/udalenie-lipomy.html"><span class="what">Вылущивание липомы<small>1-я категория</small></span><span class="num">5 750 ₽</span></a></li>
+            <li><a href="operations/udalenie-lipomy.html"><span class="what">Вылущивание липомы<small>2-я категория</small></span><span class="num">11 500 ₽</span></a></li>
+            <li><a href="operations/mnozhestvennye-opuholi-kozhi.html"><span class="what">Иссечение множественных опухолей кожи<small>1-я категория</small></span><span class="num">10 800 ₽</span></a></li>
+            <li><a href="operations/mnozhestvennye-opuholi-kozhi.html"><span class="what">Иссечение множественных опухолей кожи<small>2-я категория</small></span><span class="num">14 250 ₽</span></a></li>
+            <li><a href="operations/lampektomiya.html"><span class="what">Лампэктомия</span><span class="num">11 500 ₽</span></a></li>
+            <li><a href="operations/limfadenektomiya.html"><span class="what">Лимфаденэктомия</span><span class="num">11 500 ₽</span></a></li>
+            <li><a href="operations/otkrytaya-biopsiya.html"><span class="what">Открытая биопсия</span><span class="num">5 750 ₽</span></a></li>
+            <li><a href="operations/mastektomiya.html"><span class="what">Мастэктомия<small>регионарная, собака до 10 кг</small></span><span class="num">11 500 ₽</span></a></li>
+            <li><a href="operations/mastektomiya.html"><span class="what">Мастэктомия<small>регионарная, собака 10–20 кг</small></span><span class="num">17 250 ₽</span></a></li>
+            <li><a href="operations/mastektomiya.html"><span class="what">Мастэктомия<small>регионарная, собака более 20 кг</small></span><span class="num">23 000 ₽</span></a></li>
+            <li><a href="operations/mastektomiya.html"><span class="what">Мастэктомия<small>односторонняя, кошка</small></span><span class="num">17 250 ₽</span></a></li>
+            <li><a href="operations/mastektomiya.html"><span class="what">Мастэктомия<small>односторонняя, собака до 10 кг</small></span><span class="num">17 250 ₽</span></a></li>
+            <li><a href="operations/mastektomiya.html"><span class="what">Мастэктомия<small>односторонняя, собака 10–25 кг</small></span><span class="num">23 000 ₽</span></a></li>
+            <li><a href="operations/mastektomiya.html"><span class="what">Мастэктомия<small>односторонняя, собака более 25 кг</small></span><span class="num">40 250 ₽</span></a></li>
+            <li><a href="operations/mastektomiya.html"><span class="what">Мастэктомия<small>тотальная, кошка</small></span><span class="num">13 800 ₽</span></a></li>
+            <li><a href="operations/mastektomiya.html"><span class="what">Мастэктомия<small>тотальная, собака</small></span><span class="num">18 050 ₽</span></a></li>
+            <li><a href="operations/udalenie-opuholej-kozhi.html"><span class="what">Удаление опухолей кожи<small>1-я категория</small></span><span class="num">5 000 ₽</span></a></li>
+            <li><a href="operations/udalenie-opuholej-kozhi.html"><span class="what">Удаление опухолей кожи<small>2-я категория</small></span><span class="num">10 000 ₽</span></a></li>
+            <li><a href="operations/udalenie-opuholej-kozhi.html"><span class="what">Удаление опухолей кожи<small>3-я категория</small></span><span class="num">15 000 ₽</span></a></li>
+            <li><a href="operations/udalenie-opuholej-kozhi.html"><span class="what">Удаление опухолей кожи<small>4-я категория</small></span><span class="num">18 000 ₽</span></a></li>
+            <li><a href="operations/opuhol-myagkih-tkanej.html"><span class="what">Удаление опухоли мягких тканей<small>до 3 см</small></span><span class="num">10 000 ₽</span></a></li>
+            <li><a href="operations/opuhol-myagkih-tkanej.html"><span class="what">Удаление опухоли мягких тканей<small>3–5 см</small></span><span class="num">15 000 ₽</span></a></li>
+            <li><a href="operations/opuhol-myagkih-tkanej.html"><span class="what">Удаление опухоли мягких тканей<small>более 5 см</small></span><span class="num">23 000 ₽</span></a></li>
+            <li><a href="operations/opuhol-perianalnyh-zhelez.html"><span class="what">Удаление опухоли перианальных желёз</span><span class="num">13 800 ₽</span></a></li>
+            <li><a href="operations/opuhol-perianalnyh-zhelez.html"><span class="what">Удаление опухоли перианальных желёз<small>вместе с кастрацией кобеля</small></span><span class="num">11 500 ₽</span></a></li>
+            <li><a href="operations/opuhol-rotovoj-polosti.html"><span class="what">Удаление опухоли ротовой полости<small>1-я категория</small></span><span class="num">17 250 ₽</span></a></li>
+            <li><a href="operations/opuhol-rotovoj-polosti.html"><span class="what">Удаление опухоли ротовой полости<small>2-я категория</small></span><span class="num">28 750 ₽</span></a></li>
+            <li><a href="operations/opuhol-rotovoj-polosti.html"><span class="what">Удаление опухоли ротовой полости<small>3-я категория</small></span><span class="num">34 500 ₽</span></a></li>
+            <li><a href="operations/udalenie-opuholi-s-plastikoj.html"><span class="what">Удаление опухоли с пластикой</span><span class="num">23 000 ₽</span></a></li>
+            <li><a href="operations/udalenie-opuholi-semennika.html"><span class="what">Удаление опухоли семенника</span><span class="num">15 000 ₽</span></a></li>
+          </ul>
+        </details>
+        <details class="cat">
+          <summary><span>Ортопедия и травматология</span><small>18</small></summary>
+          <ul class="price-list">
+            <li><a href="operations/artrodez.html"><span class="what">Артродез сустава</span><span class="num">46 000 ₽</span></a></li>
+            <li><a href="operations/osteosintez.html"><span class="what">Остеосинтез<small>аппаратом внешней фиксации (free form)</small></span><span class="num">24 000 ₽</span></a></li>
+            <li><a href="operations/osteosintez.html"><span class="what">Остеосинтез<small>пластиной, кошка или собака</small></span><span class="num">32 000 ₽</span></a></li>
+            <li><a href="operations/osteosintez-chelyusti.html"><span class="what">Остеосинтез челюсти<small>2-я категория</small></span><span class="num">11 000 ₽</span></a></li>
+            <li><a href="operations/plastika-svyazki.html"><span class="what">Пластика связки<small>1-я категория</small></span><span class="num">15 000 ₽</span></a></li>
+            <li><a href="operations/plastika-svyazki.html"><span class="what">Пластика связки<small>2-я категория</small></span><span class="num">20 000 ₽</span></a></li>
+            <li><a href="operations/plastika-svyazki.html"><span class="what">Пластика связки<small>3-я категория</small></span><span class="num">25 000 ₽</span></a></li>
+            <li><a href="operations/protezirovanie-svyazki.html"><span class="what">Протезирование связки, собака<small>собака</small></span><span class="num">25 000 ₽</span></a></li>
+            <li><a href="operations/rezekciya-golovki-bedra.html"><span class="what">Резекция головки бедренной кости<small>кошка</small></span><span class="num">23 000 ₽</span></a></li>
+            <li><a href="operations/rezekciya-golovki-bedra.html"><span class="what">Резекция головки бедренной кости<small>собака</small></span><span class="num">23 000 ₽</span></a></li>
+            <li><a href="operations/udalenie-metallokonstrukcij.html"><span class="what">Удаление металлоконструкций<small>снятие спиц, 1-я категория</small></span><span class="num">3 000 ₽</span></a></li>
+            <li><a href="operations/udalenie-metallokonstrukcij.html"><span class="what">Удаление металлоконструкций<small>снятие спиц, 2-я категория</small></span><span class="num">5 000 ₽</span></a></li>
+            <li><a href="operations/udalenie-metallokonstrukcij.html"><span class="what">Удаление металлоконструкций<small>снятие спиц, 3-я категория</small></span><span class="num">10 000 ₽</span></a></li>
+            <li><a href="operations/udalenie-metallokonstrukcij.html"><span class="what">Удаление металлоконструкций<small>пластины, винты, серкляжи, 1-я категория</small></span><span class="num">5 000 ₽</span></a></li>
+            <li><a href="operations/udalenie-metallokonstrukcij.html"><span class="what">Удаление металлоконструкций<small>пластины, винты, серкляжи, 2-я категория</small></span><span class="num">10 000 ₽</span></a></li>
+            <li><a href="operations/fiksaciya-vyviha-tbs.html"><span class="what">Фиксация вывиха тазобедренного сустава</span><span class="num">28 000 ₽</span></a></li>
+            <li><a href="operations/avulsionnyj-perelom.html"><span class="what">Авульсионный перелом</span><span class="num">25 000 ₽</span></a></li>
+            <li><a href="operations/vnutrisustavnoj-perelom.html"><span class="what">Внутрисуставной перелом</span><span class="num">35 000 ₽</span></a></li>
+          </ul>
+        </details>
+        <details class="cat">
+          <summary><span>Урология</span><small>8</small></summary>
+          <ul class="price-list">
+            <li><a href="operations/uretrostomiya.html"><span class="what">Уретростомия<small>расширяющая, кот</small></span><span class="num">17 000 ₽</span></a></li>
+            <li><a href="operations/uretrostomiya.html"><span class="what">Уретростомия<small>расширяющая, собака</small></span><span class="num">20 000 ₽</span></a></li>
+            <li><a href="operations/uretrostomiya.html"><span class="what">Уретростомия<small>модифицированная</small></span><span class="num">23 000 ₽</span></a></li>
+            <li><a href="operations/uretrostomiya.html"><span class="what">Уретростомия<small>предлонная, кошка или собака</small></span><span class="num">23 000 ₽</span></a></li>
+            <li><a href="operations/nefrektomiya.html"><span class="what">Нефрэктомия<small>открытая</small></span><span class="num">23 000 ₽</span></a></li>
+            <li><a href="operations/ureterotomiya.html"><span class="what">Уретеротомия</span><span class="num">25 000 ₽</span></a></li>
+            <li><a href="operations/cistotomiya.html"><span class="what">Цистотомия<small>кошка</small></span><span class="num">15 000 ₽</span></a></li>
+            <li><a href="operations/cistotomiya.html"><span class="what">Цистотомия<small>собака</small></span><span class="num">15 000 ₽</span></a></li>
+          </ul>
+        </details>
+        <details class="cat">
+          <summary><span>Репродуктивная хирургия</span><small>27</small></summary>
+          <ul class="price-list">
+            <li><a href="operations/kastraciya-kota.html"><span class="what">Кастрация кота</span><span class="num">4 600 ₽</span></a></li>
+            <li><a href="operations/kastraciya-kota.html"><span class="what">Кастрация кота<small>со скротумэктомией</small></span><span class="num">8 050 ₽</span></a></li>
+            <li><a href="operations/kastraciya-sobaki.html"><span class="what">Кастрация собаки<small>любой вес</small></span><span class="num">8 050 ₽</span></a></li>
+            <li><a href="operations/kriptorhizm.html"><span class="what">Кастрация крипторха<small>кот, семенник под кожей</small></span><span class="num">5 750 ₽</span></a></li>
+            <li><a href="operations/kriptorhizm.html"><span class="what">Кастрация крипторха<small>кот, семенник в брюшной полости</small></span><span class="num">11 500 ₽</span></a></li>
+            <li><a href="operations/kriptorhizm.html"><span class="what">Кастрация крипторха<small>собака, семенник под кожей</small></span><span class="num">11 500 ₽</span></a></li>
+            <li><a href="operations/kriptorhizm.html"><span class="what">Кастрация крипторха<small>собака, семенник в брюшной полости</small></span><span class="num">17 250 ₽</span></a></li>
+            <li><a href="operations/kastraciya-horka.html"><span class="what">Кастрация хорька</span><span class="num">10 200 ₽</span></a></li>
+            <li><a href="operations/kesarevo-sechenie.html"><span class="what">Кесарево сечение<small>кошка</small></span><span class="num">17 250 ₽</span></a></li>
+            <li><a href="operations/kesarevo-sechenie.html"><span class="what">Кесарево сечение<small>собака до 10 кг</small></span><span class="num">20 000 ₽</span></a></li>
+            <li><a href="operations/kesarevo-sechenie.html"><span class="what">Кесарево сечение<small>собака 10–20 кг</small></span><span class="num">25 000 ₽</span></a></li>
+            <li><a href="operations/kesarevo-sechenie.html"><span class="what">Кесарево сечение<small>собака более 25 кг</small></span><span class="num">34 500 ₽</span></a></li>
+            <li><a href="operations/piometra.html"><span class="what">Пиометра<small>кошка</small></span><span class="num">15 000 ₽</span></a></li>
+            <li><a href="operations/piometra.html"><span class="what">Пиометра<small>собака до 10 кг</small></span><span class="num">15 000 ₽</span></a></li>
+            <li><a href="operations/piometra.html"><span class="what">Пиометра<small>собака 10–25 кг</small></span><span class="num">17 000 ₽</span></a></li>
+            <li><a href="operations/piometra.html"><span class="what">Пиометра<small>собака более 25 кг</small></span><span class="num">23 000 ₽</span></a></li>
+            <li><a href="operations/plastika-vlagalishhnoj-skladki.html"><span class="what">Пластика влагалищной складки</span><span class="num">15 000 ₽</span></a></li>
+            <li><a href="operations/promezhnostnaya-gryzha.html"><span class="what">Промежностная грыжа<small>комплекс</small></span><span class="num">38 500 ₽</span></a></li>
+            <li><a href="operations/skrotumektomiya.html"><span class="what">Скротумэктомия</span><span class="num">15 000 ₽</span></a></li>
+            <li><a href="operations/sterilizaciya.html"><span class="what">Стерилизация<small>кошка</small></span><span class="num">10 350 ₽</span></a></li>
+            <li><a href="operations/sterilizaciya.html"><span class="what">Стерилизация<small>собака, любой вес</small></span><span class="num">11 500 ₽</span></a></li>
+            <li><a href="operations/abscess-kulti.html"><span class="what">Абсцесс культи матки или яичника<small>абсцесс культи матки</small></span><span class="num">25 000 ₽</span></a></li>
+            <li><a href="operations/abscess-kulti.html"><span class="what">Абсцесс культи матки или яичника<small>лигатурный абсцесс культи яичника, 1-я категория</small></span><span class="num">25 000 ₽</span></a></li>
+            <li><a href="operations/abscess-kulti.html"><span class="what">Абсцесс культи матки или яичника<small>лигатурный абсцесс культи яичника, 2-я категория</small></span><span class="num">30 000 ₽</span></a></li>
+            <li><a href="operations/prolaps-vlagalishha.html"><span class="what">Пролапс влагалища</span><span class="num">17 250 ₽</span></a></li>
+            <li><a href="operations/epiziotomiya.html"><span class="what">Эпизиотомия<small>1-я категория</small></span><span class="num">11 500 ₽</span></a></li>
+            <li><a href="operations/epiziotomiya.html"><span class="what">Эпизиотомия<small>2-я категория</small></span><span class="num">23 000 ₽</span></a></li>
+          </ul>
+        </details>
+        <details class="cat">
+          <summary><span>Раны и пластика кожи</span><small>12</small></summary>
+          <ul class="price-list">
+            <li><a href="operations/vskrytie-abscessa.html"><span class="what">Вскрытие абсцесса или флегмоны<small>1-я категория</small></span><span class="num">1 150 ₽</span></a></li>
+            <li><a href="operations/vskrytie-abscessa.html"><span class="what">Вскрытие абсцесса или флегмоны<small>2-я категория</small></span><span class="num">5 750 ₽</span></a></li>
+            <li><a href="operations/vskrytie-abscessa.html"><span class="what">Вскрытие абсцесса или флегмоны<small>3-я категория</small></span><span class="num">8 750 ₽</span></a></li>
+            <li><a href="operations/nekrektomiya.html"><span class="what">Иссечение некротических участков кожи</span><span class="num">4 000 ₽</span></a></li>
+            <li><a href="operations/ushivanie-ran.html"><span class="what">Ушивание ран<small>кожно-мышечные швы, 1-я категория</small></span><span class="num">4 000 ₽</span></a></li>
+            <li><a href="operations/ushivanie-ran.html"><span class="what">Ушивание ран<small>кожно-мышечные швы, 2-я категория</small></span><span class="num">6 000 ₽</span></a></li>
+            <li><a href="operations/ushivanie-ran.html"><span class="what">Ушивание ран<small>кожно-мышечные швы, 3-я категория</small></span><span class="num">10 000 ₽</span></a></li>
+            <li><a href="operations/ushivanie-ran.html"><span class="what">Ушивание ран<small>косметический шов</small></span><span class="num">2 100 ₽</span></a></li>
+            <li><a href="operations/plastika-kozhi.html"><span class="what">Пластика кожи<small>1-я категория</small></span><span class="num">10 000 ₽</span></a></li>
+            <li><a href="operations/plastika-kozhi.html"><span class="what">Пластика кожи<small>2-я категория</small></span><span class="num">15 000 ₽</span></a></li>
+            <li><a href="operations/plastika-kozhi.html"><span class="what">Пластика кожи<small>3-я категория</small></span><span class="num">20 000 ₽</span></a></li>
+            <li><a href="operations/plastika-kozhi.html"><span class="what">Пластика кожи<small>4-я категория</small></span><span class="num">35 000 ₽</span></a></li>
+          </ul>
+        </details>
+        <details class="cat">
+          <summary><span>Послеоперационные процедуры</span><small>6</small></summary>
+          <ul class="price-list">
+            <li><a href="operations/aspiraciya-seromy.html"><span class="what">Аспирация серомы<small>1-я категория</small></span><span class="num">1 150 ₽</span></a></li>
+            <li><a href="operations/aspiraciya-seromy.html"><span class="what">Аспирация серомы<small>2-я категория</small></span><span class="num">1 700 ₽</span></a></li>
+            <li><a href="operations/aspiraciya-seromy.html"><span class="what">Аспирация серомы<small>3-я категория</small></span><span class="num">3 450 ₽</span></a></li>
+            <li><a href="operations/perevyazki.html"><span class="what">Перевязка и обработка раны<small>1-я категория</small></span><span class="num">1 700 ₽</span></a></li>
+            <li><a href="operations/perevyazki.html"><span class="what">Перевязка и обработка раны<small>2-я категория</small></span><span class="num">3 450 ₽</span></a></li>
+            <li><a href="operations/perevyazki.html"><span class="what">Перевязка и обработка раны<small>3-я категория</small></span><span class="num">5 750 ₽</span></a></li>
+          </ul>
+        </details>
+        <details class="cat">
+          <summary><span>Анестезия и реанимация</span><small>10</small></summary>
+          <ul class="price-list">
+            <li><a href="operations/anesteziya.html"><span class="what">Анестезия<small>медикаментозная подготовка</small></span><span class="num">2 500 ₽</span></a></li>
+            <li><a href="operations/anesteziya.html"><span class="what">Анестезия<small>местная анестезия (блокада)</small></span><span class="num">750 ₽</span></a></li>
+            <li><a href="operations/anesteziya.html"><span class="what">Анестезия<small>эпидуральная анестезия</small></span><span class="num">3 050 ₽</span></a></li>
+            <li><a href="operations/anesteziya.html"><span class="what">Анестезия<small>общая анестезия при стерилизации</small></span><span class="num">3 400 ₽</span></a></li>
+            <li><a href="operations/anesteziya.html"><span class="what">Анестезия<small>общая анестезия, 1-я степень</small></span><span class="num">4 000 ₽</span></a></li>
+            <li><a href="operations/anesteziya.html"><span class="what">Анестезия<small>общая анестезия, 2-я степень</small></span><span class="num">8 000 ₽</span></a></li>
+            <li><a href="operations/anesteziya.html"><span class="what">Анестезия<small>общая анестезия, 3-я степень</small></span><span class="num">10 500 ₽</span></a></li>
+            <li><a href="operations/anesteziya.html"><span class="what">Анестезия<small>общая анестезия, 4-я степень</small></span><span class="num">12 500 ₽</span></a></li>
+            <li><a href="operations/anesteziya.html"><span class="what">Анестезия<small>общая анестезия, 5-я степень</small></span><span class="num">13 800 ₽</span></a></li>
+            <li><a href="operations/serdechno-legochnaya-reanimaciya.html"><span class="what">Сердечно-лёгочная реанимация</span><span class="num">6 300 ₽</span></a></li>
+          </ul>
+        </details>
+        <!-- SURGERY:END -->
         </div>
       </div>
     </div>
@@ -734,6 +951,10 @@ var SCHEDULE = {
   document.querySelectorAll('[data-form]').forEach(function (el) {
     el.addEventListener('click', function (ev) { ev.stopPropagation(); open(el.dataset.form); });
   });
+  window.BV_openForm = open;
+  // Ссылки со страниц операций: index.html?form=book | ask | urgent
+  var fromLink = new URLSearchParams(location.search).get('form');
+  if (FORMS[fromLink]) open(fromLink);
   dialog.querySelector('[data-close-dialog]').addEventListener('click', function () { dialog.close(); });
   dialog.addEventListener('click', function (ev) { if (ev.target === dialog) dialog.close(); }); // клик по затемнению
 })();
@@ -784,6 +1005,8 @@ var SCHEDULE = {
   });
 })();
 </script>
+<script src="assets/search-data.js"></script>
+<script src="assets/search.js"></script>
 
 </body>
 </html>
