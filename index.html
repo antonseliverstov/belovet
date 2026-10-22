@@ -335,7 +335,7 @@ dialog::backdrop { background: rgba(15, 43, 69, .55); }
     <a class="logo" href="#top"><img class="sym" src="assets/logo-symbol.png" alt=""><img class="word" src="assets/logo-wordmark.png" alt="beloVET, ветеринарный врач-хирург"></a>
     <nav class="nav" aria-label="Разделы">
       <a href="#about">О враче</a>
-      <a href="#operations">Операции</a>
+      <a href="#steps">Как проходит</a>
       <a href="#prices">Цены</a>
       <a href="#urgent">Экстренно</a>
       <a href="#contacts">Контакты</a>
@@ -373,7 +373,7 @@ dialog::backdrop { background: rgba(15, 43, 69, .55); }
     </div>
     <nav aria-label="Разделы">
       <a href="#about" data-close-menu>О враче</a>
-      <a href="#operations" data-close-menu>Операции</a>
+      <a href="#steps" data-close-menu>Как проходит</a>
       <a href="#prices" data-close-menu>Цены</a>
       <a href="#urgent" data-close-menu>Экстренно</a>
       <a href="#contacts" data-close-menu>Контакты</a>
@@ -468,20 +468,19 @@ dialog::backdrop { background: rgba(15, 43, 69, .55); }
     </div>
   </section>
 
-  <section class="section" id="operations" aria-labelledby="ops-h" style="padding-top:0">
+  <section class="section" id="steps" aria-labelledby="steps-h" style="padding-top:0">
     <div class="wrap">
       <div class="head">
-        <span class="label">Операции</span>
-        <h2 id="ops-h">Что я оперирую</h2>
+        <span class="label">Как всё проходит</span>
+        <h2 id="steps-h">От консультации до снятия швов</h2>
       </div>
-      <div class="dirs">
-        <a class="dir" href="#prices"><h3>Брюшная полость</h3><p>Инородные тела, заворот желудка, опухоли селезёнки и печени</p><span class="from num">от 15 000 ₽</span></a>
-        <a class="dir" href="#prices"><h3>Опухоли</h3><p>Кожа, молочная железа, ротовая полость, надпочечник</p><span class="from num">от 5 000 ₽</span></a>
-        <a class="dir" href="#prices"><h3>Мочевыводящие пути</h3><p>Камни мочевого пузыря, закупорка уретры у котов</p><span class="from num">от 15 000 ₽</span></a>
-        <a class="dir" href="#prices"><h3>Переломы и суставы</h3><p>Остеосинтез, вывих бедра, ампутация</p><span class="from num">от 17 250 ₽</span></a>
-        <a class="dir" href="#prices"><h3>Роды и стерилизация</h3><p>Кесарево сечение, пиометра, промежностная грыжа</p><span class="from num">от 4 600 ₽</span></a>
-        <a class="dir" href="#prices"><h3>Раны и пластика</h3><p>Укусы, абсцессы, закрытие дефектов кожи</p><span class="from num">от 1 150 ₽</span></a>
-      </div>
+      <ol class="steps">
+        <li><span class="when">День обращения</span><h3>Консультация</h3><p>Осматриваю и объясняю, нужна ли операция.</p></li>
+        <li><span class="when">По показаниям</span><h3>Обследование</h3><p>Анализы, УЗИ, рентген: только то, что влияет на решение.</p></li>
+        <li><span class="when">День операции</span><h3>Операция</h3><p>После операции звоню владельцу.</p></li>
+        <li><span class="when">Часы или дни</span><h3>Стационар</h3><p>Домой — с письменными рекомендациями.</p></li>
+        <li><span class="when">10–14 день</span><h3>Контроль</h3><p>Осмотр и снятие швов.</p></li>
+      </ol>
     </div>
   </section>
 
@@ -512,22 +511,6 @@ dialog::backdrop { background: rgba(15, 43, 69, .55); }
           <a class="btn btn-outline" href="#prices" style="justify-self:start">Полный прайс</a>
         </div>
       </div>
-    </div>
-  </section>
-
-  <section class="section" aria-labelledby="steps-h" style="padding-top:0">
-    <div class="wrap">
-      <div class="head">
-        <span class="label">Как всё проходит</span>
-        <h2 id="steps-h">От консультации до снятия швов</h2>
-      </div>
-      <ol class="steps">
-        <li><span class="when">День обращения</span><h3>Консультация</h3><p>Осматриваю и объясняю, нужна ли операция.</p></li>
-        <li><span class="when">По показаниям</span><h3>Обследование</h3><p>Анализы, УЗИ, рентген: только то, что влияет на решение.</p></li>
-        <li><span class="when">День операции</span><h3>Операция</h3><p>После операции звоню владельцу.</p></li>
-        <li><span class="when">Часы или дни</span><h3>Стационар</h3><p>Домой — с письменными рекомендациями.</p></li>
-        <li><span class="when">10–14 день</span><h3>Контроль</h3><p>Осмотр и снятие швов.</p></li>
-      </ol>
     </div>
   </section>
 
