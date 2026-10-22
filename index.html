@@ -140,7 +140,11 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--blue-text); out
 .sum dt { min-width: 0; }
 .sum dt small { display: block; font-size: 15px; color: var(--muted); }
 .sum dd { margin: 0; font-weight: 600; text-align: right; }
-@media (max-width: 900px) { .prices { grid-template-columns: 1fr; } }
+@media (max-width: 900px) { .prices { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 480px) {
+  .price-list, .sum dl { padding-inline: 16px; }
+  .price-list .num { white-space: normal; text-align: right; }
+}
 
 /* Как проходит */
 .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; counter-reset: s; }
