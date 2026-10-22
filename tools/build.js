@@ -11,6 +11,8 @@ const ROOT = path.join(__dirname, '..');
 const SITE = 'https://antonseliverstov.github.io/belovet/';
 const PHONE = '+7 (939) 255-77-71';
 const PHONE_HREF = 'tel:+79392557771';
+const crypto = require("crypto");
+const ver = f => crypto.createHash("md5").update(fs.readFileSync(path.join(ROOT, f))).digest("hex").slice(0, 8); // метка версии против кэша
 const UPDATED = { iso: '2026-10-22', text: '22 октября 2026' }; // дата проверки материалов
 
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -195,7 +197,7 @@ function pageHtml(p) {
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Onest:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="../assets/page.css">
+<link rel="stylesheet" href="../assets/page.css?v=${ver("assets/page.css")}">
 ${ld.map(x => `<script type="application/ld+json">${JSON.stringify(x)}</script>`).join('\n')}
 </head>
 <body>
@@ -295,6 +297,7 @@ fs.writeFileSync(path.join(ROOT, 'assets', 'search-data.js'),
 
 const indexPath = path.join(ROOT, 'index.html');
 let index = fs.readFileSync(indexPath, 'utf8');
+index = index.replace(/assets\/(search-data|search)\.js(\?v=[0-9a-f]+)?/g, (m, n) => `assets/${n}.js?v=${ver('assets/' + n + '.js')}`);
 const START = '<!-- SURGERY:START -->', END = '<!-- SURGERY:END -->';
 const a = index.indexOf(START), b = index.indexOf(END);
 if (a < 0 || b < 0) throw new Error('В index.html нет меток SURGERY:START / SURGERY:END');
