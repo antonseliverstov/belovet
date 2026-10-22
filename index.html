@@ -148,7 +148,8 @@ body.where-open .mbar { display: none; }
 .hero-photo { position: relative; margin: 0; display: grid; gap: 22px; }
 .hero-photo .blob { position: absolute; z-index: 0; left: -22%; top: 2%; width: 140%; height: 100%; fill: var(--sky); }
 .hero-photo img { position: relative; z-index: 1; display: block; width: 100%; aspect-ratio: 618 / 760; object-fit: cover; object-position: 50% 12%; border-radius: 40px; border: 6px solid var(--paper); box-shadow: 0 18px 40px rgba(15, 43, 69, .10); background: var(--sky); }
-.hero-photo figcaption { position: relative; z-index: 1; padding-left: 18px; border-left: 4px solid var(--orange); display: grid; gap: 2px; margin-left: 10px; }
+.hero .lead { display: grid; gap: 10px; }
+.hero-photo figcaption { position: absolute; z-index: 2; left: 22px; bottom: 22px; max-width: calc(100% - 44px); display: grid; gap: 2px; padding: 12px 18px 12px 16px; border-left: 4px solid var(--orange); border-radius: 14px; background: rgba(255, 255, 255, .94); box-shadow: 0 8px 24px rgba(15, 43, 69, .14); backdrop-filter: blur(6px); }
 .hero-photo figcaption b { font: 800 clamp(20px, 2vw, 26px)/1.2 var(--font-display); letter-spacing: -0.01em; }
 .hero-photo figcaption span { color: var(--blue-text); font-size: 17px; }
 @media (max-width: 860px) {
@@ -306,7 +307,10 @@ body.where-open .mbar { display: none; }
       <div class="hero-text">
         <span class="eyebrow">Ветеринарный врач-хирург</span>
         <h1>Операции кошкам и&nbsp;собакам <em>в&nbsp;Люберцах<svg viewBox="0 0 300 12" preserveAspectRatio="none" aria-hidden="true"><path d="M3 9 C 70 3, 190 2, 297 6"/></svg></em></h1>
-        <p class="lead">Плановые и экстренные операции с понятным планом на каждом этапе. По приглашению оперирую в клиниках Москвы и области.</p>
+        <div class="lead">
+          <p>Плановые и экстренные операции.</p>
+          <p>По приглашению оперирую в ветеринарных клиниках Москвы и области.</p>
+        </div>
         <div class="row" style="gap:16px">
           <a class="btn btn-dark" href="#contacts">Записаться на приём<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
           <a class="btn btn-ghost" href="#second">Задать вопрос врачу</a>
