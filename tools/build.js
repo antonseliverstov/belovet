@@ -33,6 +33,9 @@ for (const p of PROCEDURES) {
 }
 for (const k of Object.keys(ARTICLES)) if (!slugs.has(k)) throw new Error('Статья без процедуры: ' + k);
 
+// ---------- блог ----------
+const BLOG = require('./blog')({ ROOT, SITE, esc, rub, cap, plural, ver, SOURCES, PROCEDURES, PHONE, PHONE_HREF });
+
 // ---------- шаблоны восстановления по типу вмешательства ----------
 const TIMELINES = {
   soft: [
@@ -204,7 +207,7 @@ ${ld.map(x => `<script type="application/ld+json">${JSON.stringify(x)}</script>`
 <header class="header">
   <div class="wrap">
     <a class="logo" href="../index.html"><img class="sym" src="../assets/logo-symbol.png" alt=""><img class="word" src="../assets/logo-wordmark.png" alt="beloVET, ветеринарный врач-хирург"></a>
-    <nav class="nav" aria-label="Разделы"><a href="../index.html#prices">Операции и цены</a><a href="../index.html#urgent">Экстренно</a><a href="../index.html#contacts">Контакты</a></nav>
+    <nav class="nav" aria-label="Разделы"><a href="../index.html#prices">Операции и цены</a><a href="../blog/index.html">Блог</a><a href="../index.html#urgent">Экстренно</a><a href="../index.html#contacts">Контакты</a></nav>
     <a class="phone num" href="${PHONE_HREF}">${PHONE}</a>
     <a class="btn btn-primary" href="../index.html?form=book">Записаться</a>
   </div>
@@ -238,6 +241,13 @@ ${body}
       </div>
     </div>
   </div>
+
+  ${BLOG.postsFor(p.slug).length ? `<section class="more more-posts">
+    <div class="wrap">
+      <h2>Статьи по теме</h2>
+      <div class="cards">${BLOG.postsFor(p.slug).slice(0, 3).map(b => `<a class="card" href="../blog/${b.slug}.html"><span class="card-cat">Блог</span><b>${esc(b.title)}</b><span class="card-text">${esc(b.lead.length > 120 ? b.lead.slice(0, b.lead.lastIndexOf(' ', 118)) + '…' : b.lead)}</span><span class="card-more">Читать →</span></a>`).join('')}</div>
+    </div>
+  </section>` : ''}
 
   ${related.length ? `<section class="more">
     <div class="wrap">
@@ -335,9 +345,13 @@ const RS = '<!-- REVIEWS:START -->', RE = '<!-- REVIEWS:END -->';
 const ra = index.indexOf(RS), rb = index.indexOf(RE);
 if (ra < 0 || rb < 0) throw new Error('В index.html нет меток REVIEWS:START / REVIEWS:END');
 index = index.slice(0, ra + RS.length) + reviewsBlock() + '\n        ' + index.slice(rb);
+const BS = '<!-- BLOG:START -->', BE = '<!-- BLOG:END -->';
+const ba = index.indexOf(BS), bb = index.indexOf(BE);
+if (ba < 0 || bb < 0) throw new Error('В index.html нет меток BLOG:START / BLOG:END');
+index = index.slice(0, ba + BS.length) + BLOG.homeBlock + '\n        ' + index.slice(bb);
 fs.writeFileSync(indexPath, index);
 
-const urls = ['', 'privacy.html', ...PROCEDURES.map(p => 'operations/' + p.slug + '.html')];
+const urls = ['', 'privacy.html', ...PROCEDURES.map(p => 'operations/' + p.slug + '.html'), ...BLOG.urls];
 fs.writeFileSync(path.join(ROOT, 'sitemap.xml'),
   '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
   + urls.map(u => `  <url><loc>${SITE}${u}</loc><lastmod>${UPDATED.iso}</lastmod></url>`).join('\n') + '\n</urlset>\n');

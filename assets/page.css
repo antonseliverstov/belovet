@@ -164,3 +164,23 @@ p { margin: 0; }
 .footer img { width: 140px; }
 .footer p { max-width: 640px; }
 .footer a { color: var(--muted); }
+
+/* Блог */
+.cover-post .cover-title { margin-bottom: -6px; }
+.takeaways { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; max-width: 760px; }
+.takeaways li { position: relative; padding: 12px 16px 12px 44px; background: rgba(255, 255, 255, .8); border-radius: 14px; font-weight: 500; }
+.takeaways li::before { content: "✓"; position: absolute; left: 16px; top: 11px; color: var(--orange); font-weight: 800; }
+.op-card { display: grid; gap: 6px; padding: 20px 22px; background: var(--paper); border: 2px solid var(--sky); border-radius: 18px; color: var(--navy); text-decoration: none; transition: border-color .15s; }
+.op-card:hover { border-color: var(--blue); }
+.op-card-label { font: 700 12px/1.2 var(--font-body); letter-spacing: .06em; text-transform: uppercase; color: var(--blue-text); }
+.op-card b { font: 800 20px/1.25 var(--font-display); }
+.op-card-text { font-size: 15px; color: var(--muted); }
+.op-card-more { display: flex; justify-content: space-between; gap: 12px; margin-top: 4px; font-weight: 700; color: var(--blue-text); }
+.op-card-more .num { color: var(--navy); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+.chip { padding: 10px 16px; border: 0; border-radius: 999px; background: var(--paper); color: var(--navy); font: 600 15px var(--font-body); cursor: pointer; }
+.chip:hover { background: var(--sky); }
+.chip.on { background: var(--navy); color: #fff; }
+.blog-cards { margin-bottom: 72px; }
+.post-card[hidden] { display: none; }
+.more-posts { background: var(--cream); padding-bottom: 0; }

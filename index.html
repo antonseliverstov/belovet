@@ -338,6 +338,16 @@ dialog::backdrop { background: rgba(15, 43, 69, .55); }
 .clinics .row { justify-content: flex-start; }
 @media (max-width: 900px) { .clinics { grid-template-columns: minmax(0, 1fr); } }
 
+/* Блог на главной */
+.posts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.post { background: var(--paper); border-radius: var(--radius-lg); padding: 24px; display: grid; gap: 10px; align-content: start; color: var(--navy); text-decoration: none; transition: transform .15s; }
+.post:hover { transform: translateY(-2px); }
+@media (prefers-reduced-motion: reduce) { .post { transition: none; } .post:hover { transform: none; } }
+.post-cat { font: 700 12px/1.2 var(--font-body); letter-spacing: .06em; text-transform: uppercase; color: var(--blue-text); }
+.post b { font: 800 20px/1.25 var(--font-display); }
+.post-more { margin-top: 4px; font-weight: 700; color: var(--blue-text); }
+@media (max-width: 900px) { .posts { grid-template-columns: minmax(0, 1fr); } }
+
 /* Отзывы: вид карточки как на Яндекс Картах */
 .rv-top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 20px 32px; margin-bottom: 32px; }
 .rv-grid { columns: 3 320px; column-gap: 16px; }
@@ -413,6 +423,7 @@ dialog::backdrop { background: rgba(15, 43, 69, .55); }
     <nav class="nav" aria-label="Разделы">
       <a href="#about">О враче</a>
       <a href="#reviews">Отзывы</a>
+      <a href="blog/index.html">Блог</a>
       <a href="#prices">Цены</a>
       <a href="#urgent">Экстренно</a>
       <a href="#contacts">Контакты</a>
@@ -452,6 +463,7 @@ dialog::backdrop { background: rgba(15, 43, 69, .55); }
       <a href="#about" data-close-menu>О враче</a>
       <a href="#steps" data-close-menu>Как проходит</a>
       <a href="#reviews" data-close-menu>Отзывы</a>
+      <a href="blog/index.html">Блог</a>
       <a href="#prices" data-close-menu>Цены</a>
       <a href="#urgent" data-close-menu>Экстренно</a>
       <a href="#contacts" data-close-menu>Контакты</a>
@@ -863,6 +875,26 @@ dialog::backdrop { background: rgba(15, 43, 69, .55); }
     </div>
   </section>
 
+  <section class="section" id="blog" aria-labelledby="blog-h" style="padding-top:0">
+    <div class="wrap">
+      <div class="rv-top">
+        <div class="head" style="margin-bottom:0">
+          <span class="label">Блог</span>
+          <h2 id="blog-h">Полезное владельцам</h2>
+          <p>Что делать в экстренной ситуации, как подготовить питомца к операции и ухаживать после неё.</p>
+        </div>
+        <a class="btn btn-outline" href="blog/index.html">Все статьи</a>
+      </div>
+      <div class="posts">
+        <!-- BLOG:START -->
+          <a class="post" href="blog/kot-ne-mozhet-popisat.html"><span class="post-cat">Экстренные ситуации</span><b>Кот не может пописать: что делать и почему нельзя ждать</b><span class="post-more">Читать →</span></a>
+          <a class="post" href="blog/sobaka-proglotila-predmet.html"><span class="post-cat">Экстренные ситуации</span><b>Собака проглотила посторонний предмет: что делать</b><span class="post-more">Читать →</span></a>
+          <a class="post" href="blog/zavorot-zheludka-u-sobak.html"><span class="post-cat">Экстренные ситуации</span><b>Заворот желудка у собак: признаки, первая помощь, профилактика</b><span class="post-more">Читать →</span></a>
+        <!-- BLOG:END -->
+      </div>
+    </div>
+  </section>
+
   <section class="section" id="reviews" aria-labelledby="reviews-h" style="padding-top:0">
     <div class="wrap">
       <div class="rv-top">
@@ -1040,7 +1072,7 @@ dialog::backdrop { background: rgba(15, 43, 69, .55); }
 <footer class="footer">
   <div class="wrap">
     <img src="assets/logo-wordmark.png" alt="beloVET">
-    <p style="max-width:540px">Владислав Белорыбец, ветеринарный врач-хирург. Цены на сайте не являются публичной офертой: итоговая стоимость согласуется после осмотра. <a href="mailto:vladislav@belovet.ru">vladislav@belovet.ru</a> · <a href="privacy.html">Политика конфиденциальности</a></p>
+    <p style="max-width:540px">Владислав Белорыбец, ветеринарный врач-хирург. Цены на сайте не являются публичной офертой: итоговая стоимость согласуется после осмотра. <a href="mailto:vladislav@belovet.ru">vladislav@belovet.ru</a> · <a href="blog/index.html">Блог</a> · <a href="privacy.html">Политика конфиденциальности</a></p>
   </div>
 </footer>
 
