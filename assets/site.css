@@ -321,7 +321,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px soli
 
 /* ---------- текстовые страницы: блог, политика, 404 ---------- */
 .ph-in { min-height: calc(640 * var(--px)); padding-top: 0; }
-.ph-title { margin-top: calc(60 * var(--px)); color: #fff; max-width: calc(1469 * var(--px)); }
+.ph-title { margin-top: calc(60 * var(--px)); color: var(--ink); max-width: calc(1469 * var(--px)); }
 .ph-lead { margin-top: calc(40 * var(--px)); max-width: calc(900 * var(--px)); }
 .ph-meta { margin-top: calc(36 * var(--px)); display: flex; flex-wrap: wrap; gap: calc(8 * var(--px)) calc(40 * var(--px)); }
 .prose { padding-top: calc(80 * var(--px)); padding-bottom: calc(100 * var(--px)); }
