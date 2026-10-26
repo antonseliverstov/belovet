@@ -13,7 +13,7 @@ function loadPosts(ROOT) {
 }
 
 module.exports = function blog(ctx) {
-  const { ROOT, SITE, UI, clip, fitTitle, ogTags, iconTags, esc, rub, cap, plural, ver, SOURCES, PROCEDURES, PHONE, PHONE_HREF } = ctx;
+  const { ROOT, SITE, UI, clip, fitTitle, ogTags, iconTags, esc, rub, cap, plural, ver, PROCEDURES, PHONE, PHONE_HREF } = ctx;
   const posts = loadPosts(ROOT).sort((a, b) => (b.date || '').localeCompare(a.date || '') || a.priority - b.priority);
   const proc = slug => PROCEDURES.find(p => p.slug === slug);
   const minPrice = p => Math.min(...p.prices.map(x => x.p));
@@ -42,7 +42,6 @@ module.exports = function blog(ctx) {
   }
   const postCard = (p, prefix) => `<a class="post" href="${prefix}${p.slug}.html" data-rubric="${p.rubric}"><span class="t" style="${T(21, 29)}">${esc(RUBRICS[p.rubric])}</span><b>${esc(p.title)}</b><span class="t" style="${T(23, 33)}">${esc(p.lead.length > 150 ? p.lead.slice(0, p.lead.lastIndexOf(' ', 148)) + '…' : p.lead)}</span><span class="post-read t" style="${T(25, 34)}">Читать →</span></a>`;
   const short = o => { const s = o.lead.split(/(?<=\.)\s/)[0]; return s.length > 150 ? s.slice(0, s.lastIndexOf(' ', 146)) + '…' : s; };
-  const sourceHtml = s => typeof s === 'string' ? esc(SOURCES[s]) : (s.url ? `${esc(s.text)}: <a href="${s.url}" target="_blank" rel="noopener">${s.url}</a>` : esc(s.text));
 
   // Фото первого экрана статьи — из утверждённой серии, по виду животного и теме (макет «Статья блога» в Figma)
   const POST_PHOTOS = {
@@ -90,7 +89,6 @@ ${body}
 ${UI.faq(p.faq, 'Частые вопросы')}
 ${ops.length ? UI.others(pre, 'Операции\nпо теме', ops, minPrice) : ''}
 ${related.length ? `<section class="fx" style="--bg:var(--sky2)"><div class="sx"><h2 class="t o up" style="${T(88, 96)};margin-bottom:calc(52 * var(--px))">Читайте также</h2><div class="posts">${related.map(r => postCard(r, '')).join('')}</div></div></section>` : ''}
-${UI.sources(p.sources.map(sourceHtml), `Статья подготовлена по учебникам и клиническим руководствам по ветеринарной хирургии. Дата проверки: ${dateRu(p.updated || p.date)}.`, 'Статья носит ознакомительный характер и не заменяет осмотр. Если питомцу плохо — звоните врачу.')}
 ${UI.book(pre, 'Остались\nвопросы?', 'Опишите ситуацию и прикрепите анализы или снимки — отвечу, что делать дальше.')}
 </main>
 ${UI.footer(pre)}
