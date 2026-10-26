@@ -344,6 +344,11 @@ dialog::backdrop { background: rgba(15, 43, 69, .55); }
 .dir-mid > div { display: flex; flex-direction: column; gap: calc(16 * var(--px)); }
 .dir-small { display: flex; flex-direction: column; gap: calc(16 * var(--px)); padding: calc(32 * var(--px)); background: var(--milk); }
 .dir h3 { font-weight: 700; }
+a.dir { color: var(--ink) !important; text-decoration: none !important; transition: translate .15s; }
+a.dir:hover { translate: 0 calc(-4 * var(--px)); }
+a.dir:hover h3 { text-decoration: underline; text-underline-offset: .12em; text-decoration-thickness: .06em; }
+.dirs-more a { text-decoration: underline !important; text-underline-offset: .15em; }
+@media (prefers-reduced-motion: reduce) { a.dir { transition: none; } a.dir:hover { translate: none; } }
 
 /* 04 Экстренная запись */
 .s-urgent { --bg: var(--medical); color: var(--milk); }
@@ -790,29 +795,30 @@ dialog::backdrop { background: rgba(15, 43, 69, .55); }
       <h2 class="a dirs-h o up" id="dirs-h" style="--x:72;--y:53;--w:1200"><span class="t" style="--fs:138;--lh:151">Хирургия</span> <span class="t" style="--fs:112;--lh:128">кошек и собак</span></h2>
       <img class="a dirs-dog" style="--x:1160;--y:49;--w:394" src="assets/home/dog-orange.png" width="788" height="788" alt="" loading="lazy">
       <div class="a deco card-white rot" style="--x:84.4;--y:466.5;--w:704;--r:1.4" aria-hidden="true"><div class="hh" style="--hh:450"></div></div>
-      <article class="a dir dir-main rot hh" style="--x:66.4;--y:443.5;--w:704;--hh:450;--r:1.4">
+      <a class="a dir dir-main rot hh" style="--x:66.4;--y:443.5;--w:704;--hh:450;--r:1.4" href="#prices" data-open-cat="Ортопедия и травматология">
         <b class="a t o" style="--x:30;--y:28;--w:190;--fs:130;--lh:140">01</b>
-        <h3 class="a t o" style="--x:219;--y:39;--w:455;--fs:60;--lh:65">Кости <br>и суставы</h3>
-        <p class="a t" style="--x:219;--y:238;--w:451;--fs:27;--lh:36">Переломы, вывихи <br>и повреждения связок.</p>
+        <h3 class="a t o" style="--x:219;--y:39;--w:455;--fs:60;--lh:65">Переломы <br>и связки</h3>
+        <p class="a t" style="--x:219;--y:238;--w:451;--fs:27;--lh:36">Остеосинтез, разрывы связок, <br>вывихи и суставы.</p>
         <img class="a deco" style="--x:50.04;--y:297.49;--w:110.92" src="assets/home/paw.png" width="222" height="198" alt="">
-      </article>
-      <article class="a dir dir-mid hh" style="--x:858;--y:435;--w:683;--hh:212">
+      </a>
+      <a class="a dir dir-mid hh" style="--x:858;--y:435;--w:683;--hh:212" href="#prices" data-open-cat="Онкологическая хирургия">
         <b class="t o" style="--fs:52;--lh:62">02</b>
-        <div><h3 class="t o" style="--fs:42;--lh:50">Раны и мягкие ткани</h3><p class="t" style="--fs:23;--lh:31">Обработка ран, дренирование <br>и пластика кожи.</p></div>
-      </article>
-      <article class="a dir dir-mid hh" style="--x:858;--y:675;--w:683;--hh:212">
+        <div><h3 class="t o" style="--fs:42;--lh:50">Опухоли</h3><p class="t" style="--fs:23;--lh:31">Удаление опухолей кожи, мягких тканей <br>и молочных желёз, биопсия.</p></div>
+      </a>
+      <a class="a dir dir-mid hh" style="--x:858;--y:675;--w:683;--hh:212" href="#prices" data-open-cat="Абдоминальная и торакальная хирургия">
         <b class="t o" style="--fs:52;--lh:62">03</b>
-        <div><h3 class="t o" style="--fs:42;--lh:50">Внутренние органы</h3><p class="t" style="--fs:23;--lh:31">Операции на органах брюшной <br>и грудной полости.</p></div>
-      </article>
-      <article class="a dir dir-small hh" style="--x:72;--y:946;--w:477;--hh:320">
-        <b class="t o" style="--fs:28;--lh:34">04</b><h3 class="t o" style="--fs:36;--lh:44">Новообразования</h3><p class="t" style="--fs:22;--lh:30">Удаление опухолей кожи <br>и мягких тканей, биопсия.</p>
-      </article>
-      <article class="a dir dir-small hh" style="--x:568;--y:946;--w:477;--hh:320">
-        <b class="t o" style="--fs:28;--lh:34">05</b><h3 class="t o" style="--fs:36;--lh:44">Мочевая система</h3><p class="t" style="--fs:22;--lh:30">Операции на почках, мочевом <br>пузыре и мочевыводящих путях.</p>
-      </article>
-      <article class="a dir dir-small hh" style="--x:1064;--y:946;--w:477;--hh:320">
-        <b class="t o" style="--fs:28;--lh:34">06</b><h3 class="t o" style="--fs:36;--lh:44">Репродуктивная <br>хирургия</h3><p class="t" style="--fs:22;--lh:30">Кастрация, стерилизация <br>и кесарево сечение.</p>
-      </article>
+        <div><h3 class="t o" style="--fs:42;--lh:50">Внутренние органы</h3><p class="t" style="--fs:23;--lh:31">Желудок и кишечник, печень, грыжи, <br>операции в грудной полости.</p></div>
+      </a>
+      <a class="a dir dir-small hh" style="--x:72;--y:946;--w:477;--hh:320" href="#prices" data-open-cat="Урология">
+        <b class="t o" style="--fs:28;--lh:34">04</b><h3 class="t o" style="--fs:36;--lh:44">Мочевая система</h3><p class="t" style="--fs:22;--lh:30">Операции на почках, мочевом <br>пузыре и мочевыводящих путях.</p>
+      </a>
+      <a class="a dir dir-small hh" style="--x:568;--y:946;--w:477;--hh:320" href="#prices" data-open-cat="Раны и пластика кожи">
+        <b class="t o" style="--fs:28;--lh:34">05</b><h3 class="t o" style="--fs:36;--lh:44">Раны, кожа и уши</h3><p class="t" style="--fs:22;--lh:30">Обработка ран, пластика кожи, <br>гематомы уха, ампутации.</p>
+      </a>
+      <a class="a dir dir-small hh" style="--x:1064;--y:946;--w:477;--hh:320" href="#prices" data-open-cat="Репродуктивная хирургия">
+        <b class="t o" style="--fs:28;--lh:34">06</b><h3 class="t o" style="--fs:36;--lh:44">Стерилизация <br>и кастрация</h3><p class="t" style="--fs:22;--lh:30">А также кесарево сечение <br>и пиометра.</p>
+      </a>
+      <p class="a t dirs-more" style="--x:72;--y:1280;--w:1469;--fs:22;--lh:30">А также ЛОР и челюстно-лицевые операции, перевязки и анестезия — всё в <a href="#prices" data-open-cat="Общая хирургия">прайсе ниже</a>.</p>
       <hr class="a line" style="--x:72;--y:1320;--w:1469">
       <p class="a t o up" style="--x:72;--y:1369;--w:1030;--fs:48;--lh:52">Не знаете, с чего начать?</p>
       <p class="a t" style="--x:72;--y:1438;--w:980;--fs:27;--lh:36">Расскажите, что беспокоит питомца.</p>
@@ -1642,6 +1648,20 @@ var SCHEDULE = {
     if (!open) document.getElementById("reviews").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
   });
 })();
+
+// Направления хирургии: ссылка открывает свой раздел прайса
+document.querySelectorAll('[data-open-cat]').forEach(function (link) {
+  link.addEventListener('click', function (ev) {
+    var name = link.dataset.openCat;
+    var cat = Array.prototype.find.call(document.querySelectorAll('#op-cats .cat'), function (d) { return d.querySelector('summary span').textContent.trim() === name; });
+    if (!cat) return;
+    ev.preventDefault();
+    var search = document.getElementById('op-search');
+    if (search.value) { search.value = ''; search.dispatchEvent(new Event('input', { bubbles: true })); }
+    cat.open = true;
+    cat.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+  });
+});
 
 // Уведомление о cookie
 (function () {
