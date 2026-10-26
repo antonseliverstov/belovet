@@ -53,7 +53,9 @@ for (const p of PROCEDURES) {
 for (const k of Object.keys(ARTICLES)) if (!slugs.has(k)) throw new Error('Статья без процедуры: ' + k);
 
 // ---------- блог ----------
-const BLOG = require('./blog')({ ROOT, SITE, clip, fitTitle, ogTags, iconTags, esc, rub, cap, plural, ver, SOURCES, PROCEDURES, PHONE, PHONE_HREF });
+const FIGMA = require('../data/figma-ops');
+const UI = require('./ui')({ SITE, esc, rub, cap, ver, PHONE, PHONE_HREF });
+const BLOG = require('./blog')({ ROOT, SITE, UI, clip, fitTitle, ogTags, iconTags, esc, rub, cap, plural, ver, SOURCES, PROCEDURES, PHONE, PHONE_HREF });
 
 // ---------- шаблоны восстановления по типу вмешательства ----------
 const TIMELINES = {
@@ -108,7 +110,6 @@ const HOME_BASE = [
   'каждый день осматривайте шов: в первые дни допустимы лёгкое покраснение и небольшой отёк',
   'в первые сутки кормите небольшими порциями'
 ];
-const ALARMS = ['кровотечение из раны или повязки', 'шов разошёлся, из него выделяется гной', 'температура выше 39,5 °C', 'отказ от еды больше суток, повторная рвота', 'выраженная вялость, бледные дёсны, тяжёлое дыхание'];
 
 const PREP_BASE = [
   'осмотр и сбор анамнеза: какие болезни были, какие лекарства принимает питомец',
@@ -127,78 +128,100 @@ function words(a, p) {
 function pageHtml(p) {
   const a = ARTICLES[p.slug];
   const f = a.facts || {};
+  const fig = FIGMA[p.slug] || {};
   const isOp = !['anest', 'postop'].includes(p.cat);
-  const related = PROCEDURES.filter(x => x.cat === p.cat && x.slug !== p.slug).slice(0, 3);
-  const priceNote = p.cat === 'anest'
-    ? 'Степень анестезии определяет анестезиолог после осмотра.'
-    : ['postop', 'wounds'].includes(p.cat)
-      ? 'Если нужна седация или наркоз, их стоимость считается отдельно.'
-      : 'Цена операции указана без наркоза, анализов, стационара и препаратов. Точную смету врач называет после осмотра.';
+  const pre = '../';
+  const url = `${SITE}operations/${p.slug}.html`;
 
-  // разделы и оглавление
-  const toc = [];
-  const sec = (id, title, html) => { toc.push([id, title]); return `<h2 id="${id}">${esc(title)}</h2>\n${html}`; };
-
-  const factsList = [
-    ['Длительность', f.duration], ['Анестезия', f.anes], ['Стационар', f.stay],
-    ['Швы', f.sutures], ['Восстановление', f.recovery]
-  ].filter(x => x[1] && x[1] !== '—');
-
+  // FAQ: свои вопросы + типовые по фактам
   const autoFaq = [];
   if (f.duration && !/уточня|—|по ситуации|на время/.test(f.duration)) autoFaq.push(['Сколько длится операция?', `Обычно ${f.duration}. Точное время зависит от размера питомца и того, что хирург увидит во время операции.`]);
   if (isOp && f.stay && !/уточня|—/.test(f.stay)) autoFaq.push(['Когда можно забрать питомца домой?', cap(f.stay) + '. Домой отпускаем, когда питомец проснулся, стабилен и вы получили письменные рекомендации.']);
   if (isOp && f.sutures && !/—|уточня/.test(f.sutures)) autoFaq.push(['Когда снимают швы?', cap(f.sutures) + '. Если швы внутрикожные или рассасывающиеся, снимать их не нужно.']);
   const faq = [...(a.faq || []), ...autoFaq];
 
-  let body = '';
-  body += sec('chto-eto', 'Что это за операция', (a.what || [p.lead]).map(t => `<p>${esc(t)}</p>`).join('\n'));
-  body += sec('kogda', isOp ? 'Когда нужна операция' : 'Когда это нужно',
-    `<ul>${p.indications.map(i => `<li>${esc(i)}</li>`).join('')}</ul>`
-    + (a.redFlags && a.redFlags.length ? `<aside class="note note-alarm"><b>Срочно к врачу, если:</b><ul>${a.redFlags.map(r => `<li>${esc(r)}</li>`).join('')}</ul><p>Запись: <a href="${PHONE_HREF}">${PHONE}</a>. По экстренной записи приеду в клинику за 15 минут в любое время, даже ночью. Тяжёлых пациентов принимаем без очереди.</p></aside>` : ''));
-  body += sec('ceny', 'Варианты и цены',
-    (a.types || []).map(t => `<h3>${esc(t[0])}</h3><p>${esc(t[1])}</p>`).join('')
-    + `<div class="table"><table><caption>${esc(p.title)}: стоимость</caption><thead><tr><th>Вариант</th><th class="num">Цена</th></tr></thead><tbody>${p.prices.map(x => `<tr><td>${esc(x.v ? cap(x.v) : p.title)}</td><td class="num">${rub(x.p)}</td></tr>`).join('')}</tbody></table></div>`
-    + `<p class="small">${esc(priceNote)}</p>`);
-  if (p.cat !== 'anest') body += sec('podgotovka', 'Обследование и подготовка',
-    `<ul>${[...(a.prep || []), ...(isOp ? PREP_BASE : [])].map(x => `<li>${esc(cap(x))}</li>`).join('')}</ul>`);
-  else body += sec('podgotovka', 'Подготовка к наркозу', `<ul>${(a.prep || []).map(x => `<li>${esc(cap(x))}</li>`).join('')}</ul>`);
-  body += sec('hod', isOp ? 'Как проходит операция' : 'Как это проходит',
-    `<ol class="steps">${(a.steps || []).map(s => `<li>${esc(cap(s))}</li>`).join('')}</ol>`
-    + (p.draft ? '<p class="note">Подробное описание этой позиции уточняется у хирурга.</p>' : ''));
-  const tl = TIMELINES[a.profile || 'soft'];
-  body += sec('vosstanovlenie', 'Восстановление по дням',
-    `<p>${esc(p.recovery)}</p><ol class="timeline">${tl.map(r => `<li><b>${esc(r[0])}</b><span>${esc(r[1])}</span></li>`).join('')}</ol>`
-    + '<p class="small">Сроки ориентировочные: врач скорректирует их по ходу восстановления.</p>');
-  const home = [...(a.profile === 'anest' || a.profile === 'minor' ? [] : HOME_BASE), ...(a.home || [])];
-  if (home.length) body += sec('doma', 'Уход дома', `<ul class="check">${home.map(h => `<li>${esc(cap(h))}</li>`).join('')}</ul>`);
-  body += sec('oslozhneniya', 'Возможные осложнения',
-    `<p>${esc(p.risks)}</p>`
-    + (a.profile !== 'anest' ? `<aside class="note"><b>Покажите питомца врачу, если заметили:</b><ul>${ALARMS.map(x => `<li>${esc(x)}</li>`).join('')}</ul></aside>` : ''));
-  if (a.outlook) body += sec('prognoz', 'Прогноз', `<p>${esc(a.outlook)}</p>`);
+  // 1. первый экран
+  const species = /кот|кошк/i.test(p.title) ? 'У кошек' : /собак|кобел|сук/i.test(p.title) ? 'У собак' : /хорьк|хорёк/i.test(p.title) ? 'У хорьков' : (isOp ? 'У кошек и собак' : 'Для кошек и собак');
+  const L = p.title.length;
+  const auto = { fs: L <= 12 ? 182 : L <= 20 ? 150 : L <= 30 ? 120 : L <= 42 ? 100 : 84 };
+  auto.lh = Math.round(auto.fs * 1.08);
+  const heroPhoto = fig.hero ? fig.hero.photo : heroPhotoFor(p);
+  const heroHtml = UI.hero(pre, Object.assign({
+    title: p.title, sub: species, lead: p.lead, price: minPrice(p), priceFrom: p.prices.length > 1, photo: heroPhoto, alt: '',
+    crumbs: [['Главная', pre + 'index.html'], ['Ветеринарная хирургия', pre + 'index.html#prices'], [catName(p.cat), pre + 'index.html#prices']]
+  }, auto, fig.hero || {}, { photo: heroPhoto }));
 
-  body += `<div class="cta">
-    <div>
-      <p class="cta-title">Обсудим ваш случай</p>
-      <p class="cta-text">Пришлите анализы, снимки и заключения — посмотрю и отвечу, нужна ли операция и как к ней подготовиться.</p>
-    </div>
-    <div class="cta-actions">
-      <a class="btn btn-primary" href="../index.html?form=book">Записаться на приём</a>
-      <a class="btn btn-light" href="../index.html?form=ask">Задать вопрос врачу</a>
-    </div>
-  </div>`;
+  // 2. параметры
+  const params = [['Длительность', f.duration], ['Анестезия', f.anes], ['Стационар', f.stay], ['Снятие швов', f.sutures], ['Восстановление', f.recovery]]
+    .filter(x => x[1] && x[1] !== '—');
 
-  const sources = p.sources.map(k => `<li>${esc(SOURCES[k])}</li>`).join('')
-    + (p.acvs || []).map(x => `<li>American College of Veterinary Surgeons. Small Animal Topics: <a href="${ACVS + x}/" target="_blank" rel="noopener">${ACVS + x}/</a></li>`).join('');
-  body += sec('istochniki', 'Источники и дата проверки',
-    `<p>Материал подготовлен по учебникам и клиническим руководствам по ветеринарной хирургии и проверен ${UPDATED.text}.</p><ol class="sources">${sources}</ol>`
-    + '<p class="small">Информация носит ознакомительный характер и не заменяет осмотр. Нужна ли операция и какая, решает врач после обследования.</p>');
-  body += sec('voprosy', 'Частые вопросы',
-    `<div class="faq">${faq.map(q => `<details class="faq-item"><summary>${esc(q[0])}</summary><div class="faq-a"><p>${esc(q[1])}</p></div></details>`).join('')}</div>`);
+  // 3. смысл операции
+  const what = a.what || [p.lead];
+  const introHtml = fig.noIntro ? '' : UI.intro(pre, fig.intro || {
+    bg: '#fff', heading: isOp ? 'Что это\nза операция' : 'Что это\nза процедура',
+    paras: [what[0]],
+    card: what[1] ? { title: 'Что важно знать', text: what[1] } : null,
+    doodle: what[0].length < 330 && what[1] ? { file: 'm17-lines.png', x: 91.3, y: 668.3, w: 413.3 } : null
+  });
 
-  const textWords = body.replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length;
-  const minutes = Math.max(2, Math.round(textWords / 180));
+  // 4–5. показания и срочно к врачу
+  const red = a.redFlags && a.redFlags.length ? a.redFlags : null;
+  const wf = fig.when || {};
+  const embedAlert = red && (wf.embedAlert || !fig.when);
+  const whenHtml = UI.when(pre, Object.assign({
+    variant: 'rows', heading: isOp ? 'Когда нужна\nоперация' : 'Когда это\nнужно', items: p.indications.map(t => ({ text: t })),
+    after: embedAlert ? UI.alertBox(red) : ''
+  }, wf, { items: wf.items || p.indications.map(t => ({ text: t })), after: embedAlert ? UI.alertBox(red) : '' }));
+  const alertHtml = red && !embedAlert ? UI.alert(red, wf.bg === '#fff' ? '#fff' : 'var(--milk)') : '';
+
+  // 6. стоимость
+  const priceNote = p.cat === 'anest'
+    ? 'Степень анестезии определяет анестезиолог после осмотра.\nТочную смету врач называет после осмотра.'
+    : ['postop', 'wounds'].includes(p.cat)
+      ? 'Если нужна седация или наркоз, их стоимость считается отдельно.\nТочную смету врач называет после осмотра.'
+      : 'Без наркоза, анализов, стационара и препаратов.\nТочную смету врач называет после осмотра.';
+  const costHtml = UI.cost(pre, p.prices.map(x => [x.v ? cap(x.v) : p.title, x.p]), priceNote);
+
+  // 7. акцент
+  const acc = fig.accent || (fig.hero ? null : { type: p.cat === 'ortho' ? 'dvizhenie' : 'ponyatno', at: 'afterCost' });
+  const accHtml = acc ? UI.accent(pre, acc) : '';
+
+  // 8–12. общие блоки
+  const prepItems = [...(a.prep || []), ...(isOp ? PREP_BASE.slice(0, 2) : [])];
+  const prepHtml = p.cat === 'anest' && !prepItems.length ? '' : UI.prep(pre, prepItems.length ? prepItems : PREP_BASE.slice(0, 2));
+  const howHtml = UI.how(pre, a.steps || [], isOp ? 'Как проходит\nоперация' : 'Как это\nпроходит', p.draft ? 'Подробное описание этой позиции уточняется у хирурга.' : '');
+  const recHtml = UI.recovery(pre, p.recovery, TIMELINES[a.profile || 'soft']);
+  const homeItems = [...(a.profile === 'anest' || a.profile === 'minor' ? [] : HOME_BASE), ...(a.home || [])].slice(0, 8);
+  const homeHtml = homeItems.length ? UI.home(pre, homeItems) : '';
+  const ctrlHtml = UI.control(pre, p.risks);
+
+  // 13. прогноз
+  const pg = fig.prognosis || (a.outlook ? { type: 'igrat' } : null);
+  const pgHtml = pg ? UI.prognosis(pre, Object.assign({ text: a.outlook || p.recovery }, pg)) : '';
+
+  // 15. больше по теме / другие операции
+  const short = o => { const s = o.lead.split(/(?<=\.)\s/)[0]; return s.length > 150 ? s.slice(0, s.lastIndexOf(' ', 146)) + '…' : s; };
+  const posts = BLOG.postsFor(p.slug);
+  const list = PROCEDURES.filter(x => x.cat === p.cat), at = list.findIndex(x => x.slug === p.slug);
+  const pick = [1, 2, 3].map(k => list[(at + k) % list.length]).filter((o, i, arr) => o.slug !== p.slug && arr.indexOf(o) === i).map(o => Object.assign({}, o, { short: short(o) }));
+  const moreHtml = posts.length
+    ? UI.more(pre, posts[0], pick, minPrice)
+    : (pick.length ? UI.others(pre, `Другие операции\n${CAT_GEN[p.cat]}`, pick, minPrice) : '');
+
+  // 16. источники
+  const src = p.sources.map(k => esc(SOURCES[k]))
+    .concat((p.acvs || []).map(x => `American College of Veterinary Surgeons. Small Animal Topics: <a href="${ACVS + x}/" target="_blank" rel="noopener">${ACVS + x}/</a>`));
+  const srcHtml = UI.sources(src, `Материал подготовлен по учебникам и клиническим руководствам по ветеринарной хирургии и проверен ${UPDATED.text}.`,
+    'Информация носит ознакомительный характер и не заменяет осмотр. Нужна ли операция и какая, решает врач после обследования.');
+
+  const sections = [
+    heroHtml, UI.params(params), introHtml, whenHtml, alertHtml,
+    acc && acc.at === 'beforeCost' ? accHtml : '', costHtml, acc && acc.at === 'afterCost' ? accHtml : '',
+    prepHtml, howHtml, acc && acc.at === 'afterHow' ? accHtml : '', recHtml, homeHtml, ctrlHtml, pgHtml,
+    UI.faq(faq), moreHtml, srcHtml, UI.book(pre)
+  ].filter(Boolean);
+
   const desc = clip(`${p.title} у кошек и собак в Люберцах: ${p.lead.charAt(0).toLowerCase() + p.lead.slice(1)}`);
-  const url = `${SITE}operations/${p.slug}.html`;
   const title = fitTitle(`${p.title} в Люберцах — цена, восстановление | beloVET`, `${p.title} в Люберцах — цена | beloVET`, `${p.title} в Люберцах | beloVET`, `${p.title} в Люберцах`);
   const ld = [
     { '@context': 'https://schema.org', '@type': 'MedicalWebPage', name: p.title, description: p.lead, dateModified: UPDATED.iso, inLanguage: 'ru',
@@ -209,94 +232,31 @@ function pageHtml(p) {
       { '@type': 'ListItem', position: 3, name: p.title, item: url }] },
     { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map(q => ({ '@type': 'Question', name: q[0], acceptedAnswer: { '@type': 'Answer', text: q[1] } })) }
   ];
-  const tocHtml = `<ol>${toc.map(t => `<li><a href="#${t[0]}">${esc(t[1])}</a></li>`).join('')}</ol>`;
-
-  return `<!doctype html>
-<html lang="ru">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<!-- Прототип: убрать noindex перед запуском -->
-<meta name="robots" content="noindex, nofollow">
-<title>${esc(title)}</title>
-<meta name="description" content="${esc(desc)}">
-<link rel="canonical" href="${url}">
-${ogTags(title, desc, url, 'article')}
-${iconTags('../')}
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Onest:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="../assets/page.css?v=${ver("assets/page.css")}">
-${ld.map(x => `<script type="application/ld+json">${JSON.stringify(x)}</script>`).join('\n')}
-</head>
+  return `${UI.head({ title, desc, url, prefix: pre, ld, ogTags: ogTags(title, desc, url, 'article'), iconTags: iconTags(pre), preload: `${pre}assets/op/${heroPhoto.name}.jpg` })}
 <body>
-<header class="header">
-  <div class="wrap">
-    <a class="logo" href="../index.html"><img class="sym" src="../assets/logo-symbol.png" alt=""><img class="word" src="../assets/logo-wordmark.png" alt="beloVET, ветеринарный врач-хирург"></a>
-    <nav class="nav" aria-label="Разделы"><a href="../index.html#prices">Операции и цены</a><a href="../blog/index.html">Блог</a><a href="../index.html#urgent">Экстренно</a><a href="../index.html#contacts">Контакты</a></nav>
-    <a class="phone num" href="${PHONE_HREF}">${PHONE}</a>
-    <a class="btn btn-primary" href="../index.html?form=book">Записаться</a>
-  </div>
-</header>
-
-<main class="article">
-  <div class="wrap">
-    <nav class="crumbs" aria-label="Навигация"><a href="../index.html">Главная</a><span>/</span><a href="../index.html#prices">Ветеринарная хирургия</a><span>/</span><span>${esc(catName(p.cat))}</span></nav>
-    <header class="article-head">
-      <span class="label">${esc(catName(p.cat))}</span>
-      <h1>${esc(p.title)}${isOp ? ' у кошек и собак' : ''}</h1>
-      <p class="meta"><span>Хирург: Владислав Белорыбец</span><span>Обновлено: <time datetime="${UPDATED.iso}">${UPDATED.text}</time></span><span>${minutes} ${plural(minutes, ["минута", "минуты", "минут"])} чтения</span></p>
-      <p class="lead">${esc(p.lead)}</p>
-    </header>
-
-    <section class="cover" aria-label="Коротко об операции">
-      <img class="cover-mark" src="../assets/cover-mark.jpg" alt="" width="680" height="924">
-      <div class="cover-in">
-        <p class="cover-title">Коротко</p>
-        <dl class="facts">${factsList.map(x => `<div><dt>${esc(x[0])}</dt><dd>${esc(cap(x[1]))}</dd></div>`).join('')}</dl>
-        <div class="cover-price"><span>Стоимость</span><b class="num">${p.prices.length > 1 ? 'от ' : ''}${rub(minPrice(p))}</b><a class="btn btn-primary" href="../index.html?form=book">Записаться</a></div>
-      </div>
-    </section>
-
-    <div class="layout">
-      <nav class="toc" aria-label="Содержание">
-        <details open><summary>Содержание</summary>${tocHtml}</details>
-      </nav>
-      <div class="body">
-${body}
-      </div>
-    </div>
-  </div>
-
-  ${BLOG.postsFor(p.slug).length ? `<section class="more more-posts">
-    <div class="wrap">
-      <h2>Статьи по теме</h2>
-      <div class="cards">${BLOG.postsFor(p.slug).slice(0, 3).map(b => `<a class="card" href="../blog/${b.slug}.html"><span class="card-cat">Блог</span><b>${esc(b.title)}</b><span class="card-text">${esc(b.lead.length > 120 ? b.lead.slice(0, b.lead.lastIndexOf(' ', 118)) + '…' : b.lead)}</span><span class="card-more">Читать →</span></a>`).join('')}</div>
-    </div>
-  </section>` : ''}
-
-  ${related.length ? `<section class="more">
-    <div class="wrap">
-      <h2>Другие операции раздела «${esc(catName(p.cat))}»</h2>
-      <div class="cards">${related.map(r => `<a class="card" href="${r.slug}.html"><span class="card-cat">${esc(catName(r.cat))}</span><b>${esc(r.title)}</b><span class="card-text">${esc(r.lead.length > 120 ? r.lead.slice(0, r.lead.lastIndexOf(' ', 118)) + '…' : r.lead)}</span><span class="card-more"><span class="num">от ${rub(minPrice(r))}</span>Читать →</span></a>`).join('')}</div>
-    </div>
-  </section>` : ''}
+<main>
+${sections.join('\n')}
 </main>
-
-<footer class="footer">
-  <div class="wrap">
-    <img src="../assets/logo-wordmark.png" alt="beloVET">
-    <p>Владислав Белорыбец, ветеринарный врач-хирург. Клиника «Добрый Доктор», Люберцы, ул. Вертолётчиков, 11. Цены не являются публичной офертой. <a href="mailto:vladislav@belovet.ru">vladislav@belovet.ru</a> · <a href="../privacy.html">Политика конфиденциальности</a></p>
-  </div>
-</footer>
-<script>
-// На телефоне оглавление свёрнуто
-if (matchMedia('(max-width: 960px)').matches) document.querySelector('.toc details').open = false;
-</script>
+${UI.footer(pre)}
 </body>
 </html>
 `;
 }
+
+// Фото первого экрана для страниц без макета: из утверждённой серии, с теми же кадрированием и местом, что в Figma
+const HERO_PHOTOS = {
+  dog: { name: 'dachshund-nose', clip: { x: 1000, y: 380, w: 613, h: 740 }, x: -120, y: -370, w: 800 },
+  dogBig: { name: 'black-dog', x: 853, y: 267, w: 760 },
+  cat: { name: 'cat-tongue', clip: { x: 907, y: 485, w: 788, h: 760 }, x: -280, y: 0, w: 1150 },
+  catUp: { name: 'ginger-cat', x: 880, y: 440, w: 860 }
+};
+const HERO_BY_CAT = { general: 'dog', abdominal: 'catUp', onco: 'dogBig', ortho: 'dog', uro: 'catUp', repro: 'cat', wounds: 'cat', postop: 'dogBig', anest: 'catUp' };
+function heroPhotoFor(p) {
+  if (/кот|кошк/i.test(p.title)) return HERO_PHOTOS[p.cat === 'uro' ? 'catUp' : 'cat'];
+  if (/собак|кобел/i.test(p.title)) return HERO_PHOTOS.dogBig;
+  return HERO_PHOTOS[HERO_BY_CAT[p.cat] || 'dog'];
+}
+const CAT_GEN = { general: 'общей хирургии', abdominal: 'в брюшной и грудной полости', onco: 'онкологической хирургии', ortho: 'ортопедии и травматологии', uro: 'урологии', repro: 'репродуктивной хирургии', wounds: 'на ранах и коже', postop: 'после операции', anest: 'анестезии' };
 
 // ---------- данные поиска ----------
 function searchData() {
@@ -387,45 +347,53 @@ ${ogTags(title, desc, SITE, 'website')}
 ${iconTags('')}
 <script type="application/ld+json">${JSON.stringify(ld)}</script>`;
 }
+// Политика конфиденциальности: заготовка до юридических текстов по 152-ФЗ
+function privacyHtml() {
+  const url = SITE + 'privacy.html';
+  const title = 'Политика конфиденциальности | beloVET';
+  const desc = 'Как beloVET обрабатывает персональные данные из форм записи и вопросов врачу: какие данные собираем, зачем, сколько храним и как их удалить.';
+  const parts = [
+    ['privacy', 'Политика в отношении обработки персональных данных', 'Какие данные собираются (имя, телефон, кличка питомца, текст обращения), для чего, сколько хранятся, кому передаются и как попросить их удалить.'],
+    ['consent', 'Согласие на обработку персональных данных', 'Текст согласия, которое посетитель даёт, отмечая галочку в форме заявки.'],
+    ['cookie', 'Файлы cookie', 'Какие cookie использует сайт и зачем. Если будет подключена Яндекс Метрика или другая аналитика — указать это здесь.']
+  ];
+  return `${UI.head({ title, desc, url, prefix: '', type: 'website', ogTags: ogTags(title, desc, url, 'website'), iconTags: iconTags('') })}
+<body>
+<main>
+${UI.pageHero('', [['Главная', 'index.html'], ['Политика конфиденциальности', '']], 'Политика конфиденциальности', 'Как мы обращаемся с данными, которые вы оставляете в формах записи и вопросов врачу.')}
+<section class="fx" style="--bg:#fff">
+  <article class="sx prose">
+    <aside class="prose-note"><b>Заготовка</b><p>Перед запуском сайта сюда нужно вставить тексты, подготовленные по 152-ФЗ «О персональных данных»: политику обработки, согласие и сведения о cookie.</p></aside>
+${parts.map(([id, h, t]) => `    <h2 id="${id}">${h}</h2>\n    <p>${t}</p>`).join('\n')}
+  </article>
+</section>
+</main>
+${UI.footer('')}
+</body>
+</html>
+`;
+}
+
 // 404: GitHub Pages отдаёт её по любому адресу, поэтому ссылки от корня сайта
 function notFoundHtml() {
   const B = new URL(SITE).pathname;
-  const top = PROCEDURES.slice(0, 6);
-  return `<!doctype html>
-<html lang="ru">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="robots" content="noindex">
-<title>Страница не найдена | beloVET</title>
-<link rel="icon" type="image/png" href="${B}assets/logo-symbol.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Onest:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="${B}assets/page.css?v=${ver('assets/page.css')}">
-</head>
+  const title = 'Страница не найдена | beloVET';
+  const cards = [
+    [`${B}index.html#prices`, 'Операции и цены', 'Поиск по названию операции или симптому', 'Открыть →'],
+    [`${B}blog/index.html`, 'Блог для владельцев', 'Подготовка, восстановление, тревожные признаки', 'Читать →'],
+    [`${B}index.html?form=urgent`, 'Экстренная запись', 'Приеду в клинику за 15 минут, даже ночью', 'Оставить заявку →']
+  ];
+  return `${UI.head({ title, desc: 'Такой страницы нет.', url: '', prefix: B, type: 'website', robots: 'noindex', ogTags: '', iconTags: `<link rel="icon" type="image/png" href="${B}assets/logo-symbol.png">` })}
 <body>
-<header class="header">
-  <div class="wrap">
-    <a class="logo" href="${B}"><img class="sym" src="${B}assets/logo-symbol.png" alt=""><img class="word" src="${B}assets/logo-wordmark.png" alt="beloVET, ветеринарный врач-хирург"></a>
-    <a class="phone num" href="${PHONE_HREF}">${PHONE}</a>
-    <a class="btn btn-primary" href="${B}?form=book">Записаться</a>
+<main>
+${UI.pageHero(B, [['Главная', B + 'index.html'], ['Ошибка 404', '']], 'Такой страницы нет', `Возможно, адрес изменился. Все операции и цены собраны на главной, там же есть поиск по симптомам. Если питомцу плохо, звоните ${PHONE}: по экстренной записи приеду в клинику за 15 минут в любое время, даже ночью. Тяжёлых пациентов принимаем без очереди.`)}
+<section class="fx" style="--bg:#fff">
+  <div class="sx">
+    <div class="posts">${cards.map(([h, b, t, m]) => `<a class="post" href="${h}"><b>${b}</b><span class="t" style="${UI.T(23, 33)}">${t}</span><span class="post-read t" style="${UI.T(25, 34)}">${m}</span></a>`).join('')}</div>
   </div>
-</header>
-<main class="article">
-  <div class="wrap">
-    <header class="article-head">
-      <span class="label">Ошибка 404</span>
-      <h1>Такой страницы нет</h1>
-      <p class="lead">Возможно, адрес изменился. Все операции и цены собраны на главной, там же есть поиск по симптомам. Если питомцу плохо, звоните ${PHONE}: по экстренной записи приеду в клинику за 15 минут в любое время, даже ночью. Тяжёлых пациентов принимаем без очереди.</p>
-    </header>
-    <section class="cards">
-      <a class="card" href="${B}#prices"><b>Операции и цены</b><span class="card-text">Поиск по названию операции или симптому</span><span class="card-more">Открыть →</span></a>
-      <a class="card" href="${B}blog/index.html"><b>Блог для владельцев</b><span class="card-text">Подготовка, восстановление, тревожные признаки</span><span class="card-more">Читать →</span></a>
-      <a class="card" href="${B}?form=urgent"><b>Экстренная запись</b><span class="card-text">Приеду в клинику за 15 минут, даже ночью</span><span class="card-more">Оставить заявку →</span></a>
-    </section>
-  </div>
+</section>
 </main>
+${UI.footer(B)}
 </body>
 </html>
 `;
@@ -435,7 +403,7 @@ function notFoundHtml() {
 const opsDir = path.join(ROOT, 'operations');
 fs.mkdirSync(opsDir, { recursive: true });
 for (const f of fs.readdirSync(opsDir)) if (f.endsWith('.html')) fs.unlinkSync(path.join(opsDir, f));
-for (const p of PROCEDURES) fs.writeFileSync(path.join(opsDir, p.slug + '.html'), pageHtml(p));
+for (const p of PROCEDURES) fs.writeFileSync(path.join(opsDir, p.slug + '.html'), UI.fitWords(pageHtml(p)));
 
 fs.writeFileSync(path.join(ROOT, 'assets', 'search-data.js'),
   '// Сгенерировано tools/build.js из data/procedures.js — не редактировать вручную\nwindow.BV_DATA = ' + JSON.stringify(searchData()) + ';\n');
@@ -461,13 +429,9 @@ const ba = index.indexOf(BS), bb = index.indexOf(BE);
 if (ba < 0 || bb < 0) throw new Error('В index.html нет меток BLOG:START / BLOG:END');
 index = index.slice(0, ba + BS.length) + BLOG.homeBlock + '\n        ' + index.slice(bb);
 index = seoHead(index, 'index.html', homeSeo());
-fs.writeFileSync(indexPath, index);
-const privPath = path.join(ROOT, 'privacy.html');
-fs.writeFileSync(privPath, seoHead(fs.readFileSync(privPath, 'utf8'), 'privacy.html',
-  `<meta name="description" content="Как beloVET обрабатывает персональные данные из форм записи и вопросов врачу: какие данные собираем, зачем, сколько храним и как их удалить.">
-<link rel="canonical" href="${SITE}privacy.html">
-${iconTags('')}`));
-fs.writeFileSync(path.join(ROOT, '404.html'), notFoundHtml());
+fs.writeFileSync(indexPath, UI.fitWords(index));
+fs.writeFileSync(path.join(ROOT, 'privacy.html'), UI.fitWords(privacyHtml()));
+fs.writeFileSync(path.join(ROOT, '404.html'), UI.fitWords(notFoundHtml()));
 fs.writeFileSync(path.join(ROOT, 'robots.txt'), `# Прототип: перед запуском заменить «Disallow: /» на «Allow: /»
 User-agent: *
 Disallow: /

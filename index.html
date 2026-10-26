@@ -513,6 +513,7 @@ a.dir:hover h3 { text-decoration: underline; text-underline-offset: .12em; text-
   .a { position: relative; left: auto; top: auto; width: auto; max-width: 100%; }
   .hh { height: auto; }
   .t { font-size: max(var(--min, 15px), calc((var(--fs) * .34 + 8) * 1px)); }
+  .t.o[style*="--wl"] { font-size: min(max(var(--min, 15px), calc((var(--fs) * .34 + 8) * 1px)), calc((100cqw - 64px) / var(--wl) / .64)); }
   .deco { display: none; }
   .rot { rotate: none; }
   .cta, .cta-lg, .cta-sm { width: min(100%, 365px); height: 58px; border-radius: 18px; font-size: 18px; padding: 0 20px; }
@@ -589,6 +590,7 @@ a.dir:hover h3 { text-decoration: underline; text-underline-offset: .12em; text-
   .cat summary::after { left: auto; right: 14px; width: 24px; font-size: 26px; text-align: center; }
   .price-list { padding: 0 18px 8px; }
   .price-list li a { gap: 14px; padding: 12px 0; font-size: 16px; }
+  .price-list .what { min-width: 0; overflow-wrap: break-word; hyphens: auto; }
   .price-list small { font-size: 14px; }
   .prices-foot { flex-direction: column; align-items: flex-start; height: auto; }
   .prices-foot .cta { margin-top: 0; }
@@ -636,9 +638,9 @@ a.dir:hover h3 { text-decoration: underline; text-underline-offset: .12em; text-
   .contacts-btns { flex-wrap: wrap; gap: 10px; width: 100%; }
   .sched { width: min(100%, 420px); padding: 22px; border-radius: 22px; filter: none; box-shadow: var(--soft); display: grid; gap: 10px; margin-block: 10px; }
   .sched .a { position: static; }
-  .sched-cal .cal-grid { grid-template-columns: repeat(7, 40px); gap: 6px; }
+  .sched-cal .cal-grid { grid-template-columns: repeat(7, minmax(0, 40px)); gap: 6px clamp(2px, 1.5vw, 6px); }
   .sched-cal .dow { height: 26px; font-size: 13px; }
-  .sched-cal .d { width: 40px; height: 40px; font-size: 16px; }
+  .sched-cal .d { width: 100%; max-width: 40px; height: auto; aspect-ratio: 1; margin-inline: auto; font-size: 16px; }
   .sched-legend i { width: 14px; height: 14px; }
 
   .s-footer .fx-box { gap: 12px; padding-bottom: 110px; }
@@ -772,9 +774,9 @@ a.dir:hover h3 { text-decoration: underline; text-underline-offset: .12em; text-
   <section class="fx s-about" id="about" aria-labelledby="about-h">
     <div class="fx-box" style="aspect-ratio:1613/1180">
       <div class="a deco card-sky rot" style="--x:759.91;--y:136.67;--w:826;--r:-3" aria-hidden="true"><div class="hh" style="--hh:1050"></div></div>
-      <h2 class="a about-name o up" id="about-h" style="--x:72;--y:46;--w:1400"><span class="t" style="--fs:92;--lh:99">Владислав</span> <span class="t" style="--fs:158;--lh:176">Белорыбец</span></h2>
+      <h2 class="a about-name o up" id="about-h" style="--x:72;--y:46;--w:1400"><span class="t" style="--fs:92;--lh:99">Владислав</span> <span class="t o" style="--fs:158;--lh:176;--wl:9">Белорыбец</span></h2>
       <img class="a about-photo" style="--x:777.75;--y:164;--w:674.52" src="assets/home/doctor-bulldog.jpg" width="1024" height="1536" alt="Владислав Белорыбец с французским бульдогом на руках" loading="lazy">
-      <p class="a t o about-role" style="--x:72;--y:357;--w:630;--fs:36;--lh:46">Ветеринарный врач-хирург</p>
+      <p class="a t o about-role" style="--x:72;--y:357;--w:630;--fs:36;--lh:46;--wl:12">Ветеринарный врач-хирург</p>
       <p class="a t about-lead" style="--x:72;--y:427;--w:600;--fs:28;--lh:38">Плановые и экстренные операции <br>кошкам и собакам.</p>
       <p class="a t about-geo" style="--x:72;--y:526;--w:620;--fs:22;--lh:29">Люберцы · Москва и Московская область</p>
       <div class="a deco card-coral rot" style="--x:87.08;--y:618.8;--w:600;--r:1.5" aria-hidden="true"><div class="hh" style="--hh:292"></div></div>
@@ -807,7 +809,7 @@ a.dir:hover h3 { text-decoration: underline; text-underline-offset: .12em; text-
       </a>
       <a class="a dir dir-mid hh" style="--x:858;--y:675;--w:683;--hh:212" href="#prices" data-open-cat="Абдоминальная и торакальная хирургия">
         <b class="t o" style="--fs:52;--lh:62">03</b>
-        <div><h3 class="t o" style="--fs:42;--lh:50">Внутренние органы</h3><p class="t" style="--fs:23;--lh:31">Желудок и кишечник, печень, грыжи, <br>операции в грудной полости.</p></div>
+        <div><h3 class="t o" style="--fs:42;--lh:50;--wl:10">Внутренние органы</h3><p class="t" style="--fs:23;--lh:31">Желудок и кишечник, печень, грыжи, <br>операции в грудной полости.</p></div>
       </a>
       <a class="a dir dir-small hh" style="--x:72;--y:946;--w:477;--hh:320" href="#prices" data-open-cat="Урология">
         <b class="t o" style="--fs:28;--lh:34">04</b><h3 class="t o" style="--fs:36;--lh:44">Мочевая система</h3><p class="t" style="--fs:22;--lh:30">Операции на почках, мочевом <br>пузыре и мочевыводящих путях.</p>
@@ -816,7 +818,7 @@ a.dir:hover h3 { text-decoration: underline; text-underline-offset: .12em; text-
         <b class="t o" style="--fs:28;--lh:34">05</b><h3 class="t o" style="--fs:36;--lh:44">Раны, кожа и уши</h3><p class="t" style="--fs:22;--lh:30">Обработка ран, пластика кожи, <br>гематомы уха, ампутации.</p>
       </a>
       <a class="a dir dir-small hh" style="--x:1064;--y:946;--w:477;--hh:320" href="#prices" data-open-cat="Репродуктивная хирургия">
-        <b class="t o" style="--fs:28;--lh:34">06</b><h3 class="t o" style="--fs:36;--lh:44">Стерилизация <br>и кастрация</h3><p class="t" style="--fs:22;--lh:30">А также кесарево сечение <br>и пиометра.</p>
+        <b class="t o" style="--fs:28;--lh:34">06</b><h3 class="t o" style="--fs:36;--lh:44;--wl:12">Стерилизация <br>и кастрация</h3><p class="t" style="--fs:22;--lh:30">А также кесарево сечение <br>и пиометра.</p>
       </a>
       <p class="a t dirs-more" style="--x:72;--y:1280;--w:1469;--fs:22;--lh:30">А также ЛОР и челюстно-лицевые операции, перевязки и анестезия — всё в <a href="#prices" data-open-cat="Общая хирургия">прайсе ниже</a>.</p>
       <hr class="a line" style="--x:72;--y:1320;--w:1469">
@@ -830,7 +832,7 @@ a.dir:hover h3 { text-decoration: underline; text-underline-offset: .12em; text-
   <section class="fx s-urgent" id="urgent" aria-labelledby="urgent-h">
     <div class="fx-box urgent-box">
       <div class="urgent-left">
-        <h2 class="a t o up" id="urgent-h" style="--x:68;--y:88;--w:716;--fs:104;--lh:112">Экстренная <br>запись</h2>
+        <h2 class="a t o up" id="urgent-h" style="--x:68;--y:88;--w:716;--fs:104;--lh:112;--wl:10">Экстренная <br>запись</h2>
         <p class="a t" style="--x:72;--y:407;--w:650;--fs:28;--lh:38">Приеду в клинику за</p>
         <p class="a t o up" style="--x:66;--y:456;--w:720;--fs:136;--lh:147">15 минут</p>
         <p class="a t" style="--x:72;--y:635;--w:620;--fs:30;--lh:41">В любое время, <span class="sun">даже ночью</span>. <br>Тяжёлых пациентов — без очереди.</p>
@@ -839,7 +841,7 @@ a.dir:hover h3 { text-decoration: underline; text-underline-offset: .12em; text-
         <p class="a t urgent-plan" style="--x:72;--y:1152;--w:650;--fs:24;--lh:33">Плановый приём — с 10:00 до 22:00.</p>
       </div>
       <form class="urgent-form lead-form" data-kind="urgent" novalidate>
-        <p class="t o" style="--fs:40;--lh:54">Опишите, что случилось</p>
+        <p class="t o" style="--fs:40;--lh:54;--wl:9">Опишите, что случилось</p>
         <label class="ff"><span class="t" style="--fs:20;--lh:28">Имя</span><input name="name" autocomplete="name" required placeholder="Как к вам обращаться"></label>
         <label class="ff"><span class="t" style="--fs:20;--lh:28">Телефон</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="+7 (___) ___-__-__" data-phone></label>
         <label class="ff ff-msg"><span class="t" style="--fs:20;--lh:28">Сообщение</span><textarea name="message" required placeholder="Опишите случай"></textarea></label>
@@ -864,7 +866,7 @@ a.dir:hover h3 { text-decoration: underline; text-underline-offset: .12em; text-
   <!-- 05 / От консультации до снятия швов -->
   <section class="fx s-steps" id="steps" aria-labelledby="steps-h">
     <div class="fx-box" style="aspect-ratio:1613/1320">
-      <h2 class="a t o up" id="steps-h" style="--x:68;--y:75;--w:1470;--fs:100;--lh:108">От консультации <br>до снятия швов</h2>
+      <h2 class="a t o up" id="steps-h" style="--x:68;--y:75;--w:1470;--fs:100;--lh:108;--wl:12">От консультации <br>до снятия швов</h2>
       <div class="a deco card-ice rot" style="--x:1023.45;--y:336.5;--w:531;--r:-2" aria-hidden="true"><div class="hh" style="--hh:780"></div></div>
       <ol class="steps">
         <li class="a" style="--x:72;--y:352;--w:872"><b class="t o" style="--fs:68;--lh:73">01</b><span class="t" style="--fs:22;--lh:30">День обращения</span><strong class="t o" style="--fs:48;--lh:52">Консультация</strong><span class="t" style="--fs:25;--lh:34">Осматриваю и объясняю, нужна ли операция.</span></li>
@@ -885,7 +887,7 @@ a.dir:hover h3 { text-decoration: underline; text-underline-offset: .12em; text-
   <section class="fx s-story" aria-labelledby="story-h">
     <div class="fx-box" style="aspect-ratio:1613/1036">
       <p class="a t up" style="--x:72;--y:64;--w:1100;--fs:18;--lh:26">История Фроси</p>
-      <h2 class="a t o" id="story-h" style="--x:72;--y:113;--w:1460;--fs:76;--lh:88">Фрося: от страшного диагноза <br>к беззаботным играм</h2>
+      <h2 class="a t o" id="story-h" style="--x:72;--y:113;--w:1460;--fs:76;--lh:88;--wl:11">Фрося: от страшного диагноза <br>к беззаботным играм</h2>
       <div class="a story-who" style="--x:72;--y:318;--w:800">
         <img src="assets/home/dmitry.jpg" width="320" height="568" alt="" loading="lazy">
         <p><b class="t o" style="--fs:30;--lh:40">Дмитрий Сидоров</b><span class="t" style="--fs:22;--lh:30">хозяин Фроси</span></p>
@@ -1145,7 +1147,7 @@ a.dir:hover h3 { text-decoration: underline; text-underline-offset: .12em; text-
         </div>
       </div>
       <div class="prices-foot">
-        <p><b class="t o" style="--fs:32;--lh:44">Итоговая стоимость согласуется после осмотра.</b><span class="t" style="--fs:23;--lh:31">Цены на сайте не являются публичной офертой.</span></p>
+        <p><b class="t o" style="--fs:32;--lh:44;--wl:11">Итоговая стоимость согласуется после осмотра.</b><span class="t" style="--fs:23;--lh:31">Цены на сайте не являются публичной офертой.</span></p>
         <button class="cta" type="button" data-form="ask">Задать вопрос врачу</button>
       </div>
     </div>
@@ -1166,8 +1168,8 @@ a.dir:hover h3 { text-decoration: underline; text-underline-offset: .12em; text-
   <!-- 07 / Второе мнение -->
   <section class="fx s-second" id="second" aria-labelledby="second-h">
     <div class="fx-box" style="aspect-ratio:1613/1100">
-      <h2 class="a t o up" id="second-h" style="--x:68;--y:80;--w:990;--fs:100;--lh:108">Предложили <br>операцию</h2>
-      <p class="a t o" style="--x:72;--y:344;--w:850;--fs:58;--lh:63">Но вы сомневаетесь?</p>
+      <h2 class="a t o up" id="second-h" style="--x:68;--y:80;--w:990;--fs:100;--lh:108;--wl:10">Предложили <br>операцию</h2>
+      <p class="a t o" style="--x:72;--y:344;--w:850;--fs:58;--lh:63;--wl:13">Но вы сомневаетесь?</p>
       <p class="a t" style="--x:72;--y:451;--w:820;--fs:28;--lh:38">Пришлите документы в мессенджер или на почту. <br>Посмотрю и отвечу, нужна ли операция <br>и сколько она будет стоить.</p>
       <a class="a t second-mail" style="--x:72;--y:661;--w:800;--fs:36;--lh:49" href="mailto:vladislav@belovet.ru">vladislav@belovet.ru</a>
       <button class="a cta" style="--x:72;--y:770" type="button" data-form="ask">Задать вопрос врачу</button>
@@ -1193,7 +1195,7 @@ a.dir:hover h3 { text-decoration: underline; text-underline-offset: .12em; text-
     <div class="fx-box" style="aspect-ratio:1613/930">
       <div class="a deco card-sky rot" style="--x:45.12;--y:252.41;--w:718;--r:3" aria-hidden="true"><div class="hh" style="--hh:550"></div></div>
       <img class="a clinics-photo hh" style="--x:72;--y:245;--w:700;--hh:525" src="assets/home/doctor-clinic.jpg" width="900" height="675" alt="Владислав Белорыбец заполняет карту пациента" loading="lazy">
-      <h2 class="a t o up" id="clinics-h" style="--x:833;--y:84;--w:720;--fs:83;--lh:90">Хирург <br>по приглашению</h2>
+      <h2 class="a t o up" id="clinics-h" style="--x:833;--y:84;--w:720;--fs:83;--lh:90;--wl:11">Хирург <br>по приглашению</h2>
       <p class="a t" style="--x:837;--y:390;--w:680;--fs:27;--lh:37">Приезжаю в вашу клинику: беру сложные <br>операции, ассистирую вашим врачам, <br>помогаю с хирургической тактикой.</p>
       <p class="a t" style="--x:837;--y:568;--w:680;--fs:29;--lh:39">Пришлите диагноз и снимки — <br>назову дату и стоимость.</p>
       <button class="a cta cta-lg" style="--x:837;--y:743" type="button" data-form="ask">Пригласить хирурга</button>
@@ -1203,14 +1205,14 @@ a.dir:hover h3 { text-decoration: underline; text-underline-offset: .12em; text-
   <!-- 09 / Полезное владельцам -->
   <section class="fx s-blog" id="blog" aria-labelledby="blog-h">
     <div class="fx-box" style="aspect-ratio:1613/1220">
-      <h2 class="a t o up" id="blog-h" style="--x:68;--y:66;--w:1120;--fs:100;--lh:108">Полезное <br>владельцам</h2>
+      <h2 class="a t o up" id="blog-h" style="--x:68;--y:66;--w:1120;--fs:100;--lh:108;--wl:10">Полезное <br>владельцам</h2>
       <p class="a t" style="--x:1002;--y:237;--w:540;--fs:25;--lh:34">Что делать в экстренной ситуации, <br>как подготовить питомца к операции <br>и ухаживать после неё.</p>
       <a class="a cta cta-white" style="--x:1176;--y:89" href="blog/index.html">Все статьи</a>
       <hr class="a line" style="--x:1000;--y:776;--w:541">
       <!-- BLOG:START -->
-      <a class="a post post-main" style="--x:72;--y:405;--w:850" href="blog/kot-ne-mozhet-popisat.html"><span class="a t" style="--x:36;--y:40;--w:750;--fs:23;--lh:31">Экстренные ситуации</span><b class="a t o" style="--x:36;--y:120;--w:758;--fs:59;--lh:64">Кот не может пописать: что делать и почему нельзя ждать</b><span class="a t" style="--x:36;--y:574;--w:350;--fs:30;--lh:41">Читать</span></a>
-      <a class="a post post-side hh" style="--x:1000;--y:449;--w:541;--hh:290" href="blog/sobaka-proglotila-predmet.html"><span class="a t" style="--x:0;--y:0;--w:541;--fs:21;--lh:29">Экстренные ситуации</span><b class="a t o" style="--x:0;--y:57;--w:541;--fs:44;--lh:48">Собака проглотила посторонний предмет: что делать</b><span class="a t" style="--x:0;--y:245;--w:541;--fs:25;--lh:34">Читать</span></a>
-      <a class="a post post-side hh" style="--x:1000;--y:819;--w:541;--hh:330" href="blog/zavorot-zheludka-u-sobak.html"><span class="a t" style="--x:0;--y:0;--w:541;--fs:21;--lh:29">Экстренные ситуации</span><b class="a t o" style="--x:0;--y:57;--w:541;--fs:44;--lh:48">Заворот желудка у собак: признаки, первая помощь, профилактика</b><span class="a t" style="--x:0;--y:280;--w:541;--fs:25;--lh:34">Читать</span></a>
+      <a class="a post post-main" style="--x:72;--y:405;--w:850" href="blog/kot-ne-mozhet-popisat.html"><span class="a t" style="--x:36;--y:40;--w:750;--fs:23;--lh:31">Экстренные ситуации</span><b class="a t o" style="--x:36;--y:120;--w:758;--fs:59;--lh:64;--wl:9">Кот не может пописать: что делать и почему нельзя ждать</b><span class="a t" style="--x:36;--y:574;--w:350;--fs:30;--lh:41">Читать</span></a>
+      <a class="a post post-side hh" style="--x:1000;--y:449;--w:541;--hh:290" href="blog/sobaka-proglotila-predmet.html"><span class="a t" style="--x:0;--y:0;--w:541;--fs:21;--lh:29">Экстренные ситуации</span><b class="a t o" style="--x:0;--y:57;--w:541;--fs:44;--lh:48;--wl:11">Собака проглотила посторонний предмет: что делать</b><span class="a t" style="--x:0;--y:245;--w:541;--fs:25;--lh:34">Читать</span></a>
+      <a class="a post post-side hh" style="--x:1000;--y:819;--w:541;--hh:330" href="blog/zavorot-zheludka-u-sobak.html"><span class="a t" style="--x:0;--y:0;--w:541;--fs:21;--lh:29">Экстренные ситуации</span><b class="a t o" style="--x:0;--y:57;--w:541;--fs:44;--lh:48;--wl:12">Заворот желудка у собак: признаки, первая помощь, профилактика</b><span class="a t" style="--x:0;--y:280;--w:541;--fs:25;--lh:34">Читать</span></a>
         <!-- BLOG:END -->
       <img class="a deco blog-cat rot" style="--x:527.57;--y:864.76;--w:351.185;--r:2" src="assets/home/cat-laptop.png" width="702" height="539" alt="" loading="lazy">
     </div>
@@ -1228,7 +1230,7 @@ a.dir:hover h3 { text-decoration: underline; text-underline-offset: .12em; text-
   <!-- 10 / Отзывы -->
   <section class="fx s-reviews" id="reviews" aria-labelledby="reviews-h">
     <div class="fx-box" style="aspect-ratio:1613/1290">
-      <h2 class="a t o up" id="reviews-h" style="--x:68;--y:66;--w:1160;--fs:100;--lh:108">Что пишут <br>владельцы</h2>
+      <h2 class="a t o up" id="reviews-h" style="--x:68;--y:66;--w:1160;--fs:100;--lh:108;--wl:9">Что пишут <br>владельцы</h2>
       <img class="a deco rot" style="--x:669.2;--y:54.25;--w:249.59;--r:-9.16" src="assets/home/cat-armchair.png" width="499" height="450" alt="" loading="lazy">
       <p class="a t" style="--x:932;--y:226;--w:610;--fs:25;--lh:34">Отзывы о работе Владислава из карточки <br>клиники «Добрый Доктор» на Яндекс Картах.</p>
       <a class="a cta cta-white" style="--x:1176;--y:88" href="https://yandex.ru/maps/?text=%D0%94%D0%BE%D0%B1%D1%80%D1%8B%D0%B9%20%D0%94%D0%BE%D0%BA%D1%82%D0%BE%D1%80%2C%20%D0%9B%D1%8E%D0%B1%D0%B5%D1%80%D1%86%D1%8B%2C%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%20%D0%92%D0%B5%D1%80%D1%82%D0%BE%D0%BB%D1%91%D1%82%D1%87%D0%B8%D0%BA%D0%BE%D0%B2%2C%2011" target="_blank" rel="noopener">На Яндекс Картах</a>
@@ -1362,7 +1364,7 @@ P.S. Все сотрудники ветклиники «Добрый докто�
   <!-- 11 / Контакты и график -->
   <section class="fx s-contacts" id="contacts" aria-labelledby="contacts-h">
     <div class="fx-box" style="aspect-ratio:1613/1120">
-      <h2 class="a t o up" id="contacts-h" style="--x:68;--y:78;--w:1010;--fs:88;--lh:95">Люберцы, <br>Вертолётчиков, 11</h2>
+      <h2 class="a t o up" id="contacts-h" style="--x:68;--y:78;--w:1010;--fs:88;--lh:95;--wl:14">Люберцы, <br>Вертолётчиков, 11</h2>
       <p class="a t" style="--x:72;--y:348;--w:930;--fs:28;--lh:38">Ветеринарная клиника «Добрый Доктор». <br>Приём с 10:00 до 22:00 по графику.</p>
       <a class="a t contacts-phone" style="--x:68;--y:516;--w:920;--fs:59;--lh:80" href="tel:+79392557771">+7 (939) 255-77-71</a>
       <a class="a t contacts-mail" style="--x:72;--y:623;--w:900;--fs:34;--lh:46" href="mailto:vladislav@belovet.ru">vladislav@belovet.ru</a>
