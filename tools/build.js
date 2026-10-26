@@ -2,7 +2,7 @@
 // Запуск из корня проекта: node tools/build.js
 const fs = require('fs');
 const path = require('path');
-const { SOURCES, ACVS, CATEGORIES, PROCEDURES } = require('../data/procedures');
+const { SOURCES, CATEGORIES, PROCEDURES } = require('../data/procedures');
 const ARTICLES = Object.assign({},
   require('../data/articles-1'), require('../data/articles-2'),
   require('../data/articles-3'), require('../data/articles-4'));
@@ -55,7 +55,7 @@ for (const k of Object.keys(ARTICLES)) if (!slugs.has(k)) throw new Error('Ст�
 // ---------- блог ----------
 const FIGMA = require('../data/figma-ops');
 const UI = require('./ui')({ SITE, esc, rub, cap, ver, PHONE, PHONE_HREF });
-const BLOG = require('./blog')({ ROOT, SITE, UI, clip, fitTitle, ogTags, iconTags, esc, rub, cap, plural, ver, SOURCES, PROCEDURES, PHONE, PHONE_HREF });
+const BLOG = require('./blog')({ ROOT, SITE, UI, clip, fitTitle, ogTags, iconTags, esc, rub, cap, plural, ver, PROCEDURES, PHONE, PHONE_HREF });
 
 // ---------- шаблоны восстановления по типу вмешательства ----------
 const TIMELINES = {
@@ -208,17 +208,12 @@ function pageHtml(p) {
     ? UI.more(pre, posts[0], pick, minPrice)
     : (pick.length ? UI.others(pre, `Другие операции\n${CAT_GEN[p.cat]}`, pick, minPrice) : '');
 
-  // 16. источники
-  const src = p.sources.map(k => esc(SOURCES[k]))
-    .concat((p.acvs || []).map(x => `American College of Veterinary Surgeons. Small Animal Topics: <a href="${ACVS + x}/" target="_blank" rel="noopener">${ACVS + x}/</a>`));
-  const srcHtml = UI.sources(src, `Материал подготовлен по учебникам и клиническим руководствам по ветеринарной хирургии и проверен ${UPDATED.text}.`,
-    'Информация носит ознакомительный характер и не заменяет осмотр. Нужна ли операция и какая, решает врач после обследования.');
 
   const sections = [
     heroHtml, UI.params(params), introHtml, whenHtml, alertHtml,
     acc && acc.at === 'beforeCost' ? accHtml : '', costHtml, acc && acc.at === 'afterCost' ? accHtml : '',
     prepHtml, howHtml, acc && acc.at === 'afterHow' ? accHtml : '', recHtml, homeHtml, ctrlHtml, pgHtml,
-    UI.faq(faq), moreHtml, srcHtml, UI.book(pre)
+    UI.faq(faq), moreHtml, UI.book(pre)
   ].filter(Boolean);
 
   const desc = clip(`${p.title} у кошек и собак в Люберцах: ${p.lead.charAt(0).toLowerCase() + p.lead.slice(1)}`);

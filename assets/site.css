@@ -298,13 +298,6 @@ a:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px soli
 .others-op { display: grid; grid-template-rows: calc(125 * var(--px)) calc(200 * var(--px)) auto; padding-top: calc(21 * var(--px)); border-top: 1px solid var(--line); }
 .others-op em { font-style: normal; }
 
-/* ---------- 16. источники ---------- */
-.src { padding-top: calc(62 * var(--px)); padding-bottom: calc(110 * var(--px)); }
-.src h2 + p { margin-top: calc(49 * var(--px)); }
-.src ol { margin-top: calc(85 * var(--px)); display: flex; flex-direction: column; gap: calc(22 * var(--px)); }
-.src ol a { text-decoration: underline; text-underline-offset: .15em; word-break: break-word; }
-.src ol + p { margin-top: calc(90 * var(--px)); }
-
 /* ---------- 17. запись на приём ---------- */
 .book { min-height: calc(800 * var(--px)); }
 .book p { margin-top: calc(65 * var(--px)); width: calc(950 * var(--px)); }
@@ -520,9 +513,6 @@ a:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px soli
   .more-post { min-height: 0; padding: 22px; gap: 12px; border-radius: 20px; }
   .others-op { grid-template-rows: auto; gap: 8px; padding: 16px 0; }
 
-  .src ol { margin-top: 20px; }
-  .src h2 + p { margin-top: 16px; }
-  .src ol + p { margin-top: 20px; }
 
   .book { min-height: 0; padding-bottom: 0; display: flex; flex-direction: column; }
   .book p { width: auto; margin-top: 16px; }

@@ -411,18 +411,6 @@ ${preload ? `<link rel="preload" as="image" href="${preload}">\n` : ''}${ld.map(
 </section>`;
   }
 
-  // ---------- 16. источники ----------
-  function sources(items, checked, disclaimer) {
-    return `<section class="fx" style="--bg:var(--ice)" id="istochniki">
-  <div class="sx src">
-    <h2 class="t o up" style="${T(76, 86)}">Источники<br>и дата проверки</h2>
-    <p class="t" style="${T(24, 34)}">${esc(checked)}</p>
-    <ol>${items.map(s => `<li class="t" style="${T(22, 32)}">${s}</li>`).join('')}</ol>
-    <p class="t" style="${T(23, 33)}">${esc(disclaimer)}</p>
-  </div>
-</section>`;
-  }
-
   // ---------- 17. запись на приём ----------
   function book(prefix, heading = 'Обсудим\nваш случай', text = 'Пришлите анализы, снимки и заключения — посмотрю и отвечу, нужна ли операция и как к ней подготовиться.') {
     return `<section class="fx" style="--bg:var(--sky2)">
@@ -436,5 +424,5 @@ ${preload ? `<link rel="preload" as="image" href="${preload}">\n` : ''}${ld.map(
 </section>`;
   }
 
-  return { T, lines, fitWords, head, header, pageHero, footer, photo, doodle, hero, params, intro, when, alert, alertBox, cost, accent, prep, how, recovery, home, control, prognosis, faq, more, others, sources, book, yearNow };
+  return { T, lines, fitWords, head, header, pageHero, footer, photo, doodle, hero, params, intro, when, alert, alertBox, cost, accent, prep, how, recovery, home, control, prognosis, faq, more, others, book, yearNow };
 };
