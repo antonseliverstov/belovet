@@ -44,6 +44,16 @@ module.exports = function blog(ctx) {
   const short = o => { const s = o.lead.split(/(?<=\.)\s/)[0]; return s.length > 150 ? s.slice(0, s.lastIndexOf(' ', 146)) + '…' : s; };
   const sourceHtml = s => typeof s === 'string' ? esc(SOURCES[s]) : (s.url ? `${esc(s.text)}: <a href="${s.url}" target="_blank" rel="noopener">${s.url}</a>` : esc(s.text));
 
+  // Фото первого экрана статьи — из утверждённой серии, по виду животного и теме (макет «Статья блога» в Figma)
+  const POST_PHOTOS = {
+    catUp: { name: 'ginger-cat', x: 880, y: 445, w: 860 },
+    cat: { name: 'cat-tongue', clip: { x: 907, y: 485, w: 788, h: 760 }, x: -280, y: 0, w: 1150 },
+    dog: { name: 'dachshund-nose', clip: { x: 1000, y: 380, w: 613, h: 740 }, x: -120, y: -370, w: 800 },
+    dogBig: { name: 'black-dog', x: 853, y: 267, w: 760 }
+  };
+  const POST_PHOTO_BY_SLUG = { 'kot-ne-mozhet-popisat': 'catUp', 'sterilizaciya-koshki': 'cat', 'uhod-posle-sterilizacii-koshki': 'catUp', 'sobaka-proglotila-predmet': 'dog', 'zavorot-zheludka-u-sobak': 'dogBig', 'pyometra-u-sobak': 'dog' };
+  const postPhoto = p => POST_PHOTOS[POST_PHOTO_BY_SLUG[p.slug] || (/кош|кот/i.test(p.title) ? 'catUp' : 'dogBig')];
+
   function postHtml(p) {
     const pre = '../';
     const body = proseBlocks(p.blocks);
@@ -68,16 +78,18 @@ module.exports = function blog(ctx) {
 <body>
 <main>
 ${pageHero(pre, [['Главная', pre + 'index.html'], ['Блог', 'index.html'], [RUBRICS[p.rubric], `index.html#${p.rubric}`]], p.title, p.lead,
-    ['Автор: Владислав Белорыбец, ветеринарный хирург', `<time datetime="${p.date}">${dateRu(p.date)}</time>`, `${minutes} ${plural(minutes, ['минута', 'минуты', 'минут'])} чтения`])}
+    ['Автор: Владислав Белорыбец, ветеринарный хирург', `<time datetime="${p.date}">${dateRu(p.date)}</time>`, `${minutes} ${plural(minutes, ['минута', 'минуты', 'минут'])} чтения`],
+    { sub: RUBRICS[p.rubric], tw: 940, photo: postPhoto(p) })}
 <section class="fx" style="--bg:#fff">
   <article class="sx prose">
+    ${UI.doodle(pre, 'm12-excl.png', '--x:1290;--y:150;--w:95')}
     <div class="takeaways"><p>Главное из статьи</p><ul>${p.takeaways.map(t => `<li>${esc(t)}</li>`).join('')}</ul></div>
 ${body}
   </article>
 </section>
 ${UI.faq(p.faq, 'Частые вопросы')}
 ${ops.length ? UI.others(pre, 'Операции\nпо теме', ops, minPrice) : ''}
-${related.length ? `<section class="fx" style="--bg:var(--ice)"><div class="sx"><h2 class="t o up" style="${T(88, 96)};margin-bottom:calc(52 * var(--px))">Читайте также</h2><div class="posts">${related.map(r => postCard(r, '')).join('')}</div></div></section>` : ''}
+${related.length ? `<section class="fx" style="--bg:var(--sky2)"><div class="sx"><h2 class="t o up" style="${T(88, 96)};margin-bottom:calc(52 * var(--px))">Читайте также</h2><div class="posts">${related.map(r => postCard(r, '')).join('')}</div></div></section>` : ''}
 ${UI.sources(p.sources.map(sourceHtml), `Статья подготовлена по учебникам и клиническим руководствам по ветеринарной хирургии. Дата проверки: ${dateRu(p.updated || p.date)}.`, 'Статья носит ознакомительный характер и не заменяет осмотр. Если питомцу плохо — звоните врачу.')}
 ${UI.book(pre, 'Остались\nвопросы?', 'Опишите ситуацию и прикрепите анализы или снимки — отвечу, что делать дальше.')}
 </main>
@@ -98,7 +110,8 @@ ${UI.footer(pre)}
     return `${UI.head({ title, desc, url, prefix: pre, type: 'website', ld, ogTags: ogTags(title, desc, url, 'website'), iconTags: iconTags(pre) })}
 <body>
 <main>
-${pageHero(pre, [['Главная', pre + 'index.html'], ['Блог', '']], 'Полезное владельцам', 'Что делать в экстренной ситуации, как подготовить питомца к операции и как ухаживать за ним после — простым языком, со ссылками на ветеринарные источники.')}
+${pageHero(pre, [['Главная', pre + 'index.html'], ['Блог', '']], 'Полезное владельцам', 'Что делать в экстренной ситуации, как подготовить питомца к операции и как ухаживать за ним после — простым языком, со ссылками на ветеринарные источники.', null,
+    { sub: 'Статьи ветеринарного хирурга', lw: 760, mh: 1014, photo: { src: 'assets/home/cat-laptop.png', x: 900, y: 420, w: 691 } })}
 <section class="fx" style="--bg:#fff">
   <div class="sx">
     <div class="chips" role="group" aria-label="Рубрики" style="margin-top:0;margin-bottom:calc(48 * var(--px))">

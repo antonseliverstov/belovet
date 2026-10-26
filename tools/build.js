@@ -360,9 +360,11 @@ function privacyHtml() {
   return `${UI.head({ title, desc, url, prefix: '', type: 'website', ogTags: ogTags(title, desc, url, 'website'), iconTags: iconTags('') })}
 <body>
 <main>
-${UI.pageHero('', [['Главная', 'index.html'], ['Политика конфиденциальности', '']], 'Политика конфиденциальности', 'Как мы обращаемся с данными, которые вы оставляете в формах записи и вопросов врачу.')}
+${UI.pageHero('', [['Главная', 'index.html'], ['Политика конфиденциальности', '']], 'Политика конфиденциальности', 'Как мы обращаемся с данными, которые вы оставляете в формах записи и вопросов врачу.', null,
+  { sub: 'Персональные данные', lw: 760, photo: { name: 'pinscher-squint', x: 1165, y: 554, w: 428 } })}
 <section class="fx" style="--bg:#fff">
   <article class="sx prose">
+    ${UI.doodle('', 'p01-paws.png', '--x:1260;--y:110;--w:253')}
     <aside class="prose-note"><b>Заготовка</b><p>Перед запуском сайта сюда нужно вставить тексты, подготовленные по 152-ФЗ «О персональных данных»: политику обработки, согласие и сведения о cookie.</p></aside>
 ${parts.map(([id, h, t]) => `    <h2 id="${id}">${h}</h2>\n    <p>${t}</p>`).join('\n')}
   </article>
@@ -386,7 +388,8 @@ function notFoundHtml() {
   return `${UI.head({ title, desc: 'Такой страницы нет.', url: '', prefix: B, type: 'website', robots: 'noindex', ogTags: '', iconTags: `<link rel="icon" type="image/png" href="${B}assets/logo-symbol.png">` })}
 <body>
 <main>
-${UI.pageHero(B, [['Главная', B + 'index.html'], ['Ошибка 404', '']], 'Такой страницы нет', `Возможно, адрес изменился. Все операции и цены собраны на главной, там же есть поиск по симптомам. Если питомцу плохо, звоните ${PHONE}: по экстренной записи приеду в клинику за 15 минут в любое время, даже ночью. Тяжёлых пациентов принимаем без очереди.`)}
+${UI.pageHero(B, [['Главная', B + 'index.html'], ['Ошибка 404', '']], 'Такой страницы нет', `Возможно, адрес изменился. Все операции и цены собраны на главной, там же есть поиск по симптомам. Если питомцу плохо, звоните ${PHONE}: по экстренной записи приеду в клинику за 15 минут в любое время, даже ночью. Тяжёлых пациентов принимаем без очереди.`, null,
+  { sub: 'Ошибка 404', photo: { name: 'terrier', x: 1000, y: 400, w: 566 } })}
 <section class="fx" style="--bg:#fff">
   <div class="sx">
     <div class="posts">${cards.map(([h, b, t, m]) => `<a class="post" href="${h}"><b>${b}</b><span class="t" style="${UI.T(23, 33)}">${t}</span><span class="post-read t" style="${UI.T(25, 34)}">${m}</span></a>`).join('')}</div>

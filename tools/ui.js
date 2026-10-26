@@ -52,14 +52,23 @@ ${preload ? `<link rel="preload" as="image" href="${preload}">\n` : ''}${ld.map(
 
   // ---------- подвал (как на главной) ----------
   // Первый экран страниц без фото: блог, служебные страницы
-  const pageHero = (pre, crumbs, title, lead, meta) => {
-    const L = title.length, fs = L <= 30 ? 132 : L <= 50 ? 110 : L <= 70 ? 96 : 84;
+  // o: { sub, photo:{name|src, x, y, w, clip}, mh, lw, tw } — как в макетах «Статья блога», «Блог», «Политика», «404»
+  const pageHero = (pre, crumbs, title, lead, meta, o = {}) => {
+    const L = title.length, ph = o.photo;
+    const fs = o.tw ? (L <= 20 ? 132 : L <= 40 ? 110 : L <= 56 ? 100 : 88) : (L <= 30 ? 132 : L <= 50 ? 110 : L <= 70 ? 96 : 84);
+    const img = !ph ? '' : ph.src
+      ? `<img class="oh-photo" style="--x:${ph.x};--y:${ph.y};--w:${ph.w}" src="${pre}${ph.src}" alt="">`
+      : ph.clip
+        ? `<div class="oh-clip" style="--x:${ph.clip.x};--y:${ph.clip.y};--w:${ph.clip.w};--hh:${ph.clip.h};--cw:${ph.clip.w};--ch:${ph.clip.h}">${photo(pre, ph.name, 'oh-photo', `--x:${ph.x};--y:${ph.y};--w:${ph.w}`, '')}</div>`
+        : photo(pre, ph.name, 'oh-photo', `--x:${ph.x};--y:${ph.y};--w:${ph.w}`, '');
     return `<section class="fx" style="--bg:var(--sky2)">
-  <div class="sx ph-in">
+  <div class="sx ph-in${ph ? ' ph-ph' : ''}" style="--mh:${o.mh || (ph ? 1120 : 640)};--tw:${o.tw || 1469};--lw:${o.lw || 830}">
     ${header(pre, crumbs)}
     <h1 class="ph-title t o up" style="${T(fs, Math.round(fs * 1.08))};--wl:${Math.max(...title.split(' ').map(w => w.length))}">${esc(title)}</h1>
+    ${o.sub ? `<p class="ph-sub t o" style="${T(45, 57)}">${esc(o.sub)}</p>` : ''}
     ${lead ? `<p class="ph-lead t" style="${T(28, 40)}">${esc(lead)}</p>` : ''}
     ${meta ? `<p class="ph-meta t" style="${T(22, 30)}">${meta.map(m => `<span>${m}</span>`).join('')}</p>` : ''}
+    ${img}
   </div>
 </section>`;
   };
