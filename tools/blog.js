@@ -220,8 +220,14 @@ ${footer('../')}
   fs.writeFileSync(path.join(ROOT, 'brand', 'blog-plan.md'), planMd());
 
   // блок «Полезное владельцам» на главной — три последние статьи
-  const homeBlock = posts.slice(0, 3).map(p => `
-          <a class="post" href="blog/${p.slug}.html"><span class="post-cat">${esc(RUBRICS[p.rubric])}</span><b>${esc(p.title)}</b><span class="post-more">Читать →</span></a>`).join('');
+  // Блок на главной по макету Figma: первая статья — большая голубая карточка, две — списком справа
+  const HOME_SLOTS = [
+    { cls: 'post-main', box: '--x:72;--y:405;--w:850', cat: '--x:36;--y:40;--w:750;--fs:23;--lh:31', title: '--x:36;--y:120;--w:758;--fs:59;--lh:64', more: '--x:36;--y:574;--w:350;--fs:30;--lh:41' },
+    { cls: 'post-side hh', box: '--x:1000;--y:449;--w:541;--hh:290', cat: '--x:0;--y:0;--w:541;--fs:21;--lh:29', title: '--x:0;--y:57;--w:541;--fs:44;--lh:48', more: '--x:0;--y:245;--w:541;--fs:25;--lh:34' },
+    { cls: 'post-side hh', box: '--x:1000;--y:819;--w:541;--hh:330', cat: '--x:0;--y:0;--w:541;--fs:21;--lh:29', title: '--x:0;--y:57;--w:541;--fs:44;--lh:48', more: '--x:0;--y:280;--w:541;--fs:25;--lh:34' }
+  ];
+  const homeBlock = posts.slice(0, 3).map((p, i) => { const k = HOME_SLOTS[i]; return `
+      <a class="a post ${k.cls}" style="${k.box}" href="blog/${p.slug}.html"><span class="a t" style="${k.cat}">${esc(RUBRICS[p.rubric])}</span><b class="a t o" style="${k.title}">${esc(p.title)}</b><span class="a t" style="${k.more}">Читать</span></a>`; }).join('');
 
   // статьи по операции — для страниц операций
   const postsFor = slug => posts.filter(p => p.ops.includes(slug));

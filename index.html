@@ -27,27 +27,35 @@
 <!-- SEO:END -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Onest:wght@400;500;600;700&family=Oswald:wght@700&family=Roboto:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat&family=Oswald:wght@700&family=Roboto:wght@400;500;600;700&display=swap">
 <link rel="preload" as="image" href="assets/hero-bg.jpg">
 <style>
-/* Брендбук beloVET, направление «Знак»: фон sky-soft, крупный знак срезан краем, текст слева, один оранжевый элемент на экран */
+/* Дизайн-система макета Figma «BELOVET.RU»: navy, жёлтые кнопки, голубой, молочный; Oswald + Roboto + Caveat */
 :root {
   color-scheme: light;
-  --navy: #0F2B45;
-  --navy-hover: #1A3D5E;
-  --blue: #3780C0;
-  --blue-text: #2867A3;
-  --orange: #FD5D2E;
-  --orange-hover: #E84E21;
-  --sky-soft: #EAF2FA;
-  --cream: #F9F6EF;
-  --sky: #DCEAF4;
+  --ink: #001C45;
+  --sun: #FBFF2C;
+  --sky2: #58BAFC;
+  --medical: #0068B5;
+  --ice: #E8F4FD;
+  --milk: #FFF9F1;
+  --coral: #EE9583;
+  --soft: 0 14px 36px rgba(0, 28, 69, .07);
+  --navy: #001C45;
+  --navy-hover: #0A2E62;
+  --blue: #0068B5;
+  --blue-text: #0068B5;
+  --orange: #FBFF2C;
+  --orange-hover: #F0F41E;
+  --sky-soft: #E8F4FD;
+  --cream: #FFF9F1;
+  --sky: #E8F4FD;
   --paper: #FFFFFF;
-  --muted: #4E6275;
-  --line: #D6E1EC;
+  --muted: #3D5170;
+  --line: #D3DEEA;
 
-  --font-display: "Manrope", "Segoe UI", Arial, sans-serif;
-  --font-body: "Onest", "Segoe UI", Arial, sans-serif;
+  --font-display: "Oswald", "Arial Narrow", sans-serif;
+  --font-body: "Roboto", Arial, sans-serif;
 
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -62,10 +70,10 @@
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 88px; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-body { margin: 0; background: var(--cream); color: var(--navy); font: 400 17px/1.55 var(--font-body); -webkit-font-smoothing: antialiased; }
+body { margin: 0; background: #fff; color: var(--navy); font: 400 17px/1.55 var(--font-body); -webkit-font-smoothing: antialiased; }
 img { max-width: 100%; height: auto; }
 h1, h2, h3 { margin: 0; font-family: var(--font-display); text-wrap: balance; }
-h2 { font-size: clamp(26px, 3.2vw, 32px); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; }
+h2 { font-size: clamp(26px, 3.2vw, 32px); font-weight: 700; line-height: 1.15; letter-spacing: -0.02em; }
 h3 { font-size: 21px; font-weight: 700; line-height: 1.3; }
 p { margin: 0; }
 a { color: var(--blue-text); }
@@ -80,7 +88,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--blue-text); out
 
 /* Кнопки, капсулы, бейдж врача — компоненты брендбука */
 .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 26px; border-radius: 16px; border: 2px solid transparent; font: 700 17px/1 var(--font-body); text-decoration: none; white-space: nowrap; cursor: pointer; transition: background-color .15s, color .15s; }
-.btn-primary { background: var(--orange); color: #fff; }
+.btn-primary { background: var(--sun); color: var(--ink); }
 .btn-primary:hover { background: var(--orange-hover); }
 .btn-dark { background: var(--navy); color: #fff; }
 .btn-dark:hover { background: var(--navy-hover); }
@@ -189,29 +197,12 @@ body.where-open .mbar { display: none; }
 .cal-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; text-align: center; }
 .cal-grid .dow { font-size: 12px; color: var(--muted); padding-bottom: 2px; }
 .cal-grid .d { width: 34px; max-width: 100%; aspect-ratio: 1; margin-inline: auto; display: grid; place-items: center; font-size: 14px; border-radius: 50%; font-variant-numeric: tabular-nums; color: var(--muted); }
-.cal-grid .d.work { background: var(--orange); color: var(--navy); font-weight: 700; }
+.cal-grid .d.work { background: var(--sky2); color: var(--ink); font-weight: 500; }
 .cal-grid .d.past { opacity: .45; }
-.cal-grid .d.today { box-shadow: 0 0 0 2px var(--blue); }
+.cal-grid .d.today { box-shadow: inset 0 0 0 1.5px var(--ink); }
 .cal-legend { display: flex; gap: 16px; font-size: 13px; color: var(--muted); }
-.cal-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--orange); margin-right: 6px; vertical-align: 0; }
+.cal-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--sky2); margin-right: 6px; vertical-align: 0; }
 .cal-legend i.t { background: none; box-shadow: 0 0 0 2px var(--blue); }
-
-/* Экстренно: оранжевый блок. Белый — только крупный жирный текст (3.1:1), остальное тёмно-синим (4.7:1) */
-.urgent { background: var(--orange); color: var(--navy); border-radius: var(--radius-lg); padding: clamp(24px, 4vw, 48px); display: grid; gap: 28px; }
-.urgent h2 { color: #fff; font-size: clamp(28px, 3.4vw, 38px); white-space: nowrap; }
-.urgent .lead-form { gap: 16px; }
-.urgent .row2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
-.urgent textarea { min-height: 120px; }
-.urgent .submit-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 32px; }
-.urgent .submit-row .btn { min-width: 200px; }
-.urgent-call { display: grid; gap: 4px; padding-top: 28px; border-top: 1px solid rgba(15, 43, 69, .2); }
-.urgent-call span { font-size: 15px; font-weight: 600; }
-.urgent-call .phone { font: 800 clamp(28px, 3.4vw, 38px)/1.1 var(--font-display); color: #fff; text-decoration: none; }
-@media (max-width: 560px) {
-  .urgent h2 { white-space: normal; }
-  .urgent .row2 { grid-template-columns: minmax(0, 1fr); }
-  .urgent .submit-row .btn { width: 100%; }
-}
 
 /* Формы заявок */
 .lead-form { display: grid; gap: 14px; align-content: start; }
@@ -294,151 +285,361 @@ dialog::backdrop { background: rgba(15, 43, 69, .55); }
 .cookie .btn { min-height: 44px; padding: 0 22px; font-size: 15px; }
 @media (max-width: 700px) { .cookie { bottom: calc(84px + env(safe-area-inset-bottom, 0px)); } }
 
-/* Операции */
-.dirs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-.dir { background: var(--paper); border-radius: var(--radius-md); padding: 24px; display: grid; gap: 10px; align-content: start; text-decoration: none; color: var(--navy); min-width: 0; transition: background-color .15s; }
-.dir:hover { background: var(--sky); }
-.dir p { color: var(--muted); font-size: 15px; }
-.dir .from { margin-top: 6px; font-weight: 600; }
-@media (max-width: 900px) { .dirs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 560px) { .dirs { grid-template-columns: 1fr; } }
+/* ===== Блоки главной по макету Figma (BELOVET / Полный desktop, ширина 1613) =====
+   .fx — блок шириной до 1613px; --px — один пиксель макета при текущей ширине блока.
+   .a — элемент по координатам макета: --x, --y, --w; .hh — высота --hh; .rot — поворот --r (в градусах).
+   .t — текст: --fs размер, --lh межстрочный из макета; на телефоне размер пересчитывается. */
+.fx { --px: calc(100cqw / 1613); position: relative; container-type: inline-size; max-width: 1613px; margin-inline: auto; overflow: clip; background: var(--bg, #fff); color: var(--ink); }
+.fx-box { position: relative; }
+.fx img { max-width: none; }
+.a { position: absolute; left: calc(var(--x, 0) * var(--px)); top: calc(var(--y, 0) * var(--px)); width: calc(var(--w) * var(--px)); margin: 0; }
+.hh { height: calc(var(--hh) * var(--px)); }
+.rot { rotate: calc(var(--r) * 1deg); }
+.ml { margin-left: calc(var(--ml) * var(--px)); }
+.t { font-size: calc(var(--fs) * var(--px)); line-height: calc(var(--lh) / var(--fs)); }
+.o { font-family: "Oswald", "Arial Narrow", sans-serif; font-weight: 700; }
+.cv { font-family: "Caveat", cursive; font-weight: 400; }
+.up { text-transform: uppercase; }
+.sun { color: var(--sun); }
+.fx h2, .fx h3, .fx p, .fx figure, .fx ol { margin: 0; }
+.fx h2, .fx h3 { letter-spacing: 0; text-wrap: wrap; font-weight: 700; }
+.fx a { color: inherit; text-decoration: none; }
+.fx .cta { color: var(--ink); }
+.fx a:hover { text-decoration: underline; text-underline-offset: .15em; }
+.line { border: 0; height: 1px; background: var(--ink); opacity: .14; }
+.deco { pointer-events: none; }
+.card-sky > div, .card-coral > div, .card-white > div, .card-ice > div { border-radius: calc(28 * var(--px)); }
+.card-sky > div { background: var(--sky2); }
+.card-coral > div { background: var(--coral); }
+.card-white > div { background: #fff; box-shadow: var(--soft); }
+.card-ice > div { background: var(--ice); box-shadow: var(--soft); }
 
-/* Ветеринарная хирургия: поиск и категории */
-.surgery { display: grid; gap: 16px; }
-.search { position: relative; }
-.search svg { position: absolute; left: 20px; top: 50%; width: 22px; height: 22px; translate: 0 -50%; color: var(--muted); pointer-events: none; }
-.search input { width: 100%; min-height: 64px; padding: 0 20px 0 54px; border: 2px solid var(--line); border-radius: 18px; background: var(--paper); color: var(--navy); font: 400 18px/1.3 var(--font-body); }
-.search input::placeholder { color: var(--muted); }
-.search input:focus { outline: none; border-color: var(--blue); }
-.results { display: grid; gap: 8px; }
-.results[hidden] { display: none; }
-.results .hint { color: var(--muted); font-size: 15px; }
-.res { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 16px; align-items: center; padding: 16px 20px; background: var(--paper); border-radius: var(--radius-md); color: var(--navy); text-decoration: none; transition: background-color .15s; }
-.res:hover, .res:focus-visible { background: var(--sky); }
-.res b { font: 700 18px/1.3 var(--font-display); }
-.res .cat-name { grid-column: 1; font-size: 14px; color: var(--muted); }
-.res .num { grid-row: 1 / span 2; grid-column: 2; font-weight: 600; }
-.res mark { background: none; color: var(--blue-text); font-weight: 700; }
-.empty { padding: 20px; background: var(--paper); border-radius: var(--radius-md); display: grid; gap: 12px; justify-items: start; }
-.cats { display: grid; gap: 8px; }
-.cats[hidden] { display: none; }
-.cat { background: var(--paper); border-radius: var(--radius-md); }
-.cat summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 22px; cursor: pointer; list-style: none; font: 700 19px/1.3 var(--font-display); }
+/* Кнопки макета: жёлтая 365×72, белая с обводкой */
+.cta { display: inline-flex; align-items: center; justify-content: center; width: calc(365 * var(--px)); height: calc(72 * var(--px)); padding: 0 calc(24 * var(--px)); border: 0; border-radius: calc(20 * var(--px)); background: var(--sun); color: var(--ink); font: 700 calc(23 * var(--px))/1.2 "Roboto", Arial, sans-serif; text-align: center; text-decoration: none; cursor: pointer; box-shadow: inset 0 0 0 0 var(--ink); transition: box-shadow .12s; }
+.cta:hover { box-shadow: inset 0 0 0 2px var(--ink); text-decoration: none !important; }
+.cta:active { box-shadow: inset 0 0 0 3px var(--ink); }
+.cta-white { background: #fff; box-shadow: inset 0 0 0 1.5px var(--ink); }
+.cta-white:hover { box-shadow: inset 0 0 0 2.5px var(--ink); }
+.cta-lg { width: calc(390 * var(--px)); height: calc(76.93 * var(--px)); border-radius: calc(21.37 * var(--px)); font-size: calc(24.58 * var(--px)); }
+.cta-sm { width: calc(320 * var(--px)); height: calc(63.12 * var(--px)); border-radius: calc(17.53 * var(--px)); font-size: calc(20.16 * var(--px)); }
+
+/* 02 О враче */
+.s-about { --bg: #fff; }
+.about-name span { display: block; }
+.about-name span + span { margin-left: calc(-7 * var(--px)); }
+.about-photo { height: auto; -webkit-mask: url(assets/home/doctor-bulldog-mask.png) 0 0 / 100% 100% no-repeat; mask: url(assets/home/doctor-bulldog-mask.png) 0 0 / 100% 100% no-repeat; }
+.fact { display: flex; flex-direction: column; gap: calc(16 * var(--px)); padding: calc(32 * var(--px)); background: #fff; border-radius: calc(28 * var(--px)); filter: drop-shadow(0 14px 18px rgba(0, 28, 69, .07)); }
+.about-cat { height: calc(333.33 * var(--px)); object-fit: contain; }
+
+/* 03 Направления */
+.s-dirs { --bg: var(--ice); }
+.dirs-h span { display: block; }
+.dirs-h span:first-child { margin-left: calc(-7 * var(--px)); }
+.dirs-h span + span { margin-left: calc(-5 * var(--px)); margin-top: calc(2 * var(--px)); }
+.dirs-dog { height: calc(328.33 * var(--px)); object-fit: contain; scale: -1 1; }
+.dir { border-radius: calc(28 * var(--px)); filter: drop-shadow(0 14px 18px rgba(0, 28, 69, .07)); }
+.dir-main { background: var(--sky2); }
+.dir-mid { display: flex; gap: calc(24 * var(--px)); padding: calc(32 * var(--px)); background: #fff; }
+.dir-mid > b { flex: none; width: calc(70 * var(--px)); }
+.dir-mid > div { display: flex; flex-direction: column; gap: calc(16 * var(--px)); }
+.dir-small { display: flex; flex-direction: column; gap: calc(16 * var(--px)); padding: calc(32 * var(--px)); background: var(--milk); }
+.dir h3 { font-weight: 700; }
+
+/* 04 Экстренная запись */
+.s-urgent { --bg: var(--medical); color: var(--milk); }
+.urgent-plan { color: var(--ink); }
+.urgent-phone { white-space: nowrap; }
+.urgent-form { position: relative; display: flex; flex-direction: column; width: calc(761 * var(--px)); margin: calc(88 * var(--px)) 0 calc(88 * var(--px)) calc(780 * var(--px)); padding: calc(35 * var(--px)) calc(40 * var(--px)) calc(47 * var(--px)); background: var(--milk); border-radius: calc(28 * var(--px)); filter: drop-shadow(0 14px 18px rgba(0, 28, 69, .07)); color: var(--ink); gap: 0; }
+.urgent-form > p.t { margin-bottom: calc(21 * var(--px)); }
+.ff { display: flex; flex-direction: column; gap: calc(12 * var(--px)); margin-bottom: calc(25 * var(--px)); }
+.ff input, .ff textarea { width: 100%; height: calc(80 * var(--px)); padding: calc(20.5 * var(--px)); border: 1.5px solid var(--ink); border-radius: calc(20 * var(--px)); background: #fff; color: var(--ink); font: 400 calc(24 * var(--px))/1.4 "Roboto", Arial, sans-serif; }
+.ff textarea { height: calc(188 * var(--px)); resize: vertical; }
+.ff input::placeholder, .ff textarea::placeholder { color: var(--ink); opacity: .62; }
+.ff input:focus, .ff textarea:focus { outline: none; box-shadow: 0 0 0 2px var(--ink); }
+.ff-msg { margin-bottom: calc(37 * var(--px)); }
+.urgent-form .files-drop { gap: calc(26 * var(--px)); min-height: calc(126 * var(--px)); padding: calc(18 * var(--px)) calc(19 * var(--px)); background: var(--ice); border: 1px dashed var(--ink); border-radius: calc(20 * var(--px)); }
+.urgent-form .files-drop:hover, .urgent-form .files-drop.over { background: #fff; }
+.urgent-form .files-drop i { font: 400 calc(48 * var(--px))/1 "Roboto", Arial, sans-serif; font-style: normal; width: calc(38 * var(--px)); text-align: center; }
+.urgent-form .files-drop b { font: 400 calc(26 * var(--px))/1.35 "Roboto", Arial, sans-serif; }
+.urgent-form .files-drop small { font-size: calc(18 * var(--px)); line-height: 1.39; }
+.urgent-form .consent { gap: calc(26 * var(--px)); margin: calc(46 * var(--px)) 0 calc(92 * var(--px)); }
+.urgent-form .check { gap: calc(14 * var(--px)); font-size: calc(18 * var(--px)); line-height: 1.39; }
+.urgent-form .check input { width: calc(22 * var(--px)); height: calc(22 * var(--px)); }
+.urgent-form .check a { text-decoration: none; }
+.urgent-form .form-note { margin-top: 16px; font-size: calc(20 * var(--px)); }
+
+/* 05 Как проходит */
+.steps { list-style: none; padding: 0; }
+.steps li { display: grid; grid-template-columns: calc(172 * var(--px)) 1fr; align-items: start; }
+.steps li > b { grid-row: 1 / span 3; margin-top: calc(14 * var(--px)); color: var(--sky2); }
+.steps li > strong { margin-top: calc(9 * var(--px)); font-weight: 700; }
+.steps li > span:last-child { margin-top: calc(17 * var(--px)); }
+.steps li:not(:last-child)::after { content: ""; position: absolute; left: calc(172 * var(--px)); top: calc(177 * var(--px)); width: calc(700 * var(--px)); height: 1px; background: var(--ink); opacity: .14; }
+.control { background: var(--sky2); border-radius: calc(28 * var(--px)); filter: drop-shadow(0 14px 18px rgba(0, 28, 69, .07)); }
+
+/* История Фроси */
+.story-who { display: flex; align-items: center; gap: calc(24 * var(--px)); }
+.story-who img { width: calc(112 * var(--px)); height: calc(112 * var(--px)); border-radius: 50%; object-fit: cover; object-position: 50% 12%; }
+.story-who p { display: grid; gap: calc(7 * var(--px)); }
+.polaroid { background: #fff; filter: drop-shadow(0 5px 7px rgba(0, 28, 69, .1)); }
+.polaroid img { position: absolute; left: calc(8.36 * var(--px)); top: calc(8.36 * var(--px)); width: calc(204.17 * var(--px)); height: calc(300.83 * var(--px)); object-fit: cover; }
+.polaroid figcaption { position: absolute; left: calc(9.88 * var(--px)); top: calc(314.97 * var(--px)); }
+.tape { display: block; background: var(--coral); }
+.story-text { display: flex; flex-direction: column; gap: calc(22 * var(--px)); }
+
+/* Акцент: доверяют самое дорогое */
+.s-trust { --bg: var(--sky2); }
+.trust-h { color: #fff; white-space: nowrap; }
+.trust-dog { height: calc(887 * var(--px)); object-fit: cover; -webkit-mask: url(assets/home/dalmatian-mask.png) center / cover no-repeat; mask: url(assets/home/dalmatian-mask.png) center / cover no-repeat; }
+.wave { rotate: 180deg; }
+
+/* 06 Операции и цены */
+.s-prices { --bg: var(--ice); }
+.prices-in { display: flex; flex-direction: column; gap: calc(32 * var(--px)); padding: calc(72 * var(--px)); }
+.prices-head { position: relative; display: flex; flex-direction: column; gap: calc(18 * var(--px)); }
+.prices-head h2 { margin-left: calc(-5 * var(--px)); }
+.prices-head img { position: absolute; right: calc(40.7 * var(--px)); top: calc(14.26 * var(--px)); width: calc(276.87 * var(--px)); }
+.s-prices .surgery { display: flex; flex-direction: column; gap: calc(32 * var(--px)); }
+.s-prices .search input { width: 100%; height: calc(84 * var(--px)); padding: 0 calc(26.5 * var(--px)); border: 1.5px solid var(--ink); border-radius: calc(20 * var(--px)); background: #fff; color: var(--ink); font: 400 calc(26 * var(--px))/1.35 "Roboto", Arial, sans-serif; }
+.s-prices .search input::placeholder { color: var(--ink); opacity: 1; }
+.s-prices .search input:focus { outline: none; box-shadow: 0 0 0 2px var(--ink); }
+.results { display: flex; flex-direction: column; gap: calc(16 * var(--px)); }
+.results[hidden], .cats[hidden] { display: none; }
+.results .hint { font-size: calc(22 * var(--px)); }
+.res { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: calc(6 * var(--px)) calc(24 * var(--px)); align-items: center; padding: calc(24 * var(--px)) calc(28 * var(--px)); background: #fff; border-radius: calc(28 * var(--px)); color: var(--ink); text-decoration: none; }
+.res:hover, .res:focus-visible { background: var(--sky2); text-decoration: none !important; }
+.res b { font: 700 calc(32 * var(--px))/1.3 "Oswald", sans-serif; }
+.res .cat-name { grid-column: 1; font-size: calc(20 * var(--px)); }
+.res .num { grid-row: 1 / span 2; grid-column: 2; font-size: calc(24 * var(--px)); }
+.res mark { background: none; color: inherit; text-decoration: underline; text-decoration-color: var(--sky2); text-decoration-thickness: .15em; }
+.empty { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: calc(28 * var(--px)); background: #fff; border-radius: calc(28 * var(--px)); font-size: calc(24 * var(--px)); }
+.empty .btn { min-height: calc(72 * var(--px)); padding: 0 calc(32 * var(--px)); font-size: calc(23 * var(--px)); }
+.cats { display: flex; flex-direction: column; gap: calc(16 * var(--px)); }
+.cat { background: #fff; border-radius: calc(28 * var(--px)); }
+.cat summary { position: relative; display: flex; align-items: center; height: calc(104 * var(--px)); padding: 0 calc(28 * var(--px)); cursor: pointer; list-style: none; }
 .cat summary::-webkit-details-marker { display: none; }
-.cat summary::after { content: ""; width: 10px; height: 10px; border-right: 2px solid var(--navy); border-bottom: 2px solid var(--navy); rotate: 45deg; translate: 0 -3px; flex-shrink: 0; transition: rotate .15s; }
-.cat[open] summary::after { rotate: -135deg; translate: 0 3px; }
-.cat summary small { margin-left: auto; font: 500 14px var(--font-body); color: var(--muted); }
-.price-list { list-style: none; margin: 0; padding: 0 22px 10px; }
-.price-list li a { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 12px 0; border-top: 1px solid var(--line); color: var(--navy); text-decoration: none; }
-.price-list li a:hover .what { color: var(--blue-text); text-decoration: underline; text-underline-offset: 3px; }
-.price-list .what { min-width: 0; }
-.price-list small { display: block; font-size: 15px; color: var(--muted); }
-.price-list .num { font-weight: 600; }
-@media (max-width: 480px) {
-  .price-list { padding-inline: 16px; }
-  .cat summary { padding: 16px; font-size: 17px; }
-  .price-list .num { white-space: normal; text-align: right; }
-  .res { padding: 14px 16px; }
+.cat summary span { font: 700 calc(36 * var(--px))/1.36 "Oswald", sans-serif; }
+.cat summary small { position: absolute; left: calc(1280 * var(--px)); font: 400 calc(24 * var(--px))/1.375 "Roboto", sans-serif; }
+.cat summary::after { content: "+"; position: absolute; left: calc(1384 * var(--px)); width: calc(60 * var(--px)); font: 400 calc(42 * var(--px))/1 "Roboto", sans-serif; transition: rotate .15s; }
+.cat[open] summary::after { rotate: 45deg; }
+.price-list { list-style: none; margin: 0; padding: 0 calc(28 * var(--px)) calc(16 * var(--px)); }
+.price-list li a { display: flex; align-items: baseline; justify-content: space-between; gap: calc(24 * var(--px)); padding: calc(18 * var(--px)) 0; border-top: 1px solid rgba(0, 28, 69, .14); color: var(--ink); font-size: calc(24 * var(--px)); line-height: 1.375; text-decoration: none; }
+.price-list li a:hover { text-decoration: none; }
+.price-list li a:hover .what { text-decoration: underline; text-underline-offset: .15em; }
+.price-list small { display: block; font-size: calc(20 * var(--px)); opacity: .7; }
+.prices-foot { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; height: calc(160 * var(--px)); }
+.prices-foot p { padding-top: calc(8 * var(--px)); }
+.prices-foot .cta { margin-top: calc(33 * var(--px)); }
+.prices-foot p { display: flex; flex-direction: column; gap: calc(14 * var(--px)); }
+
+/* Акцент: операция — нос поверх букв */
+.nose-bg, .nose-top { height: auto; }
+.nose-word { white-space: nowrap; }
+.nose-top { -webkit-mask: url(assets/home/nose-mask.svg) 0 100% / 100% 52.93% no-repeat; mask: url(assets/home/nose-mask.svg) 0 100% / 100% 52.93% no-repeat; }
+.note { background: var(--coral); border-radius: calc(28 * var(--px)); filter: drop-shadow(0 14px 18px rgba(0, 28, 69, .07)); }
+
+/* 07 Второе мнение */
+.s-second { --bg: var(--sky2); }
+.memo { background: var(--milk); border-radius: calc(28 * var(--px)); filter: drop-shadow(0 14px 18px rgba(0, 28, 69, .07)); }
+.memo ol { list-style: none; padding: 0; }
+.memo li { display: grid; grid-template-columns: calc(90 * var(--px)) 1fr; align-items: start; }
+.memo li b { margin-top: calc(6 * var(--px)); color: var(--sky2); }
+.fill-link { border-bottom: 1.5px dashed currentColor; width: auto !important; }
+
+/* 08 Хирург по приглашению */
+.s-clinics { --bg: var(--milk); }
+.clinics-photo { object-fit: cover; border-radius: calc(28 * var(--px)); }
+
+/* 09 Полезное владельцам */
+.post { color: var(--ink); text-decoration: none !important; }
+.post:hover b { text-decoration: underline; text-underline-offset: .12em; text-decoration-thickness: .06em; }
+.post-main { height: calc(700 * var(--px)); background: var(--sky2); border-radius: calc(28 * var(--px)); filter: drop-shadow(0 14px 18px rgba(0, 28, 69, .07)); }
+.blog-cat { height: auto; }
+
+/* Акцент: в надёжных руках */
+.s-hands { --bg: var(--ice); }
+.hands-bg, .ribbon { height: auto; }
+.s-hands h2 { color: #fff; }
+
+/* 10 Отзывы */
+.s-reviews { --bg: var(--milk); }
+.rv { color: var(--ink); filter: drop-shadow(0 14px 18px rgba(0, 28, 69, .07)); border-radius: calc(28 * var(--px)); }
+.rv-main { background: #fff; }
+.rv-main img { border-radius: calc(28 * var(--px)); object-fit: cover; }
+.rv-main .rv-txt { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 9; overflow: hidden; }
+.rv-side { height: calc(370 * var(--px)); background: #fff; text-align: left; border: 0; font: inherit; cursor: pointer; }
+.rv-side.ice { background: var(--ice); }
+.rv-side .rv-txt, .rv-card .rv-txt { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 7; overflow: hidden; }
+.rv-more-link { padding: 0; border: 0; background: none; color: inherit; font-family: inherit; text-align: left; cursor: pointer; text-decoration: underline; text-underline-offset: .15em; }
+.rv-foot { padding: 0 calc(72 * var(--px)) calc(88 * var(--px)); }
+.rv-rest { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: calc(32 * var(--px)); margin-bottom: calc(48 * var(--px)); }
+.rv-rest[hidden] { display: none; }
+.rv-card { display: flex; flex-direction: column; gap: calc(10 * var(--px)); padding: calc(28 * var(--px)); background: #fff; border: 0; text-align: left; font: inherit; cursor: pointer; }
+.rv-card:nth-child(4n+1) { background: var(--ice); }
+.rv-dialog { width: min(720px, calc(100vw - 32px)); border-radius: 28px; background: #fff; }
+.rv-dialog .rv-in { padding: 36px; display: grid; gap: 14px; font: 400 18px/1.5 "Roboto", sans-serif; }
+.rv-dialog h2 { font: 700 30px/1.15 "Oswald", sans-serif; text-transform: uppercase; padding-right: 48px; }
+.rv-dialog .rv-who { font-size: 16px; opacity: .8; }
+.rv-dialog .rv-op { font-weight: 700; color: var(--ink); }
+
+/* 11 Контакты */
+.s-contacts { --bg: var(--sky2); }
+.contacts-phone { white-space: nowrap; }
+.contacts-btns { display: flex; align-items: flex-start; gap: calc(29 * var(--px)); }
+.sched { background: #fff; border-radius: calc(28 * var(--px)); filter: drop-shadow(0 14px 18px rgba(0, 28, 69, .07)); }
+.sched-cal .cal-grid { display: grid; grid-template-columns: repeat(7, calc(54 * var(--px))); column-gap: calc(6 * var(--px)); row-gap: calc(6 * var(--px)); text-align: center; }
+.sched-cal .dow { height: calc(40 * var(--px)); font-size: calc(18 * var(--px)); line-height: 1.33; text-transform: uppercase; }
+.sched-cal .d { display: grid; place-items: center; width: calc(54 * var(--px)); height: calc(54 * var(--px)); border-radius: 50%; font-size: calc(24 * var(--px)); }
+.sched-cal .d.work { background: var(--sky2); }
+.sched-cal .d.today { box-shadow: inset 0 0 0 1.5px var(--ink); }
+.sched-cal .d.past { opacity: .45; }
+.sched-cal .cal-month, .sched-cal .cal-legend { display: none; }
+.sched-legend { display: flex; align-items: center; gap: calc(12 * var(--px)); }
+.sched-legend i { width: calc(20 * var(--px)); height: calc(20 * var(--px)); border-radius: 50%; background: var(--sky2); }
+.sched-link { padding: 0; border: 0; background: none; color: var(--ink); text-align: left; font-family: "Roboto", sans-serif; cursor: pointer; text-decoration: underline; text-underline-offset: .2em; }
+
+/* 12 Подвал */
+.s-footer { --bg: var(--milk); }
+.s-footer img { height: auto; }
+
+/* ===== Телефон и планшет: блоки в колонку ===== */
+@media (max-width: 1023px) {
+  .fx-box { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding: 56px 20px; aspect-ratio: auto !important; }
+  .a { position: relative; left: auto; top: auto; width: auto; max-width: 100%; }
+  .hh { height: auto; }
+  .t { font-size: max(var(--min, 15px), calc((var(--fs) * .34 + 8) * 1px)); }
+  .deco { display: none; }
+  .rot { rotate: none; }
+  .cta, .cta-lg, .cta-sm { width: min(100%, 365px); height: 58px; border-radius: 18px; font-size: 18px; padding: 0 20px; }
+  .fx h2 { margin-bottom: 6px; }
+
+  .about-name span + span { margin-left: 0; }
+  .about-photo { order: 9; width: 100%; max-width: 420px; margin-top: 8px; }
+  .fact { width: min(100%, 420px); padding: 22px 24px; gap: 4px; border-radius: 22px; box-shadow: 10px 12px 0 var(--coral); filter: none; margin-block: 6px 14px; }
+  .about-care { order: 10; }
+
+  .dirs-h span:first-child, .dirs-h span + span { margin: 0; }
+  .dirs-dog { display: none; }
+  .t:not(.o) br { display: none; }
+  .dir { width: 100%; padding: 22px; border-radius: 22px; filter: none; box-shadow: var(--soft); }
+  .dir-main { display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; }
+  .dir-main .a { position: static; }
+  .dir-main b { grid-row: 1 / span 2; }
+  .dir-main img { display: none; }
+  .dir-mid { gap: 16px; }
+  .dir-mid > b { width: auto; }
+  .dir-small { gap: 8px; }
+
+  .urgent-box { display: block; padding: 56px 20px; }
+  .urgent-left { display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
+  .urgent-plan { color: var(--milk); opacity: .85; }
+  .urgent-phone { white-space: normal; }
+  .urgent-form { width: auto; margin: 0; padding: 24px 20px 28px; border-radius: 22px; }
+  .urgent-form > p.t { margin-bottom: 14px; }
+  .ff { gap: 6px; margin-bottom: 12px; }
+  .ff input, .ff textarea { height: 54px; padding: 14px 16px; border-radius: 16px; font-size: 16px; }
+  .ff textarea { height: 140px; }
+  .urgent-form .files-drop { gap: 14px; min-height: 0; padding: 14px 16px; border-radius: 16px; }
+  .urgent-form .files-drop i { font-size: 32px; width: 24px; }
+  .urgent-form .files-drop b { font-size: 16px; font-weight: 600; }
+  .urgent-form .files-drop small { font-size: 14px; }
+  .urgent-form .consent { gap: 10px; margin: 20px 0 24px; }
+  .urgent-form .check { gap: 10px; font-size: 15px; }
+  .urgent-form .check input { width: 20px; height: 20px; }
+  .urgent-form .form-note { font-size: 15px; }
+
+  .steps { display: grid; gap: 22px; width: 100%; }
+  .steps li { grid-template-columns: 56px 1fr; }
+  .steps li > b { margin-top: 4px; }
+  .steps li > strong { margin-top: 2px; }
+  .steps li > span:last-child { margin-top: 6px; }
+  .steps li:not(:last-child)::after { display: none; }
+  .control { width: 100%; padding: 22px 24px; border-radius: 22px; filter: none; display: grid; }
+  .control .a { position: static; }
+
+  .story-who img { width: 72px; height: 72px; }
+  .story-who p { gap: 2px; }
+  .polaroid { display: none; }
+  .story-text { gap: 12px; }
+
+  .s-trust .fx-box { padding-bottom: 0; }
+  .trust-h { white-space: normal; }
+  .trust-dog { order: 9; width: 100%; height: auto; max-width: 420px; align-self: center; margin-top: 8px; }
+
+  .prices-in { gap: 20px; padding: 56px 20px; }
+  .prices-head { gap: 10px; }
+  .prices-head h2 { margin-left: 0; }
+  .prices-head img { display: block; width: 110px; right: 0; top: -14px; }
+  .s-prices .surgery, .cats, .results { gap: 10px; }
+  .s-prices .search input { height: 58px; padding: 0 18px; border-radius: 16px; font-size: 16px; }
+  .results .hint { font-size: 15px; }
+  .res { padding: 16px 18px; border-radius: 18px; gap: 4px 12px; }
+  .res b { font-size: 19px; } .res .cat-name { font-size: 14px; } .res .num { font-size: 16px; }
+  .empty { padding: 18px; border-radius: 18px; font-size: 16px; }
+  .empty .btn { min-height: 52px; font-size: 16px; }
+  .cat { border-radius: 18px; }
+  .cat summary { height: auto; min-height: 62px; padding: 14px 52px 14px 18px; }
+  .cat summary span { font-size: 19px; }
+  .cat summary small { position: static; margin-left: auto; padding-left: 12px; font-size: 15px; }
+  .cat summary::after { left: auto; right: 14px; width: 24px; font-size: 26px; text-align: center; }
+  .price-list { padding: 0 18px 8px; }
+  .price-list li a { gap: 14px; padding: 12px 0; font-size: 16px; }
+  .price-list small { font-size: 14px; }
+  .prices-foot { flex-direction: column; align-items: flex-start; height: auto; }
+  .prices-foot .cta { margin-top: 0; }
+  .prices-foot p { gap: 6px; }
+
+  .s-nose .fx-box { min-height: 0; padding: 0; aspect-ratio: 1613 / 930 !important; display: block; }
+  .s-nose .a { position: absolute; left: calc(var(--x) * var(--px)); top: calc(var(--y) * var(--px)); width: calc(var(--w) * var(--px)); }
+  .s-nose .t { font-size: calc(var(--fs) * var(--px)); }
+  .s-nose .note { display: none; }
+
+  .memo { width: 100%; padding: 24px; border-radius: 22px; filter: none; box-shadow: var(--soft); }
+  .memo .a { position: static; }
+  .memo h3 { margin-bottom: 12px; }
+  .memo ol { display: grid; gap: 10px; }
+  .memo li { grid-template-columns: 44px 1fr; }
+  .memo li b { margin-top: 2px; }
+  .memo hr { display: none; }
+  .second-msg { display: inline-block; }
+
+  .clinics-photo { order: -1; width: 100%; height: auto; border-radius: 22px; box-shadow: 10px 12px 0 var(--sky2); margin-bottom: 16px; }
+
+  .s-blog .fx-box > .cta { order: 9; margin-top: 6px; }
+  .post { display: flex; flex-direction: column; gap: 8px; width: 100%; padding: 22px 0; border-bottom: 1px solid rgba(0, 28, 69, .14); }
+  .post .a { position: static; }
+  .post-main { height: auto; padding: 24px; border: 0; border-radius: 22px; filter: none; }
+  .s-blog hr { display: none; }
+
+  .s-hands .fx-box { padding: 0; aspect-ratio: 1613 / 950 !important; display: block; }
+  .s-hands .a { position: absolute; left: calc(var(--x) * var(--px)); top: calc(var(--y) * var(--px)); width: calc(var(--w) * var(--px)); }
+  .s-hands .t { font-size: max(30px, calc(var(--fs) * var(--px))); }
+
+  .rv { width: 100%; padding: 22px; border-radius: 22px; filter: none; box-shadow: var(--soft); }
+  .rv .a { position: static; }
+  .rv-main { display: grid; grid-template-columns: 88px 1fr; gap: 10px 16px; }
+  .rv-main img { width: 88px; height: 88px; border-radius: 18px; }
+  .rv-main > :not(img):not(h3) { grid-column: 1 / -1; }
+  .rv-main h3 { align-self: center; }
+  .rv-side { height: auto; display: grid; gap: 6px; }
+  .rv-foot { padding: 0 20px 56px; }
+  .rv-rest { grid-template-columns: minmax(0, 1fr); gap: 12px; margin-bottom: 20px; }
+  .rv-card { gap: 6px; padding: 20px; border-radius: 20px; }
+  .rv-card .t { font-size: 15px; }
+
+  .contacts-phone { white-space: normal; }
+  .contacts-btns { flex-wrap: wrap; gap: 10px; width: 100%; }
+  .sched { width: min(100%, 420px); padding: 22px; border-radius: 22px; filter: none; box-shadow: var(--soft); display: grid; gap: 10px; margin-block: 10px; }
+  .sched .a { position: static; }
+  .sched-cal .cal-grid { grid-template-columns: repeat(7, 40px); gap: 6px; }
+  .sched-cal .dow { height: 26px; font-size: 13px; }
+  .sched-cal .d { width: 40px; height: 40px; font-size: 16px; }
+  .sched-legend i { width: 14px; height: 14px; }
+
+  .s-footer .fx-box { gap: 12px; padding-bottom: 110px; }
+  .s-footer img { width: 180px; }
 }
 
-/* Как проходит */
-.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; counter-reset: s; }
-.steps li { counter-increment: s; background: var(--paper); border-radius: var(--radius-md); padding: 20px; display: grid; gap: 8px; align-content: start; min-width: 0; }
-.steps li::before { content: counter(s); font: 800 28px/1 var(--font-display); color: var(--blue); }
-.steps .when { font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--blue-text); }
-.steps p { font-size: 15px; color: var(--muted); }
-@media (max-width: 1000px) { .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 560px) { .steps { grid-template-columns: 1fr; } }
-
-/* Второе мнение */
-.second { position: relative; overflow: hidden; background: var(--sky); border-radius: var(--radius-lg); padding: clamp(24px, 4vw, 56px); display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 32px 56px; align-items: center; }
-.second .copy { display: grid; gap: 16px; }
-.second .copy p { max-width: 520px; }
-.second ol { margin: 0; padding: 20px 24px 20px 44px; background: var(--paper); border-radius: var(--radius-md); display: grid; gap: 8px; }
-@media (max-width: 900px) { .second { grid-template-columns: 1fr; } }
-
-/* О хирурге */
-.about { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 32px 56px; align-items: center; }
-.about img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 20%; border-radius: var(--radius-lg); background: var(--sky); display: block; }
-.about .copy { display: grid; gap: 20px; }
-.about dl { margin: 0; display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 12px 24px; padding-top: 20px; border-top: 1px solid var(--line); }
-.about dt { color: var(--muted); }
-.about dd { margin: 0; }
-@media (max-width: 900px) { .about { grid-template-columns: 1fr; } .about img { aspect-ratio: 4 / 3; } }
-@media (max-width: 560px) { .about dl { grid-template-columns: 1fr; gap: 2px; } .about dd { margin-bottom: 10px; } }
-
-/* Для клиник */
-.clinics { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 24px 56px; align-items: center; border-top: 1px solid var(--line); padding-top: 48px; }
-.clinics .copy { display: grid; gap: 12px; }
-.clinics .copy p { color: var(--muted); max-width: 560px; }
-.clinics .row { justify-content: flex-start; }
-@media (max-width: 900px) { .clinics { grid-template-columns: minmax(0, 1fr); } }
-
-/* Блог на главной */
-.posts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-.post { background: var(--paper); border-radius: var(--radius-lg); padding: 24px; display: grid; gap: 10px; align-content: start; color: var(--navy); text-decoration: none; transition: transform .15s; }
-.post:hover { transform: translateY(-2px); }
-@media (prefers-reduced-motion: reduce) { .post { transition: none; } .post:hover { transform: none; } }
-.post-cat { font: 700 12px/1.2 var(--font-body); letter-spacing: .06em; text-transform: uppercase; color: var(--blue-text); }
-.post b { font: 800 20px/1.25 var(--font-display); }
-.post-more { margin-top: 4px; font-weight: 700; color: var(--blue-text); }
-@media (max-width: 900px) { .posts { grid-template-columns: minmax(0, 1fr); } }
-
-/* Отзывы: вид карточки как на Яндекс Картах */
-.rv-top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 20px 32px; margin-bottom: 32px; }
-.rv-grid { columns: 3 320px; column-gap: 16px; }
-.rv { break-inside: avoid; margin: 0 0 16px; background: #fff; border-radius: 16px; padding: 20px 22px; display: grid; gap: 12px; color: #000; font-family: "YS Text", "Helvetica Neue", Arial, sans-serif; box-shadow: 0 1px 2px rgba(0, 0, 0, .06); }
-.rv-more { display: none; }
-.rv-grid.all .rv-more { display: grid; }
-.rv-head { display: flex; align-items: center; gap: 12px; }
-.rv-ava { width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0; object-fit: cover; }
-.rv-letter { display: grid; place-items: center; color: #fff; font: 400 22px/1 "YS Text", "Helvetica Neue", Arial, sans-serif; }
-.rv-who { display: grid; gap: 2px; min-width: 0; }
-.rv-name { color: #1a1a8f; font-size: 17px; line-height: 1.25; }
-.rv-meta { color: #6f6f6f; font-size: 14px; line-height: 1.3; }
-.rv-rate { display: flex; align-items: center; gap: 12px; }
-.rv-stars { display: flex; gap: 3px; }
-.rv-stars svg { width: 20px; height: 20px; fill: #fc0; }
-.rv-rate time { color: #6f6f6f; font-size: 14px; }
-.rv-text { display: grid; gap: 6px; font-size: 16px; line-height: 1.45; }
-.rv-text.clamp { max-height: 10.2em; overflow: hidden; }
-.rv-text.clamp.over { -webkit-mask-image: linear-gradient(#000 72%, transparent); mask-image: linear-gradient(#000 72%, transparent); }
-.rv-toggle { justify-self: start; margin-top: -6px; padding: 0; border: 0; background: none; color: #8c8c8c; font: 400 16px "YS Text", "Helvetica Neue", Arial, sans-serif; cursor: pointer; }
-.rv-toggle:hover { color: #000; }
-.rv-toggle[hidden] { display: none; }
-.rv-photos { display: flex; flex-wrap: wrap; gap: 8px; }
-.rv-ph { padding: 0; border: 0; border-radius: 16px; overflow: hidden; width: 104px; height: 104px; cursor: zoom-in; background: #f2f2f2; }
-.rv-ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.rv-case { padding-top: 12px; border-top: 1px solid #ececec; font-family: var(--font-body); font-size: 14px; color: var(--muted); }
-.rv-case a { color: var(--blue-text); font-weight: 600; text-decoration: none; }
-.rv-case a:hover { text-decoration: underline; }
-.rv-all { display: flex; margin: 8px auto 0; }
-.rv-all[hidden] { display: none; }
-.lightbox { padding: 0; background: transparent; max-width: min(92vw, 720px); max-height: 90vh; overflow: visible; }
-.lightbox img { display: block; max-width: 100%; max-height: 86vh; border-radius: 16px; }
-.lightbox .x { top: -16px; right: -16px; }
-@media (max-width: 480px) { .rv-ph { width: 88px; height: 88px; } }
-
-/* Контакты */
-.contacts { background: var(--navy); color: #fff; border-radius: var(--radius-lg); padding: clamp(28px, 5vw, 64px); display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 40px 56px; }
-.contacts .label { color: #9CC3E8; }
-.contacts h2 { color: #fff; }
-.contacts .addr { font: 800 clamp(26px, 3.4vw, 40px)/1.1 var(--font-display); letter-spacing: -0.02em; }
-.contacts p { color: #C9D6E3; }
-.contacts dl { margin: 0; display: grid; gap: 18px; align-content: start; }
-.contacts dt { font-size: 14px; color: #9CC3E8; }
-.contacts dd { margin: 2px 0 0; font-size: 19px; font-weight: 600; }
-.contacts .fill { color: #fff; border-color: #9CC3E8; }
-.contacts .btn-outline { border-color: #fff; color: #fff; }
-.contacts .btn-outline:hover { background: #fff; color: var(--navy); }
-.contacts .left { display: grid; gap: 16px; align-content: start; }
-.sched-link { padding: 0; border: 0; background: none; color: #fff; font: inherit; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
-@media (max-width: 900px) { .contacts { grid-template-columns: 1fr; } }
-
-.footer { padding-block: 32px 104px; font-size: 14px; color: var(--muted); }
-.footer .wrap { display: flex; flex-wrap: wrap; gap: 16px 40px; justify-content: space-between; align-items: center; }
-.footer img { width: 140px; display: block; }
-.footer a { color: var(--muted); }
 .cookie[hidden] { display: none; }
 
 /* Нижняя панель на телефоне */
@@ -487,7 +688,7 @@ dialog::backdrop { background: rgba(15, 43, 69, .55); }
   </div>
 </dialog>
 
-<dialog class="lightbox" id="lightbox" aria-label="Фото из отзыва"><button class="x" type="button" data-close-lightbox aria-label="Закрыть">×</button><img alt="Фото из отзыва"></dialog>
+<dialog class="rv-dialog" id="rv-dialog" aria-label="Отзыв"><div class="rv-in"><button class="x" type="button" data-close-dialog aria-label="Закрыть">×</button><div class="rv-body"></div></div></dialog>
 
 <dialog class="modal" id="form-dialog" aria-labelledby="fd-title">
   <form class="modal-in lead-form" id="fd-form" novalidate>
@@ -562,67 +763,164 @@ dialog::backdrop { background: rgba(15, 43, 69, .55); }
     </section>
   </div>
 
-  <section class="section" id="urgent" aria-labelledby="urgent-h" style="padding-top:0">
-    <div class="wrap">
-      <div class="urgent">
-        <h2 id="urgent-h">Экстренная запись на приём</h2>
-        <form class="lead-form" data-kind="urgent" novalidate>
-          <div class="row2">
-            <label class="field"><span>Имя</span><input name="name" autocomplete="name" required placeholder="Как к вам обращаться"></label>
-            <label class="field"><span>Телефон</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="+7 (___) ___-__-__" data-phone></label>
-          </div>
-          <label class="field"><span>Сообщение</span><textarea name="message" required rows="4" placeholder="Опишите случай"></textarea></label>
-          <div class="files" data-files>
-            <label class="files-drop" for="urgent-files">
-              <input id="urgent-files" name="files" type="file" multiple accept="image/*,.pdf,.doc,.docx,.dcm,.zip">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.4 11.1-9.2 9.2a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"/></svg>
-              <span><b>Прикрепить файлы</b><small>Анализы, рентген, УЗИ, заключения, фото — перетащите сюда или нажмите</small></span>
-            </label>
-            <ul class="files-list"></ul>
-          </div>
-          <div class="submit-row">
-            <div class="consent">
-              <label class="check"><input type="checkbox" name="privacy" required><span>Ознакомлен с <a href="privacy.html" target="_blank">политикой конфиденциальности</a></span></label>
-              <label class="check"><input type="checkbox" name="consent" required><span>Даю <a href="privacy.html#consent" target="_blank">согласие на обработку персональных данных</a></span></label>
-            </div>
-            <button class="btn btn-dark" type="submit">Отправить</button>
-          </div>
-          <p class="form-note" role="status"></p>
-        </form>
-        <div class="urgent-call">
-          <span>Приём с 10:00 до 22:00, но по экстренной записи приеду в клинику за 15 минут в любое время, даже ночью. Тяжёлых пациентов — без очереди</span>
-          <a class="phone num" href="tel:+79392557771">+7 (939) 255-77-71</a>
+  <!-- 02 / О враче -->
+  <section class="fx s-about" id="about" aria-labelledby="about-h">
+    <div class="fx-box" style="aspect-ratio:1613/1180">
+      <div class="a deco card-sky rot" style="--x:759.91;--y:136.67;--w:826;--r:-3" aria-hidden="true"><div class="hh" style="--hh:1050"></div></div>
+      <h2 class="a about-name o up" id="about-h" style="--x:72;--y:46;--w:1400"><span class="t" style="--fs:92;--lh:99">Владислав</span> <span class="t" style="--fs:158;--lh:176">Белорыбец</span></h2>
+      <img class="a about-photo" style="--x:777.75;--y:164;--w:674.52" src="assets/home/doctor-bulldog.jpg" width="1024" height="1536" alt="Владислав Белорыбец с французским бульдогом на руках" loading="lazy">
+      <p class="a t o about-role" style="--x:72;--y:357;--w:630;--fs:36;--lh:46">Ветеринарный врач-хирург</p>
+      <p class="a t about-lead" style="--x:72;--y:427;--w:600;--fs:28;--lh:38">Плановые и экстренные операции <br>кошкам и собакам.</p>
+      <p class="a t about-geo" style="--x:72;--y:526;--w:620;--fs:22;--lh:29">Люберцы · Москва и Московская область</p>
+      <div class="a deco card-coral rot" style="--x:87.08;--y:618.8;--w:600;--r:1.5" aria-hidden="true"><div class="hh" style="--hh:292"></div></div>
+      <div class="a fact rot" style="--x:68.03;--y:593.85;--w:600;--r:1.5">
+        <b class="t o" style="--fs:156;--lh:170">5 000+</b>
+        <span class="t" style="--fs:28;--lh:38">вылеченных питомцев</span>
+      </div>
+      <img class="a deco about-cat" style="--x:590;--y:744;--w:400" src="assets/home/cat-stretch.png" width="800" height="800" alt="" loading="lazy">
+      <button class="a cta" style="--x:72;--y:950" type="button" data-form="book">Записаться на приём</button>
+      <p class="a t cv rot about-care" style="--x:77;--y:1054;--w:530;--fs:38;--lh:42;--r:2">С заботой о вашем питомце</p>
+      <p class="a t about-addr" style="--x:72;--y:1123;--w:690;--fs:20;--lh:28">«Добрый Доктор» · Люберцы, ул. Вертолётчиков, 11</p>
+    </div>
+  </section>
+
+  <!-- 03 / Направления хирургии -->
+  <section class="fx s-dirs" aria-labelledby="dirs-h">
+    <div class="fx-box" style="aspect-ratio:1613/1535">
+      <h2 class="a dirs-h o up" id="dirs-h" style="--x:72;--y:53;--w:1200"><span class="t" style="--fs:138;--lh:151">Хирургия</span> <span class="t" style="--fs:112;--lh:128">кошек и собак</span></h2>
+      <img class="a dirs-dog" style="--x:1160;--y:49;--w:394" src="assets/home/dog-orange.png" width="788" height="788" alt="" loading="lazy">
+      <div class="a deco card-white rot" style="--x:84.4;--y:466.5;--w:704;--r:1.4" aria-hidden="true"><div class="hh" style="--hh:450"></div></div>
+      <article class="a dir dir-main rot hh" style="--x:66.4;--y:443.5;--w:704;--hh:450;--r:1.4">
+        <b class="a t o" style="--x:30;--y:28;--w:190;--fs:130;--lh:140">01</b>
+        <h3 class="a t o" style="--x:219;--y:39;--w:455;--fs:60;--lh:65">Кости <br>и суставы</h3>
+        <p class="a t" style="--x:219;--y:238;--w:451;--fs:27;--lh:36">Переломы, вывихи <br>и повреждения связок.</p>
+        <img class="a deco" style="--x:50.04;--y:297.49;--w:110.92" src="assets/home/paw.png" width="222" height="198" alt="">
+      </article>
+      <article class="a dir dir-mid hh" style="--x:858;--y:435;--w:683;--hh:212">
+        <b class="t o" style="--fs:52;--lh:62">02</b>
+        <div><h3 class="t o" style="--fs:42;--lh:50">Раны и мягкие ткани</h3><p class="t" style="--fs:23;--lh:31">Обработка ран, дренирование <br>и пластика кожи.</p></div>
+      </article>
+      <article class="a dir dir-mid hh" style="--x:858;--y:675;--w:683;--hh:212">
+        <b class="t o" style="--fs:52;--lh:62">03</b>
+        <div><h3 class="t o" style="--fs:42;--lh:50">Внутренние органы</h3><p class="t" style="--fs:23;--lh:31">Операции на органах брюшной <br>и грудной полости.</p></div>
+      </article>
+      <article class="a dir dir-small hh" style="--x:72;--y:946;--w:477;--hh:320">
+        <b class="t o" style="--fs:28;--lh:34">04</b><h3 class="t o" style="--fs:36;--lh:44">Новообразования</h3><p class="t" style="--fs:22;--lh:30">Удаление опухолей кожи <br>и мягких тканей, биопсия.</p>
+      </article>
+      <article class="a dir dir-small hh" style="--x:568;--y:946;--w:477;--hh:320">
+        <b class="t o" style="--fs:28;--lh:34">05</b><h3 class="t o" style="--fs:36;--lh:44">Мочевая система</h3><p class="t" style="--fs:22;--lh:30">Операции на почках, мочевом <br>пузыре и мочевыводящих путях.</p>
+      </article>
+      <article class="a dir dir-small hh" style="--x:1064;--y:946;--w:477;--hh:320">
+        <b class="t o" style="--fs:28;--lh:34">06</b><h3 class="t o" style="--fs:36;--lh:44">Репродуктивная <br>хирургия</h3><p class="t" style="--fs:22;--lh:30">Кастрация, стерилизация <br>и кесарево сечение.</p>
+      </article>
+      <hr class="a line" style="--x:72;--y:1320;--w:1469">
+      <p class="a t o up" style="--x:72;--y:1369;--w:1030;--fs:48;--lh:52">Не знаете, с чего начать?</p>
+      <p class="a t" style="--x:72;--y:1438;--w:980;--fs:27;--lh:36">Расскажите, что беспокоит питомца.</p>
+      <button class="a cta" style="--x:1176;--y:1385" type="button" data-form="ask">Задать вопрос врачу</button>
+    </div>
+  </section>
+
+  <!-- 04 / Экстренная запись -->
+  <section class="fx s-urgent" id="urgent" aria-labelledby="urgent-h">
+    <div class="fx-box urgent-box">
+      <div class="urgent-left">
+        <h2 class="a t o up" id="urgent-h" style="--x:68;--y:88;--w:716;--fs:104;--lh:112">Экстренная <br>запись</h2>
+        <p class="a t" style="--x:72;--y:407;--w:650;--fs:28;--lh:38">Приеду в клинику за</p>
+        <p class="a t o up" style="--x:66;--y:456;--w:720;--fs:136;--lh:147">15 минут</p>
+        <p class="a t" style="--x:72;--y:635;--w:620;--fs:30;--lh:41">В любое время, <span class="sun">даже ночью</span>. <br>Тяжёлых пациентов — без очереди.</p>
+        <a class="a t o urgent-phone" style="--x:66;--y:792;--w:995;--fs:72;--lh:78" href="tel:+79392557771">+7 (939) 255-77-71</a>
+        <a class="a cta cta-white" style="--x:72;--y:1020" href="tel:+79392557771">Позвонить врачу</a>
+        <p class="a t urgent-plan" style="--x:72;--y:1152;--w:650;--fs:24;--lh:33">Плановый приём — с 10:00 до 22:00.</p>
+      </div>
+      <form class="urgent-form lead-form" data-kind="urgent" novalidate>
+        <p class="t o" style="--fs:40;--lh:54">Опишите, что случилось</p>
+        <label class="ff"><span class="t" style="--fs:20;--lh:28">Имя</span><input name="name" autocomplete="name" required placeholder="Как к вам обращаться"></label>
+        <label class="ff"><span class="t" style="--fs:20;--lh:28">Телефон</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="+7 (___) ___-__-__" data-phone></label>
+        <label class="ff ff-msg"><span class="t" style="--fs:20;--lh:28">Сообщение</span><textarea name="message" required placeholder="Опишите случай"></textarea></label>
+        <div class="files" data-files>
+          <label class="files-drop" for="urgent-files">
+            <input id="urgent-files" name="files" type="file" multiple accept="image/*,.pdf,.doc,.docx,.dcm,.zip">
+            <i aria-hidden="true">+</i>
+            <span><b>Прикрепить файлы</b><small>Анализы, рентген, УЗИ, заключения, фото <br>Перетащите сюда или нажмите</small></span>
+          </label>
+          <ul class="files-list"></ul>
         </div>
-      </div>
+        <div class="consent">
+          <label class="check"><input type="checkbox" name="privacy" required><span>Ознакомлен с <a href="privacy.html" target="_blank">политикой конфиденциальности</a></span></label>
+          <label class="check"><input type="checkbox" name="consent" required><span>Даю <a href="privacy.html#consent" target="_blank">согласие на обработку персональных данных</a></span></label>
+        </div>
+        <button class="cta" type="submit">Отправить</button>
+        <p class="form-note" role="status"></p>
+      </form>
     </div>
   </section>
 
-  <section class="section" id="steps" aria-labelledby="steps-h" style="padding-top:0">
-    <div class="wrap">
-      <div class="head">
-        <span class="label">Как всё проходит</span>
-        <h2 id="steps-h">От консультации до снятия швов</h2>
-      </div>
+  <!-- 05 / От консультации до снятия швов -->
+  <section class="fx s-steps" id="steps" aria-labelledby="steps-h">
+    <div class="fx-box" style="aspect-ratio:1613/1320">
+      <h2 class="a t o up" id="steps-h" style="--x:68;--y:75;--w:1470;--fs:100;--lh:108">От консультации <br>до снятия швов</h2>
+      <div class="a deco card-ice rot" style="--x:1023.45;--y:336.5;--w:531;--r:-2" aria-hidden="true"><div class="hh" style="--hh:780"></div></div>
       <ol class="steps">
-        <li><span class="when">День обращения</span><h3>Консультация</h3><p>Осматриваю и объясняю, нужна ли операция.</p></li>
-        <li><span class="when">По показаниям</span><h3>Обследование</h3><p>Анализы, УЗИ, рентген: только то, что влияет на решение.</p></li>
-        <li><span class="when">День операции</span><h3>Операция</h3><p>После операции звоню владельцу.</p></li>
-        <li><span class="when">Часы или дни</span><h3>Стационар</h3><p>Домой — с письменными рекомендациями.</p></li>
-        <li><span class="when">10–14 день</span><h3>Контроль</h3><p>Осмотр и снятие швов.</p></li>
+        <li class="a" style="--x:72;--y:352;--w:872"><b class="t o" style="--fs:68;--lh:73">01</b><span class="t" style="--fs:22;--lh:30">День обращения</span><strong class="t o" style="--fs:48;--lh:52">Консультация</strong><span class="t" style="--fs:25;--lh:34">Осматриваю и объясняю, нужна ли операция.</span></li>
+        <li class="a" style="--x:72;--y:549;--w:872"><b class="t o" style="--fs:68;--lh:73">02</b><span class="t" style="--fs:22;--lh:30">По показаниям</span><strong class="t o" style="--fs:48;--lh:52">Обследование</strong><span class="t" style="--fs:25;--lh:34">Анализы, УЗИ, рентген: только то, что влияет на решение.</span></li>
+        <li class="a" style="--x:72;--y:746;--w:872"><b class="t o" style="--fs:68;--lh:73">03</b><span class="t" style="--fs:22;--lh:30">День операции</span><strong class="t o" style="--fs:48;--lh:52">Операция</strong><span class="t" style="--fs:25;--lh:34">После операции звоню владельцу.</span></li>
+        <li class="a" style="--x:72;--y:943;--w:872"><b class="t o" style="--fs:68;--lh:73">04</b><span class="t" style="--fs:22;--lh:30">Часы или дни</span><strong class="t o" style="--fs:48;--lh:52">Стационар, либо сразу домой</strong><span class="t" style="--fs:25;--lh:34">С письменными рекомендациями.</span></li>
       </ol>
+      <img class="a deco" style="--x:1075.73;--y:462.65;--w:394.545" src="assets/home/dog-bed.png" width="789" height="386" alt="" loading="lazy">
+      <div class="a control rot hh" style="--x:993.55;--y:819.33;--w:541;--hh:360;--r:2">
+        <b class="a t o" style="--x:34;--y:35;--w:475;--fs:122;--lh:132">10–14</b>
+        <span class="a t o" style="--x:38;--y:173;--w:465;--fs:34;--lh:46">день · контроль</span>
+        <span class="a t" style="--x:38;--y:243;--w:465;--fs:27;--lh:37">Осмотр и снятие швов.</span>
+      </div>
     </div>
   </section>
 
-  <section class="section" id="prices" aria-labelledby="prices-h" style="padding-top:0">
-    <div class="wrap">
-      <div class="head">
-        <span class="label">Операции и цены</span>
-        <h2 id="prices-h">Ветеринарная хирургия</h2>
-        <p>Опишите проблему своими словами — поиск подскажет, какая операция скорее всего нужна.</p>
+  <!-- История Фроси -->
+  <section class="fx s-story" aria-labelledby="story-h">
+    <div class="fx-box" style="aspect-ratio:1613/1036">
+      <p class="a t up" style="--x:72;--y:64;--w:1100;--fs:18;--lh:26">История Фроси</p>
+      <h2 class="a t o" id="story-h" style="--x:72;--y:113;--w:1460;--fs:76;--lh:88">Фрося: от страшного диагноза <br>к беззаботным играм</h2>
+      <div class="a story-who" style="--x:72;--y:318;--w:800">
+        <img src="assets/home/dmitry.jpg" width="320" height="568" alt="" loading="lazy">
+        <p><b class="t o" style="--fs:30;--lh:40">Дмитрий Сидоров</b><span class="t" style="--fs:22;--lh:30">хозяин Фроси</span></p>
+      </div>
+      <figure class="a polaroid rot hh" style="--x:67.73;--y:473.3;--w:221.28;--hh:344.256;--r:4">
+        <img src="assets/home/frosya.jpg" width="440" height="781" alt="Кошка Фрося" loading="lazy">
+        <figcaption class="t cv" style="--fs:15.2;--lh:17.5">Та самая Фрося</figcaption>
+      </figure>
+      <i class="a deco tape rot hh" style="--x:126.94;--y:461.86;--w:78;--hh:22;--r:-6" aria-hidden="true"></i>
+      <div class="a story-text" style="--x:300;--y:466;--w:1241">
+        <p class="t" style="--fs:25;--lh:32">Трёхмесячную Фросю в первой клинике признали здоровой, но вскоре мы заметили, что ей трудно ходить в туалет. В другой клинике обнаружили врождённую патологию и дали тяжёлый прогноз: шансы после операции — 50 на 50. При этом хирург признался, что ни разу не проводил такую операцию, и предложил усыпить Фросю. Мы не хотели сдаваться.</p>
+        <p class="t" style="--fs:25;--lh:32">По совету знакомых мы позвонили Владиславу, он без малейших колебаний сказал, что ждёт нас на приём. Мы поехали из Тулы в Люберцы. Доктор осмотрел Фросю и подробно объяснил, как пройдут операция и восстановление. Нам стало спокойнее решиться на лечение.</p>
+        <p class="t" style="--fs:25;--lh:32">Сложная операция длилась несколько часов: уже начавшийся некроз удалось полностью удалить. Мы получили рекомендации по уходу, а во время восстановления Владислав консультировал нас удалённо.</p>
+      </div>
+      <p class="a t" style="--x:72;--y:850.26;--w:1469;--fs:25;--lh:32">Теперь Фрося снова беззаботно играет. Трудно поверить, через что она прошла. Мы очень благодарны доктору за помощь.</p>
+      <p class="a t cv rot" style="--x:72.98;--y:901.5;--w:484;--fs:42;--lh:50;--r:-3">Теперь — снова играть.</p>
+    </div>
+  </section>
+
+  <!-- Акцент / Доверяют самое дорогое -->
+  <section class="fx s-trust" aria-labelledby="trust-h">
+    <div class="fx-box" style="aspect-ratio:1613/820">
+      <h2 class="a t o up trust-h" id="trust-h" style="--x:72;--y:98;--w:1000;--fs:130;--lh:156">Доверяют <br>самое дорогое</h2>
+      <img class="a deco" style="--x:637;--y:314;--w:1199.8" src="assets/home/star.svg" width="1200" height="452" alt="" loading="lazy">
+      <img class="a trust-dog" style="--x:901;--y:55;--w:712" src="assets/home/dalmatian.jpg" width="1163" height="1352" alt="" loading="lazy">
+      <p class="a t cv" style="--x:66.7;--y:477.75;--w:800;--fs:52;--lh:62">Ко мне привозят питомцев на операции из других городов и стран.</p>
+      <p class="a t" style="--x:72;--y:710;--w:770;--fs:32;--lh:44">Лечим, чтобы снова быть дома.</p>
+      <img class="a deco wave" style="--x:-16.9;--y:0;--w:1646.9" src="assets/home/wave.svg" width="1647" height="81" alt="">
+    </div>
+  </section>
+
+  <!-- 06 / Операции и цены -->
+  <section class="fx s-prices" id="prices" aria-labelledby="prices-h">
+    <div class="prices-in">
+      <div class="prices-head">
+        <h2 class="t o up" id="prices-h" style="--fs:110;--lh:119">Операции <br>и цены</h2>
+        <p class="t" style="--fs:26;--lh:35">Опишите проблему своими словами — поиск подскажет, <br>какая операция скорее всего нужна.</p>
+        <img class="deco" src="assets/home/cat-ball.png" width="554" height="477" alt="" loading="lazy">
       </div>
       <div class="surgery">
         <div class="search" role="search">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
           <input id="op-search" type="search" autocomplete="off" placeholder="Что случилось? Например: кот не может пописать" aria-label="Поиск операции" aria-controls="op-results">
         </div>
         <div class="results" id="op-results" aria-live="polite" hidden></div>
@@ -840,264 +1138,259 @@ dialog::backdrop { background: rgba(15, 43, 69, .55); }
         <!-- SURGERY:END -->
         </div>
       </div>
+      <div class="prices-foot">
+        <p><b class="t o" style="--fs:32;--lh:44">Итоговая стоимость согласуется после осмотра.</b><span class="t" style="--fs:23;--lh:31">Цены на сайте не являются публичной офертой.</span></p>
+        <button class="cta" type="button" data-form="ask">Задать вопрос врачу</button>
+      </div>
     </div>
   </section>
 
-  <section class="section" id="second" aria-labelledby="second-h" style="padding-top:0">
-    <div class="wrap">
-      <div class="second">
-        <div class="copy">
-          <span class="label">Второе мнение</span>
-          <h2 id="second-h">Предложили операцию, но вы сомневаетесь?</h2>
-          <p>Пришлите документы в мессенджер или на почту. Посмотрю и отвечу, нужна ли операция и сколько она будет стоить.</p>
-          <div class="row">
-            <a class="btn btn-primary" href="#second">Написать в WhatsApp</a>
-            <a class="btn btn-outline" href="#second">Telegram</a>
-            <a class="btn btn-outline" href="mailto:vladislav@belovet.ru">vladislav@belovet.ru</a>
-          </div>
-        </div>
+  <!-- Акцент / Операция -->
+  <section class="fx s-nose" aria-label="Операция — это не страшно">
+    <div class="fx-box" style="aspect-ratio:1613/930">
+      <img class="a nose-bg" style="--x:0;--y:-90;--w:1613" src="assets/home/dog-nose.jpg" width="2200" height="1466" alt="" loading="lazy">
+      <p class="a t o up nose-word" style="--x:62;--y:91;--w:2031;--fs:320;--lh:380" aria-hidden="true">Операция</p>
+      <img class="a nose-top" style="--x:0;--y:-90;--w:1613" src="assets/home/dog-nose.jpg" width="2200" height="1466" alt="" loading="lazy">
+      <div class="a note rot hh" style="--x:1138.5;--y:389.9;--w:433.958;--hh:203.282;--r:-9.25">
+        <p class="a t cv" style="--x:27;--y:29;--w:376;--fs:46;--lh:53">Это не страшно. Это шанс вернуться к привычной жизни</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 / Второе мнение -->
+  <section class="fx s-second" id="second" aria-labelledby="second-h">
+    <div class="fx-box" style="aspect-ratio:1613/1100">
+      <h2 class="a t o up" id="second-h" style="--x:68;--y:80;--w:990;--fs:100;--lh:108">Предложили <br>операцию</h2>
+      <p class="a t o" style="--x:72;--y:344;--w:850;--fs:58;--lh:63">Но вы сомневаетесь?</p>
+      <p class="a t" style="--x:72;--y:451;--w:820;--fs:28;--lh:38">Пришлите документы в мессенджер или на почту. <br>Посмотрю и отвечу, нужна ли операция <br>и сколько она будет стоить.</p>
+      <a class="a t second-mail" style="--x:72;--y:661;--w:800;--fs:36;--lh:49" href="mailto:vladislav@belovet.ru">vladislav@belovet.ru</a>
+      <button class="a cta" style="--x:72;--y:770" type="button" data-form="ask">Задать вопрос врачу</button>
+      <a class="a t second-msg fill-link" style="--x:72;--y:895;--w:410;--fs:24;--lh:33" href="#second">Написать в WhatsApp</a>
+      <a class="a t second-msg fill-link" style="--x:500;--y:895;--w:280;--fs:24;--lh:33" href="#second">Telegram</a>
+      <img class="a deco" style="--x:633.69;--y:585.24;--w:186.618" src="assets/home/dog-sit.png" width="373" height="450" alt="" loading="lazy">
+      <div class="a memo rot hh" style="--x:951.97;--y:148.5;--w:560;--hh:794;--r:2">
+        <h3 class="a t o" style="--x:36;--y:40;--w:488;--fs:54;--lh:58">Для второго <br>мнения</h3>
         <ol>
-          <li>Заключение врача</li>
-          <li>Анализы крови за 2 недели</li>
-          <li>Снимки рентгена, УЗИ или КТ</li>
-          <li>Вид, возраст и вес питомца</li>
+          <li class="a" style="--x:36;--y:220;--w:480"><b class="t o" style="--fs:30;--lh:32">01</b><span class="t" style="--fs:28;--lh:38">Заключение врача</span></li>
+          <li class="a" style="--x:36;--y:352;--w:480"><b class="t o" style="--fs:30;--lh:32">02</b><span class="t" style="--fs:28;--lh:38">Анализы крови <br>за 2 недели</span></li>
+          <li class="a" style="--x:36;--y:484;--w:480"><b class="t o" style="--fs:30;--lh:32">03</b><span class="t" style="--fs:28;--lh:38">Снимки рентгена, <br>УЗИ или КТ</span></li>
+          <li class="a" style="--x:36;--y:616;--w:480"><b class="t o" style="--fs:30;--lh:32">04</b><span class="t" style="--fs:28;--lh:38">Вид, возраст <br>и вес питомца</span></li>
         </ol>
+        <hr class="a line" style="--x:126;--y:322;--w:390"><hr class="a line" style="--x:126;--y:454;--w:390"><hr class="a line" style="--x:126;--y:586;--w:390">
       </div>
+      <img class="a deco" style="--x:1391.83;--y:853.82;--w:102.348" src="assets/home/clipboard.png" width="205" height="245" alt="" loading="lazy">
     </div>
   </section>
 
-  <section class="section" aria-labelledby="about-h" style="padding-top:0">
-    <div class="wrap">
-      <div class="about" id="about">
-        <img src="assets/doctor-notes.jpg" alt="Владислав Белорыбец" width="900" height="675" loading="lazy">
-        <div class="copy">
-          <span class="label">О хирурге</span>
-          <h2 id="about-h">Владислав Белорыбец</h2>
-          <p><span class="fill">Два-три предложения от первого лица: почему хирургия и какие операции делает чаще всего.</span></p>
-          <dl>
-            <dt>Оперирую</dt><dd><span class="fill">с ____ года</span></dd>
-            <dt>Образование</dt><dd><span class="fill">вуз, год</span></dd>
-            <dt>Обучение</dt><dd><span class="fill">курсы, стажировки</span></dd>
-            <dt>Принимаю</dt><dd>Клиника «Добрый Доктор», Люберцы, ул. Вертолётчиков, 11</dd>
-          </dl>
-        </div>
-      </div>
-
-      <div class="clinics" id="clinics" style="margin-top:72px">
-        <div class="copy">
-          <span class="label">Для клиник</span>
-          <h2>Хирург по приглашению</h2>
-          <p>Приезжаю в вашу клинику: беру сложные операции, ассистирую вашим врачам, помогаю с хирургической тактикой. Пришлите диагноз и снимки — назову дату и стоимость.</p>
-        </div>
-        <div class="row"><a class="btn btn-dark" href="#contacts">Пригласить хирурга</a></div>
-      </div>
+  <!-- 08 / Хирург по приглашению -->
+  <section class="fx s-clinics" id="clinics" aria-labelledby="clinics-h">
+    <div class="fx-box" style="aspect-ratio:1613/930">
+      <div class="a deco card-sky rot" style="--x:45.12;--y:252.41;--w:718;--r:3" aria-hidden="true"><div class="hh" style="--hh:550"></div></div>
+      <img class="a clinics-photo hh" style="--x:72;--y:245;--w:700;--hh:525" src="assets/home/doctor-clinic.jpg" width="900" height="675" alt="Владислав Белорыбец заполняет карту пациента" loading="lazy">
+      <h2 class="a t o up" id="clinics-h" style="--x:833;--y:84;--w:720;--fs:83;--lh:90">Хирург <br>по приглашению</h2>
+      <p class="a t" style="--x:837;--y:390;--w:680;--fs:27;--lh:37">Приезжаю в вашу клинику: беру сложные <br>операции, ассистирую вашим врачам, <br>помогаю с хирургической тактикой.</p>
+      <p class="a t" style="--x:837;--y:568;--w:680;--fs:29;--lh:39">Пришлите диагноз и снимки — <br>назову дату и стоимость.</p>
+      <button class="a cta cta-lg" style="--x:837;--y:743" type="button" data-form="ask">Пригласить хирурга</button>
     </div>
   </section>
 
-  <section class="section" id="blog" aria-labelledby="blog-h" style="padding-top:0">
-    <div class="wrap">
-      <div class="rv-top">
-        <div class="head" style="margin-bottom:0">
-          <span class="label">Блог</span>
-          <h2 id="blog-h">Полезное владельцам</h2>
-          <p>Что делать в экстренной ситуации, как подготовить питомца к операции и ухаживать после неё.</p>
-        </div>
-        <a class="btn btn-outline" href="blog/index.html">Все статьи</a>
-      </div>
-      <div class="posts">
-        <!-- BLOG:START -->
-          <a class="post" href="blog/kot-ne-mozhet-popisat.html"><span class="post-cat">Экстренные ситуации</span><b>Кот не может пописать: что делать и почему нельзя ждать</b><span class="post-more">Читать →</span></a>
-          <a class="post" href="blog/sobaka-proglotila-predmet.html"><span class="post-cat">Экстренные ситуации</span><b>Собака проглотила посторонний предмет: что делать</b><span class="post-more">Читать →</span></a>
-          <a class="post" href="blog/zavorot-zheludka-u-sobak.html"><span class="post-cat">Экстренные ситуации</span><b>Заворот желудка у собак: признаки, первая помощь, профилактика</b><span class="post-more">Читать →</span></a>
+  <!-- 09 / Полезное владельцам -->
+  <section class="fx s-blog" id="blog" aria-labelledby="blog-h">
+    <div class="fx-box" style="aspect-ratio:1613/1220">
+      <h2 class="a t o up" id="blog-h" style="--x:68;--y:66;--w:1120;--fs:100;--lh:108">Полезное <br>владельцам</h2>
+      <p class="a t" style="--x:1002;--y:237;--w:540;--fs:25;--lh:34">Что делать в экстренной ситуации, <br>как подготовить питомца к операции <br>и ухаживать после неё.</p>
+      <a class="a cta cta-white" style="--x:1176;--y:89" href="blog/index.html">Все статьи</a>
+      <hr class="a line" style="--x:1000;--y:776;--w:541">
+      <!-- BLOG:START -->
+      <a class="a post post-main" style="--x:72;--y:405;--w:850" href="blog/kot-ne-mozhet-popisat.html"><span class="a t" style="--x:36;--y:40;--w:750;--fs:23;--lh:31">Экстренные ситуации</span><b class="a t o" style="--x:36;--y:120;--w:758;--fs:59;--lh:64">Кот не может пописать: что делать и почему нельзя ждать</b><span class="a t" style="--x:36;--y:574;--w:350;--fs:30;--lh:41">Читать</span></a>
+      <a class="a post post-side hh" style="--x:1000;--y:449;--w:541;--hh:290" href="blog/sobaka-proglotila-predmet.html"><span class="a t" style="--x:0;--y:0;--w:541;--fs:21;--lh:29">Экстренные ситуации</span><b class="a t o" style="--x:0;--y:57;--w:541;--fs:44;--lh:48">Собака проглотила посторонний предмет: что делать</b><span class="a t" style="--x:0;--y:245;--w:541;--fs:25;--lh:34">Читать</span></a>
+      <a class="a post post-side hh" style="--x:1000;--y:819;--w:541;--hh:330" href="blog/zavorot-zheludka-u-sobak.html"><span class="a t" style="--x:0;--y:0;--w:541;--fs:21;--lh:29">Экстренные ситуации</span><b class="a t o" style="--x:0;--y:57;--w:541;--fs:44;--lh:48">Заворот желудка у собак: признаки, первая помощь, профилактика</b><span class="a t" style="--x:0;--y:280;--w:541;--fs:25;--lh:34">Читать</span></a>
         <!-- BLOG:END -->
-      </div>
+      <img class="a deco blog-cat rot" style="--x:527.57;--y:864.76;--w:351.185;--r:2" src="assets/home/cat-laptop.png" width="702" height="539" alt="" loading="lazy">
     </div>
   </section>
 
-  <section class="section" id="reviews" aria-labelledby="reviews-h" style="padding-top:0">
-    <div class="wrap">
-      <div class="rv-top">
-        <div class="head" style="margin-bottom:0">
-          <span class="label">Отзывы</span>
-          <h2 id="reviews-h">Что пишут владельцы</h2>
-          <p>Отзывы о работе Владислава из карточки клиники «Добрый Доктор» на Яндекс Картах.</p>
-        </div>
-        <a class="btn btn-outline" href="https://yandex.ru/maps/?text=%D0%94%D0%BE%D0%B1%D1%80%D1%8B%D0%B9%20%D0%94%D0%BE%D0%BA%D1%82%D0%BE%D1%80%2C%20%D0%9B%D1%8E%D0%B1%D0%B5%D1%80%D1%86%D1%8B%2C%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%20%D0%92%D0%B5%D1%80%D1%82%D0%BE%D0%BB%D1%91%D1%82%D1%87%D0%B8%D0%BA%D0%BE%D0%B2%2C%2011" target="_blank" rel="noopener">Все отзывы на Яндекс Картах</a>
-      </div>
-      <div class="rv-grid" id="rv-grid">
-        <!-- REVIEWS:START -->
-        <article class="rv">
-          <header class="rv-head"><img class="rv-ava" src="assets/reviews/ava-yulia.png" alt="" width="48" height="48" loading="lazy"><span class="rv-who"><span class="rv-name">Юлия А.</span><span class="rv-meta">3 отзыва · Знаток города 4 уровня</span></span></header>
-          <div class="rv-rate"><span class="rv-stars" role="img" aria-label="Оценка 5 из 5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg></span><time>28 декабря 2024</time></div>
-          <div class="rv-text clamp"><p>Клиника хорошая! Я как владелец питомника канадских сфинксов, могу сказать, что все врачи там профессионалы своего дела. Однажды был случай, что наша любимая Карамелька начала рожать-6 котят родила сама и на этом родовая деятельность закончилась, но я поняла, что родила она еще не всех. Позвонила в клинику, рассказала ситуацию. Врачи сказали срочно везти мать и котят в клинику. Привезла, на смене был Белорыбец Владислав Викторович, который тут же оперативно провел ультразвук, сделал рентген, который показал, что один котенок застрял и на этом остановилась родовая деятельность. Владислав тут же начал делать кесарево сечение и спас жизнь еще двум котятам и нашей любимой Карамельке. Это один из случаев, когда в этой клинике спасали моих кошек, за что огромная благодарность всему персоналу этой клиники!Если вы любите своих животных и хотите спасти им жизнь, то обращайтесь только в эту клинику.Здесь работают неравнодушные люди, которые обязательно вам помогут!</p></div><button class="rv-toggle" type="button" hidden>ещё</button>
-          <div class="rv-photos"><button class="rv-ph" type="button" data-src="assets/reviews/yulia-1.jpg" aria-label="Открыть фото"><img src="assets/reviews/yulia-1.jpg" alt="Фото из отзыва" loading="lazy" width="120" height="120"></button></div>
-          <div class="rv-case"><a href="operations/kesarevo-sechenie.html">Кесарево сечение →</a></div>
-        </article>
-        <article class="rv">
-          <header class="rv-head"><span class="rv-ava rv-letter" style="background:#E5413D" aria-hidden="true">В</span><span class="rv-who"><span class="rv-name">Вера Орлова</span><span class="rv-meta">Надёжный автор · 84 отзыва</span></span></header>
-          <div class="rv-rate"><span class="rv-stars" role="img" aria-label="Оценка 5 из 5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg></span><time>19 сентября 2025</time></div>
-          <div class="rv-text clamp"><p>Хочу оставить положительно отзыв о клинике, о её сотрудниках и в частности о враче Владиславе Викторовиче. Моя кошка сломала лапу, привезли её ночью, на нервах.. Всех успокоили, кошке помогли, сделали операцию, поставили спицу, все рассказали, объяснили. Прошло полтора месяца, кошка отлично себя чувствует, не хромает. Рекомендую эту клинику и этого врача. Больше спасибо</p></div><button class="rv-toggle" type="button" hidden>ещё</button>
-          <div class="rv-photos"><button class="rv-ph" type="button" data-src="assets/reviews/vera-1.jpg" aria-label="Открыть фото"><img src="assets/reviews/vera-1.jpg" alt="Фото из отзыва" loading="lazy" width="120" height="120"></button><button class="rv-ph" type="button" data-src="assets/reviews/vera-2.jpg" aria-label="Открыть фото"><img src="assets/reviews/vera-2.jpg" alt="Фото из отзыва" loading="lazy" width="120" height="120"></button><button class="rv-ph" type="button" data-src="assets/reviews/vera-3.jpg" aria-label="Открыть фото"><img src="assets/reviews/vera-3.jpg" alt="Фото из отзыва" loading="lazy" width="120" height="120"></button></div>
-          <div class="rv-case"><a href="operations/osteosintez.html">Перелом лапы →</a></div>
-        </article>
-        <article class="rv">
-          <header class="rv-head"><img class="rv-ava" src="assets/reviews/ava-marta.png" alt="" width="48" height="48" loading="lazy"><span class="rv-who"><span class="rv-name">Марта Н.</span><span class="rv-meta">10 отзывов · Знаток города 4 уровня</span></span></header>
-          <div class="rv-rate"><span class="rv-stars" role="img" aria-label="Оценка 5 из 5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg></span><time>12 июля</time></div>
-          <div class="rv-text clamp"><p>Доверяю этой клинике на все 100%. Однажды выбрали ее за круглосуточный график и возможность приема без предварительной записи, и теперь продолжаем выбирать за ответственное отношение к животным.</p><p>Особая благодарность Владиславу Викторовичу за оперативно проведенную операцию по извлечению инородных предметов из кишечника собаки. Под присмотром профессионалов быстро идем на поправку.</p></div><button class="rv-toggle" type="button" hidden>ещё</button>
-          <div class="rv-photos"><button class="rv-ph" type="button" data-src="assets/reviews/marta-1.jpg" aria-label="Открыть фото"><img src="assets/reviews/marta-1.jpg" alt="Фото из отзыва" loading="lazy" width="120" height="120"></button></div>
-          <div class="rv-case"><a href="operations/enterotomiya.html">Инородное тело в кишечнике →</a></div>
-        </article>
-        <article class="rv">
-          <header class="rv-head"><img class="rv-ava" src="assets/reviews/ava-alisa.png" alt="" width="48" height="48" loading="lazy"><span class="rv-who"><span class="rv-name">Алиса Воеводова</span><span class="rv-meta">24 отзыва · Знаток города 7 уровня</span></span></header>
-          <div class="rv-rate"><span class="rv-stars" role="img" aria-label="Оценка 5 из 5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg></span><time>16 октября</time></div>
-          <div class="rv-text clamp"><p>…У меня 4 животных. Каждого из них осматривал глав врач и Владислав Викторович.</p><p>Спас мою кошку Марту,проводил операции для нее даже в не рабочее время. Доктор искренне заинтересован состоянием и здоровьем вашего питомца.</p><p>Марта лежала почти месяц в стационаре,справилась со всеми своими переломами,ушибами, в то время,когда другая ветклиника говорила: «ей ничего не поможет»,но Владислав Викторович и его коллеги показали мастерство высшего уровня!!!</p><p>Рекомендую эту ветеринарную клинику и Владислава Викторовича.</p></div><button class="rv-toggle" type="button" hidden>ещё</button>
-          <div class="rv-photos"><button class="rv-ph" type="button" data-src="assets/reviews/alisa-1.jpg" aria-label="Открыть фото"><img src="assets/reviews/alisa-1.jpg" alt="Фото из отзыва" loading="lazy" width="120" height="120"></button><button class="rv-ph" type="button" data-src="assets/reviews/alisa-2.jpg" aria-label="Открыть фото"><img src="assets/reviews/alisa-2.jpg" alt="Фото из отзыва" loading="lazy" width="120" height="120"></button><button class="rv-ph" type="button" data-src="assets/reviews/alisa-3.jpg" aria-label="Открыть фото"><img src="assets/reviews/alisa-3.jpg" alt="Фото из отзыва" loading="lazy" width="120" height="120"></button></div>
-          <div class="rv-case"><a href="operations/osteosintez.html">Переломы →</a></div>
-        </article>
-        <article class="rv">
-          <header class="rv-head"><span class="rv-ava rv-letter" style="background:#B051E2" aria-hidden="true">К</span><span class="rv-who"><span class="rv-name">Карпенко Ольга</span><span class="rv-meta">17 отзывов · Знаток города 8 уровня</span></span></header>
-          <div class="rv-rate"><span class="rv-stars" role="img" aria-label="Оценка 5 из 5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg></span><time>17 апреля</time></div>
-          <div class="rv-text clamp"><p>Неделю назад нашего Красавчика сбила машина. Сразу прибежали в клинику, в этот день к нашему счастью😊работал Белорыбец Владислав Викторович. Доктор оперативно сделал рентген, выявил повреждения, оказал первую помощь, положил под капельницу, обрисовал какие могут быть последствия, ответил на все наши что? как ? и почему? 👍</p><p>В стационаре пробыли 2 дня, далее поехали в другую клинику на МРТ и КТ, для подтверждения диагноза ЧМТ. Очень ценно, что Доктор просил звонить в Клинику и рассказывать как у нас дела, поддерживал, советовал как лучше поступить, максимально проникся травмой нашего пёсика, проявил профессионализм и человеческие качества, что большая редкость в наше время.</p><p>Сейчас мы снова вернулись в стационар Клиники, нам назначили терапию, ходим на капельницы и уколы, динамика положительная есть и мы верим, что наш Злюка😉 будет бегать как раньше.</p><p>От всего сердца большая благодарность Владиславу Викторовичу и всей команде Клиники👏🏻дай Бог Вам здоровья, терпения и побольше благодарных пациентов🙌🏻</p><p>Дополняю отзыв 16.04</p><p>Всё самое страшное позади, наш пёсик идёт на поправку, бегает и потихоньку вспоминает свою собачью жизнь и повадки до травмы, что нас ооочень радует🙏🏻это значит - лечение подобрано верно, огромное спасибо🤝 что подарили 2ю жизнь🐕</p></div><button class="rv-toggle" type="button" hidden>ещё</button>
-          <div class="rv-photos"><button class="rv-ph" type="button" data-src="assets/reviews/olga-1.jpg" aria-label="Открыть фото"><img src="assets/reviews/olga-1.jpg" alt="Фото из отзыва" loading="lazy" width="120" height="120"></button><button class="rv-ph" type="button" data-src="assets/reviews/olga-2.jpg" aria-label="Открыть фото"><img src="assets/reviews/olga-2.jpg" alt="Фото из отзыва" loading="lazy" width="120" height="120"></button></div>
-          <div class="rv-case"><span>Травма после ДТП</span></div>
-        </article>
-        <article class="rv">
-          <header class="rv-head"><img class="rv-ava" src="assets/reviews/ava-ekaterina.png" alt="" width="48" height="48" loading="lazy"><span class="rv-who"><span class="rv-name">Екатерина Благова</span><span class="rv-meta">34 отзыва · Знаток города 3 уровня</span></span></header>
-          <div class="rv-rate"><span class="rv-stars" role="img" aria-label="Оценка 5 из 5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg></span><time>26 апреля 2024</time></div>
-          <div class="rv-text clamp"><p>Словами не выразить нашу огромную благодарность заботливому и внимательному врачу Владиславу Викторовичу Белорыбец за спасение жизни нашей маленькой кошечки сфинкса Лилу! Вы наш герой! … Владислав Викторович внимательно выслушал наши жалобы, осмотрел Лилу, сделал рентген. Диагноз был поставлен четко и оперативно, врач сказал что присутствует инородный предмет и решил не терять время и делать операцию, сказал что уже поздно обратились, котенок сильно обезвожен. Мы доверились ему полностью, хотя было очень страшно за нашу малышку. Персонал нас подбадривал и юморил, мы очень переживали и страшно боялись за нашу доченьку, пережили большой стресс. Операция была сложная, но все прошло успешно. Выяснилось что наша Лилу наелась ниток!! Врач показал нам эти нитки. Шок не описать словами. После операции 2 дня наша Лилу оставалась под наблюдением в клинике, мы ее навещали, врачи давали все необходимые рекомендации, показывали видео что все хорошо. После нам назначили дополнительное лечение, которое мы проводили дома и приезжали в клинику на уколы и обработку шва. Прошло уже почти 2 недели после операции, наша малышка довольно быстро пошла на поправку, наконец швы сняли, кошечка заметно лучше себя чувствует, игривая, кушает хорошо, а мы очень счастливы что все прошло благополучно и самое страшное уже позади, теперь будем внимательнее следить за нашим котеребенком. Спасибо наш замечательный добрый доктор Владислав Викторович, чувствуется с какой заботой и любовью вы относитесь к нашим питомцам, нам очень повезло что попали на вашу смену, всего вам самого наилучшего, вы действительно очень хороший профессионал и небезразличный человек, это сейчас очень редко встретишь и дорогого стоит!!! Мы нашли своего врача которому можно довериться, теперь только к вам, спасибо, спасибо и еще раз спасибо! ❤️❤️❤️</p></div><button class="rv-toggle" type="button" hidden>ещё</button>
-          
-          <div class="rv-case"><a href="operations/enterotomiya.html">Инородное тело: нитки →</a></div>
-        </article>
-        <article class="rv rv-more">
-          <header class="rv-head"><img class="rv-ava" src="assets/reviews/ava-elya.png" alt="" width="48" height="48" loading="lazy"><span class="rv-who"><span class="rv-name">Эля Твердохлебова</span><span class="rv-meta">16 отзывов · Знаток города 6 уровня</span></span></header>
-          <div class="rv-rate"><span class="rv-stars" role="img" aria-label="Оценка 5 из 5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg></span><time>22 апреля</time></div>
-          <div class="rv-text clamp"><p>Большое спасибо главному врачу Белорыбец Владиславу Викторовичу за бережное отношение, профессионализм и консультацию. Врач верно определил диагноз , успешно провел операцию и наша Терри теперь здорова.</p></div><button class="rv-toggle" type="button" hidden>ещё</button>
-          <div class="rv-photos"><button class="rv-ph" type="button" data-src="assets/reviews/elya-1.jpg" aria-label="Открыть фото"><img src="assets/reviews/elya-1.jpg" alt="Фото из отзыва" loading="lazy" width="120" height="120"></button><button class="rv-ph" type="button" data-src="assets/reviews/elya-2.jpg" aria-label="Открыть фото"><img src="assets/reviews/elya-2.jpg" alt="Фото из отзыва" loading="lazy" width="120" height="120"></button></div>
-          <div class="rv-case"><span>Операция</span></div>
-        </article>
-        <article class="rv rv-more">
-          <header class="rv-head"><img class="rv-ava" src="assets/reviews/ava-mmm.png" alt="" width="48" height="48" loading="lazy"><span class="rv-who"><span class="rv-name">МММ Г.</span><span class="rv-meta">4 отзыва · Знаток города 4 уровня</span></span></header>
-          <div class="rv-rate"><span class="rv-stars" role="img" aria-label="Оценка 5 из 5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg></span><time>31 мая</time></div>
-          <div class="rv-text clamp"><p>Огромное спасибо хирургу Владиславу Викторович за профессиональную работу и за доброе отношение к животным.</p><p>Волонтёрский слепой возрастной пёс Рыжий без вашей помощи мог погибнуть. Здоровья вам, благополучия и долгих лет</p></div><button class="rv-toggle" type="button" hidden>ещё</button>
-          <div class="rv-photos"><button class="rv-ph" type="button" data-src="assets/reviews/mmm-1.jpg" aria-label="Открыть фото"><img src="assets/reviews/mmm-1.jpg" alt="Фото из отзыва" loading="lazy" width="120" height="120"></button><button class="rv-ph" type="button" data-src="assets/reviews/mmm-2.jpg" aria-label="Открыть фото"><img src="assets/reviews/mmm-2.jpg" alt="Фото из отзыва" loading="lazy" width="120" height="120"></button></div>
-          <div class="rv-case"><span>Помощь псу-волонтёру</span></div>
-        </article>
-        <article class="rv rv-more">
-          <header class="rv-head"><img class="rv-ava" src="assets/reviews/ava-anna.png" alt="" width="48" height="48" loading="lazy"><span class="rv-who"><span class="rv-name">Анна Х.</span><span class="rv-meta">8 отзывов · Знаток города 5 уровня</span></span></header>
-          <div class="rv-rate"><span class="rv-stars" role="img" aria-label="Оценка 5 из 5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg></span><time>27 апреля</time></div>
-          <div class="rv-text clamp"><p>Хочу выразить мою глубочайшую благодарность Владиславу Викторвичу и коллективу вет.клиники Добрый Доктор за спасение моего Голдена‼️Ситуация была критической,если бы не Владислав Викторович ‼️Его профессионализм, компетенция и скорейшая своевременная диагностика пациента‼️Слава Богу ,что у нас есть такие специалисты,которым можно безоговорочно доверить жизнь своего питомца и знать ,что она в надёжных руках🙏Сейчас мой &quot;хвостик&quot; бегает ‼️Здоров,весел и счастлив)Быстро встал на лапы😊и радуется жизни ‼️СПАСИБО ‼️ВАМ‼️ОГРОМНОЕ‼️</p></div><button class="rv-toggle" type="button" hidden>ещё</button>
-          
-          <div class="rv-case"><span>Экстренная помощь</span></div>
-        </article>
-        <article class="rv rv-more">
-          <header class="rv-head"><img class="rv-ava" src="assets/reviews/ava-zhanna.png" alt="" width="48" height="48" loading="lazy"><span class="rv-who"><span class="rv-name">Жанна Гришкова</span><span class="rv-meta">3 отзыва · Знаток города 3 уровня</span></span></header>
-          <div class="rv-rate"><span class="rv-stars" role="img" aria-label="Оценка 5 из 5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg></span><time>28 октября 2025</time></div>
-          <div class="rv-text clamp"><p>Наблюдаем мопса в этой клинике. Персонал компетентный, внимательный. Работают круглосуточно.</p><p>Удаляли очень сложное новообразование. Спасибо врачу Белорыбец В. В. Все сделал на высшем уровне. Сейчас лечимся, уже есть улучшения. Клинику рекомедую</p></div><button class="rv-toggle" type="button" hidden>ещё</button>
-          
-          <div class="rv-case"><span>Удаление новообразования</span></div>
-        </article>
-        <article class="rv rv-more">
-          <header class="rv-head"><span class="rv-ava rv-letter" style="background:#B051E2" aria-hidden="true">И</span><span class="rv-who"><span class="rv-name">Инна Игоревна</span><span class="rv-meta">36 отзывов · Знаток города 9 уровня</span></span></header>
-          <div class="rv-rate"><span class="rv-stars" role="img" aria-label="Оценка 5 из 5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg></span><time>24 сентября</time></div>
-          <div class="rv-text clamp"><p>Хочу выразить огромную благодарность врачу Владиславу Викторовичу и всей команде клиники! 🙏❤️</p><p>Владислав Викторович — не просто профессионал с золотыми руками, а человек с большим сердцем. Он вылечил моего котёнка, помог моей кошке Лилу, которая находилась в тяжёлом состоянии, и спас ещё одну кошку — Агушу. Его опыт, чуткость и внимание к каждой детали — это то, что отличает настоящего доктора.</p><p>Отдельно хочу поблагодарить весь персонал. Даня — спасибо за чуткость и поддержку. Администратор Ирина — за помощь в родах, за то, что растирала котят вместо мамы, когда Лилу не могла подойти. Это бесценно. Вы все — команда, которая делает невероятно важное дело.</p><p>Спасибо за вашу заботу, терпение и любовь к животным. Вы спасли не одну жизнь. Низкий поклон вам за это. 💖</p><p>Рекомендую клинику всем, кто любит своих питомцев и хочет доверить их в надёжные руки.</p></div><button class="rv-toggle" type="button" hidden>ещё</button>
-          
-          <div class="rv-case"><span>Тяжёлое состояние, роды</span></div>
-        </article>
-        <article class="rv rv-more">
-          <header class="rv-head"><span class="rv-ava rv-letter" style="background:#00A3A3" aria-hidden="true">В</span><span class="rv-who"><span class="rv-name">Влада Шашкова</span><span class="rv-meta">8 отзывов · Знаток города 5 уровня</span></span></header>
-          <div class="rv-rate"><span class="rv-stars" role="img" aria-label="Оценка 5 из 5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg></span><time>27 декабря 2024</time></div>
-          <div class="rv-text clamp"><p>Сердечно благодарю ветеринарную клинику «Добрый Доктор» и отдельная благодарность Доброму Доктору – Былорыбец Владиславу Викторовичу, за его неоценимую помощь! Наш котенок Луна попала в неприятную ситуацию — она застряла в заборе и повредила лапку. Мы были в ужасе, но Владислав Викторович проявил невероятное терпение и заботу. Он не только вылечил Луну, но и объяснил нам, как правильно ухаживать за ней в период восстановления. Теперь наша малышка снова прыгает и играет. Вы — настоящие профессионалы!</p></div><button class="rv-toggle" type="button" hidden>ещё</button>
-          
-          <div class="rv-case"><span>Травма лапы</span></div>
-        </article>
-        <article class="rv rv-more">
-          <header class="rv-head"><img class="rv-ava" src="assets/reviews/ava-alana.png" alt="" width="48" height="48" loading="lazy"><span class="rv-who"><span class="rv-name">Алана П.</span><span class="rv-meta">1 отзыв · Знаток города 2 уровня</span></span></header>
-          <div class="rv-rate"><span class="rv-stars" role="img" aria-label="Оценка 5 из 5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg></span><time>9 октября 2025</time></div>
-          <div class="rv-text clamp"><p>Всем здравствуйте! Хочу выразить огромную благодарность врачу Владиславу за его грамотный подход к лечению наших маленьких друзей. У моего кота достаточно давно начались проблемы с пищеварением, обращались во многие клиники, но лечение ограничивалось снятием симптома на 1-2 дня . Владислав же помог нам: назначил препараты, корм и теперь котик чувствует себя прекрасно!</p></div><button class="rv-toggle" type="button" hidden>ещё</button>
-          
-          <div class="rv-case"><span>Лечение</span></div>
-        </article>
-        <article class="rv rv-more">
-          <header class="rv-head"><span class="rv-ava rv-letter" style="background:#B051E2" aria-hidden="true">И</span><span class="rv-who"><span class="rv-name">Ирина К.</span><span class="rv-meta">125 отзывов · Знаток города 8 уровня</span></span></header>
-          <div class="rv-rate"><span class="rv-stars" role="img" aria-label="Оценка 5 из 5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg></span><time>31 мая 2024</time></div>
-          <div class="rv-text clamp"><p>Первый раз были в вашей клинике в феврале. Обратились с больными ушками нашей девочки-лабрадора! Доктор Владислав Викторович внимательно остотрел мою малышку, поставил диагноз и прописал лечение. Мы пролечились и наши ушки теперь здоровы! Спасибо большое доктору и клинике в целом за бережное и внимательное отношение к нашим питомцам! Вернёмся к вам на прививки)))</p></div><button class="rv-toggle" type="button" hidden>ещё</button>
-          <div class="rv-photos"><button class="rv-ph" type="button" data-src="assets/reviews/irina-1.jpg" aria-label="Открыть фото"><img src="assets/reviews/irina-1.jpg" alt="Фото из отзыва" loading="lazy" width="120" height="120"></button></div>
-          <div class="rv-case"><span>Лечение</span></div>
-        </article>
-        <article class="rv rv-more">
-          <header class="rv-head"><span class="rv-ava rv-letter" style="background:#00A3A3" aria-hidden="true">И</span><span class="rv-who"><span class="rv-name">Иван Ф.</span><span class="rv-meta">89 отзывов · Знаток города 8 уровня</span></span></header>
-          <div class="rv-rate"><span class="rv-stars" role="img" aria-label="Оценка 5 из 5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg></span><time>1 декабря 2024</time></div>
-          <div class="rv-text clamp"><p>Отличная клиника, всех своих питомцев лечим только там. Белорыбец Владислав Викторович - врач от бога. Ездим только к нему, прекрасное отношение и сопереживание. Рекомендую на все 100%</p></div><button class="rv-toggle" type="button" hidden>ещё</button>
-          
-          
-        </article>
-        <article class="rv rv-more">
-          <header class="rv-head"><span class="rv-ava rv-letter" style="background:#2BB24C" aria-hidden="true">Д</span><span class="rv-who"><span class="rv-name">Дарья Конкина</span><span class="rv-meta">114 отзывов · Знаток города 15 уровня</span></span></header>
-          <div class="rv-rate"><span class="rv-stars" role="img" aria-label="Оценка 5 из 5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg></span><time>3 июня 2025</time></div>
-          <div class="rv-text clamp"><p>Очень понравилась ветклиника. Приём был проведён быстро и оперативно. Первый раз собака даже не отреагировала на прививку от бешенства. Даже не успела понять что уже всё. Потрясающий врач Белорыбец В.В.. Спасибо огромное за приём! Будем Вас обязательно рекомендовать!🙏🏼👍🏼🌺👏🏻</p><p>P.S. Все сотрудники ветклиники «Добрый доктор» очень дружелюбные, всё объясняют, если нужно проконсультируют!</p></div><button class="rv-toggle" type="button" hidden>ещё</button>
-          
-          <div class="rv-case"><span>Приём</span></div>
-        </article>
-        <article class="rv rv-more">
-          <header class="rv-head"><span class="rv-ava rv-letter" style="background:#1E98FF" aria-hidden="true">A</span><span class="rv-who"><span class="rv-name">Arina Levina</span><span class="rv-meta">31 отзыв · Знаток города 8 уровня</span></span></header>
-          <div class="rv-rate"><span class="rv-stars" role="img" aria-label="Оценка 5 из 5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg></span><time>30 октября 2024</time></div>
-          <div class="rv-text clamp"><p>Спасибо большое врачу Владиславу Викторовичу, который неоднократно помогал нашим котам и крыске</p><p>Профессионализм на высшем уровне. Все быстро и качественно.</p><p>Всем рекомендую 🙏🏼</p></div><button class="rv-toggle" type="button" hidden>ещё</button>
-          
-          
-        </article>
-        <article class="rv rv-more">
-          <header class="rv-head"><img class="rv-ava" src="assets/reviews/ava-natalya.png" alt="" width="48" height="48" loading="lazy"><span class="rv-who"><span class="rv-name">Наталья Стасева</span><span class="rv-meta">13 отзывов · Знаток города 5 уровня</span></span></header>
-          <div class="rv-rate"><span class="rv-stars" role="img" aria-label="Оценка 5 из 5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg></span><time>26 июля 2025</time></div>
-          <div class="rv-text clamp"><p>Хочу поблагодарить врача Белорыбец Владислава Викторович. Замечательный профессионал. И очень добрый человек.</p></div><button class="rv-toggle" type="button" hidden>ещё</button>
-          
-          
-        </article>
-        <article class="rv rv-more">
-          <header class="rv-head"><img class="rv-ava" src="assets/reviews/ava-mull.png" alt="" width="48" height="48" loading="lazy"><span class="rv-who"><span class="rv-name">Müll Trash</span><span class="rv-meta">18 отзывов · Знаток города 7 уровня</span></span></header>
-          <div class="rv-rate"><span class="rv-stars" role="img" aria-label="Оценка 5 из 5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.5l-5.9 3.1 1.2-6.5L2.5 9.5l6.6-.9z"/></svg></span><time>24 июля</time></div>
-          <div class="rv-text clamp"><p>Замечательная клиника. Неоднократно обращались туда за помощью и с вопросами. Очень приветливый и отзывчивый персонал. Всегда квалифицированная помощь и быстрое решение вопроса.Отдельные спасибо ,доктору Белорыбец В . В.</p></div><button class="rv-toggle" type="button" hidden>ещё</button>
-          
-          
-        </article>
-        <!-- REVIEWS:END -->
-      </div>
-      <button class="btn btn-dark rv-all" id="rv-all" type="button">Показать все отзывы</button>
+  <!-- Акцент / В надёжных руках -->
+  <section class="fx s-hands" aria-labelledby="hands-h">
+    <div class="fx-box" style="aspect-ratio:1613/950">
+      <img class="a hands-bg" style="--x:0;--y:-80;--w:1613" src="assets/home/cat-belly.jpg" width="2200" height="1467" alt="" loading="lazy">
+      <h2 class="a t o up" id="hands-h" style="--x:69;--y:47;--w:930;--fs:142;--lh:157">В надёжных <br>руках</h2>
+      <img class="a ribbon" style="--x:-133.9;--y:0;--w:1884.6" src="assets/home/ribbon.svg" width="1885" height="950" alt="Ещё много ваших обычных дней" loading="lazy">
     </div>
   </section>
 
-  <section class="section" id="contacts" aria-labelledby="contacts-h" style="padding-top:0">
-    <div class="wrap">
-      <div class="contacts">
-        <div class="left">
-          <span class="label">Запись</span>
-          <h2 id="contacts-h" class="addr">Люберцы, ул.&nbsp;Вертолётчиков,&nbsp;11</h2>
-          <p>Ветеринарная клиника «Добрый Доктор». Приём с 10:00 до 22:00 по графику. <span class="fill">Ориентир и парковка</span></p>
-          <div class="row">
-            <button class="btn btn-primary" type="button" data-form="book">Записаться</button>
-            <a class="btn btn-outline" href="https://yandex.ru/maps/?text=%D0%9B%D1%8E%D0%B1%D0%B5%D1%80%D1%86%D1%8B%2C%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%20%D0%92%D0%B5%D1%80%D1%82%D0%BE%D0%BB%D1%91%D1%82%D1%87%D0%B8%D0%BA%D0%BE%D0%B2%2C%2011" target="_blank" rel="noopener">Маршрут</a>
-          </div>
-        </div>
-        <dl>
-          <div><dt>Телефон</dt><dd class="num"><a href="tel:+79392557771" style="color:#fff;text-decoration:none">+7 (939) 255-77-71</a></dd></div>
-          <div><dt>WhatsApp и Telegram</dt><dd><span class="fill">номер</span></dd></div>
-          <div><dt>Почта</dt><dd><a href="mailto:vladislav@belovet.ru" style="color:#fff;text-decoration:none">vladislav@belovet.ru</a></dd></div>
-          <div><dt>Приём</dt><dd><button class="sched-link" type="button" data-open-where>Смотреть график</button></dd></div>
-        </dl>
+  <!-- 10 / Отзывы -->
+  <section class="fx s-reviews" id="reviews" aria-labelledby="reviews-h">
+    <div class="fx-box" style="aspect-ratio:1613/1290">
+      <h2 class="a t o up" id="reviews-h" style="--x:68;--y:66;--w:1160;--fs:100;--lh:108">Что пишут <br>владельцы</h2>
+      <img class="a deco rot" style="--x:669.2;--y:54.25;--w:249.59;--r:-9.16" src="assets/home/cat-armchair.png" width="499" height="450" alt="" loading="lazy">
+      <p class="a t" style="--x:932;--y:226;--w:610;--fs:25;--lh:34">Отзывы о работе Владислава из карточки <br>клиники «Добрый Доктор» на Яндекс Картах.</p>
+      <a class="a cta cta-white" style="--x:1176;--y:88" href="https://yandex.ru/maps/?text=%D0%94%D0%BE%D0%B1%D1%80%D1%8B%D0%B9%20%D0%94%D0%BE%D0%BA%D1%82%D0%BE%D1%80%2C%20%D0%9B%D1%8E%D0%B1%D0%B5%D1%80%D1%86%D1%8B%2C%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%20%D0%92%D0%B5%D1%80%D1%82%D0%BE%D0%BB%D1%91%D1%82%D1%87%D0%B8%D0%BA%D0%BE%D0%B2%2C%2011" target="_blank" rel="noopener">На Яндекс Картах</a>
+      <!-- REVIEWS:START -->
+      <article class="a rv rv-main rot hh" style="--x:64.83;--y:413.5;--w:870;--hh:814;--r:1">
+        <img class="a hh" style="--x:36;--y:36;--w:214;--hh:214" src="assets/home/karamelka.jpg" width="182" height="181" alt="Кошка Карамелька" loading="lazy">
+        <h3 class="a t o up" style="--x:286;--y:57;--w:540;--fs:58;--lh:63">Кесарево<br>сечение</h3>
+        <p class="a t rv-txt" style="--x:36;--y:290;--w:790;--fs:29;--lh:40">«Владислав тут же начал делать кесарево сечение и спас жизнь еще двум котятам и нашей любимой Карамельке. Это один из случаев, когда в этой клинике спасали моих кошек, за что огромная благодарность всему персоналу этой клиники!Если вы любите своих животных и хотите спасти им жизнь, то обращайтесь только в эту клинику.Здесь работают неравнодушные люди, которые обязательно вам помогут!»</p>
+        <p class="a t" style="--x:36;--y:677;--w:790;--fs:24;--lh:33">Юлия А. · 5 / 5</p>
+        <p class="a t" style="--x:36;--y:721;--w:790;--fs:20;--lh:27">28 декабря 2024</p>
+        <button class="a t rv-more-link" style="--x:36;--y:761;--w:400;--fs:23;--lh:31" type="button" data-rv="0">Читать полностью</button>
+      </article>
+      <button class="a rv rv-side ice" style="--x:1010;--y:424;--w:531" type="button" data-rv="1" aria-label="Отзыв: Вера Орлова, читать полностью">
+        <span class="a t" style="--x:28;--y:25;--w:475;--fs:25;--lh:34">Вера Орлова · 5 / 5</span>
+        <span class="a t" style="--x:28;--y:69;--w:475;--fs:19;--lh:26">19 сентября 2025</span>
+        <span class="a t rv-txt" style="--x:28;--y:113;--w:475;--fs:22;--lh:30">Хочу оставить положительно отзыв о клинике, о её сотрудниках и в частности о враче Владиславе Викторовиче. Моя кошка сломала лапу, привезли её ночью, на нервах.. Всех успокоили, кошке помогли, сделали операцию, поставили спицу, все рассказали, объяснили. Прошло полтора месяца, кошка отлично себя чувствует, не хромает. Рекомендую эту клинику и этого врача. Больше спасибо</span>
+      </button>
+      <button class="a rv rv-side" style="--x:1010;--y:844;--w:531" type="button" data-rv="2" aria-label="Отзыв: Марта Н., читать полностью">
+        <span class="a t" style="--x:28;--y:25;--w:475;--fs:25;--lh:34">Марта Н. · 5 / 5</span>
+        <span class="a t" style="--x:28;--y:69;--w:475;--fs:19;--lh:26">12 июля</span>
+        <span class="a t rv-txt" style="--x:28;--y:113;--w:475;--fs:22;--lh:30">Доверяю этой клинике на все 100%. Однажды выбрали ее за круглосуточный график и возможность приема без предварительной записи, и теперь продолжаем выбирать за ответственное отношение к животным.
+Особая благодарность Владиславу Викторовичу за оперативно проведенную операцию по извлечению инородных предметов из кишечника собаки. Под присмотром профессионалов быстро идем на поправку.</span>
+      </button>
+      <script type="application/json" id="rv-data">[{"n":"Юлия А.","d":"28 декабря 2024","t":"Клиника хорошая! Я как владелец питомника канадских сфинксов, могу сказать, что все врачи там профессионалы своего дела. Однажды был случай, что наша любимая Карамелька начала рожать-6 котят родила сама и на этом родовая деятельность закончилась, но я поняла, что родила она еще не всех. Позвонила в клинику, рассказала ситуацию. Врачи сказали срочно везти мать и котят в клинику. Привезла, на смене был Белорыбец Владислав Викторович, который тут же оперативно провел ультразвук, сделал рентген, который показал, что один котенок застрял и на этом остановилась родовая деятельность. Владислав тут же начал делать кесарево сечение и спас жизнь еще двум котятам и нашей любимой Карамельке. Это один из случаев, когда в этой клинике спасали моих кошек, за что огромная благодарность всему персоналу этой клиники!Если вы любите своих животных и хотите спасти им жизнь, то обращайтесь только в эту клинику.Здесь работают неравнодушные люди, которые обязательно вам помогут!","tag":"Кесарево сечение","s":"kesarevo-sechenie"},{"n":"Вера Орлова","d":"19 сентября 2025","t":"Хочу оставить положительно отзыв о клинике, о её сотрудниках и в частности о враче Владиславе Викторовиче. Моя кошка сломала лапу, привезли её ночью, на нервах.. Всех успокоили, кошке помогли, сделали операцию, поставили спицу, все рассказали, объяснили. Прошло полтора месяца, кошка отлично себя чувствует, не хромает. Рекомендую эту клинику и этого врача. Больше спасибо","tag":"Перелом лапы","s":"osteosintez"},{"n":"Марта Н.","d":"12 июля","t":"Доверяю этой клинике на все 100%. Однажды выбрали ее за круглосуточный график и возможность приема без предварительной записи, и теперь продолжаем выбирать за ответственное отношение к животным.\nОсобая благодарность Владиславу Викторовичу за оперативно проведенную операцию по извлечению инородных предметов из кишечника собаки. Под присмотром профессионалов быстро идем на поправку.","tag":"Инородное тело в кишечнике","s":"enterotomiya"},{"n":"Алиса Воеводова","d":"16 октября","t":"…У меня 4 животных. Каждого из них осматривал глав врач и Владислав Викторович.\nСпас мою кошку Марту,проводил операции для нее даже в не рабочее время. Доктор искренне заинтересован состоянием и здоровьем вашего питомца.\nМарта лежала почти месяц в стационаре,справилась со всеми своими переломами,ушибами, в то время,когда другая ветклиника говорила: «ей ничего не поможет»,но Владислав Викторович и его коллеги показали мастерство высшего уровня!!!\nРекомендую эту ветеринарную клинику и Владислава Викторовича.","tag":"Переломы","s":"osteosintez"},{"n":"Карпенко Ольга","d":"17 апреля","t":"Неделю назад нашего Красавчика сбила машина. Сразу прибежали в клинику, в этот день к нашему счастью😊работал Белорыбец Владислав Викторович. Доктор оперативно сделал рентген, выявил повреждения, оказал первую помощь, положил под капельницу, обрисовал какие могут быть последствия, ответил на все наши что? как ? и почему? 👍\nВ стационаре пробыли 2 дня, далее поехали в другую клинику на МРТ и КТ, для подтверждения диагноза ЧМТ. Очень ценно, что Доктор просил звонить в Клинику и рассказывать как у нас дела, поддерживал, советовал как лучше поступить, максимально проникся травмой нашего пёсика, проявил профессионализм и человеческие качества, что большая редкость в наше время.\nСейчас мы снова вернулись в стационар Клиники, нам назначили терапию, ходим на капельницы и уколы, динамика положительная есть и мы верим, что наш Злюка😉 будет бегать как раньше.\nОт всего сердца большая благодарность Владиславу Викторовичу и всей команде Клиники👏🏻дай Бог Вам здоровья, терпения и побольше благодарных пациентов🙌🏻\nДополняю отзыв 16.04\nВсё самое страшное позади, наш пёсик идёт на поправку, бегает и потихоньку вспоминает свою собачью жизнь и повадки до травмы, что нас ооочень радует🙏🏻это значит - лечение подобрано верно, огромное спасибо🤝 что подарили 2ю жизнь🐕","tag":"Травма после ДТП","s":""},{"n":"Екатерина Благова","d":"26 апреля 2024","t":"Словами не выразить нашу огромную благодарность заботливому и внимательному врачу Владиславу Викторовичу Белорыбец за спасение жизни нашей маленькой кошечки сфинкса Лилу! Вы наш герой! … Владислав Викторович внимательно выслушал наши жалобы, осмотрел Лилу, сделал рентген. Диагноз был поставлен четко и оперативно, врач сказал что присутствует инородный предмет и решил не терять время и делать операцию, сказал что уже поздно обратились, котенок сильно обезвожен. Мы доверились ему полностью, хотя было очень страшно за нашу малышку. Персонал нас подбадривал и юморил, мы очень переживали и страшно боялись за нашу доченьку, пережили большой стресс. Операция была сложная, но все прошло успешно. Выяснилось что наша Лилу наелась ниток!! Врач показал нам эти нитки. Шок не описать словами. После операции 2 дня наша Лилу оставалась под наблюдением в клинике, мы ее навещали, врачи давали все необходимые рекомендации, показывали видео что все хорошо. После нам назначили дополнительное лечение, которое мы проводили дома и приезжали в клинику на уколы и обработку шва. Прошло уже почти 2 недели после операции, наша малышка довольно быстро пошла на поправку, наконец швы сняли, кошечка заметно лучше себя чувствует, игривая, кушает хорошо, а мы очень счастливы что все прошло благополучно и самое страшное уже позади, теперь будем внимательнее следить за нашим котеребенком. Спасибо наш замечательный добрый доктор Владислав Викторович, чувствуется с какой заботой и любовью вы относитесь к нашим питомцам, нам очень повезло что попали на вашу смену, всего вам самого наилучшего, вы действительно очень хороший профессионал и небезразличный человек, это сейчас очень редко встретишь и дорогого стоит!!! Мы нашли своего врача которому можно довериться, теперь только к вам, спасибо, спасибо и еще раз спасибо! ❤️❤️❤️","tag":"Инородное тело: нитки","s":"enterotomiya"},{"n":"Эля Твердохлебова","d":"22 апреля","t":"Большое спасибо главному врачу Белорыбец Владиславу Викторовичу за бережное отношение, профессионализм и консультацию. Врач верно определил диагноз , успешно провел операцию и наша Терри теперь здорова.","tag":"Операция","s":""},{"n":"МММ Г.","d":"31 мая","t":"Огромное спасибо хирургу Владиславу Викторович за профессиональную работу и за доброе отношение к животным.\nВолонтёрский слепой возрастной пёс Рыжий без вашей помощи мог погибнуть. Здоровья вам, благополучия и долгих лет","tag":"Помощь псу-волонтёру","s":""},{"n":"Анна Х.","d":"27 апреля","t":"Хочу выразить мою глубочайшую благодарность Владиславу Викторвичу и коллективу вет.клиники Добрый Доктор за спасение моего Голдена‼️Ситуация была критической,если бы не Владислав Викторович ‼️Его профессионализм, компетенция и скорейшая своевременная диагностика пациента‼️Слава Богу ,что у нас есть такие специалисты,которым можно безоговорочно доверить жизнь своего питомца и знать ,что она в надёжных руках🙏Сейчас мой \"хвостик\" бегает ‼️Здоров,весел и счастлив)Быстро встал на лапы😊и радуется жизни ‼️СПАСИБО ‼️ВАМ‼️ОГРОМНОЕ‼️","tag":"Экстренная помощь","s":""},{"n":"Жанна Гришкова","d":"28 октября 2025","t":"Наблюдаем мопса в этой клинике. Персонал компетентный, внимательный. Работают круглосуточно.\nУдаляли очень сложное новообразование. Спасибо врачу Белорыбец В. В. Все сделал на высшем уровне. Сейчас лечимся, уже есть улучшения. Клинику рекомедую","tag":"Удаление новообразования","s":""},{"n":"Инна Игоревна","d":"24 сентября","t":"Хочу выразить огромную благодарность врачу Владиславу Викторовичу и всей команде клиники! 🙏❤️\nВладислав Викторович — не просто профессионал с золотыми руками, а человек с большим сердцем. Он вылечил моего котёнка, помог моей кошке Лилу, которая находилась в тяжёлом состоянии, и спас ещё одну кошку — Агушу. Его опыт, чуткость и внимание к каждой детали — это то, что отличает настоящего доктора.\nОтдельно хочу поблагодарить весь персонал. Даня — спасибо за чуткость и поддержку. Администратор Ирина — за помощь в родах, за то, что растирала котят вместо мамы, когда Лилу не могла подойти. Это бесценно. Вы все — команда, которая делает невероятно важное дело.\nСпасибо за вашу заботу, терпение и любовь к животным. Вы спасли не одну жизнь. Низкий поклон вам за это. 💖\nРекомендую клинику всем, кто любит своих питомцев и хочет доверить их в надёжные руки.","tag":"Тяжёлое состояние, роды","s":""},{"n":"Влада Шашкова","d":"27 декабря 2024","t":"Сердечно благодарю ветеринарную клинику «Добрый Доктор» и отдельная благодарность Доброму Доктору – Былорыбец Владиславу Викторовичу, за его неоценимую помощь! Наш котенок Луна попала в неприятную ситуацию — она застряла в заборе и повредила лапку. Мы были в ужасе, но Владислав Викторович проявил невероятное терпение и заботу. Он не только вылечил Луну, но и объяснил нам, как правильно ухаживать за ней в период восстановления. Теперь наша малышка снова прыгает и играет. Вы — настоящие профессионалы!","tag":"Травма лапы","s":""},{"n":"Алана П.","d":"9 октября 2025","t":"Всем здравствуйте! Хочу выразить огромную благодарность врачу Владиславу за его грамотный подход к лечению наших маленьких друзей. У моего кота достаточно давно начались проблемы с пищеварением, обращались во многие клиники, но лечение ограничивалось снятием симптома на 1-2 дня . Владислав же помог нам: назначил препараты, корм и теперь котик чувствует себя прекрасно!","tag":"Лечение","s":""},{"n":"Ирина К.","d":"31 мая 2024","t":"Первый раз были в вашей клинике в феврале. Обратились с больными ушками нашей девочки-лабрадора! Доктор Владислав Викторович внимательно остотрел мою малышку, поставил диагноз и прописал лечение. Мы пролечились и наши ушки теперь здоровы! Спасибо большое доктору и клинике в целом за бережное и внимательное отношение к нашим питомцам! Вернёмся к вам на прививки)))","tag":"Лечение","s":""},{"n":"Иван Ф.","d":"1 декабря 2024","t":"Отличная клиника, всех своих питомцев лечим только там. Белорыбец Владислав Викторович - врач от бога. Ездим только к нему, прекрасное отношение и сопереживание. Рекомендую на все 100%","tag":"","s":""},{"n":"Дарья Конкина","d":"3 июня 2025","t":"Очень понравилась ветклиника. Приём был проведён быстро и оперативно. Первый раз собака даже не отреагировала на прививку от бешенства. Даже не успела понять что уже всё. Потрясающий врач Белорыбец В.В.. Спасибо огромное за приём! Будем Вас обязательно рекомендовать!🙏🏼👍🏼🌺👏🏻\nP.S. Все сотрудники ветклиники «Добрый доктор» очень дружелюбные, всё объясняют, если нужно проконсультируют!","tag":"Приём","s":""},{"n":"Arina Levina","d":"30 октября 2024","t":"Спасибо большое врачу Владиславу Викторовичу, который неоднократно помогал нашим котам и крыске\nПрофессионализм на высшем уровне. Все быстро и качественно.\nВсем рекомендую 🙏🏼","tag":"","s":""},{"n":"Наталья Стасева","d":"26 июля 2025","t":"Хочу поблагодарить врача Белорыбец Владислава Викторович. Замечательный профессионал. И очень добрый человек.","tag":"","s":""},{"n":"Müll Trash","d":"24 июля","t":"Замечательная клиника. Неоднократно обращались туда за помощью и с вопросами. Очень приветливый и отзывчивый персонал. Всегда квалифицированная помощь и быстрое решение вопроса.Отдельные спасибо ,доктору Белорыбец В . В.","tag":"","s":""}]</script>
+      <!-- REVIEWS:END -->
+    </div>
+    <div class="rv-foot">
+      <div class="rv-rest" id="rv-rest" hidden><!-- REVIEWS-REST:START -->
+        <button class="rv rv-card" type="button" data-rv="3" aria-label="Отзыв: Алиса Воеводова, читать полностью">
+          <span class="t" style="--fs:25;--lh:34">Алиса Воеводова · 5 / 5</span>
+          <span class="t" style="--fs:19;--lh:26">16 октября</span>
+          <span class="t rv-txt" style="--fs:22;--lh:30">…У меня 4 животных. Каждого из них осматривал глав врач и Владислав Викторович.
+Спас мою кошку Марту,проводил операции для нее даже в не рабочее время. Доктор искренне заинтересован состоянием и здоровьем вашего питомца.
+Марта лежала почти месяц в стационаре,справилась со всеми своими переломами,ушибами, в то время,когда другая ветклиника говорила: «ей ничего не поможет»,но Владислав Викторович и его коллеги показали мастерство высшего уровня!!!
+Рекомендую эту ветеринарную клинику и Владислава Викторовича.</span>
+        </button>
+        <button class="rv rv-card" type="button" data-rv="4" aria-label="Отзыв: Карпенко Ольга, читать полностью">
+          <span class="t" style="--fs:25;--lh:34">Карпенко Ольга · 5 / 5</span>
+          <span class="t" style="--fs:19;--lh:26">17 апреля</span>
+          <span class="t rv-txt" style="--fs:22;--lh:30">Неделю назад нашего Красавчика сбила машина. Сразу прибежали в клинику, в этот день к нашему счастью😊работал Белорыбец Владислав Викторович. Доктор оперативно сделал рентген, выявил повреждения, оказал первую помощь, положил под капельницу, обрисовал какие могут быть последствия, ответил на все наши что? как ? и почему? 👍
+В стационаре пробыли 2 дня, далее поехали в другую клинику на МРТ и КТ, для подтверждения диагноза ЧМТ. Очень ценно, что Доктор просил звонить в Клинику и рассказывать как у нас дела, поддерживал, советовал как лучше поступить, максимально проникся травмой нашего пёсика, проявил профессионализм и человеческие качества, что большая редкость в наше время.
+Сейчас мы снова вернулись в стационар Клиники, нам назначили терапию, ходим на капельницы и уколы, динамика положительная есть и мы верим, что наш Злюка😉 будет бегать как раньше.
+От всего сердца большая благодарность Владиславу Викторовичу и всей команде Клиники👏🏻дай Бог Вам здоровья, терпения и побольше благодарных пациентов🙌🏻
+Дополняю отзыв 16.04
+Всё самое страшное позади, наш пёсик идёт на поправку, бегает и потихоньку вспоминает свою собачью жизнь и повадки до травмы, что нас ооочень радует🙏🏻это значит - лечение подобрано верно, огромное спасибо🤝 что подарили 2ю жизнь🐕</span>
+        </button>
+        <button class="rv rv-card" type="button" data-rv="5" aria-label="Отзыв: Екатерина Благова, читать полностью">
+          <span class="t" style="--fs:25;--lh:34">Екатерина Благова · 5 / 5</span>
+          <span class="t" style="--fs:19;--lh:26">26 апреля 2024</span>
+          <span class="t rv-txt" style="--fs:22;--lh:30">Словами не выразить нашу огромную благодарность заботливому и внимательному врачу Владиславу Викторовичу Белорыбец за спасение жизни нашей маленькой кошечки сфинкса Лилу! Вы наш герой! … Владислав Викторович внимательно выслушал наши жалобы, осмотрел Лилу, сделал рентген. Диагноз был поставлен четко и оперативно, врач сказал что присутствует инородный предмет и решил не терять время и делать операцию, сказал что уже поздно обратились, котенок сильно обезвожен. Мы доверились ему полностью, хотя было очень страшно за нашу малышку. Персонал нас подбадривал и юморил, мы очень переживали и страшно боялись за нашу доченьку, пережили большой стресс. Операция была сложная, но все прошло успешно. Выяснилось что наша Лилу наелась ниток!! Врач показал нам эти нитки. Шок не описать словами. После операции 2 дня наша Лилу оставалась под наблюдением в клинике, мы ее навещали, врачи давали все необходимые рекомендации, показывали видео что все хорошо. После нам назначили дополнительное лечение, которое мы проводили дома и приезжали в клинику на уколы и обработку шва. Прошло уже почти 2 недели после операции, наша малышка довольно быстро пошла на поправку, наконец швы сняли, кошечка заметно лучше себя чувствует, игривая, кушает хорошо, а мы очень счастливы что все прошло благополучно и самое страшное уже позади, теперь будем внимательнее следить за нашим котеребенком. Спасибо наш замечательный добрый доктор Владислав Викторович, чувствуется с какой заботой и любовью вы относитесь к нашим питомцам, нам очень повезло что попали на вашу смену, всего вам самого наилучшего, вы действительно очень хороший профессионал и небезразличный человек, это сейчас очень редко встретишь и дорогого стоит!!! Мы нашли своего врача которому можно довериться, теперь только к вам, спасибо, спасибо и еще раз спасибо! ❤️❤️❤️</span>
+        </button>
+        <button class="rv rv-card" type="button" data-rv="6" aria-label="Отзыв: Эля Твердохлебова, читать полностью">
+          <span class="t" style="--fs:25;--lh:34">Эля Твердохлебова · 5 / 5</span>
+          <span class="t" style="--fs:19;--lh:26">22 апреля</span>
+          <span class="t rv-txt" style="--fs:22;--lh:30">Большое спасибо главному врачу Белорыбец Владиславу Викторовичу за бережное отношение, профессионализм и консультацию. Врач верно определил диагноз , успешно провел операцию и наша Терри теперь здорова.</span>
+        </button>
+        <button class="rv rv-card" type="button" data-rv="7" aria-label="Отзыв: МММ Г., читать полностью">
+          <span class="t" style="--fs:25;--lh:34">МММ Г. · 5 / 5</span>
+          <span class="t" style="--fs:19;--lh:26">31 мая</span>
+          <span class="t rv-txt" style="--fs:22;--lh:30">Огромное спасибо хирургу Владиславу Викторович за профессиональную работу и за доброе отношение к животным.
+Волонтёрский слепой возрастной пёс Рыжий без вашей помощи мог погибнуть. Здоровья вам, благополучия и долгих лет</span>
+        </button>
+        <button class="rv rv-card" type="button" data-rv="8" aria-label="Отзыв: Анна Х., читать полностью">
+          <span class="t" style="--fs:25;--lh:34">Анна Х. · 5 / 5</span>
+          <span class="t" style="--fs:19;--lh:26">27 апреля</span>
+          <span class="t rv-txt" style="--fs:22;--lh:30">Хочу выразить мою глубочайшую благодарность Владиславу Викторвичу и коллективу вет.клиники Добрый Доктор за спасение моего Голдена‼️Ситуация была критической,если бы не Владислав Викторович ‼️Его профессионализм, компетенция и скорейшая своевременная диагностика пациента‼️Слава Богу ,что у нас есть такие специалисты,которым можно безоговорочно доверить жизнь своего питомца и знать ,что она в надёжных руках🙏Сейчас мой &quot;хвостик&quot; бегает ‼️Здоров,весел и счастлив)Быстро встал на лапы😊и радуется жизни ‼️СПАСИБО ‼️ВАМ‼️ОГРОМНОЕ‼️</span>
+        </button>
+        <button class="rv rv-card" type="button" data-rv="9" aria-label="Отзыв: Жанна Гришкова, читать полностью">
+          <span class="t" style="--fs:25;--lh:34">Жанна Гришкова · 5 / 5</span>
+          <span class="t" style="--fs:19;--lh:26">28 октября 2025</span>
+          <span class="t rv-txt" style="--fs:22;--lh:30">Наблюдаем мопса в этой клинике. Персонал компетентный, внимательный. Работают круглосуточно.
+Удаляли очень сложное новообразование. Спасибо врачу Белорыбец В. В. Все сделал на высшем уровне. Сейчас лечимся, уже есть улучшения. Клинику рекомедую</span>
+        </button>
+        <button class="rv rv-card" type="button" data-rv="10" aria-label="Отзыв: Инна Игоревна, читать полностью">
+          <span class="t" style="--fs:25;--lh:34">Инна Игоревна · 5 / 5</span>
+          <span class="t" style="--fs:19;--lh:26">24 сентября</span>
+          <span class="t rv-txt" style="--fs:22;--lh:30">Хочу выразить огромную благодарность врачу Владиславу Викторовичу и всей команде клиники! 🙏❤️
+Владислав Викторович — не просто профессионал с золотыми руками, а человек с большим сердцем. Он вылечил моего котёнка, помог моей кошке Лилу, которая находилась в тяжёлом состоянии, и спас ещё одну кошку — Агушу. Его опыт, чуткость и внимание к каждой детали — это то, что отличает настоящего доктора.
+Отдельно хочу поблагодарить весь персонал. Даня — спасибо за чуткость и поддержку. Администратор Ирина — за помощь в родах, за то, что растирала котят вместо мамы, когда Лилу не могла подойти. Это бесценно. Вы все — команда, которая делает невероятно важное дело.
+Спасибо за вашу заботу, терпение и любовь к животным. Вы спасли не одну жизнь. Низкий поклон вам за это. 💖
+Рекомендую клинику всем, кто любит своих питомцев и хочет доверить их в надёжные руки.</span>
+        </button>
+        <button class="rv rv-card" type="button" data-rv="11" aria-label="Отзыв: Влада Шашкова, читать полностью">
+          <span class="t" style="--fs:25;--lh:34">Влада Шашкова · 5 / 5</span>
+          <span class="t" style="--fs:19;--lh:26">27 декабря 2024</span>
+          <span class="t rv-txt" style="--fs:22;--lh:30">Сердечно благодарю ветеринарную клинику «Добрый Доктор» и отдельная благодарность Доброму Доктору – Былорыбец Владиславу Викторовичу, за его неоценимую помощь! Наш котенок Луна попала в неприятную ситуацию — она застряла в заборе и повредила лапку. Мы были в ужасе, но Владислав Викторович проявил невероятное терпение и заботу. Он не только вылечил Луну, но и объяснил нам, как правильно ухаживать за ней в период восстановления. Теперь наша малышка снова прыгает и играет. Вы — настоящие профессионалы!</span>
+        </button>
+        <button class="rv rv-card" type="button" data-rv="12" aria-label="Отзыв: Алана П., читать полностью">
+          <span class="t" style="--fs:25;--lh:34">Алана П. · 5 / 5</span>
+          <span class="t" style="--fs:19;--lh:26">9 октября 2025</span>
+          <span class="t rv-txt" style="--fs:22;--lh:30">Всем здравствуйте! Хочу выразить огромную благодарность врачу Владиславу за его грамотный подход к лечению наших маленьких друзей. У моего кота достаточно давно начались проблемы с пищеварением, обращались во многие клиники, но лечение ограничивалось снятием симптома на 1-2 дня . Владислав же помог нам: назначил препараты, корм и теперь котик чувствует себя прекрасно!</span>
+        </button>
+        <button class="rv rv-card" type="button" data-rv="13" aria-label="Отзыв: Ирина К., читать полностью">
+          <span class="t" style="--fs:25;--lh:34">Ирина К. · 5 / 5</span>
+          <span class="t" style="--fs:19;--lh:26">31 мая 2024</span>
+          <span class="t rv-txt" style="--fs:22;--lh:30">Первый раз были в вашей клинике в феврале. Обратились с больными ушками нашей девочки-лабрадора! Доктор Владислав Викторович внимательно остотрел мою малышку, поставил диагноз и прописал лечение. Мы пролечились и наши ушки теперь здоровы! Спасибо большое доктору и клинике в целом за бережное и внимательное отношение к нашим питомцам! Вернёмся к вам на прививки)))</span>
+        </button>
+        <button class="rv rv-card" type="button" data-rv="14" aria-label="Отзыв: Иван Ф., читать полностью">
+          <span class="t" style="--fs:25;--lh:34">Иван Ф. · 5 / 5</span>
+          <span class="t" style="--fs:19;--lh:26">1 декабря 2024</span>
+          <span class="t rv-txt" style="--fs:22;--lh:30">Отличная клиника, всех своих питомцев лечим только там. Белорыбец Владислав Викторович - врач от бога. Ездим только к нему, прекрасное отношение и сопереживание. Рекомендую на все 100%</span>
+        </button>
+        <button class="rv rv-card" type="button" data-rv="15" aria-label="Отзыв: Дарья Конкина, читать полностью">
+          <span class="t" style="--fs:25;--lh:34">Дарья Конкина · 5 / 5</span>
+          <span class="t" style="--fs:19;--lh:26">3 июня 2025</span>
+          <span class="t rv-txt" style="--fs:22;--lh:30">Очень понравилась ветклиника. Приём был проведён быстро и оперативно. Первый раз собака даже не отреагировала на прививку от бешенства. Даже не успела понять что уже всё. Потрясающий врач Белорыбец В.В.. Спасибо огромное за приём! Будем Вас обязательно рекомендовать!🙏🏼👍🏼🌺👏🏻
+P.S. Все сотрудники ветклиники «Добрый доктор» очень дружелюбные, всё объясняют, если нужно проконсультируют!</span>
+        </button>
+        <button class="rv rv-card" type="button" data-rv="16" aria-label="Отзыв: Arina Levina, читать полностью">
+          <span class="t" style="--fs:25;--lh:34">Arina Levina · 5 / 5</span>
+          <span class="t" style="--fs:19;--lh:26">30 октября 2024</span>
+          <span class="t rv-txt" style="--fs:22;--lh:30">Спасибо большое врачу Владиславу Викторовичу, который неоднократно помогал нашим котам и крыске
+Профессионализм на высшем уровне. Все быстро и качественно.
+Всем рекомендую 🙏🏼</span>
+        </button>
+        <button class="rv rv-card" type="button" data-rv="17" aria-label="Отзыв: Наталья Стасева, читать полностью">
+          <span class="t" style="--fs:25;--lh:34">Наталья Стасева · 5 / 5</span>
+          <span class="t" style="--fs:19;--lh:26">26 июля 2025</span>
+          <span class="t rv-txt" style="--fs:22;--lh:30">Хочу поблагодарить врача Белорыбец Владислава Викторович. Замечательный профессионал. И очень добрый человек.</span>
+        </button>
+        <button class="rv rv-card" type="button" data-rv="18" aria-label="Отзыв: Müll Trash, читать полностью">
+          <span class="t" style="--fs:25;--lh:34">Müll Trash · 5 / 5</span>
+          <span class="t" style="--fs:19;--lh:26">24 июля</span>
+          <span class="t rv-txt" style="--fs:22;--lh:30">Замечательная клиника. Неоднократно обращались туда за помощью и с вопросами. Очень приветливый и отзывчивый персонал. Всегда квалифицированная помощь и быстрое решение вопроса.Отдельные спасибо ,доктору Белорыбец В . В.</span>
+        </button>
+      <!-- REVIEWS-REST:END --></div>
+      <button class="cta" id="rv-all" type="button" aria-expanded="false" aria-controls="rv-rest">Все отзывы</button>
+    </div>
+  </section>
+
+  <!-- 11 / Контакты и график -->
+  <section class="fx s-contacts" id="contacts" aria-labelledby="contacts-h">
+    <div class="fx-box" style="aspect-ratio:1613/1120">
+      <h2 class="a t o up" id="contacts-h" style="--x:68;--y:78;--w:1010;--fs:88;--lh:95">Люберцы, <br>Вертолётчиков, 11</h2>
+      <p class="a t" style="--x:72;--y:348;--w:930;--fs:28;--lh:38">Ветеринарная клиника «Добрый Доктор». <br>Приём с 10:00 до 22:00 по графику.</p>
+      <a class="a t contacts-phone" style="--x:68;--y:516;--w:920;--fs:59;--lh:80" href="tel:+79392557771">+7 (939) 255-77-71</a>
+      <a class="a t contacts-mail" style="--x:72;--y:623;--w:900;--fs:34;--lh:46" href="mailto:vladislav@belovet.ru">vladislav@belovet.ru</a>
+      <div class="a contacts-btns" style="--x:72;--y:752;--w:720">
+        <button class="cta" type="button" data-form="book">Записаться на приём</button>
+        <a class="cta cta-white cta-sm" href="https://yandex.ru/maps/?text=%D0%9B%D1%8E%D0%B1%D0%B5%D1%80%D1%86%D1%8B%2C%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%20%D0%92%D0%B5%D1%80%D1%82%D0%BE%D0%BB%D1%91%D1%82%D1%87%D0%B8%D0%BA%D0%BE%D0%B2%2C%2011" target="_blank" rel="noopener">Маршрут</a>
       </div>
+      <div class="a sched hh" style="--x:1060;--y:99;--w:481;--hh:768">
+        <p class="a t o up sched-month" style="--x:28;--y:31;--w:425;--fs:38;--lh:41" data-month></p>
+        <p class="a t" style="--x:28;--y:93;--w:425;--fs:25;--lh:34" data-next-short></p>
+        <div class="a sched-cal" style="--x:22;--y:194;--w:414" data-cal-big></div>
+        <p class="a sched-legend t" style="--x:30;--y:575;--w:425;--fs:20;--lh:27"><i></i>Дни приёма</p>
+        <p class="a t" style="--x:28;--y:637;--w:425;--fs:26;--lh:35">С 10:00 до 22:00</p>
+        <button class="a t sched-link" style="--x:28;--y:705;--w:425;--fs:24;--lh:33" type="button" data-open-where>Смотреть график</button>
+      </div>
+      <p class="a t" style="--x:72;--y:936;--w:1469;--fs:26;--lh:35">В остальные дни оперирую по приглашению в клиниках Москвы и области. <br>По экстренной записи приеду в клинику за 15 минут в любое время, даже ночью.</p>
     </div>
   </section>
 </main>
 
-<footer class="footer">
-  <div class="wrap">
-    <img src="assets/logo-wordmark.png" alt="beloVET" width="640" height="224" loading="lazy">
-    <p style="max-width:540px">Владислав Белорыбец, ветеринарный врач-хирург. Цены на сайте не являются публичной офертой: итоговая стоимость согласуется после осмотра. <a href="mailto:vladislav@belovet.ru">vladislav@belovet.ru</a> · <a href="blog/index.html">Блог</a> · <a href="privacy.html">Политика конфиденциальности</a></p>
+<!-- 12 / Footer -->
+<footer class="fx s-footer">
+  <div class="fx-box" style="aspect-ratio:1613/420">
+    <img class="a" style="--x:72;--y:56;--w:330" src="assets/logo-wordmark.png" width="640" height="224" alt="beloVET, ветеринарный врач-хирург" loading="lazy">
+    <p class="a t" style="--x:612;--y:73;--w:930;--fs:24;--lh:33">Владислав Белорыбец, ветеринарный врач-хирург. <br>Цены на сайте не являются публичной офертой: <br>итоговая стоимость согласуется после осмотра.</p>
+    <a class="a t" style="--x:612;--y:219;--w:930;--fs:25;--lh:34" href="mailto:vladislav@belovet.ru">vladislav@belovet.ru</a>
+    <a class="a t" style="--x:612;--y:293;--w:175;--fs:23;--lh:31" href="blog/index.html">Блог</a>
+    <a class="a t" style="--x:848;--y:293;--w:693;--fs:23;--lh:31" href="privacy.html">Политика конфиденциальности</a>
   </div>
 </footer>
 
 <div class="mbar">
   <button class="btn btn-primary" type="button" data-form="book">Записаться</button>
-  <button class="btn btn-dark" type="button" data-form="urgent">Экстренно</button>
+  <button class="btn btn-dark" type="button" data-form="urgent">Экстренная запись</button>
 </div>
 
 <div class="cookie" id="cookie" role="region" aria-label="Уведомление о cookie" hidden>
@@ -1168,6 +1461,13 @@ var SCHEDULE = {
   // Тот же график — в мобильном меню
   document.querySelectorAll('[data-cal]').forEach(function (el) { el.innerHTML = cal.innerHTML; el.hidden = cal.hidden; });
   document.querySelectorAll('[data-next]').forEach(function (el) { el.textContent = next.textContent; });
+  document.querySelectorAll('[data-cal-big]').forEach(function (el) { el.innerHTML = cal.innerHTML; el.hidden = cal.hidden; });
+  document.querySelectorAll('[data-month]').forEach(function (el) { if (shown) el.textContent = MONTHS[shown.getMonth()] + ' ' + shown.getFullYear(); });
+  document.querySelectorAll('[data-next-short]').forEach(function (el) {
+    if (!nextDay) el.textContent = 'График уточняйте по телефону.';
+    else if (+nextDay === +today) el.textContent = 'Сегодня принимаю';
+    else el.innerHTML = 'Ближайший приём — <br>' + nextDay.getDate() + ' ' + MONTHS_GEN[nextDay.getMonth()];
+  });
 
   function setOpen(open) {
     panel.hidden = !open;
@@ -1310,56 +1610,37 @@ var SCHEDULE = {
   });
 })();
 
-// Отзывы: сворачивание длинных текстов, «показать все», просмотр фото
+// Отзывы: «Все отзывы» раскрывает остальные карточки, полный текст — в окне
 (function () {
-  var grid = document.getElementById("rv-grid");
-  if (!grid) return;
-  grid.querySelectorAll(".rv").forEach(function (card) {
-    var text = card.querySelector(".rv-text"), btn = card.querySelector(".rv-toggle");
-    function check() {
-      if (!text.classList.contains("clamp")) return; // раскрыт — кнопка «Скрыть» остаётся
-      var over = text.scrollHeight > text.clientHeight + 4;
-      text.classList.toggle("over", over); // затухание — только если текст правда обрезан
-      btn.hidden = !over;
-    }
-    card.checkClamp = check;
-    card.collapse = function () {
-      if (text.classList.contains("clamp")) return;
-      text.classList.add("clamp"); btn.textContent = "ещё"; check();
-    };
-    // как на Яндексе: «ещё» раскрывает текст, «Скрыть» сворачивает обратно.
-    // Открыт всегда один отзыв: при раскрытии нового остальные сворачиваются сами.
-    btn.addEventListener("click", function () {
-      if (!text.classList.contains("clamp")) { card.collapse(); return; }
-      grid.querySelectorAll(".rv").forEach(function (other) { if (other !== card && other.collapse) other.collapse(); });
-      text.classList.remove("clamp", "over"); btn.textContent = "Скрыть";
-    });
-    check(); window.addEventListener("resize", check);
+  var dataEl = document.getElementById("rv-data");
+  if (!dataEl) return;
+  var data = JSON.parse(dataEl.textContent);
+  var dialog = document.getElementById("rv-dialog");
+  var body = dialog.querySelector(".rv-body");
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  document.addEventListener("click", function (e) {
+    var el = e.target.closest("[data-rv]");
+    if (!el) return;
+    var r = data[+el.dataset.rv];
+    body.innerHTML = (r.tag ? "<h2>" + esc(r.tag) + "</h2>" : "<h2>Отзыв</h2>")
+      + "<p class=\"rv-who\">" + esc(r.n) + " · 5 / 5 · " + esc(r.d) + "</p>"
+      + r.t.split(/\n+/).map(function (p) { return "<p>" + esc(p) + "</p>"; }).join("")
+      + (r.s ? "<p><a class=\"rv-op\" href=\"operations/" + r.s + ".html\">Об операции: " + esc(r.tag) + " →</a></p>" : "");
+    dialog.showModal();
   });
-  var all = document.getElementById("rv-all");
-  var more = grid.querySelectorAll(".rv-more").length;
-  var moreLabel = "Показать ещё " + more + " " + (more % 10 === 1 && more % 100 !== 11 ? "отзыв" : (more % 10 >= 2 && more % 10 <= 4 && (more % 100 < 10 || more % 100 >= 20)) ? "отзыва" : "отзывов");
-  if (!more) all.hidden = true; else all.textContent = moreLabel;
-  all.setAttribute("aria-expanded", "false");
+  dialog.querySelector("[data-close-dialog]").addEventListener("click", function () { dialog.close(); });
+  dialog.addEventListener("click", function (e) { if (e.target === dialog) dialog.close(); });
+  var all = document.getElementById("rv-all"), rest = document.getElementById("rv-rest");
+  var n = rest.querySelectorAll(".rv-card").length;
+  var label = "Все отзывы";
+  all.textContent = label;
   all.addEventListener("click", function () {
-    var open = !grid.classList.contains("all");
-    grid.classList.toggle("all", open);
-    all.textContent = open ? "Свернуть отзывы" : moreLabel;
+    var open = rest.hidden;
+    rest.hidden = !open;
+    all.textContent = open ? "Свернуть отзывы" : label;
     all.setAttribute("aria-expanded", String(open));
-    if (open) {
-      grid.querySelectorAll(".rv-more").forEach(function (card) { card.checkClamp(); });
-    } else {
-      // свернули — возвращаемся к началу блока, чтобы посетитель не потерялся на странице
-      document.getElementById("reviews").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
-    }
+    if (!open) document.getElementById("reviews").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
   });
-  var box = document.getElementById("lightbox"), img = box.querySelector("img");
-  grid.addEventListener("click", function (e) {
-    var ph = e.target.closest(".rv-ph"); if (!ph) return;
-    img.src = ph.dataset.src; box.showModal();
-  });
-  box.querySelector("[data-close-lightbox]").addEventListener("click", function () { box.close(); });
-  box.addEventListener("click", function (e) { if (e.target === box) box.close(); });
 })();
 
 // Уведомление о cookie
