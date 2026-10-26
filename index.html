@@ -101,7 +101,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--blue-text); out
 
 /* Первый экран вместе с шапкой — макет Figma «01 / Утверждённый hero», 1613×975.
    На широких экранах всё стоит по координатам макета: --px = один пиксель макета при текущей ширине блока. */
-.stage { --ink: #001C45; --sun: #FBFF2C; position: relative; container-type: inline-size; border-radius: 28px; background: #59B6F7 url(assets/hero-bg.jpg) center bottom / cover no-repeat; overflow-x: clip; }
+.stage { --ink: #001C45; --sun: #FBFF2C; position: relative; max-width: 1613px; margin-inline: auto; container-type: inline-size; border-radius: 28px; background: #59B6F7 url(assets/hero-bg.jpg) center bottom / cover no-repeat; overflow-x: clip; }
 .stage > * { --px: calc(100cqw / 1613); }
 .btn-sun { background: var(--sun); color: var(--ink); font-family: "Roboto", Arial, sans-serif; font-weight: 700; }
 .btn-sun:hover { background: #F0F41E; }
@@ -113,32 +113,32 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--blue-text); out
 .header .logo .sym { width: calc(80 * var(--px)); height: auto; margin-left: calc(-15 * var(--px)); } /* у знака в png широкие поля */
 .header .logo .word { width: calc(240 * var(--px)); height: auto; } /* в png вокруг надписи поля: так текст встаёт как в макете */
 .nav { position: absolute; left: calc(435 * var(--px)); top: calc(41 * var(--px)); display: flex; gap: calc(36 * var(--px)); }
-.nav a { color: #fff; text-decoration: none; font: 500 max(14px, calc(22 * var(--px)))/1.2 "Roboto", Arial, sans-serif; white-space: nowrap; }
+.nav a { color: #fff; text-decoration: none; font: 500 calc(22 * var(--px))/1.2 "Roboto", Arial, sans-serif; white-space: nowrap; }
 .nav a:hover { color: var(--sun); }
 .header .where { position: absolute; left: calc(974 * var(--px)); top: calc(24 * var(--px)); }
-.header .call { position: absolute; left: calc(1318 * var(--px)); top: calc(21 * var(--px)); width: calc(200 * var(--px)); min-height: 0; height: calc(62 * var(--px)); padding: 0; border-radius: calc(20 * var(--px)); font-size: max(15px, calc(24 * var(--px))); }
+.header .call { position: absolute; left: calc(1318 * var(--px)); top: calc(21 * var(--px)); width: calc(200 * var(--px)); min-height: 0; height: calc(62 * var(--px)); padding: 0; border-radius: calc(20 * var(--px)); font-size: calc(24 * var(--px)); }
 
 /* Телефон и адрес в шапке */
 .header .where-ico { width: calc(32 * var(--px)); height: calc(36 * var(--px)); color: #008FE9; }
-.header .where-phone { font: 700 max(15px, calc(25 * var(--px)))/1.15 "Roboto", Arial, sans-serif; color: var(--ink); }
-.header .where-btn { font: 400 max(12px, calc(15 * var(--px)))/1.2 "Roboto", Arial, sans-serif; color: var(--ink); }
+.header .where-phone { font: 700 calc(25 * var(--px))/1.15 "Roboto", Arial, sans-serif; color: var(--ink); }
+.header .where-btn { font: 400 calc(15 * var(--px))/1.2 "Roboto", Arial, sans-serif; color: var(--ink); }
 .header .where-btn .on { color: var(--ink); font-weight: 500; }
 
 /* Заголовок, кошка, кнопка, подпись */
 .hero { position: relative; height: calc(975 * var(--px)); color: #fff; }
-.hero-eyebrow { position: absolute; left: calc(84 * var(--px)); top: calc(121 * var(--px)); font: 700 max(12px, calc(17 * var(--px)))/1.2 "Roboto", Arial, sans-serif; letter-spacing: calc(0.45 * var(--px)); text-transform: uppercase; }
+.hero-eyebrow { position: absolute; left: calc(84 * var(--px)); top: calc(121 * var(--px)); font: 700 calc(17 * var(--px))/1.2 "Roboto", Arial, sans-serif; letter-spacing: calc(0.45 * var(--px)); text-transform: uppercase; }
 .hero h1 { margin: 0; font-family: "Oswald", "Arial Narrow", sans-serif; font-weight: 700; text-transform: uppercase; }
 .hero-big { position: absolute; z-index: 1; left: calc(85 * var(--px)); top: calc(159 * var(--px)); font-size: calc(300 * var(--px)); line-height: calc(208 * var(--px)); letter-spacing: calc(-2 * var(--px)); white-space: nowrap; }
 .hero-sub { position: absolute; z-index: 3; left: calc(85 * var(--px)); top: calc(501 * var(--px)); font-size: calc(74 * var(--px)); line-height: calc(100 * var(--px)); letter-spacing: calc(-1 * var(--px)); color: var(--sun); white-space: nowrap; }
 .hero-cat { position: absolute; z-index: 2; left: calc(497 * var(--px)); top: calc(288 * var(--px)); width: calc(1037.675 * var(--px)); height: calc(615.924 * var(--px)); margin: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
 .hero-cat img { flex: none; width: calc(992 * var(--px)); height: auto; max-width: none; rotate: -5.52deg; }
-.hero-cta { position: absolute; z-index: 3; left: calc(85 * var(--px)); top: calc(809 * var(--px)); width: calc(364 * var(--px)); min-height: 0; height: calc(65 * var(--px)); padding: 0; border-radius: calc(20 * var(--px)); color: #322B16; font-size: max(16px, calc(23 * var(--px))); }
+.hero-cta { position: absolute; z-index: 3; left: calc(85 * var(--px)); top: calc(809 * var(--px)); width: calc(364 * var(--px)); min-height: 0; height: calc(65 * var(--px)); padding: 0; border-radius: calc(20 * var(--px)); color: #322B16; font-size: calc(23 * var(--px)); }
 .hero-sign { margin: 0; position: absolute; z-index: 3; left: calc(1182 * var(--px)); top: calc(812 * var(--px)); display: grid; gap: calc(2 * var(--px)); font-family: "Roboto", Arial, sans-serif; line-height: 1.17; }
-.hero-sign b { font-size: max(16px, calc(28 * var(--px))); font-weight: 700; }
-.hero-sign span { font-size: max(13px, calc(20 * var(--px))); font-weight: 600; }
+.hero-sign b { font-size: calc(28 * var(--px)); font-weight: 700; }
+.hero-sign span { font-size: calc(20 * var(--px)); font-weight: 600; }
 
-/* Уже 1100px: шапка обычной строкой, первый экран в колонку */
-@media (max-width: 1099px) {
+/* Уже 1024px: шапка обычной строкой, первый экран в колонку */
+@media (max-width: 1023px) {
   .stage { --gut: var(--gutter); }
   .header { position: relative; }
   .header .wrap { height: auto; min-height: 76px; display: flex; align-items: center; gap: 16px; padding: 12px var(--gut) 0; }
