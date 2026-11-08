@@ -174,5 +174,8 @@ ${UI.footer(pre)}
 
   // статьи по операции — для страниц операций
   const postsFor = slug => posts.filter(p => p.ops.includes(slug));
-  return { posts, homeBlock, postsFor, urls: ['blog/', ...posts.map(p => `blog/${p.slug}.html`)] };
+  // lastmod для sitemap: дата статьи, у ленты — дата самой свежей
+  const lastmod = { 'blog/': posts[0] && posts[0].date };
+  for (const p of posts) lastmod[`blog/${p.slug}.html`] = p.date;
+  return { posts, homeBlock, postsFor, urls: ['blog/', ...posts.map(p => `blog/${p.slug}.html`)], lastmod };
 };

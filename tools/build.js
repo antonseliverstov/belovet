@@ -443,9 +443,30 @@ fs.writeFileSync(path.join(ROOT, 'site.webmanifest'), JSON.stringify({
 }, null, 2) + '\n');
 
 const urls = ['', 'privacy.html', ...PROCEDURES.map(p => 'operations/' + p.slug + '.html'), ...BLOG.urls];
+// Главная показывает свежие статьи, поэтому её дата — не раньше самой свежей статьи
+const lastmodOf = u => BLOG.lastmod[u] || (u === '' ? [UPDATED.iso, BLOG.lastmod['blog/']].filter(Boolean).sort().pop() : UPDATED.iso);
 fs.writeFileSync(path.join(ROOT, 'sitemap.xml'),
   '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-  + urls.map(u => `  <url><loc>${SITE}${u}</loc><lastmod>${UPDATED.iso}</lastmod></url>`).join('\n') + '\n</urlset>\n');
+  + urls.map(u => `  <url><loc>${SITE}${u}</loc><lastmod>${lastmodOf(u)}</lastmod></url>`).join('\n') + '\n</urlset>\n');
+
+// llms.txt: краткая карта сайта для ИИ-поисковиков (формат llmstxt.org)
+const byCat = CATEGORIES.map(c => `### ${c.name}\n\n` + PROCEDURES.filter(p => p.cat === c.id)
+  .map(p => `- [${p.title}](${SITE}operations/${p.slug}.html): ${p.lead}`).join('\n')).join('\n\n');
+fs.writeFileSync(path.join(ROOT, 'llms.txt'), `# beloVET — Владислав Белорыбец, ветеринарный врач-хирург
+
+> Хирургия собак и кошек в Люберцах: клиника «Добрый Доктор», ул. Вертолётчиков, 11. Плановые и экстренные операции: цены, подготовка, ход операции и восстановление. Телефон +7 (939) 255-77-71.
+
+- [Главная](${SITE}): о враче, направления хирургии, отзывы, контакты и график приёма
+- [Блог](${SITE}blog/): статьи для владельцев о симптомах, первой помощи и операциях
+
+## Операции и цены
+
+${byCat}
+
+## Статьи
+
+${BLOG.posts.map(p => `- [${p.title}](${SITE}blog/${p.slug}.html): ${p.lead}`).join('\n')}
+`);
 
 const rows = PROCEDURES.reduce((n, p) => n + p.prices.length, 0);
 const wordsTotal = PROCEDURES.reduce((n, p) => n + words(ARTICLES[p.slug], p), 0);
