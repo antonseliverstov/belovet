@@ -103,6 +103,9 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--blue-text); out
 .doctor b { display: block; font: 700 15px/1.25 var(--font-display); }
 .doctor span { font-size: 14px; color: var(--muted); }
 
+/* Поле-ловушка для ботов в формах */
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+
 /* Прототипная полоса */
 .proto { background: var(--navy); color: #fff; font-size: 13px; padding-block: 8px; }
 .proto .fill { color: #fff; border-color: #fff; }
@@ -699,6 +702,7 @@ a.dir:hover h3 { text-decoration: underline; text-underline-offset: .12em; text-
 
 <dialog class="modal" id="form-dialog" aria-labelledby="fd-title">
   <form class="modal-in lead-form" id="fd-form" novalidate>
+    <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
     <button class="x" type="button" data-close-dialog aria-label="Закрыть">×</button>
     <h2 id="fd-title">Записаться на приём</h2>
     <p class="sub" id="fd-sub"></p>
@@ -716,7 +720,7 @@ a.dir:hover h3 { text-decoration: underline; text-underline-offset: .12em; text-
             </div></div>
     <div class="consent">
       <label class="check"><input type="checkbox" name="privacy" required><span>Ознакомлен с <a href="privacy.html" target="_blank">политикой конфиденциальности</a></span></label>
-      <label class="check"><input type="checkbox" name="consent" required><span>Даю <a href="privacy.html#consent" target="_blank">согласие на обработку персональных данных</a></span></label>
+      <label class="check"><input type="checkbox" name="consent" required><span>Даю <a href="consent.html" target="_blank">согласие на обработку персональных данных</a></span></label>
     </div>
     <button class="btn btn-primary" type="submit">Отправить</button>
     <p class="form-note" role="status"></p>
@@ -841,6 +845,7 @@ a.dir:hover h3 { text-decoration: underline; text-underline-offset: .12em; text-
         <p class="a t urgent-plan" style="--x:72;--y:1152;--w:650;--fs:24;--lh:33">Плановый приём — с 10:00 до 22:00.</p>
       </div>
       <form class="urgent-form lead-form" data-kind="urgent" novalidate>
+        <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
         <p class="t o" style="--fs:40;--lh:54;--wl:9">Опишите, что случилось</p>
         <label class="ff"><span class="t" style="--fs:20;--lh:28">Имя</span><input name="name" autocomplete="name" required placeholder="Как к вам обращаться"></label>
         <label class="ff"><span class="t" style="--fs:20;--lh:28">Телефон</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="+7 (___) ___-__-__" data-phone></label>
@@ -855,7 +860,7 @@ a.dir:hover h3 { text-decoration: underline; text-underline-offset: .12em; text-
         </div>
         <div class="consent">
           <label class="check"><input type="checkbox" name="privacy" required><span>Ознакомлен с <a href="privacy.html" target="_blank">политикой конфиденциальности</a></span></label>
-          <label class="check"><input type="checkbox" name="consent" required><span>Даю <a href="privacy.html#consent" target="_blank">согласие на обработку персональных данных</a></span></label>
+          <label class="check"><input type="checkbox" name="consent" required><span>Даю <a href="consent.html" target="_blank">согласие на обработку персональных данных</a></span></label>
         </div>
         <button class="cta" type="submit">Отправить</button>
         <p class="form-note" role="status"></p>
@@ -1613,8 +1618,43 @@ var SCHEDULE = {
       var phone = form.querySelector('[data-phone]');
       phone.setCustomValidity(phone.value.replace(/\D/g, '').length === 11 ? '' : 'Введите номер полностью');
       if (!form.reportValidity()) return;
-      // Отправка не подключена: статичный сайт. Подключить Telegram-бота, почту или CRM — см. README.
-      note.textContent = 'Форма пока не подключена к отправке. Позвоните, пожалуйста: +7 (939) 255-77-71.';
+      // Адрес обработчика (functions/lead) задаётся в tools/build.js → <html data-lead>
+      var endpoint = document.documentElement.dataset.lead;
+      if (!endpoint) { note.textContent = 'Форма пока не подключена к отправке. Позвоните, пожалуйста: +7 (939) 255-77-71.'; return; }
+      var btn = form.querySelector('[type=submit]');
+      var fd = new FormData(form);
+      var input = form.querySelector('input[type=file]');
+      var list = input && !input.disabled ? Array.prototype.slice.call(input.files) : [];
+      var total = list.reduce(function (s, f) { return s + f.size; }, 0);
+      if (list.length > 5 || total > 2.5 * 1048576) {
+        note.textContent = 'Можно прикрепить до 5 файлов общим размером до 2,5 МБ. Остальное пришлите в мессенджер после звонка.';
+        return;
+      }
+      function read(f) {
+        return new Promise(function (ok, fail) {
+          var r = new FileReader();
+          r.onload = function () { ok({ name: f.name, type: f.type, data: String(r.result).split(',')[1] }); };
+          r.onerror = fail;
+          r.readAsDataURL(f);
+        });
+      }
+      btn.disabled = true;
+      note.textContent = 'Отправляю…';
+      Promise.all(list.map(read)).then(function (files) {
+        var data = { kind: form.dataset.kind || 'book', page: location.href, files: files };
+        ['name', 'phone', 'pet', 'message', 'website'].forEach(function (k) { if (fd.has(k)) data[k] = fd.get(k); });
+        data.privacy = fd.has('privacy'); data.consent = fd.has('consent');
+        return fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+      }).then(function (r) {
+        if (!r.ok) throw new Error(r.status);
+        form.reset();
+        note.textContent = form.dataset.kind === 'urgent'
+          ? 'Заявка отправлена. Перезвоню в ближайшие минуты. Если питомцу хуже — звоните сразу: +7 (939) 255-77-71.'
+          : 'Заявка отправлена. Перезвоню в ближайшее время.';
+        if (window.ym && window.BV_METRIKA) ym(window.BV_METRIKA, 'reachGoal', 'lead_' + (form.dataset.kind || 'book'));
+      }).catch(function () {
+        note.textContent = 'Не получилось отправить. Позвоните, пожалуйста: +7 (939) 255-77-71.';
+      }).then(function () { btn.disabled = false; });
     });
   });
 })();

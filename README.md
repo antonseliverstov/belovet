@@ -10,17 +10,31 @@
 
 - `LAUNCH = true` — адреса в canonical, Open Graph, разметке, sitemap и llms.txt меняются на https://belovet.ru/, снимается `noindex`, `robots.txt` открывается для поисковиков и ИИ-ассистентов, пишется файл `CNAME`, скрывается полоса «Прототип»;
 - `METRIKA_ID` — номер счётчика Яндекс Метрики (ставится на все страницы);
-- `VERIFY` — коды подтверждения Яндекс Вебмастера и Google Search Console, если подтверждать не через DNS.
+- `VERIFY` — коды подтверждения Яндекс Вебмастера и Google Search Console, если подтверждать не через DNS;
+- `LEAD_URL` — адрес обработчика форм (см. ниже);
+- `OPERATOR` — данные оператора персональных данных для `privacy.html` и `consent.html`. Пока поля пустые, сборка с `LAUNCH = true` останавливается с ошибкой.
 
 После правки: `node tools/build.js`, коммит, пуш.
 
 До переключения:
 
-1. DNS belovet.ru: A-записи на 185.199.108.153, 185.199.109.153, 185.199.110.153, 185.199.111.153; для www — CNAME на antonseliverstov.github.io. Почтовые MX-записи не трогать.
+1. DNS belovet.ru (панель Timeweb → Домены → belovet.ru → DNS): у корня домена заменить A-запись 92.53.96.136 на четыре A-записи 185.199.108.153, 185.199.109.153, 185.199.110.153, 185.199.111.153; для www — CNAME на antonseliverstov.github.io. MX- и TXT-записи почты (mx1/mx2.timeweb.ru, SPF) не трогать.
 2. В настройках репозитория (Settings → Pages) указать домен belovet.ru и включить Enforce HTTPS.
-3. Подключить отправку форм (сейчас они только показывают телефон).
-4. Вставить на privacy.html тексты по 152-ФЗ: политику, согласие, cookie (с упоминанием Метрики).
+3. Подключить отправку форм — обработчик `functions/lead` (см. ниже) и `LEAD_URL`.
+4. Заполнить `OPERATOR` и отдать черновики `privacy.html` и `consent.html` юристу; при отправке заявок в Telegram — уведомить Роскомнадзор о трансграничной передаче.
 5. Медицинская вычитка статей врачом.
+
+### Обработчик форм (functions/lead)
+
+Заявки с трёх форм (запись, экстренно, вопрос врачу) уходят в Telegram и на почту через облачную функцию Yandex Cloud. Ключи хранятся только в настройках функции.
+
+1. Telegram: в @BotFather создать бота, сохранить токен. Владислав пишет боту /start; id чата — из https://api.telegram.org/bot<токен>/getUpdates (поле chat.id).
+2. Почта: в Timeweb завести ящик-отправитель, например site@belovet.ru.
+3. Yandex Cloud → Cloud Functions → создать функцию, среда Node.js 18, загрузить `functions/lead/index.js` и `package.json`, точка входа `index.handler`, таймаут 15 с, память 128 МБ.
+4. Переменные окружения: TG_TOKEN, TG_CHAT_IDS, SMTP_HOST=smtp.timeweb.ru, SMTP_PORT=465, SMTP_USER, SMTP_PASS, MAIL_TO=vladislav@belovet.ru, ALLOWED_ORIGINS=https://belovet.ru,https://www.belovet.ru,https://antonseliverstov.github.io
+5. Сделать функцию публичной, скопировать её адрес в `LEAD_URL`, собрать и выложить сайт, отправить тестовую заявку.
+
+В Метрике при подключённом счётчике срабатывают цели `lead_book`, `lead_ask`, `lead_urgent` (отправка формы) и `phone` (клик по номеру) — их нужно создать в настройках счётчика как JavaScript-события. В настройках Вебвизора отключить запись содержимого полей.
 
 После запуска: добавить сайт в Яндекс Вебмастер и Google Search Console, отправить sitemap.xml, указать регион (Люберцы) в Вебмастере, проверить карточку в Яндекс Бизнесе.
 

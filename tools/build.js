@@ -18,6 +18,10 @@ const SITE = LAUNCH ? `https://${DOMAIN}/` : 'https://antonseliverstov.github.io
 const ROBOTS = LAUNCH ? 'index, follow, max-image-preview:large' : 'noindex, nofollow';
 const METRIKA_ID = ''; // номер счётчика Яндекс Метрики; пусто — счётчик не ставится
 const VERIFY = { yandex: '', google: '' }; // коды подтверждения Вебмастера и Search Console (если не через DNS)
+const LEAD_URL = ''; // адрес функции functions/lead в Yandex Cloud; пусто — формы просят позвонить
+// Оператор персональных данных для privacy.html и consent.html. Пустые поля — [заполнить]; с ними LAUNCH не включится
+const OPERATOR = { name: '', status: '', inn: '', ogrnip: '', address: '', email: 'vladislav@belovet.ru', phone: '+7 (939) 255-77-71' };
+const LEGAL_DATE = '8 ноября 2026'; // дата редакции политики и согласия
 const PHONE = '+7 (939) 255-77-71';
 const PHONE_HREF = 'tel:+79392557771';
 const crypto = require("crypto");
@@ -354,33 +358,6 @@ ${iconTags('')}
 <meta name="google-site-verification" content="${VERIFY.google}">` : ''}${UI.metrika() ? '\n' + UI.metrika().trimEnd() : ''}`;
 }
 // Политика конфиденциальности: заготовка до юридических текстов по 152-ФЗ
-function privacyHtml() {
-  const url = SITE + 'privacy.html';
-  const title = 'Политика конфиденциальности | beloVET';
-  const desc = 'Как beloVET обрабатывает персональные данные из форм записи и вопросов врачу: какие данные собираем, зачем, сколько храним и как их удалить.';
-  const parts = [
-    ['privacy', 'Политика в отношении обработки персональных данных', 'Какие данные собираются (имя, телефон, кличка питомца, текст обращения), для чего, сколько хранятся, кому передаются и как попросить их удалить.'],
-    ['consent', 'Согласие на обработку персональных данных', 'Текст согласия, которое посетитель даёт, отмечая галочку в форме заявки.'],
-    ['cookie', 'Файлы cookie', 'Какие cookie использует сайт и зачем. Если будет подключена Яндекс Метрика или другая аналитика — указать это здесь.']
-  ];
-  return `${UI.head({ title, desc, url, prefix: '', type: 'website', ogTags: ogTags(title, desc, url, 'website'), iconTags: iconTags('') })}
-<body>
-<main>
-${UI.pageHero('', [['Главная', 'index.html'], ['Политика конфиденциальности', '']], 'Политика конфиденциальности', 'Как мы обращаемся с данными, которые вы оставляете в формах записи и вопросов врачу.', null,
-  { sub: 'Персональные данные', lw: 760, photo: { name: 'pinscher-squint', x: 1165, y: 554, w: 428 } })}
-<section class="fx" style="--bg:#fff">
-  <article class="sx prose">
-    ${UI.doodle('', 'p01-paws.png', '--x:1260;--y:110;--w:253')}
-    <aside class="prose-note"><b>Заготовка</b><p>Перед запуском сайта сюда нужно вставить тексты, подготовленные по 152-ФЗ «О персональных данных»: политику обработки, согласие и сведения о cookie.</p></aside>
-${parts.map(([id, h, t]) => `    <h2 id="${id}">${h}</h2>\n    <p>${t}</p>`).join('\n')}
-  </article>
-</section>
-</main>
-${UI.footer('')}
-</body>
-</html>
-`;
-}
 
 // 404: GitHub Pages отдаёт её по любому адресу, поэтому ссылки от корня сайта
 function notFoundHtml() {
@@ -439,9 +416,14 @@ if (ba < 0 || bb < 0) throw new Error('В index.html нет меток BLOG:STAR
 index = index.slice(0, ba + BS.length) + BLOG.homeBlock + '\n        ' + index.slice(bb);
 index = seoHead(index, 'index.html', homeSeo());
 index = index.replace(/(?:<!-- Прототип:[^\n]*-->\n)?<meta name="robots" content="[^"]*">/, UI.robotsTag());
+index = index.replace(/<html lang="ru"[^>]*>/, LEAD_URL ? `<html lang="ru" data-lead="${LEAD_URL}">` : '<html lang="ru">');
 index = index.replace(/<div class="proto"( hidden)?>/, LAUNCH ? '<div class="proto" hidden>' : '<div class="proto">');
 fs.writeFileSync(indexPath, UI.fitWords(index));
-fs.writeFileSync(path.join(ROOT, 'privacy.html'), UI.fitWords(privacyHtml()));
+const LEGAL = require('./legal')({ SITE, UI, ogTags, iconTags, esc, OPERATOR, LEGAL_DATE });
+if (LAUNCH && LEGAL.missing.length) throw new Error('LAUNCH: не заполнены данные оператора в OPERATOR: ' + LEGAL.missing.join(', '));
+if (LAUNCH && !LEAD_URL) console.warn('Внимание: LAUNCH без LEAD_URL — формы не отправляют заявки');
+fs.writeFileSync(path.join(ROOT, 'privacy.html'), UI.fitWords(LEGAL.privacy));
+fs.writeFileSync(path.join(ROOT, 'consent.html'), UI.fitWords(LEGAL.consent));
 fs.writeFileSync(path.join(ROOT, '404.html'), UI.fitWords(notFoundHtml()));
 fs.writeFileSync(path.join(ROOT, 'robots.txt'), LAUNCH ? `# Сайт открыт для поисковых систем и ИИ-ассистентов (GPTBot, ClaudeBot, PerplexityBot, YandexGPT и др.)
 User-agent: *
@@ -451,6 +433,7 @@ Disallow: /materials/
 Disallow: /tools/
 Disallow: /data/
 Disallow: /README.md
+Disallow: /functions/
 
 Sitemap: ${SITE}sitemap.xml
 ` : `# Прототип: закрыт от индексации. Открывается переключателем LAUNCH в tools/build.js
@@ -468,7 +451,7 @@ fs.writeFileSync(path.join(ROOT, 'site.webmanifest'), JSON.stringify({
   icons: [{ src: 'assets/icon-192.png', sizes: '192x192', type: 'image/png' }, { src: 'assets/icon-512.png', sizes: '512x512', type: 'image/png' }]
 }, null, 2) + '\n');
 
-const urls = ['', 'privacy.html', ...PROCEDURES.map(p => 'operations/' + p.slug + '.html'), ...BLOG.urls];
+const urls = ['', 'privacy.html', 'consent.html', ...PROCEDURES.map(p => 'operations/' + p.slug + '.html'), ...BLOG.urls];
 // Главная показывает свежие статьи, поэтому её дата — не раньше самой свежей статьи
 const lastmodOf = u => BLOG.lastmod[u] || (u === '' ? [UPDATED.iso, BLOG.lastmod['blog/']].filter(Boolean).sort().pop() : UPDATED.iso);
 fs.writeFileSync(path.join(ROOT, 'sitemap.xml'),

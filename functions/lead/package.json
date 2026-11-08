@@ -1,0 +1,10 @@
+{
+  "name": "belovet-lead",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Заявки с сайта beloVET в Telegram и на почту (Yandex Cloud Functions)",
+  "main": "index.js",
+  "dependencies": {
+    "nodemailer": "6.9.16"
+  }
+}
