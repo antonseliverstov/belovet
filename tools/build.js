@@ -8,7 +8,16 @@ const ARTICLES = Object.assign({},
   require('../data/articles-3'), require('../data/articles-4'));
 
 const ROOT = path.join(__dirname, '..');
-const SITE = 'https://antonseliverstov.github.io/belovet/';
+// ---------- Запуск ----------
+// false — прототип на GitHub Pages, закрыт от поисковиков (noindex, Disallow: /).
+// true  — боевой сайт на belovet.ru: открыт для индексации, пишется CNAME, скрыта полоса «Прототип».
+// Перед переключением: DNS belovet.ru указывает на GitHub Pages, формы подключены, тексты 152-ФЗ вставлены.
+const LAUNCH = false;
+const DOMAIN = 'belovet.ru';
+const SITE = LAUNCH ? `https://${DOMAIN}/` : 'https://antonseliverstov.github.io/belovet/';
+const ROBOTS = LAUNCH ? 'index, follow, max-image-preview:large' : 'noindex, nofollow';
+const METRIKA_ID = ''; // номер счётчика Яндекс Метрики; пусто — счётчик не ставится
+const VERIFY = { yandex: '', google: '' }; // коды подтверждения Вебмастера и Search Console (если не через DNS)
 const PHONE = '+7 (939) 255-77-71';
 const PHONE_HREF = 'tel:+79392557771';
 const crypto = require("crypto");
@@ -54,7 +63,7 @@ for (const k of Object.keys(ARTICLES)) if (!slugs.has(k)) throw new Error('Ст�
 
 // ---------- блог ----------
 const FIGMA = require('../data/figma-ops');
-const UI = require('./ui')({ SITE, esc, rub, cap, ver, PHONE, PHONE_HREF });
+const UI = require('./ui')({ SITE, ROBOTS, METRIKA_ID, esc, rub, cap, ver, PHONE, PHONE_HREF });
 const BLOG = require('./blog')({ ROOT, SITE, UI, clip, fitTitle, ogTags, iconTags, esc, rub, cap, plural, ver, PROCEDURES, PHONE, PHONE_HREF });
 
 // ---------- шаблоны восстановления по типу вмешательства ----------
@@ -340,7 +349,9 @@ function homeSeo() {
   return `<link rel="canonical" href="${SITE}">
 ${ogTags(title, desc, SITE, 'website')}
 ${iconTags('')}
-<script type="application/ld+json">${JSON.stringify(ld)}</script>`;
+<script type="application/ld+json">${JSON.stringify(ld)}</script>${VERIFY.yandex ? `
+<meta name="yandex-verification" content="${VERIFY.yandex}">` : ''}${VERIFY.google ? `
+<meta name="google-site-verification" content="${VERIFY.google}">` : ''}${UI.metrika() ? '\n' + UI.metrika().trimEnd() : ''}`;
 }
 // Политика конфиденциальности: заготовка до юридических текстов по 152-ФЗ
 function privacyHtml() {
@@ -427,15 +438,30 @@ const ba = index.indexOf(BS), bb = index.indexOf(BE);
 if (ba < 0 || bb < 0) throw new Error('В index.html нет меток BLOG:START / BLOG:END');
 index = index.slice(0, ba + BS.length) + BLOG.homeBlock + '\n        ' + index.slice(bb);
 index = seoHead(index, 'index.html', homeSeo());
+index = index.replace(/(?:<!-- Прототип:[^\n]*-->\n)?<meta name="robots" content="[^"]*">/, UI.robotsTag());
+index = index.replace(/<div class="proto"( hidden)?>/, LAUNCH ? '<div class="proto" hidden>' : '<div class="proto">');
 fs.writeFileSync(indexPath, UI.fitWords(index));
 fs.writeFileSync(path.join(ROOT, 'privacy.html'), UI.fitWords(privacyHtml()));
 fs.writeFileSync(path.join(ROOT, '404.html'), UI.fitWords(notFoundHtml()));
-fs.writeFileSync(path.join(ROOT, 'robots.txt'), `# Прототип: перед запуском заменить «Disallow: /» на «Allow: /»
+fs.writeFileSync(path.join(ROOT, 'robots.txt'), LAUNCH ? `# Сайт открыт для поисковых систем и ИИ-ассистентов (GPTBot, ClaudeBot, PerplexityBot, YandexGPT и др.)
+User-agent: *
+Allow: /
+Disallow: /brand/
+Disallow: /materials/
+Disallow: /tools/
+Disallow: /data/
+Disallow: /README.md
+
+Sitemap: ${SITE}sitemap.xml
+` : `# Прототип: закрыт от индексации. Открывается переключателем LAUNCH в tools/build.js
 User-agent: *
 Disallow: /
 
 Sitemap: ${SITE}sitemap.xml
 `);
+// CNAME для своего домена на GitHub Pages
+const cnamePath = path.join(ROOT, 'CNAME');
+if (LAUNCH) fs.writeFileSync(cnamePath, DOMAIN + '\n'); else if (fs.existsSync(cnamePath)) fs.unlinkSync(cnamePath);
 fs.writeFileSync(path.join(ROOT, 'site.webmanifest'), JSON.stringify({
   name: 'beloVET — ветеринарный хирург', short_name: 'beloVET', lang: 'ru', start_url: './', display: 'browser',
   background_color: '#F9F6EF', theme_color: '#0F2B45',
