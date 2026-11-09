@@ -3,7 +3,8 @@
 // Размеры заданы в пикселях макета (ширина 1613): стили в assets/site.css, --fs/--lh — размер и межстрочный из макета.
 
 module.exports = function ui(ctx) {
-  const { SITE, ROBOTS, METRIKA_ID, esc, rub, cap, ver, PHONE, PHONE_HREF } = ctx;
+  const { SITE, ROBOTS, METRIKA_ID, BLOG_ON = true, esc, rub, cap, ver, PHONE, PHONE_HREF } = ctx;
+  const blogLink = prefix => BLOG_ON ? `<a href="${prefix}blog/index.html">Блог</a>` : '';
   const T = (fs, lh) => `--fs:${fs};--lh:${lh}`;
   const lines = s => esc(s).replace(/\n/g, ' <br>');
   const yearNow = new Date().getFullYear();
@@ -44,7 +45,7 @@ ${metrika()}</head>`;
 
   // ---------- шапка внутренних страниц (лежит на фоне первого экрана) ----------
   function header(prefix, crumbs) {
-    const nav = `<a href="${prefix}index.html#prices">Операции и цены</a><a href="${prefix}blog/index.html">Блог</a><a href="${prefix}index.html#urgent">Экстренно</a><a href="${prefix}index.html#contacts">Контакты</a>`;
+    const nav = `<a href="${prefix}index.html#prices">Операции и цены</a>${blogLink(prefix)}<a href="${prefix}index.html#urgent">Экстренно</a><a href="${prefix}index.html#contacts">Контакты</a>`;
     return `<header class="ih">
       <a class="ih-logo" href="${prefix}index.html"><img src="${prefix}assets/logo-wordmark.png" width="640" height="224" alt="beloVET, ветеринарный врач-хирург"></a>
       <nav class="ih-nav" aria-label="Разделы">${nav}</nav>
@@ -84,7 +85,7 @@ ${metrika()}</head>`;
     <div class="foot-text">
       <p class="t" style="${T(24, 33)}">Владислав Белорыбец, ветеринарный врач-хирург.<br>Цены на сайте не являются публичной офертой:<br>итоговая стоимость согласуется после осмотра.</p>
       <a class="t" style="${T(25, 34)}" href="mailto:vladislav@belovet.ru">vladislav@belovet.ru</a>
-      <p class="foot-links t" style="${T(23, 31)}"><a href="${prefix}blog/index.html">Блог</a><a href="${prefix}privacy.html">Политика конфиденциальности</a></p>
+      <p class="foot-links t" style="${T(23, 31)}">${blogLink(prefix)}<a href="${prefix}privacy.html">Политика конфиденциальности</a></p>
     </div>
   </div>
 </footer>`;

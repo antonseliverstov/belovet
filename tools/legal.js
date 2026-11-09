@@ -2,12 +2,12 @@
 // Данные оператора задаются в OPERATOR в tools/build.js. Пустые поля выводятся как [заполнить] и не дают включить LAUNCH.
 
 module.exports = function legal(ctx) {
-  const { SITE, UI, ogTags, iconTags, esc, OPERATOR, LEGAL_DATE } = ctx;
+  const { SITE, UI, ogTags, iconTags, esc, OPERATOR, LEGAL_DATE, FORMS_ON = true, METRIKA_ID = '' } = ctx;
   const O = OPERATOR;
   const f = (v, hint) => v ? esc(v) : `<mark class="todo">[${hint}]</mark>`;
   const who = `${f(O.status, 'статус: ИП или самозанятый')} ${f(O.name, 'ФИО полностью')}`;
   const ids = [O.inn ? `ИНН ${esc(O.inn)}` : `<mark class="todo">[ИНН]</mark>`, O.ogrnip ? `ОГРНИП ${esc(O.ogrnip)}` : ''].filter(Boolean).join(', ');
-  const missing = ['name', 'status', 'inn', 'address'].filter(k => !O[k]);
+  const missing = FORMS_ON ? ['name', 'status', 'inn', 'address'].filter(k => !O[k]) : [];
 
   const sec = (id, h, body) => `    <h2 id="${id}">${h}</h2>\n${body}`;
   const p = t => `    <p>${t}</p>`;
@@ -32,6 +32,32 @@ ${UI.footer('')}
 </body>
 </html>
 `;
+  }
+
+  // Формы выключены: сайт не собирает данные, политика короткая и без полей оператора
+  if (!FORMS_ON) {
+    const short = page({
+      file: 'privacy.html',
+      title: 'Политика конфиденциальности | beloVET',
+      h1: 'Политика конфиденциальности',
+      lead: 'Сайт beloVET не собирает персональные данные: на нём нет форм заявок и регистрации. Записаться на приём можно по телефону.',
+      sub: 'Персональные данные',
+      photo: { name: 'pinscher-squint', x: 1165, y: 554, w: 428 },
+      body: [
+        sec('data', 'Какие данные собирает сайт', [
+          p('Сайт не содержит форм заявок, регистрации и подписки и не запрашивает имя, телефон или другие персональные данные.'),
+          p(`Записаться на приём или задать вопрос врачу можно по телефону ${esc(O.phone)} или по электронной почте <a href="mailto:${esc(O.email)}">${esc(O.email)}</a>. Данные, которые вы сообщаете при звонке или в письме, используются только для ответа на ваше обращение и записи питомца на приём и не передаются третьим лицам.`)
+        ].join('\n')),
+        sec('cookie', 'Файлы cookie', [
+          p('Сайт сохраняет в браузере отметку о том, что вы закрыли уведомление о cookie, чтобы не показывать его повторно.'),
+          METRIKA_ID
+            ? p('Для обезличенной статистики посещений подключён сервис Яндекс Метрика (ООО «Яндекс»): он получает сведения о посещённых страницах, источнике перехода, типе устройства и браузера. Отключить cookie можно в настройках браузера или с помощью <a href="https://yandex.ru/support/metrica/general/opt-out.html" target="_blank" rel="noopener">блокировщика Яндекс Метрики</a>.')
+            : p('Сервисы веб-аналитики на сайте не подключены. Если они появятся, это будет указано здесь.')
+        ].join('\n')),
+        sec('changes', 'Изменения', p('Если на сайте появятся формы для заявок, политика будет дополнена до их подключения.'))
+      ].join('\n')
+    });
+    return { privacy: short, consent: '', missing };
   }
 
   const privacy = page({

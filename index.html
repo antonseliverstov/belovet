@@ -106,6 +106,13 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--blue-text); out
 /* Поле-ловушка для ботов в формах */
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 
+/* Формы выключены (data-forms="off" на <html>): вместо полей — звонок и почта */
+.call-instead { display: none; }
+html[data-forms="off"] .call-instead { display: grid; gap: 14px; }
+html[data-forms="off"] .lead-form > :not(.call-instead):not(.x):not(h2):not(.sub) { display: none !important; }
+html[data-forms="off"] .call-instead a:not(.btn):not(.cta) { text-decoration: underline; }
+html[data-forms="off"] .call-instead .btn, html[data-forms="off"] .call-instead .cta { justify-self: start; }
+
 /* Прототипная полоса */
 .proto { background: var(--navy); color: #fff; font-size: 13px; padding-block: 8px; }
 .proto .fill { color: #fff; border-color: #fff; }
@@ -706,6 +713,10 @@ a.dir:hover h3 { text-decoration: underline; text-underline-offset: .12em; text-
     <button class="x" type="button" data-close-dialog aria-label="Закрыть">×</button>
     <h2 id="fd-title">Записаться на приём</h2>
     <p class="sub" id="fd-sub"></p>
+    <div class="call-instead">
+      <a class="btn btn-primary" href="tel:+79392557771">Позвонить: +7 (939) 255-77-71</a>
+      <p>Отвечу и запишу на удобное время. Анализы, снимки и заключения можно прислать на <a href="mailto:vladislav@belovet.ru">vladislav@belovet.ru</a>.</p>
+    </div>
     <label class="field"><span>Имя</span><input name="name" autocomplete="name" required placeholder="Как к вам обращаться"></label>
     <label class="field"><span>Телефон</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="+7 (___) ___-__-__" data-phone></label>
     <label class="field" data-only="book"><span>Кличка питомца</span><input name="pet" placeholder="Например, Барни"></label>
@@ -847,6 +858,12 @@ a.dir:hover h3 { text-decoration: underline; text-underline-offset: .12em; text-
       <form class="urgent-form lead-form" data-kind="urgent" novalidate>
         <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
         <p class="t o" style="--fs:40;--lh:54;--wl:9">Опишите, что случилось</p>
+        <div class="call-instead">
+          <p class="t o" style="--fs:40;--lh:54;--wl:9">Звоните сразу</p>
+          <p class="t" style="--fs:24;--lh:34">В экстренной ситуации телефон быстрее любой заявки: отвечу, подскажу, что сделать до приезда, и приеду в клинику.</p>
+          <a class="cta" href="tel:+79392557771">+7 (939) 255-77-71</a>
+          <p class="t" style="--fs:20;--lh:28">Снимки и анализы — на <a href="mailto:vladislav@belovet.ru">vladislav@belovet.ru</a></p>
+        </div>
         <label class="ff"><span class="t" style="--fs:20;--lh:28">Имя</span><input name="name" autocomplete="name" required placeholder="Как к вам обращаться"></label>
         <label class="ff"><span class="t" style="--fs:20;--lh:28">Телефон</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="+7 (___) ___-__-__" data-phone></label>
         <label class="ff ff-msg"><span class="t" style="--fs:20;--lh:28">Сообщение</span><textarea name="message" required placeholder="Опишите случай"></textarea></label>
@@ -1530,7 +1547,7 @@ var SCHEDULE = {
     form.dataset.kind = kind;
     form.querySelector('.form-note').textContent = '';
     document.getElementById('fd-title').textContent = cfg.title;
-    document.getElementById('fd-sub').textContent = cfg.sub;
+    document.getElementById('fd-sub').textContent = document.documentElement.dataset.forms === 'off' ? '' : cfg.sub;
     form.querySelectorAll('[data-only]').forEach(function (el) {
       var on = el.dataset.only.split(' ').indexOf(kind) !== -1;
       el.hidden = !on;

@@ -12,7 +12,13 @@ const ROOT = path.join(__dirname, '..');
 // false — прототип на GitHub Pages, закрыт от поисковиков (noindex, Disallow: /).
 // true  — боевой сайт на belovet.ru: открыт для индексации, пишется CNAME, скрыта полоса «Прототип».
 // Перед переключением: DNS belovet.ru указывает на GitHub Pages, формы подключены, тексты 152-ФЗ вставлены.
-const LAUNCH = false;
+// Боевая сборка для хостинга делается через tools/dist.js: он задаёт BV_LAUNCH=1 и собирает в отдельную папку.
+const LAUNCH = process.env.BV_LAUNCH === '1';
+// Разделы, которые можно выключить на боевом сайте (BV_BLOG=0, BV_FORMS=0):
+// без блога — нет ссылок на статьи, блока на главной, sitemap и llms.txt без статей;
+// без форм — вместо полей заявки показываются телефон и почта, политика без раздела о формах, consent.html не нужен.
+const BLOG_ON = process.env.BV_BLOG !== '0';
+const FORMS_ON = process.env.BV_FORMS !== '0';
 const DOMAIN = 'belovet.ru';
 const SITE = LAUNCH ? `https://${DOMAIN}/` : 'https://antonseliverstov.github.io/belovet/';
 const ROBOTS = LAUNCH ? 'index, follow, max-image-preview:large' : 'noindex, nofollow';
@@ -70,7 +76,7 @@ for (const k of Object.keys(ARTICLES)) if (!slugs.has(k)) throw new Error('Ст�
 // ---------- блог ----------
 const FIGMA = require('../data/figma-ops');
 const opSources = p => (p.sources || []).map(s => typeof s === 'string' ? { text: SOURCES[s] } : s).filter(s => s && s.text);
-const UI = require('./ui')({ SITE, ROBOTS, METRIKA_ID, esc, rub, cap, ver, PHONE, PHONE_HREF });
+const UI = require('./ui')({ SITE, ROBOTS, METRIKA_ID, BLOG_ON, esc, rub, cap, ver, PHONE, PHONE_HREF });
 const BLOG = require('./blog')({ ROOT, SITE, UI, clip, fitTitle, ogTags, iconTags, esc, rub, cap, plural, ver, PROCEDURES, PHONE, PHONE_HREF, SOURCES, LAUNCH, OPEN_WAVES });
 
 // ---------- шаблоны восстановления по типу вмешательства ----------
@@ -220,7 +226,7 @@ function pageHtml(p) {
   const posts = BLOG.postsFor(p.slug);
   const list = PROCEDURES.filter(x => x.cat === p.cat), at = list.findIndex(x => x.slug === p.slug);
   const pick = [1, 2, 3].map(k => list[(at + k) % list.length]).filter((o, i, arr) => o.slug !== p.slug && arr.indexOf(o) === i).map(o => Object.assign({}, o, { short: short(o) }));
-  const moreHtml = posts.length
+  const moreHtml = posts.length && BLOG_ON
     ? UI.more(pre, posts, pick, minPrice)
     : (pick.length ? UI.others(pre, `Другие операции\n${CAT_GEN[p.cat]}`, pick, minPrice) : '');
 
@@ -368,8 +374,8 @@ function notFoundHtml() {
   const title = 'Страница не найдена | beloVET';
   const cards = [
     [`${B}index.html#prices`, 'Операции и цены', 'Поиск по названию операции или симптому', 'Открыть →'],
-    [`${B}blog/index.html`, 'Блог для владельцев', 'Подготовка, восстановление, тревожные признаки', 'Читать →'],
-    [`${B}index.html?form=urgent`, 'Экстренная запись', 'Приеду в клинику за 15 минут, даже ночью', 'Оставить заявку →']
+    BLOG_ON ? [`${B}blog/index.html`, 'Блог для владельцев', 'Подготовка, восстановление, тревожные признаки', 'Читать →'] : [`${B}index.html#contacts`, 'Контакты', 'Адрес клиники, график приёма и как добраться', 'Открыть →'],
+    [`${B}index.html?form=urgent`, 'Экстренная запись', 'Приеду в клинику за 15 минут, даже ночью', FORMS_ON ? 'Оставить заявку →' : 'Позвонить →']
   ];
   return `${UI.head({ title, desc: 'Такой страницы нет.', url: '', prefix: B, type: 'website', robots: 'noindex', ogTags: '', iconTags: `<link rel="icon" type="image/png" href="${B}assets/logo-symbol.png">` })}
 <body>
@@ -419,14 +425,20 @@ if (ba < 0 || bb < 0) throw new Error('В index.html нет меток BLOG:STAR
 index = index.slice(0, ba + BS.length) + BLOG.homeBlock + '\n        ' + index.slice(bb);
 index = seoHead(index, 'index.html', homeSeo());
 index = index.replace(/(?:<!-- Прототип:[^\n]*-->\n)?<meta name="robots" content="[^"]*">/, UI.robotsTag());
-index = index.replace(/<html lang="ru"[^>]*>/, LEAD_URL ? `<html lang="ru" data-lead="${LEAD_URL}">` : '<html lang="ru">');
+index = index.replace(/<html lang="ru"[^>]*>/, !FORMS_ON ? '<html lang="ru" data-forms="off">' : LEAD_URL ? `<html lang="ru" data-lead="${LEAD_URL}">` : '<html lang="ru">');
+if (!FORMS_ON) index = index.replace(/\s*<div class="consent">[\s\S]*?<\/div>/g, ''); // без ссылок на согласие
+if (!BLOG_ON) {
+  index = index.replace(/\s*<!-- 09 \/ Полезное владельцам -->\s*<section class="fx s-blog"[\s\S]*?<\/section>/, '');
+  index = index.replace(/\s*<a [^>]*href="blog\/"[^>]*>[^<]*<\/a>/g, '');
+}
 index = index.replace(/<div class="proto"( hidden)?>/, LAUNCH ? '<div class="proto" hidden>' : '<div class="proto">');
 fs.writeFileSync(indexPath, UI.fitWords(index));
-const LEGAL = require('./legal')({ SITE, UI, ogTags, iconTags, esc, OPERATOR, LEGAL_DATE });
-if (LAUNCH && LEGAL.missing.length) throw new Error('LAUNCH: не заполнены данные оператора в OPERATOR: ' + LEGAL.missing.join(', '));
-if (LAUNCH && !LEAD_URL) console.warn('Внимание: LAUNCH без LEAD_URL — формы не отправляют заявки');
+const LEGAL = require('./legal')({ SITE, UI, ogTags, iconTags, esc, OPERATOR, LEGAL_DATE, FORMS_ON, METRIKA_ID });
+if (LAUNCH && FORMS_ON && LEGAL.missing.length) throw new Error('LAUNCH: не заполнены данные оператора в OPERATOR: ' + LEGAL.missing.join(', '));
+if (LAUNCH && FORMS_ON && !LEAD_URL) console.warn('Внимание: LAUNCH без LEAD_URL — формы не отправляют заявки');
 fs.writeFileSync(path.join(ROOT, 'privacy.html'), UI.fitWords(LEGAL.privacy));
-fs.writeFileSync(path.join(ROOT, 'consent.html'), UI.fitWords(LEGAL.consent));
+if (FORMS_ON) fs.writeFileSync(path.join(ROOT, 'consent.html'), UI.fitWords(LEGAL.consent));
+else if (fs.existsSync(path.join(ROOT, 'consent.html'))) fs.unlinkSync(path.join(ROOT, 'consent.html'));
 fs.writeFileSync(path.join(ROOT, '404.html'), UI.fitWords(notFoundHtml()));
 fs.writeFileSync(path.join(ROOT, 'robots.txt'), LAUNCH ? `# Сайт открыт для поисковых систем и ИИ-ассистентов (GPTBot, ClaudeBot, PerplexityBot, YandexGPT и др.)
 User-agent: *
@@ -450,7 +462,9 @@ Sitemap: ${SITE}sitemap.xml
 // Ссылки на канонические адреса: «index.html» → каталог («./», «../», «blog/»)
 const canonLinks = h => h.replace(/href="((?:\.\.\/)*|\/[^"]*?\/|\/)?(blog\/)?index\.html([#?][^"]*)?"/g, (m, pre = '', dir = '', rest = '') => `href="${(pre + dir) || './'}${rest}"`);
 for (const f of ['index.html', 'privacy.html', 'consent.html', '404.html', ...fs.readdirSync(path.join(ROOT, 'operations')).map(f => 'operations/' + f), ...fs.readdirSync(path.join(ROOT, 'blog')).map(f => 'blog/' + f)]) {
-  const p = path.join(ROOT, f), h = fs.readFileSync(p, 'utf8'), n = canonLinks(h);
+  const p = path.join(ROOT, f);
+  if (!fs.existsSync(p)) continue;
+  const h = fs.readFileSync(p, 'utf8'), n = canonLinks(h);
   if (n !== h) fs.writeFileSync(p, n);
 }
 // Страница вычитки статей врачом (закрыта от поиска): vychitka/index.html
@@ -473,7 +487,7 @@ fs.writeFileSync(path.join(ROOT, 'site.webmanifest'), JSON.stringify({
   icons: [{ src: 'assets/icon-192.png', sizes: '192x192', type: 'image/png' }, { src: 'assets/icon-512.png', sizes: '512x512', type: 'image/png' }]
 }, null, 2) + '\n');
 
-const urls = ['', 'privacy.html', 'consent.html', ...PROCEDURES.map(p => 'operations/' + p.slug + '.html'), ...BLOG.urls];
+const urls = ['', 'privacy.html', ...(FORMS_ON ? ['consent.html'] : []), ...PROCEDURES.map(p => 'operations/' + p.slug + '.html'), ...(BLOG_ON ? BLOG.urls : [])];
 // Главная показывает свежие статьи, поэтому её дата — не раньше самой свежей статьи
 const lastmodOf = u => BLOG.lastmod[u] || (u === '' ? [UPDATED.iso, BLOG.lastmod['blog/']].filter(Boolean).sort().pop() : UPDATED.iso);
 fs.writeFileSync(path.join(ROOT, 'sitemap.xml'),
@@ -488,16 +502,15 @@ fs.writeFileSync(path.join(ROOT, 'llms.txt'), `# beloVET — Владислав 
 > Хирургия собак и кошек в Люберцах: клиника «Добрый Доктор», ул. Вертолётчиков, 11. Плановые и экстренные операции: цены, подготовка, ход операции и восстановление. Телефон +7 (939) 255-77-71.
 
 - [Главная](${SITE}): о враче, направления хирургии, отзывы, контакты и график приёма
-- [Блог](${SITE}blog/): статьи для владельцев о симптомах, первой помощи и операциях
-
+${BLOG_ON ? `- [Блог](${SITE}blog/): статьи для владельцев о симптомах, первой помощи и операциях\n` : ''}
 ## Операции и цены
 
 ${byCat}
-
+${BLOG_ON ? `
 ## Статьи
 
 ${BLOG.posts.filter(p => p.indexable).map(p => `- [${p.title}](${SITE}blog/${p.slug}.html): ${p.lead}`).join('\n')}
-`);
+` : ''}`);
 
 const rows = PROCEDURES.reduce((n, p) => n + p.prices.length, 0);
 const wordsTotal = PROCEDURES.reduce((n, p) => n + words(ARTICLES[p.slug], p), 0);
