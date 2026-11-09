@@ -437,6 +437,7 @@ Disallow: /tools/
 Disallow: /data/
 Disallow: /README.md
 Disallow: /functions/
+Disallow: /vychitka/
 Clean-param: form /
 
 Sitemap: ${SITE}sitemap.xml
@@ -451,6 +452,17 @@ const canonLinks = h => h.replace(/href="((?:\.\.\/)*|\/[^"]*?\/|\/)?(blog\/)?in
 for (const f of ['index.html', 'privacy.html', 'consent.html', '404.html', ...fs.readdirSync(path.join(ROOT, 'operations')).map(f => 'operations/' + f), ...fs.readdirSync(path.join(ROOT, 'blog')).map(f => 'blog/' + f)]) {
   const p = path.join(ROOT, f), h = fs.readFileSync(p, 'utf8'), n = canonLinks(h);
   if (n !== h) fs.writeFileSync(p, n);
+}
+// Страница вычитки статей врачом (закрыта от поиска): vychitka/index.html
+{
+  const rows = require('./review/recs')(ROOT);
+  const tpl = fs.readFileSync(path.join(__dirname, 'review', 'template.html'), 'utf8');
+  const head = "<!doctype html>\n<html lang=\"ru\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, viewport-fit=cover\">\n</head>\n<body>\n";
+  const data = JSON.stringify(rows).replace(/</g, "\\u003c");
+  const cut = tpl.indexOf("<header"), headPart = tpl.slice(0, cut), bodyPart = tpl.slice(cut).replace("__DATA__", () => data);
+  const page = head.replace("</head>", headPart + "</head>") + bodyPart + "\n</body>\n</html>\n";
+  fs.mkdirSync(path.join(ROOT, 'vychitka'), { recursive: true });
+  fs.writeFileSync(path.join(ROOT, 'vychitka', 'index.html'), page);
 }
 // CNAME для своего домена на GitHub Pages
 const cnamePath = path.join(ROOT, 'CNAME');

@@ -1,0 +1,355 @@
+<title>Вычитка статей beloVET</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@500&display=swap">
+<style>
+/* Макет: рабочий лист врача — шапка с прогрессом, полоса фильтров, список карточек-статей с чек-листом, сверху самые рискованные */
+:root {
+  --bg: #F3F7FB;
+  --paper: #FFFFFF;
+  --ink: #0B2240;
+  --muted: #55657C;
+  --line: #D8E2EE;
+  --sky: #2F8FE0;
+  --sky-soft: #E3F1FD;
+  --sun: #FBFF2C;
+  --ok: #1D8A55;
+  --ok-soft: #E2F4EA;
+  --warn: #C2410C;
+  --warn-soft: #FDEBDD;
+  --risk3: #D93A2B;
+  --risk2: #E58A12;
+  --risk1: #6E8199;
+  --display: "Oswald", "Arial Narrow", Arial, sans-serif;
+  --body: "Roboto", "Segoe UI", Arial, sans-serif;
+  --mono: "Roboto Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0A1626; --paper: #10223A; --ink: #E6EEF8; --muted: #9DB0C7; --line: #24405F;
+  --sky: #6CB8FA; --sky-soft: #15314F; --sun: #E9EE2A; --ok: #4CC98A; --ok-soft: #133A2A;
+  --warn: #FF9A5C; --warn-soft: #3E2414; --risk3: #FF6B5C; --risk2: #F5B04A; --risk1: #8DA0B8; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #0A1626; --paper: #10223A; --ink: #E6EEF8; --muted: #9DB0C7; --line: #24405F;
+  --sky: #6CB8FA; --sky-soft: #15314F; --sun: #E9EE2A; --ok: #4CC98A; --ok-soft: #133A2A;
+  --warn: #FF9A5C; --warn-soft: #3E2414; --risk3: #FF6B5C; --risk2: #F5B04A; --risk1: #8DA0B8; color-scheme: dark; }
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 var(--body); }
+[hidden] { display: none !important; }
+.wrap { max-width: 980px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+header.top { padding-block: 32px 20px; }
+.eyebrow { font: 500 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1 { font: 700 clamp(30px, 6vw, 46px)/1.05 var(--display); text-transform: uppercase; margin: 10px 0 12px; text-wrap: balance; }
+h1 mark { background: var(--sun); color: #0B2240; padding: 0 .12em; }
+.intro { max-width: 68ch; color: var(--muted); margin: 0; }
+.intro b { color: var(--ink); }
+
+.progress { margin-top: 22px; display: grid; gap: 10px; }
+.bar { height: 12px; border-radius: 6px; background: var(--line); overflow: hidden; display: flex; }
+.bar i { display: block; height: 100%; transition: width .3s; }
+.bar .b-ok { background: var(--ok); }
+.bar .b-edit { background: var(--warn); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 20px; font-size: 14px; font-variant-numeric: tabular-nums; }
+.legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: 0; background: var(--line); }
+.legend .l-ok::before { background: var(--ok); }
+.legend .l-edit::before { background: var(--warn); }
+.sync { font-size: 13px; color: var(--muted); }
+.sync.err { color: var(--warn); }
+
+.how { margin-top: 18px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.how div { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; font-size: 14px; }
+.how b { display: block; font: 500 15px/1.3 var(--display); text-transform: uppercase; letter-spacing: .02em; margin-bottom: 4px; }
+@media (max-width: 720px) { .how { grid-template-columns: 1fr; } }
+
+.filters { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); padding-block: 10px; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.frow { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; background: var(--paper); }
+.seg button { border: 0; background: none; color: var(--ink); font: 500 13px/1 var(--body); padding: 9px 12px; cursor: pointer; white-space: nowrap; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+select, input[type=search] { font: 14px var(--body); color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 999px; padding: 8px 12px; min-width: 0; }
+input[type=search] { flex: 1 1 180px; }
+.count { font-size: 13px; color: var(--muted); margin-left: auto; font-variant-numeric: tabular-nums; }
+
+main { padding-block: 16px 60px; display: grid; gap: 10px; }
+.empty { text-align: center; color: var(--muted); padding: 40px 0; }
+
+details.card { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; border-left: 5px solid var(--risk1); }
+details.card.r3 { border-left-color: var(--risk3); }
+details.card.r2 { border-left-color: var(--risk2); }
+summary { list-style: none; cursor: pointer; padding: 14px 16px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; align-items: start; }
+summary::-webkit-details-marker { display: none; }
+summary:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible, textarea:focus-visible, a:focus-visible { outline: 3px solid var(--sky); outline-offset: 2px; }
+.st { font: 500 17px/1.3 var(--body); min-width: 0; }
+.meta { grid-column: 1; display: flex; flex-wrap: wrap; gap: 6px; font-size: 12px; color: var(--muted); }
+.chip { display: inline-block; padding: 2px 8px; border-radius: 999px; background: var(--sky-soft); color: var(--ink); font-size: 12px; }
+.chip.risk3 { background: var(--risk3); color: #fff; }
+.chip.risk2 { background: var(--risk2); color: #fff; }
+.pill { grid-column: 2; grid-row: 1 / span 2; align-self: center; font: 500 12px/1 var(--body); padding: 7px 10px; border-radius: 999px; background: var(--bg); color: var(--muted); border: 1px solid var(--line); white-space: nowrap; }
+.pill.ok { background: var(--ok-soft); color: var(--ok); border-color: transparent; }
+.pill.edits { background: var(--warn-soft); color: var(--warn); border-color: transparent; }
+
+.body { padding: 0 16px 16px; display: grid; gap: 16px; }
+.lead { margin: 0; color: var(--muted); font-size: 14px; }
+.lead a { color: var(--sky); font-weight: 500; }
+h3 { font: 500 14px/1.2 var(--display); text-transform: uppercase; letter-spacing: .04em; margin: 0 0 8px; color: var(--muted); }
+ol.checks, ul.adds { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+ol.checks li { border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; }
+ol.checks q { display: block; font-size: 15px; quotes: "«" "»"; }
+ol.checks small { display: block; margin-top: 4px; color: var(--muted); font-size: 12px; }
+ol.checks small b { color: var(--ink); font-weight: 500; }
+ul.adds li { padding-left: 22px; position: relative; font-size: 14.5px; }
+ul.adds li::before { content: "+"; position: absolute; left: 4px; top: -1px; font: 700 16px/1.4 var(--display); color: var(--sky); }
+.extra { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; font-size: 14px; }
+.extra div { background: var(--bg); border-radius: 10px; padding: 10px 12px; min-width: 0; }
+@media (max-width: 640px) { .extra { grid-template-columns: 1fr; } }
+
+.decide { display: grid; gap: 10px; border-top: 1px dashed var(--line); padding-top: 14px; }
+textarea { width: 100%; min-height: 84px; resize: vertical; font: 15px/1.45 var(--body); color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; }
+.btns { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.btn { border: 1px solid var(--line); background: var(--paper); color: var(--ink); font: 500 14px/1 var(--body); padding: 11px 16px; border-radius: 999px; cursor: pointer; }
+.btn.ok { background: var(--ok); border-color: var(--ok); color: #fff; }
+.btn.edits { background: var(--warn); border-color: var(--warn); color: #fff; }
+.btn[disabled] { opacity: .5; cursor: default; }
+.saved { font-size: 13px; color: var(--muted); }
+.ro { font-size: 13px; color: var(--muted); }
+.report { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+#r-text { min-height: 160px; font-size: 13px; }
+@media (prefers-reduced-motion: reduce) { .bar i { transition: none; } }
+</style>
+
+<header class="top wrap">
+  <div class="eyebrow">beloVET · блог · согласование с врачом</div>
+  <h1>Вычитка <mark>статей</mark></h1>
+  <p class="intro">Владислав, здесь <b id="total-n">316</b> статей блога, которые ещё не проверены вами. Сверху — самые важные: первая помощь и лекарства. В каждой карточке выписаны фразы, которые нужно проверить, и что стоит дописать от себя. Отмечайте статью кнопкой и оставляйте комментарий. В конце работы нажмите <b>«Скопировать отчёт»</b> и пришлите текст в мессенджер — по нему правки внесут на сайт.</p>
+  <div class="progress" aria-live="polite">
+    <div class="bar" aria-hidden="true"><i class="b-ok" id="bar-ok" style="width:0"></i><i class="b-edit" id="bar-edit" style="width:0"></i></div>
+    <div class="legend"><span class="l-ok" id="n-ok">Проверено: 0</span><span class="l-edit" id="n-edit">Нужны правки: 0</span><span id="n-rest">Не начато: 316</span></div>
+    <div class="report"><button type="button" class="btn ok" id="r-copy">Скопировать отчёт</button><button type="button" class="btn" id="r-dl">Скачать отчёт</button><span class="saved" id="r-msg"></span></div>
+    <textarea id="r-text" readonly hidden aria-label="Текст отчёта"></textarea>
+    <div class="sync" id="sync">Отметки сохраняются в этом браузере. Работайте на одном устройстве и не очищайте историю браузера, пока не отправите отчёт.</div>
+  </div>
+  <div class="how">
+    <div><b>1. Проверьте фразы</b>Выписанные цитаты — места, где ошибка может навредить питомцу или где важна точная цифра.</div>
+    <div><b>2. Допишите от себя</b>Пара фраз из вашей практики делает статью экспертной. Можно надиктовать в комментарий.</div>
+    <div><b>3. Отметьте</b>«Проверено» откроет статью для поиска. «Нужны правки» — текст поправят по вашему комментарию и вернут на проверку.</div>
+  </div>
+</header>
+
+<div class="filters">
+  <div class="wrap frow">
+    <div class="seg" role="group" aria-label="Статус">
+      <button type="button" data-st="todo" aria-pressed="true">Не проверено</button>
+      <button type="button" data-st="edits" aria-pressed="false">Правки</button>
+      <button type="button" data-st="ok" aria-pressed="false">Проверено</button>
+      <button type="button" data-st="all" aria-pressed="false">Все</button>
+    </div>
+    <select id="f-risk" aria-label="Важность">
+      <option value="">Любая важность</option>
+      <option value="3">Высокая</option>
+      <option value="2">Средняя</option>
+      <option value="1">Обычная</option>
+    </select>
+    <select id="f-rub" aria-label="Рубрика"><option value="">Все рубрики</option></select>
+    <input type="search" id="f-q" placeholder="Поиск по названию" aria-label="Поиск по названию">
+    <span class="count" id="count"></span>
+  </div>
+</div>
+
+<main class="wrap" id="list"></main>
+
+<script type="application/json" id="data">__DATA__</script>
+<script>
+(function () {
+  var SITE = '../blog/';
+  var KEY = 'belovet-vychitka-v1';
+  var RUB = { urgent: 'Экстренные ситуации', neuter: 'Стерилизация и кастрация', care: 'Уход после операции', onco: 'Онкология', ortho: 'Ортопедия и травмы', uro: 'Урология', repro: 'Репродуктивная хирургия', skin: 'Кожа и раны' };
+  var RISK = { 3: 'Высокая важность', 2: 'Средняя', 1: 'Обычная' };
+  var rows = JSON.parse(document.getElementById('data').textContent);
+  var reviews = {};           // slug -> {status, comment, at}
+  try { reviews = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { reviews = {}; }
+  var stored = true;
+  try { localStorage.setItem(KEY + '-test', '1'); localStorage.removeItem(KEY + '-test'); } catch (e) { stored = false; }
+  var state = { st: 'todo', risk: '', rub: '', q: '' };
+  var open = {};
+  var list = document.getElementById('list');
+
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function fmt(iso) { try { return new Date(iso).toLocaleString('ru-RU', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' }); } catch (e) { return ''; } }
+
+  var rubSel = document.getElementById('f-rub');
+  Object.keys(RUB).forEach(function (k) { if (rows.some(function (r) { return r.r === k; })) { var o = el('option', null, RUB[k]); o.value = k; rubSel.appendChild(o); } });
+  document.getElementById('total-n').textContent = rows.length;
+
+  function statusOf(r) { var v = reviews[r.s]; return v && v.status || ''; }
+
+  function stats() {
+    var ok = 0, ed = 0;
+    rows.forEach(function (r) { var s = statusOf(r); if (s === 'ok') ok++; else if (s === 'edits') ed++; });
+    var n = rows.length;
+    document.getElementById('bar-ok').style.width = (ok / n * 100) + '%';
+    document.getElementById('bar-edit').style.width = (ed / n * 100) + '%';
+    document.getElementById('n-ok').textContent = 'Проверено: ' + ok;
+    document.getElementById('n-edit').textContent = 'Нужны правки: ' + ed;
+    document.getElementById('n-rest').textContent = 'Не начато: ' + (n - ok - ed);
+  }
+
+  function visible() {
+    var q = state.q.trim().toLowerCase();
+    return rows.filter(function (r) {
+      var s = statusOf(r);
+      if (state.st === 'todo' && s) return false;
+      if (state.st === 'ok' && s !== 'ok') return false;
+      if (state.st === 'edits' && s !== 'edits') return false;
+      if (state.risk && String(r.k) !== state.risk) return false;
+      if (state.rub && r.r !== state.rub) return false;
+      if (q && r.t.toLowerCase().indexOf(q) === -1) return false;
+      return true;
+    });
+  }
+
+  function pillFor(s) {
+    var p = el('span', 'pill' + (s ? ' ' + s : ''), s === 'ok' ? 'Проверено' : s === 'edits' ? 'Нужны правки' : 'Не проверено');
+    return p;
+  }
+
+  function card(r) {
+    var d = el('details', 'card r' + r.k);
+    d.dataset.slug = r.s;
+    if (open[r.s]) d.open = true;
+    d.addEventListener('toggle', function () { open[r.s] = d.open; if (d.open && !d.dataset.built) build(d, r); });
+    var sm = el('summary');
+    sm.appendChild(el('span', 'st', r.t));
+    var meta = el('span', 'meta');
+    var rc = el('span', 'chip risk' + r.k, RISK[r.k]); meta.appendChild(rc);
+    meta.appendChild(el('span', 'chip', RUB[r.r] || r.r));
+    r.f.forEach(function (f) { meta.appendChild(el('span', null, '· ' + f)); });
+    sm.appendChild(meta);
+    sm.appendChild(pillFor(statusOf(r)));
+    d.appendChild(sm);
+    if (d.open) build(d, r);
+    return d;
+  }
+
+  function build(d, r) {
+    d.dataset.built = '1';
+    var b = el('div', 'body');
+    var lead = el('p', 'lead');
+    lead.appendChild(document.createTextNode(r.l + ' '));
+    var a = el('a', null, 'Открыть статью на сайте →'); a.href = SITE + r.s + '.html'; a.target = '_blank'; a.rel = 'noopener';
+    lead.appendChild(a); b.appendChild(lead);
+
+    if (r.c.length) {
+      var sec = el('section'); sec.appendChild(el('h3', null, 'Проверить в тексте'));
+      var ol = el('ol', 'checks');
+      r.c.forEach(function (c) {
+        var li = el('li'); li.appendChild(el('q', null, c.q));
+        var sm = el('small'); sm.appendChild(el('b', null, c.where)); sm.appendChild(document.createTextNode(' · ' + c.why));
+        li.appendChild(sm); ol.appendChild(li);
+      });
+      sec.appendChild(ol); b.appendChild(sec);
+    }
+    var sec2 = el('section'); sec2.appendChild(el('h3', null, 'Что дописать от себя'));
+    var ul = el('ul', 'adds'); r.a.forEach(function (t) { ul.appendChild(el('li', null, t)); });
+    sec2.appendChild(ul); b.appendChild(sec2);
+
+    var ex = el('div', 'extra');
+    var p1 = el('div'); p1.appendChild(el('h3', null, 'Фото, если есть')); p1.appendChild(document.createTextNode(r.ph)); ex.appendChild(p1);
+    var p2 = el('div'); p2.appendChild(el('h3', null, 'Услуга в статье')); p2.appendChild(document.createTextNode((r.pr || '—') + '. Подходит ли она к теме и верна ли цена?')); ex.appendChild(p2);
+    b.appendChild(ex);
+
+    var dec = el('div', 'decide');
+    var lab = el('label', null); lab.htmlFor = 'c-' + r.s;
+    lab.appendChild(el('h3', null, 'Комментарий и правки'));
+    var ta = el('textarea'); ta.id = 'c-' + r.s; ta.placeholder = 'Что исправить, что добавить из практики. Можно коротко: «было → стало».';
+    var cur = reviews[r.s]; ta.value = cur && cur.comment || '';
+    dec.appendChild(lab); dec.appendChild(ta);
+    var btns = el('div', 'btns');
+    var bOk = el('button', 'btn ok', 'Проверено, всё верно'); bOk.type = 'button';
+    var bEd = el('button', 'btn edits', 'Нужны правки'); bEd.type = 'button';
+    var bSv = el('button', 'btn', 'Сохранить комментарий'); bSv.type = 'button';
+    var info = el('span', 'saved');
+    if (cur && cur.at) info.textContent = 'Сохранено ' + fmt(cur.at);
+    [bOk, bEd, bSv].forEach(function (x) { btns.appendChild(x); });
+    btns.appendChild(info);
+    dec.appendChild(btns);
+    function save(status) {
+      var prev = reviews[r.s] || {};
+      var body = { slug: r.s, title: r.t, status: status == null ? (prev.status || '') : status, comment: ta.value.trim(), at: new Date().toISOString() };
+      if (status === 'edits' && !body.comment) { info.textContent = 'Напишите в комментарии, что поправить.'; ta.focus(); return; }
+      reviews[r.s] = body;
+      try { localStorage.setItem(KEY, JSON.stringify(reviews)); info.textContent = 'Сохранено ' + fmt(body.at); }
+      catch (e) { info.textContent = 'Браузер не даёт сохранить. Скопируйте отчёт сейчас.'; }
+      refreshCard(r.s); stats();
+    }
+    bOk.addEventListener('click', function () { save('ok'); });
+    bEd.addEventListener('click', function () { save('edits'); });
+    bSv.addEventListener('click', function () { save(null); });
+    b.appendChild(dec);
+    d.appendChild(b);
+  }
+
+  function render() {
+    var v = visible();
+    document.getElementById('count').textContent = v.length + ' из ' + rows.length;
+    list.textContent = '';
+    if (!v.length) {
+      list.appendChild(el('p', 'empty', state.st === 'todo' && !state.risk && !state.rub && !state.q ? 'Все статьи отмечены. Спасибо!' : 'Под эти фильтры ничего не подходит.'));
+    } else {
+      var frag = document.createDocumentFragment();
+      v.forEach(function (r) { frag.appendChild(card(r)); });
+      list.appendChild(frag);
+    }
+    stats();
+  }
+
+  // Обновление одной карточки при изменении отметок, чтобы не сбивать набор текста
+  function refreshCard(slug) {
+    var d = list.querySelector('details[data-slug="' + slug + '"]');
+    if (!d) return;
+    var r = rows.find(function (x) { return x.s === slug; });
+    var pill = d.querySelector('.pill'); pill.replaceWith(pillFor(statusOf(r)));
+    var ta = d.querySelector('textarea');
+    if (ta && document.activeElement !== ta) { var cur = reviews[slug]; ta.value = cur && cur.comment || ''; }
+    var info = d.querySelector('.saved'); var c = reviews[slug]; if (info && c && c.at && info.textContent !== 'Сохраняю…') info.textContent = 'Сохранено ' + fmt(c.at);
+  }
+
+  document.querySelectorAll('.seg button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      document.querySelectorAll('.seg button').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      state.st = b.dataset.st; render();
+    });
+  });
+  document.getElementById('f-risk').addEventListener('change', function (e) { state.risk = e.target.value; render(); });
+  rubSel.addEventListener('change', function (e) { state.rub = e.target.value; render(); });
+  var qt; document.getElementById('f-q').addEventListener('input', function (e) { clearTimeout(qt); qt = setTimeout(function () { state.q = e.target.value; render(); }, 150); });
+
+  render();
+
+  if (!stored) { var sy = document.getElementById('sync'); sy.className = 'sync err'; sy.textContent = 'Этот браузер не сохраняет отметки (приватный режим?). Отмечайте и сразу копируйте отчёт.'; }
+
+  function report() {
+    var ok = [], ed = [];
+    rows.forEach(function (r) { var v = reviews[r.s]; if (!v || (!v.status && !v.comment)) return; (v.status === 'ok' ? ok : ed).push({ r: r, v: v }); });
+    var out = ['Вычитка beloVET — ' + new Date().toLocaleString('ru-RU', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' }),
+      'Проверено: ' + ok.length + ', нужны правки или комментарии: ' + ed.length, ''];
+    function item(x, tag) { out.push('[' + tag + '] ' + x.r.t); out.push('slug: ' + x.r.s); if (x.v.comment) out.push('Комментарий: ' + x.v.comment); out.push(''); }
+    ed.forEach(function (x) { item(x, x.v.status === 'edits' ? 'ПРАВКИ' : 'КОММЕНТАРИЙ'); });
+    ok.forEach(function (x) { item(x, 'ОК'); });
+    return out.join(String.fromCharCode(10));
+  }
+  var msg = document.getElementById('r-msg'), rt = document.getElementById('r-text');
+  document.getElementById('r-copy').addEventListener('click', function () {
+    var text = report();
+    function fallback() { rt.hidden = false; rt.value = text; rt.focus(); rt.select(); msg.textContent = 'Выделите текст ниже и скопируйте.'; }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { msg.textContent = 'Отчёт скопирован — вставьте его в сообщение.'; }, fallback);
+    else fallback();
+  });
+  document.getElementById('r-dl').addEventListener('click', function () {
+    var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([report()], { type: 'text/plain;charset=utf-8' }));
+    a.download = 'vychitka-belovet-' + new Date().toISOString().slice(0, 10) + '.txt'; document.body.appendChild(a); a.click(); a.remove();
+  });
+})();
+</script>
