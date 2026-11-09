@@ -396,7 +396,8 @@ ${metrika()}</head>`;
   }
 
   // ---------- 15. больше по теме / другие операции ----------
-  function more(prefix, post, ops, minPrice) {
+  function more(prefix, posts, ops, minPrice) {
+    const post = posts[0], rest = posts.slice(1);
     return `<section class="fx" style="--bg:var(--ice)">
   <div class="sx more">
     <h2 class="t o up" style="${T(88, 96)}">Больше по теме</h2>
@@ -404,7 +405,9 @@ ${metrika()}</head>`;
       <a class="more-post" href="${prefix}blog/${post.slug}.html"><b class="t o" style="${T(48, 59)}">${esc(post.title)}</b><span class="t" style="${T(26, 37)}">${esc(post.lead)}</span><span class="more-read t" style="${T(25, 34)}">Читать статью →</span></a>
       <ul class="more-ops">${ops.map(o => `<li><a class="t" style="${T(38, 52)}" href="${prefix}operations/${o.slug}.html">${esc(o.title)}</a><p class="t" style="${T(24, 34)}">${esc(o.short)}</p><b class="t o" style="${T(28, 36)}">от ${rub(minPrice(o))}</b></li>`).join('')}</ul>
     </div>
-  </div>
+${rest.length ? `    <h3 class="more-sub t o up" style="${T(44, 52)}">Ещё статьи по теме</h3>
+    <ul class="more-list">${rest.map(p => `<li><a class="t" style="${T(28, 38)}" href="${prefix}blog/${p.slug}.html">${esc(p.title)}</a></li>`).join('')}</ul>
+` : ''}  </div>
 </section>`;
   }
   function others(prefix, heading, ops, minPrice) {

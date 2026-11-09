@@ -218,7 +218,7 @@ function pageHtml(p) {
   const list = PROCEDURES.filter(x => x.cat === p.cat), at = list.findIndex(x => x.slug === p.slug);
   const pick = [1, 2, 3].map(k => list[(at + k) % list.length]).filter((o, i, arr) => o.slug !== p.slug && arr.indexOf(o) === i).map(o => Object.assign({}, o, { short: short(o) }));
   const moreHtml = posts.length
-    ? UI.more(pre, posts[0], pick, minPrice)
+    ? UI.more(pre, posts, pick, minPrice)
     : (pick.length ? UI.others(pre, `Другие операции\n${CAT_GEN[p.cat]}`, pick, minPrice) : '');
 
 
@@ -434,6 +434,7 @@ Disallow: /tools/
 Disallow: /data/
 Disallow: /README.md
 Disallow: /functions/
+Clean-param: form /
 
 Sitemap: ${SITE}sitemap.xml
 ` : `# Прототип: закрыт от индексации. Открывается переключателем LAUNCH в tools/build.js
@@ -442,6 +443,12 @@ Disallow: /
 
 Sitemap: ${SITE}sitemap.xml
 `);
+// Ссылки на канонические адреса: «index.html» → каталог («./», «../», «blog/»)
+const canonLinks = h => h.replace(/href="((?:\.\.\/)*|\/[^"]*?\/|\/)?(blog\/)?index\.html([#?][^"]*)?"/g, (m, pre = '', dir = '', rest = '') => `href="${(pre + dir) || './'}${rest}"`);
+for (const f of ['index.html', 'privacy.html', 'consent.html', '404.html', ...fs.readdirSync(path.join(ROOT, 'operations')).map(f => 'operations/' + f), ...fs.readdirSync(path.join(ROOT, 'blog')).map(f => 'blog/' + f)]) {
+  const p = path.join(ROOT, f), h = fs.readFileSync(p, 'utf8'), n = canonLinks(h);
+  if (n !== h) fs.writeFileSync(p, n);
+}
 // CNAME для своего домена на GitHub Pages
 const cnamePath = path.join(ROOT, 'CNAME');
 if (LAUNCH) fs.writeFileSync(cnamePath, DOMAIN + '\n'); else if (fs.existsSync(cnamePath)) fs.unlinkSync(cnamePath);

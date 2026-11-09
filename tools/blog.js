@@ -40,6 +40,19 @@ module.exports = function blog(ctx) {
       throw new Error('Неизвестный блок ' + t);
     }).join('\n');
   }
+  // «Читайте также»: две соседние статьи по той же операции (по кругу) и одна из рубрики с шагом 7.
+  // Так каждая статья получает ссылки из нескольких других, а не только из ленты.
+  const byOp = {}, byRubric = {};
+  for (const p of posts) { (byOp[p.ops[0]] = byOp[p.ops[0]] || []).push(p); (byRubric[p.rubric] = byRubric[p.rubric] || []).push(p); }
+  function relatedOf(p) {
+    const out = [], add = x => { if (x && x !== p && !out.includes(x) && out.length < 3) out.push(x); };
+    const g = byOp[p.ops[0]], i = g.indexOf(p);
+    for (let k = 1; k < g.length && out.length < 2; k++) add(g[(i + k) % g.length]);
+    for (const o of p.ops.slice(1)) for (const x of posts) { if (out.length >= 2) break; if (x.ops.includes(o)) add(x); }
+    const r = byRubric[p.rubric], j = r.indexOf(p);
+    for (let k = 1; k <= r.length && out.length < 3; k++) add(r[(j + k * 7) % r.length]);
+    return out;
+  }
   const postCard = (p, prefix) => `<a class="post" href="${prefix}${p.slug}.html" data-rubric="${p.rubric}"><span class="t" style="${T(21, 29)}">${esc(RUBRICS[p.rubric])}</span><b>${esc(p.title)}</b><span class="t" style="${T(23, 33)}">${esc(p.lead.length > 150 ? p.lead.slice(0, p.lead.lastIndexOf(' ', 148)) + '…' : p.lead)}</span><span class="post-read t" style="${T(25, 34)}">Читать →</span></a>`;
   const short = o => { const s = o.lead.split(/(?<=\.)\s/)[0]; return s.length > 150 ? s.slice(0, s.lastIndexOf(' ', 146)) + '…' : s; };
 
@@ -60,7 +73,7 @@ module.exports = function blog(ctx) {
     const minutes = Math.max(2, Math.round(words / 180));
     const url = `${SITE}blog/${p.slug}.html`;
     const desc = clip(p.lead);
-    const related = posts.filter(x => x.slug !== p.slug && (x.rubric === p.rubric || x.ops.some(o => p.ops.includes(o)))).slice(0, 3);
+    const related = relatedOf(p);
     const ld = [
       { '@context': 'https://schema.org', '@type': 'BlogPosting', headline: p.title, description: desc, datePublished: p.date, dateModified: p.updated || p.date, inLanguage: 'ru', mainEntityOfPage: url, image: `${SITE}assets/og-image.jpg`,
         author: { '@type': 'Person', name: 'Владислав Белорыбец', jobTitle: 'Ветеринарный врач-хирург' }, publisher: { '@type': 'Organization', name: 'beloVET', logo: { '@type': 'ImageObject', url: `${SITE}assets/logo-symbol.png` } },
