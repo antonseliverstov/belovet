@@ -13,8 +13,16 @@ function loadPosts(ROOT) {
 }
 
 module.exports = function blog(ctx) {
-  const { ROOT, SITE, UI, clip, fitTitle, ogTags, iconTags, esc, rub, cap, plural, ver, PROCEDURES, PHONE, PHONE_HREF } = ctx;
+  const { ROOT, SITE, UI, clip, fitTitle, ogTags, iconTags, esc, rub, cap, plural, ver, PROCEDURES, PHONE, PHONE_HREF, SOURCES, LAUNCH, OPEN_WAVES } = ctx;
   const posts = loadPosts(ROOT).sort((a, b) => (b.date || '').localeCompare(a.date || '') || a.priority - b.priority);
+  // Вычитка врачом: data/blog-reviewed.js { slug: 'ГГГГ-ММ-ДД' }.
+  // Индексируется статья, если её вычитали или её волна в OPEN_WAVES; остальные — noindex, follow и не попадают в sitemap и llms.txt.
+  const REVIEWED = require(path.join(ROOT, 'data', 'blog-reviewed.js'));
+  for (const p of posts) {
+    p.reviewed = REVIEWED[p.slug] || '';
+    p.indexable = !!p.reviewed || OPEN_WAVES.includes(p.wave || 1);
+  }
+  const srcList = p => (p.sources || []).map(s => typeof s === 'string' ? { text: SOURCES[s] } : s).filter(s => s && s.text);
   const proc = slug => PROCEDURES.find(p => p.slug === slug);
   const minPrice = p => Math.min(...p.prices.map(x => x.p));
   const dateRu = iso => { const [y, m, d] = iso.split('-').map(Number); return `${d} ${['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'][m - 1]} ${y}`; };
@@ -75,7 +83,9 @@ module.exports = function blog(ctx) {
     const desc = clip(p.lead);
     const related = relatedOf(p);
     const ld = [
-      { '@context': 'https://schema.org', '@type': 'BlogPosting', headline: p.title, description: desc, datePublished: p.date, dateModified: p.updated || p.date, inLanguage: 'ru', mainEntityOfPage: url, image: `${SITE}assets/og-image.jpg`,
+      { '@context': 'https://schema.org', '@type': 'BlogPosting', headline: p.title, description: desc, datePublished: p.date, dateModified: p.updated || p.reviewed || p.date, inLanguage: 'ru',
+        mainEntityOfPage: p.reviewed ? { '@type': 'WebPage', '@id': url, lastReviewed: p.reviewed, reviewedBy: { '@type': 'Person', name: 'Владислав Белорыбец', jobTitle: 'Ветеринарный врач-хирург' } } : url,
+        citation: srcList(p).map(s => s.text), image: `${SITE}assets/og-image.jpg`,
         author: { '@type': 'Person', name: 'Владислав Белорыбец', jobTitle: 'Ветеринарный врач-хирург' }, publisher: { '@type': 'Organization', name: 'beloVET', logo: { '@type': 'ImageObject', url: `${SITE}assets/logo-symbol.png` } },
         keywords: [p.query, ...p.more].join(', ') },
       { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
@@ -86,11 +96,12 @@ module.exports = function blog(ctx) {
     ];
     const title = fitTitle(`${p.title} | Блог beloVET`, `${p.title} | beloVET`, p.title);
     const ops = p.ops.slice(0, 3).map(proc).map(o => Object.assign({}, o, { short: short(o) }));
-    return `${UI.head({ title, desc, url, prefix: pre, ld, ogTags: ogTags(title, desc, url, 'article'), iconTags: iconTags(pre) })}
+    const robots = LAUNCH && !p.indexable ? 'noindex, follow' : undefined;
+    return `${UI.head({ title, desc, url, prefix: pre, ld, robots, ogTags: ogTags(title, desc, url, 'article'), iconTags: iconTags(pre) })}
 <body>
 <main>
 ${pageHero(pre, [['Главная', pre + 'index.html'], ['Блог', 'index.html'], [RUBRICS[p.rubric], `index.html#${p.rubric}`]], p.title, p.lead,
-    ['Автор: Владислав Белорыбец, ветеринарный хирург', `<time datetime="${p.date}">${dateRu(p.date)}</time>`, `${minutes} ${plural(minutes, ['минута', 'минуты', 'минут'])} чтения`],
+    ['Автор: Владислав Белорыбец, ветеринарный хирург', `<time datetime="${p.date}">${dateRu(p.date)}</time>`, ...(p.reviewed ? [`Проверено врачом: <time datetime="${p.reviewed}">${dateRu(p.reviewed)}</time>`] : []),`${minutes} ${plural(minutes, ['минута', 'минуты', 'минут'])} чтения`],
     { sub: RUBRICS[p.rubric], tw: 940, photo: postPhoto(p) })}
 <section class="fx" style="--bg:#fff">
   <article class="sx prose">
@@ -100,6 +111,7 @@ ${body}
   </article>
 </section>
 ${UI.faq(p.faq, 'Частые вопросы')}
+${UI.sources(srcList(p))}
 ${ops.length ? UI.others(pre, 'Операции\nпо теме', ops, minPrice) : ''}
 ${related.length ? `<section class="fx" style="--bg:var(--sky2)"><div class="sx"><h2 class="t o up" style="${T(88, 96)};margin-bottom:calc(52 * var(--px))">Читайте также</h2><div class="posts">${related.map(r => postCard(r, '')).join('')}</div></div></section>` : ''}
 ${UI.book(pre, 'Остались\nвопросы?', 'Опишите ситуацию и прикрепите анализы или снимки — отвечу, что делать дальше.')}
@@ -189,6 +201,6 @@ ${UI.footer(pre)}
   const postsFor = slug => posts.filter(p => p.ops.includes(slug));
   // lastmod для sitemap: дата статьи, у ленты — дата самой свежей
   const lastmod = { 'blog/': posts[0] && posts[0].date };
-  for (const p of posts) lastmod[`blog/${p.slug}.html`] = p.date;
-  return { posts, homeBlock, postsFor, urls: ['blog/', ...posts.map(p => `blog/${p.slug}.html`)], lastmod };
+  for (const p of posts) lastmod[`blog/${p.slug}.html`] = p.reviewed && p.reviewed > p.date ? p.reviewed : p.date;
+  return { posts, homeBlock, postsFor, urls: ['blog/', ...posts.filter(p => p.indexable).map(p => `blog/${p.slug}.html`)], lastmod };
 };

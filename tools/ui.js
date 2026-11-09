@@ -419,6 +419,17 @@ ${rest.length ? `    <h3 class="more-sub t o up" style="${T(44, 52)}">Ещё с�
 </section>`;
   }
 
+  // ---------- источники: [{ text, url? }] ----------
+  function sources(items) {
+    if (!items || !items.length) return '';
+    return `<section class="fx" style="--bg:#fff">
+  <div class="sx sources">
+    <h2 class="t o up" style="${T(56, 64)}">Источники</h2>
+    <ol>${items.map(s => `<li class="t" style="${T(22, 32)}">${s.url ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.text)}</a>` : esc(s.text)}</li>`).join('')}</ol>
+  </div>
+</section>`;
+  }
+
   // ---------- 17. запись на приём ----------
   function book(prefix, heading = 'Обсудим\nваш случай', text = 'Пришлите анализы, снимки и заключения — посмотрю и отвечу, нужна ли операция и как к ней подготовиться.') {
     return `<section class="fx" style="--bg:var(--sky2)">
@@ -432,5 +443,5 @@ ${rest.length ? `    <h3 class="more-sub t o up" style="${T(44, 52)}">Ещё с�
 </section>`;
   }
 
-  return { T, lines, fitWords, head, robotsTag, metrika, header, pageHero, footer, photo, doodle, hero, params, intro, when, alert, alertBox, cost, accent, prep, how, recovery, home, control, prognosis, faq, more, others, book, yearNow };
+  return { T, lines, fitWords, head, robotsTag, metrika, sources, header, pageHero, footer, photo, doodle, hero, params, intro, when, alert, alertBox, cost, accent, prep, how, recovery, home, control, prognosis, faq, more, others, book, yearNow };
 };

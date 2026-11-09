@@ -291,6 +291,11 @@ a:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px soli
 .more-post { display: flex; flex-direction: column; gap: calc(40 * var(--px)); min-height: calc(670 * var(--px)); padding: calc(38 * var(--px)) calc(32 * var(--px)) calc(73 * var(--px)); background: var(--sky2); border-radius: calc(28 * var(--px)); filter: drop-shadow(0 14px 18px rgba(0, 28, 69, .07)); }
 .more-post .more-read { margin-top: auto; }
 .more-ops li { display: flex; flex-direction: column; gap: calc(13 * var(--px)); padding-bottom: calc(20 * var(--px)); }
+.sources { padding-top: calc(56 * var(--px)); padding-bottom: calc(56 * var(--px)); }
+.sources ol { margin-top: calc(28 * var(--px)); padding-left: 1.4em; list-style: decimal; max-width: calc(1100 * var(--px)); }
+.sources li + li { margin-top: calc(10 * var(--px)); }
+.sources li { color: var(--muted, #4a5a70); overflow-wrap: anywhere; }
+.sources a { text-decoration: underline; text-underline-offset: .15em; }
 .more-sub { margin-top: calc(72 * var(--px)); }
 .more-list { display: grid; grid-template-columns: 1fr 1fr; gap: calc(14 * var(--px)) calc(48 * var(--px)); margin-top: calc(28 * var(--px)); }
 .more-list a { text-decoration: underline; text-underline-offset: .15em; }

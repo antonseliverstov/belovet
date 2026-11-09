@@ -1,0 +1,337 @@
+# Вычитка статей блога врачом
+
+Всего на вычитку: 316 статей (волна 2 — 79, волна 3 — 237). Волна 1 подтверждена ранее.
+
+Как работать:
+- Открыть статью по ссылке, проверить факты, сроки, лекарства и первую помощь. Правки — комментарием или списком «было → стало».
+- Хорошо, если врач добавит 1–2 фразы из своей практики («чаще всего вижу…», «на приёме владельцы обычно…»): это главный признак экспертного, а не шаблонного текста.
+- Проверенные статьи отметить галочкой и передать список: дата проверки появится на странице («Проверено врачом»), в разметке и откроет статью для индексации.
+
+Статьи волны 3 до вычитки закрыты от поисковиков (noindex), волна 2 открыта, но её тоже стоит проверить.
+
+## 1. Высокий риск — сначала (54)
+Первая помощь и лекарства: ошибка здесь может навредить питомцу.
+
+- [ ] [Нужно ли зашивать рану собаке или кошке: как понять](https://antonseliverstov.github.io/belovet/blog/nuzhno-li-zashivat-ranu.html) — Кожа и раны, волна 2 · проверить: первая помощь, лекарства, сроки, цифры
+- [ ] [Перитонит у собак и кошек: признаки и лечение](https://antonseliverstov.github.io/belovet/blog/peritonit.html) — Экстренные ситуации, волна 2 · проверить: первая помощь, лекарства, сроки
+- [ ] [Ожог у собаки или кошки: первая помощь](https://antonseliverstov.github.io/belovet/blog/ozhog-u-sobaki.html) — Экстренные ситуации, волна 2 · проверить: первая помощь, лекарства, сроки
+- [ ] [Аптечка для собаки и кошки: что положить](https://antonseliverstov.github.io/belovet/blog/aptechka-dlya-pitomca.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, лекарства, цифры
+- [ ] [Запор у котёнка: что делать](https://antonseliverstov.github.io/belovet/blog/zapor-u-kotenka.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, лекарства, сроки
+- [ ] [Липидоз печени у кошек: почему кошкам нельзя голодать](https://antonseliverstov.github.io/belovet/blog/lipidoz-pecheni.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, лекарства, сроки
+- [ ] [Собака съела носок: что делать](https://antonseliverstov.github.io/belovet/blog/sobaka-sela-nosok.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, лекарства, сроки
+- [ ] [Что происходит при завороте желудка и почему счёт идёт на часы](https://antonseliverstov.github.io/belovet/blog/chto-proishodit-pri-zavorote.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, лекарства, сроки
+- [ ] [Кошка тужится, но не какает: запор](https://antonseliverstov.github.io/belovet/blog/zapor-u-koshki.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, лекарства, сроки
+- [ ] [Собака съела жирное: чем опасно](https://antonseliverstov.github.io/belovet/blog/sobaka-sela-zhirnoe.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, лекарства, сроки
+- [ ] [Ушиб лёгких у собак и кошек после травмы](https://antonseliverstov.github.io/belovet/blog/ushib-legkih.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, лекарства, сроки
+- [ ] [Зачем делать рентген груди после травмы, если питомец выглядит здоровым](https://antonseliverstov.github.io/belovet/blog/rentgen-posle-travmy.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, лекарства, сроки
+- [ ] [Аспирационная пневмония у собак и кошек](https://antonseliverstov.github.io/belovet/blog/aspiracionnaya-pnevmoniya.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, лекарства, сроки
+- [ ] [Собака съела игрушку или её часть](https://antonseliverstov.github.io/belovet/blog/sobaka-sela-igrushku.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, лекарства, сроки
+- [ ] [Собака сломала коготь: что делать](https://antonseliverstov.github.io/belovet/blog/slomalsya-kogot.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, лекарства, сроки
+- [ ] [Перелом бедра у собаки](https://antonseliverstov.github.io/belovet/blog/perelom-bedra-u-sobaki.html) — Ортопедия и травмы, волна 3 · проверить: первая помощь, лекарства, сроки
+- [ ] [Запор у собаки: что делать](https://antonseliverstov.github.io/belovet/blog/zapor-u-sobaki.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, лекарства, сроки
+- [ ] [Травма мошонки у собаки](https://antonseliverstov.github.io/belovet/blog/travma-moshonki.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, лекарства, сроки
+- [ ] [Выпадение матки после родов у собак и кошек](https://antonseliverstov.github.io/belovet/blog/vypadenie-matki.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, лекарства, сроки
+- [ ] [Обморожение у собаки или кошки](https://antonseliverstov.github.io/belovet/blog/obmorozhenie.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, лекарства, цифры
+- [ ] [Рана на морде или губе у собаки](https://antonseliverstov.github.io/belovet/blog/rana-na-morde.html) — Кожа и раны, волна 3 · проверить: первая помощь, лекарства, сроки
+- [ ] [Содрана кожа с лапы: тяжёлая рана после ДТП](https://antonseliverstov.github.io/belovet/blog/degloving.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, лекарства, сроки
+- [ ] [Собаку рвёт несколько дней: когда нужна операция](https://antonseliverstov.github.io/belovet/blog/rvota-ne-prohodit.html) — Экстренные ситуации, волна 2 · проверить: первая помощь, лекарства
+- [ ] [Инвагинация кишечника у щенков и котят](https://antonseliverstov.github.io/belovet/blog/invaginaciya-kishechnika.html) — Экстренные ситуации, волна 2 · проверить: первая помощь, лекарства
+- [ ] [Гной в грудной клетке у кошки: пиоторакс](https://antonseliverstov.github.io/belovet/blog/piotoraks-u-koshki.html) — Экстренные ситуации, волна 2 · проверить: первая помощь, лекарства
+- [ ] [Собака или кошка потеряла сознание: первая помощь](https://antonseliverstov.github.io/belovet/blog/pitomec-poteryal-soznanie.html) — Экстренные ситуации, волна 2 · проверить: первая помощь, лекарства
+- [ ] [Собака напоролась на сук или палку: колотая рана](https://antonseliverstov.github.io/belovet/blog/kolotaya-rana.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, лекарства
+- [ ] [Кошку покусала собака: первая помощь](https://antonseliverstov.github.io/belovet/blog/koshku-pokusala-sobaka.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, лекарства
+- [ ] [Вздулся живот у собаки: что делать](https://antonseliverstov.github.io/belovet/blog/vzdutie-zhivota-u-sobaki.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, лекарства
+- [ ] [Боль в животе у собаки: как распознать](https://antonseliverstov.github.io/belovet/blog/bol-v-zhivote-u-sobaki.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, лекарства
+- [ ] [Кровь в животе у собаки: внутреннее кровотечение](https://antonseliverstov.github.io/belovet/blog/gemoabdomen.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, лекарства
+- [ ] [Кровь в кале у собаки или кошки](https://antonseliverstov.github.io/belovet/blog/krov-v-kale.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, лекарства
+- [ ] [Сужение пищевода у собак и кошек](https://antonseliverstov.github.io/belovet/blog/striktura-pishevoda.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, лекарства
+- [ ] [Асцит у собак и кошек: жидкость в животе](https://antonseliverstov.github.io/belovet/blog/ascit.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, лекарства
+- [ ] [Проблемы желчного пузыря у собак: мукоцеле](https://antonseliverstov.github.io/belovet/blog/zhelchnyj-puzyr-u-sobaki.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, лекарства
+- [ ] [Пневмоторакс у собак и кошек: воздух в грудной клетке](https://antonseliverstov.github.io/belovet/blog/pnevmotoraks.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, лекарства
+- [ ] [Хилоторакс у кошек](https://antonseliverstov.github.io/belovet/blog/hilotoraks.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, лекарства
+- [ ] [Кошка тяжело дышит: когда это опасно](https://antonseliverstov.github.io/belovet/blog/koshka-tyazhelo-dyshit.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, лекарства
+- [ ] [Кровь из заднего прохода у собаки](https://antonseliverstov.github.io/belovet/blog/krov-iz-zadnego-prohoda.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, лекарства
+- [ ] [Панкреатит у кошек](https://antonseliverstov.github.io/belovet/blog/pankreatit-u-koshek.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, лекарства
+- [ ] [Одышка у щенка или котёнка: врождённые причины](https://antonseliverstov.github.io/belovet/blog/odyshka-u-shchenka.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, лекарства
+- [ ] [Ущемлённая грыжа у собаки или кошки: признаки](https://antonseliverstov.github.io/belovet/blog/ushchemlennaya-gryzha.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, лекарства
+- [ ] [Кровь изо рта у собаки или кошки](https://antonseliverstov.github.io/belovet/blog/krov-izo-rta.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, лекарства
+- [ ] [Кобель не может помочиться: мочевой пузырь в грыже](https://antonseliverstov.github.io/belovet/blog/puzyr-v-gryzhe.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, лекарства
+- [ ] [Трудные роды у собаки: когда нужна помощь](https://antonseliverstov.github.io/belovet/blog/trudnye-rody.html) — Репродуктивная хирургия, волна 3 · проверить: первая помощь, лекарства
+- [ ] [Собаку укусила змея: первая помощь](https://antonseliverstov.github.io/belovet/blog/ukus-zmei.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, лекарства
+- [ ] [Судороги у собаки: что делать](https://antonseliverstov.github.io/belovet/blog/sudorogi-u-sobaki.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, лекарства
+- [ ] [Уход после ампутации лапы у собаки и кошки: первые две недели](https://antonseliverstov.github.io/belovet/blog/uhod-posle-amputacii-lapy.html) — Уход после операции, волна 2 · проверить: лекарства, сроки, цифры
+- [ ] [Собака порезала лапу: первая помощь и когда нужны швы](https://antonseliverstov.github.io/belovet/blog/sobaka-porezala-lapu.html) — Экстренные ситуации, волна 2 · проверить: первая помощь, сроки, цифры
+- [ ] [Уход после удаления молочной железы у собаки и кошки](https://antonseliverstov.github.io/belovet/blog/uhod-posle-mastektomii.html) — Уход после операции, волна 2 · проверить: лекарства, сроки, цифры
+- [ ] [Кобель после кастрации: уход и восстановление](https://antonseliverstov.github.io/belovet/blog/kobel-posle-kastracii.html) — Стерилизация и кастрация, волна 2 · проверить: лекарства, сроки, цифры
+- [ ] [Собака после кесарева сечения: уход за мамой и щенками](https://antonseliverstov.github.io/belovet/blog/posle-kesareva-secheniya.html) — Репродуктивная хирургия, волна 2 · проверить: лекарства, сроки, цифры
+- [ ] [Можно ли лечить разрыв крестообразной связки без операции](https://antonseliverstov.github.io/belovet/blog/kks-bez-operacii.html) — Ортопедия и травмы, волна 3 · проверить: лекарства, сроки, цифры
+- [ ] [Лишний вес и суставы у собак](https://antonseliverstov.github.io/belovet/blog/lishnij-ves-i-sustavy.html) — Ортопедия и травмы, волна 3 · проверить: лекарства, сроки, цифры
+
+## 2. Средний риск (140)
+Сроки, цифры, отдельные упоминания лекарств.
+
+- [ ] [Гематома уха у кошки: почему опухло ухо и как лечат](https://antonseliverstov.github.io/belovet/blog/gematoma-uha-u-koshki.html) — Кожа и раны, волна 2 · проверить: лекарства, сроки
+- [ ] [Рана гноится у собаки или кошки: что делать](https://antonseliverstov.github.io/belovet/blog/rana-gnoitsya.html) — Кожа и раны, волна 2 · проверить: лекарства, сроки
+- [ ] [Пузырь под языком у собаки: что такое ранула](https://antonseliverstov.github.io/belovet/blog/ranula-u-sobaki.html) — Кожа и раны, волна 2 · проверить: лекарства, сроки
+- [ ] [Профилактическая гастропексия: нужна ли она вашей собаке](https://antonseliverstov.github.io/belovet/blog/profilakticheskaya-gastropeksiya.html) — Уход после операции, волна 2 · проверить: лекарства, сроки
+- [ ] [Восстановление после операции при завороте желудка](https://antonseliverstov.github.io/belovet/blog/posle-zavorota-zheludka.html) — Уход после операции, волна 2 · проверить: лекарства, сроки
+- [ ] [Шишка на животе после стерилизации: грыжа или нет](https://antonseliverstov.github.io/belovet/blog/shishka-na-zhivote-posle-sterilizacii.html) — Уход после операции, волна 2 · проверить: лекарства, сроки
+- [ ] [Собака проглотила рыболовный крючок: что делать](https://antonseliverstov.github.io/belovet/blog/sobaka-proglotila-kryuchok.html) — Экстренные ситуации, волна 2 · проверить: первая помощь, цифры
+- [ ] [Собака съела кукурузный початок или косточку от персика](https://antonseliverstov.github.io/belovet/blog/sobaka-sela-kukuruznyj-pochatok.html) — Экстренные ситуации, волна 2 · проверить: первая помощь, сроки
+- [ ] [Опухоль пальца у собаки: меланома и плоскоклеточный рак](https://antonseliverstov.github.io/belovet/blog/opuhol-palca-u-sobaki.html) — Онкология, волна 2 · проверить: лекарства, сроки
+- [ ] [Ложная беременность у собаки: уплотнения в молочной железе](https://antonseliverstov.github.io/belovet/blog/lozhnaya-beremennost.html) — Репродуктивная хирургия, волна 2 · проверить: лекарства, сроки
+- [ ] [Уход после операции на кости: первые 8 недель](https://antonseliverstov.github.io/belovet/blog/uhod-posle-operacii-na-kosti.html) — Уход после операции, волна 2 · проверить: лекарства, сроки
+- [ ] [Перелом челюсти у собаки: признаки и лечение](https://antonseliverstov.github.io/belovet/blog/perelom-chelyusti-u-sobaki.html) — Ортопедия и травмы, волна 2 · проверить: первая помощь, сроки
+- [ ] [Разрыв крестообразной связки у кошки](https://antonseliverstov.github.io/belovet/blog/krestoobraznaya-svyazka-u-koshki.html) — Ортопедия и травмы, волна 2 · проверить: лекарства, сроки
+- [ ] [После резекции головки бедра: как восстанавливается лапа](https://antonseliverstov.github.io/belovet/blog/posle-rezekcii-golovki-bedra.html) — Уход после операции, волна 2 · проверить: лекарства, сроки
+- [ ] [Сколько стоит лечение мочекаменной болезни у кота](https://antonseliverstov.github.io/belovet/blog/stoimost-lecheniya-mkb.html) — Урология, волна 2 · проверить: лекарства, сроки
+- [ ] [Может ли кошка или собака жить с одной почкой](https://antonseliverstov.github.io/belovet/blog/zhizn-s-odnoj-pochkoj.html) — Урология, волна 2 · проверить: лекарства, сроки
+- [ ] [Камни в почках у кошек: когда они опасны](https://antonseliverstov.github.io/belovet/blog/kamni-v-pochkah-u-koshki.html) — Урология, волна 2 · проверить: лекарства, сроки
+- [ ] [Когда должны опуститься семенники у щенка и котёнка](https://antonseliverstov.github.io/belovet/blog/kogda-opuskayutsya-semenniki.html) — Стерилизация и кастрация, волна 2 · проверить: лекарства, сроки
+- [ ] [Выделения из петли у собаки после течки: норма или пиометра](https://antonseliverstov.github.io/belovet/blog/vydeleniya-posle-techki.html) — Репродуктивная хирургия, волна 2 · проверить: лекарства, сроки
+- [ ] [Отёк мошонки после кастрации у собаки](https://antonseliverstov.github.io/belovet/blog/otek-moshonki-posle-kastracii.html) — Стерилизация и кастрация, волна 2 · проверить: лекарства, сроки
+- [ ] [Стерилизация беременной кошки: можно ли и когда](https://antonseliverstov.github.io/belovet/blog/sterilizaciya-beremennoj-koshki.html) — Стерилизация и кастрация, волна 2 · проверить: лекарства, сроки
+- [ ] [Абсцесс у собаки: причины и лечение](https://antonseliverstov.github.io/belovet/blog/abscess-u-sobaki.html) — Кожа и раны, волна 2 · проверить: лекарства, сроки
+- [ ] [У кошки повис хвост: перелом или травма нервов](https://antonseliverstov.github.io/belovet/blog/hvost-visit-u-koshki.html) — Ортопедия и травмы, волна 3 · проверить: лекарства, сроки
+- [ ] [Отёк после укуса у собаки или кошки: когда это опасно](https://antonseliverstov.github.io/belovet/blog/otek-posle-ukusa.html) — Кожа и раны, волна 3 · проверить: лекарства, сроки
+- [ ] [Раскол нёба у кошки после падения](https://antonseliverstov.github.io/belovet/blog/raskol-neba-u-koshki.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, сроки
+- [ ] [Аллергия и отит у собак: почему уши болят снова и снова](https://antonseliverstov.github.io/belovet/blog/allergiya-i-otit.html) — Кожа и раны, волна 3 · проверить: лекарства, сроки
+- [ ] [Собака наклоняет голову набок: средний и внутренний отит](https://antonseliverstov.github.io/belovet/blog/sobaka-naklonyaet-golovu.html) — Кожа и раны, волна 3 · проверить: лекарства, сроки
+- [ ] [Питомец плохо ест после операции: когда беспокоиться](https://antonseliverstov.github.io/belovet/blog/appetit-posle-operacii.html) — Уход после операции, волна 3 · проверить: лекарства, сроки
+- [ ] [Каким породам грозит заворот желудка](https://antonseliverstov.github.io/belovet/blog/porody-zavorot-zheludka.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, сроки
+- [ ] [Кошка съела резинку для волос](https://antonseliverstov.github.io/belovet/blog/koshka-sela-rezinku.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, сроки
+- [ ] [Разошлись швы на животе после операции](https://antonseliverstov.github.io/belovet/blog/rashozhdenie-shvov-na-zhivote.html) — Уход после операции, волна 3 · проверить: первая помощь, сроки
+- [ ] [Жизнь после удаления части кишечника](https://antonseliverstov.github.io/belovet/blog/posle-rezekcii-kishechnika.html) — Уход после операции, волна 3 · проверить: лекарства, сроки
+- [ ] [Разрыв селезёнки у собаки](https://antonseliverstov.github.io/belovet/blog/razryv-selezenki.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, сроки
+- [ ] [Глисты у котят и щенков: когда и чем обрабатывать](https://antonseliverstov.github.io/belovet/blog/glisty-u-kotyat.html) — Уход после операции, волна 3 · проверить: лекарства, сроки
+- [ ] [Мегаэзофагус у собак: расширение пищевода](https://antonseliverstov.github.io/belovet/blog/megaezofagus.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, сроки
+- [ ] [Воспаление пупка у новорождённых щенков и котят](https://antonseliverstov.github.io/belovet/blog/vospalenie-pupka.html) — Репродуктивная хирургия, волна 3 · проверить: лекарства, сроки
+- [ ] [Комки шерсти у кошек: когда они опасны](https://antonseliverstov.github.io/belovet/blog/komki-shersti.html) — Экстренные ситуации, волна 3 · проверить: первая помощь, сроки
+- [ ] [Как собака ходит без пальца](https://antonseliverstov.github.io/belovet/blog/sobaka-bez-palca.html) — Онкология, волна 3 · проверить: лекарства, сроки
+- [ ] [Липома под мышкой у собаки: когда мешает](https://antonseliverstov.github.io/belovet/blog/lipoma-pod-myshkoj.html) — Онкология, волна 3 · проверить: лекарства, сроки
+- [ ] [Шишка у соска у кошки](https://antonseliverstov.github.io/belovet/blog/shishka-u-soska-koshki.html) — Онкология, волна 3 · проверить: лекарства, цифры
+- [ ] [Биопсия кости у собаки: зачем и как делают](https://antonseliverstov.github.io/belovet/blog/biopsiya-kosti.html) — Онкология, волна 3 · проверить: лекарства, сроки
+- [ ] [Стерилизация и рак молочной железы: что говорят исследования](https://antonseliverstov.github.io/belovet/blog/sterilizaciya-i-rak-molochnoj.html) — Стерилизация и кастрация, волна 3 · проверить: лекарства, цифры
+- [ ] [Одна или две цепочки желёз: как планируют мастэктомию](https://antonseliverstov.github.io/belovet/blog/odna-ili-dve-cepochki.html) — Онкология, волна 3 · проверить: лекарства, сроки
+- [ ] [Шишка на веке у собаки](https://antonseliverstov.github.io/belovet/blog/shishka-na-veke.html) — Онкология, волна 3 · проверить: лекарства, сроки
+- [ ] [Растяжение и разрыв связок у собаки: запястье и скакательный сустав](https://antonseliverstov.github.io/belovet/blog/razryv-svyazok-zapyastya.html) — Ортопедия и травмы, волна 3 · проверить: лекарства, сроки
+- [ ] [Воспаление после операции на кости](https://antonseliverstov.github.io/belovet/blog/infekciya-posle-osteosinteza.html) — Ортопедия и травмы, волна 3 · проверить: лекарства, сроки
+- [ ] [После удаления пластины: как вернуть нагрузку](https://antonseliverstov.github.io/belovet/blog/posle-udaleniya-plastiny.html) — Уход после операции, волна 3 · проверить: лекарства, сроки
+- [ ] [Щенок хромает после игры: причины](https://antonseliverstov.github.io/belovet/blog/shchenok-hromaet.html) — Ортопедия и травмы, волна 3 · проверить: лекарства, сроки
+- [ ] [Зачем делать КТ при переломе](https://antonseliverstov.github.io/belovet/blog/kt-pri-perelome.html) — Ортопедия и травмы, волна 3 · проверить: лекарства, сроки
+- [ ] [Кот после уретростомии: уход в первые две недели](https://antonseliverstov.github.io/belovet/blog/uhod-posle-uretrostomii.html) — Урология, волна 3 · проверить: лекарства, сроки
+- [ ] [Хроническая болезнь почек у кошек](https://antonseliverstov.github.io/belovet/blog/hbp-u-koshek.html) — Урология, волна 3 · проверить: лекарства, сроки
+- [ ] [Струвиты у собак и кошек](https://antonseliverstov.github.io/belovet/blog/struvity.html) — Урология, волна 3 · проверить: лекарства, сроки
+- [ ] [Кастрация котёнка: в каком возрасте лучше](https://antonseliverstov.github.io/belovet/blog/kastraciya-kotenka.html) — Стерилизация и кастрация, волна 3 · проверить: лекарства, сроки
+- [ ] [Хорёк после кастрации: уход](https://antonseliverstov.github.io/belovet/blog/horek-posle-kastracii.html) — Стерилизация и кастрация, волна 3 · проверить: лекарства, сроки
+- [ ] [Пиометра у пожилой собаки: оперировать ли](https://antonseliverstov.github.io/belovet/blog/piometra-u-staroj-sobaki.html) — Репродуктивная хирургия, волна 3 · проверить: лекарства, сроки
+- [ ] [Открытая и закрытая пиометра: в чём разница](https://antonseliverstov.github.io/belovet/blog/otkrytaya-i-zakrytaya-piometra.html) — Репродуктивная хирургия, волна 3 · проверить: лекарства, сроки
+- [ ] [Цистит у собаки: признаки и лечение](https://antonseliverstov.github.io/belovet/blog/cistit-u-sobaki.html) — Урология, волна 3 · проверить: лекарства, сроки
+- [ ] [Образование на мошонке у собаки](https://antonseliverstov.github.io/belovet/blog/opuhol-moshonki.html) — Онкология, волна 3 · проверить: лекарства, сроки
+- [ ] [Кровь после стерилизации: что нормально](https://antonseliverstov.github.io/belovet/blog/krovotechenie-posle-sterilizacii.html) — Стерилизация и кастрация, волна 3 · проверить: лекарства, сроки
+- [ ] [Флегмона у собаки или кошки](https://antonseliverstov.github.io/belovet/blog/flegmona.html) — Кожа и раны, волна 3 · проверить: лекарства, сроки
+- [ ] [Шишка на морде у кошки после драки](https://antonseliverstov.github.io/belovet/blog/abscess-na-morde.html) — Кожа и раны, волна 3 · проверить: лекарства, сроки
+- [ ] [Опухла морда под глазом у собаки: зубной абсцесс](https://antonseliverstov.github.io/belovet/blog/zubnoj-abscess.html) — Кожа и раны, волна 3 · проверить: лекарства, сроки
+- [ ] [Рана на месте укола у собаки или кошки](https://antonseliverstov.github.io/belovet/blog/nekroz-posle-ukola.html) — Кожа и раны, волна 3 · проверить: лекарства, сроки
+- [ ] [Рана на ухе у собаки кровоточит](https://antonseliverstov.github.io/belovet/blog/rana-na-uhe.html) — Кожа и раны, волна 3 · проверить: первая помощь, сроки
+- [ ] [Рана у собаки или кошки долго не заживает](https://antonseliverstov.github.io/belovet/blog/rana-ne-zazhivaet.html) — Кожа и раны, волна 3 · проверить: лекарства, сроки
+- [ ] [Шишка после укола у собаки](https://antonseliverstov.github.io/belovet/blog/shishka-posle-ukola.html) — Уход после операции, волна 3 · проверить: лекарства, сроки
+- [ ] [Синяк и гематома после операции](https://antonseliverstov.github.io/belovet/blog/gematoma-posle-operacii.html) — Уход после операции, волна 3 · проверить: лекарства, сроки
+- [ ] [Голод перед наркозом: сколько не кормить](https://antonseliverstov.github.io/belovet/blog/golod-pered-narkozom.html) — Уход после операции, волна 3 · проверить: лекарства, сроки
+- [ ] [Седация или наркоз: в чём разница](https://antonseliverstov.github.io/belovet/blog/sedaciya-ili-narkoz.html) — Уход после операции, волна 3 · проверить: лекарства, сроки
+- [ ] [Как питомец отходит от наркоза](https://antonseliverstov.github.io/belovet/blog/othod-ot-narkoza.html) — Уход после операции, волна 3 · проверить: лекарства, сроки
+- [ ] [«Счастливый хвост»: собака разбивает кончик хвоста в кровь](https://antonseliverstov.github.io/belovet/blog/schastlivyj-hvost.html) — Кожа и раны, волна 2 · проверить: лекарства
+- [ ] [Неприятный запах от морды мопса или бульдога: откуда он](https://antonseliverstov.github.io/belovet/blog/zapah-ot-mordy-mopsa.html) — Кожа и раны, волна 2 · проверить: лекарства
+- [ ] [Как чистить уши собаке, которая склонна к отиту](https://antonseliverstov.github.io/belovet/blog/kak-chistit-ushi-sobake.html) — Кожа и раны, волна 2 · проверить: лекарства
+- [ ] [Полипы в носу и носоглотке у кошек](https://antonseliverstov.github.io/belovet/blog/polipy-v-nosu-u-koshki.html) — Кожа и раны, волна 2 · проверить: лекарства
+- [ ] [Кормление через зонд дома: уход за эзофагостомой](https://antonseliverstov.github.io/belovet/blog/kormlenie-cherez-zond.html) — Уход после операции, волна 2 · проверить: лекарства
+- [ ] [Хорёк лысеет: болезнь надпочечников у хорьков](https://antonseliverstov.github.io/belovet/blog/opuhol-nadpochechnika-u-horka.html) — Онкология, волна 2 · проверить: лекарства
+- [ ] [Повышены печёночные ферменты у собаки: что это значит](https://antonseliverstov.github.io/belovet/blog/povysheny-pechenochnye-fermenty.html) — Онкология, волна 2 · проверить: лекарства
+- [ ] [У котёнка или щенка не проходит понос: когда это опасно](https://antonseliverstov.github.io/belovet/blog/ponos-u-kotenka.html) — Экстренные ситуации, волна 2 · проверить: первая помощь
+- [ ] [Диафрагмальная грыжа у кошек и собак: врождённая и после травмы](https://antonseliverstov.github.io/belovet/blog/diafragmalnaya-gryzha-u-koshki.html) — Экстренные ситуации, волна 2 · проверить: первая помощь
+- [ ] [Собаку рвёт сразу после еды: срыгивание или рвота](https://antonseliverstov.github.io/belovet/blog/sryvaet-srazu-posle-edy.html) — Экстренные ситуации, волна 2 · проверить: первая помощь
+- [ ] [У пожилой собаки много шишек: удалять все сразу?](https://antonseliverstov.github.io/belovet/blog/mnogo-shishek-u-pozhiloj-sobaki.html) — Онкология, волна 2 · проверить: лекарства
+- [ ] [Параанальные железы у собак: воспаление, абсцесс, опухоль](https://antonseliverstov.github.io/belovet/blog/paraanalnye-zhelezy.html) — Кожа и раны, волна 2 · проверить: лекарства
+- [ ] [Питание после удаления камней из мочевого пузыря](https://antonseliverstov.github.io/belovet/blog/dieta-posle-udaleniya-kamnej.html) — Урология, волна 2 · проверить: лекарства
+- [ ] [Собака постоянно лижет петлю: причины](https://antonseliverstov.github.io/belovet/blog/sobaka-lizhet-petlyu.html) — Репродуктивная хирургия, волна 2 · проверить: лекарства
+- [ ] [Свищ после стерилизации: что такое лигатурный свищ](https://antonseliverstov.github.io/belovet/blog/svish-posle-sterilizacii.html) — Стерилизация и кастрация, волна 2 · проверить: лекарства
+- [ ] [Обезболивание после операции: что дают и почему нельзя человеческие таблетки](https://antonseliverstov.github.io/belovet/blog/obezbolivanie-posle-operacii.html) — Уход после операции, волна 2 · проверить: лекарства
+- [ ] [Кошка на трёх лапах: как кошки привыкают после ампутации](https://antonseliverstov.github.io/belovet/blog/koshka-na-treh-lapah.html) — Онкология, волна 3 · проверить: лекарства
+- [ ] [Собака трясёт головой и чешет уши: причины](https://antonseliverstov.github.io/belovet/blog/sobaka-tryaset-golovoj.html) — Кожа и раны, волна 3 · проверить: лекарства
+- [ ] [Ушной клещ у кошек и собак: признаки и лечение](https://antonseliverstov.github.io/belovet/blog/ushnoj-klesch.html) — Кожа и раны, волна 3 · проверить: лекарства
+- [ ] [Колосок под кожей у собаки: свищ, который не заживает](https://antonseliverstov.github.io/belovet/blog/kolosok-pod-kozhej.html) — Кожа и раны, волна 3 · проверить: лекарства
+- [ ] [Ошейник врос в шею: что делать](https://antonseliverstov.github.io/belovet/blog/rana-ot-osheynika.html) — Кожа и раны, волна 3 · проверить: лекарства
+- [ ] [Слезятся глаза у мопса и бульдога: причины](https://antonseliverstov.github.io/belovet/blog/slezy-u-mopsa.html) — Кожа и раны, волна 3 · проверить: лекарства
+- [ ] [Складки у шарпея: уход и воспаление](https://antonseliverstov.github.io/belovet/blog/skladki-u-sharpeya.html) — Кожа и раны, волна 3 · проверить: лекарства
+- [ ] [Отит у кошки: причины и лечение](https://antonseliverstov.github.io/belovet/blog/otit-u-koshki.html) — Кожа и раны, волна 3 · проверить: лекарства
+- [ ] [Опухла щека у собаки: возможные причины](https://antonseliverstov.github.io/belovet/blog/opukhla-scheka.html) — Кожа и раны, волна 3 · проверить: лекарства
+- [ ] [Собака пускает слюни: когда это повод к врачу](https://antonseliverstov.github.io/belovet/blog/sobaka-puskaet-slyuni.html) — Кожа и раны, волна 3 · проверить: лекарства
+- [ ] [Шишка на шее у кошки: что это может быть](https://antonseliverstov.github.io/belovet/blog/shishka-na-shee-u-koshki.html) — Онкология, волна 3 · проверить: лекарства
+- [ ] [Собака чихает и трёт нос лапой: инородное тело в носу](https://antonseliverstov.github.io/belovet/blog/inorodnoe-telo-v-nosu.html) — Экстренные ситуации, волна 3 · проверить: первая помощь
+- [ ] [Выделения из одной ноздри у собаки или кошки](https://antonseliverstov.github.io/belovet/blog/vydeleniya-iz-odnoj-nozdri.html) — Кожа и раны, волна 3 · проверить: лекарства
+- [ ] [Опухоль надпочечника у собаки](https://antonseliverstov.github.io/belovet/blog/opuhol-nadpochechnika-u-sobaki.html) — Онкология, волна 3 · проверить: лекарства
+- [ ] [Собака лысеет по бокам: гормональные причины](https://antonseliverstov.github.io/belovet/blog/gormonalnoe-oblysenie.html) — Кожа и раны, волна 3 · проверить: лекарства
+- [ ] [Собака проглотила камень](https://antonseliverstov.github.io/belovet/blog/sobaka-proglotila-kamen.html) — Экстренные ситуации, волна 3 · проверить: первая помощь
+- [ ] [Желтуха у собаки: пожелтели глаза и дёсны](https://antonseliverstov.github.io/belovet/blog/zheltuha-u-sobaki.html) — Онкология, волна 3 · проверить: лекарства
+- [ ] [Опухоль печени у кошки](https://antonseliverstov.github.io/belovet/blog/opuhol-pecheni-u-koshki.html) — Онкология, волна 3 · проверить: лекарства
+- [ ] [Собака пытается вырвать, но не может](https://antonseliverstov.github.io/belovet/blog/sobaka-pytaetsya-vyrvat.html) — Экстренные ситуации, волна 3 · проверить: первая помощь
+- [ ] [Бывает ли заворот желудка у кошек и мелких собак](https://antonseliverstov.github.io/belovet/blog/zavorot-zheludka-u-koshki.html) — Экстренные ситуации, волна 3 · проверить: первая помощь
+- [ ] [Травма живота у собаки или кошки: что проверить](https://antonseliverstov.github.io/belovet/blog/travma-zhivota.html) — Экстренные ситуации, волна 3 · проверить: первая помощь
+- [ ] [Перекрут селезёнки у собак](https://antonseliverstov.github.io/belovet/blog/perekrut-selezenki.html) — Экстренные ситуации, волна 3 · проверить: первая помощь
+- [ ] [Кошка давится и кашляет: что-то застряло в горле](https://antonseliverstov.github.io/belovet/blog/koshka-davitsya.html) — Экстренные ситуации, волна 3 · проверить: первая помощь
+- [ ] [Собака подавилась: первая помощь](https://antonseliverstov.github.io/belovet/blog/sobaka-podavilas.html) — Экстренные ситуации, волна 3 · проверить: первая помощь
+- [ ] [Анализы при панкреатите у собак: что значат](https://antonseliverstov.github.io/belovet/blog/analizy-pri-pankreatite.html) — Уход после операции, волна 3 · проверить: лекарства
+- [ ] [Щенок срыгивает после перехода на твёрдый корм](https://antonseliverstov.github.io/belovet/blog/anomaliya-dugi-aorty.html) — Экстренные ситуации, волна 3 · проверить: первая помощь
+- [ ] [Кошка проглотила иголку](https://antonseliverstov.github.io/belovet/blog/koshka-proglotila-igolku.html) — Экстренные ситуации, волна 3 · проверить: первая помощь
+- [ ] [Инфильтративная липома: жировик, который прорастает в мышцы](https://antonseliverstov.github.io/belovet/blog/infiltrativnaya-lipoma.html) — Онкология, волна 3 · проверить: лекарства
+- [ ] [Увеличены подчелюстные лимфоузлы у собаки](https://antonseliverstov.github.io/belovet/blog/podchelyustnye-limfouzly.html) — Онкология, волна 3 · проверить: лекарства
+- [ ] [Рак молочной железы у кошки: от чего зависит прогноз](https://antonseliverstov.github.io/belovet/blog/prognoz-rak-molochnoj-koshki.html) — Онкология, волна 3 · проверить: лекарства
+- [ ] [Повышен кальций в крови у собаки: при чём тут опухоли](https://antonseliverstov.github.io/belovet/blog/vysokij-kalcij.html) — Онкология, волна 3 · проверить: лекарства
+- [ ] [Собака лижет под хвостом: причины](https://antonseliverstov.github.io/belovet/blog/lizhet-pod-hvostom.html) — Кожа и раны, волна 3 · проверить: лекарства
+- [ ] [Опухоль языка у собаки и кошки](https://antonseliverstov.github.io/belovet/blog/opuhol-yazyka.html) — Онкология, волна 3 · проверить: лекарства
+- [ ] [Увеличена простата у кобеля](https://antonseliverstov.github.io/belovet/blog/prostata-u-kobelya.html) — Стерилизация и кастрация, волна 3 · проверить: лекарства
+- [ ] [Собака хромает на переднюю лапу: причины](https://antonseliverstov.github.io/belovet/blog/hromota-na-perednyuyu-lapu.html) — Ортопедия и травмы, волна 3 · проверить: лекарства
+- [ ] [Артроз у собак: когда нужна операция](https://antonseliverstov.github.io/belovet/blog/artroz-u-sobak.html) — Ортопедия и травмы, волна 3 · проверить: лекарства
+- [ ] [Дисплазия тазобедренных суставов у кошек](https://antonseliverstov.github.io/belovet/blog/displaziya-u-koshek.html) — Ортопедия и травмы, волна 3 · проверить: лекарства
+- [ ] [Вывих или перелом: как понять, что с лапой](https://antonseliverstov.github.io/belovet/blog/vyvih-ili-perelom.html) — Ортопедия и травмы, волна 3 · проверить: лекарства
+- [ ] [Артроз после травмы сустава](https://antonseliverstov.github.io/belovet/blog/posttravmaticheskij-artroz.html) — Ортопедия и травмы, волна 3 · проверить: лекарства
+- [ ] [Идиопатический цистит у кошек](https://antonseliverstov.github.io/belovet/blog/idiopaticheskij-cistit.html) — Урология, волна 3 · проверить: лекарства
+- [ ] [Стент или шунт при закупорке мочеточника у кошки](https://antonseliverstov.github.io/belovet/blog/stent-ili-shunt.html) — Урология, волна 3 · проверить: лекарства
+- [ ] [Острое повреждение почек у кошек и собак](https://antonseliverstov.github.io/belovet/blog/ostroe-povrezhdenie-pochek.html) — Урология, волна 3 · проверить: лекарства
+- [ ] [Химическая кастрация кота: чем отличается от хирургической](https://antonseliverstov.github.io/belovet/blog/himicheskaya-kastraciya-kota.html) — Стерилизация и кастрация, волна 3 · проверить: лекарства
+- [ ] [Таблетки от течки и пиометра: есть ли связь](https://antonseliverstov.github.io/belovet/blog/gormony-i-piometra.html) — Репродуктивная хирургия, волна 3 · проверить: лекарства
+- [ ] [Недержание мочи у собаки после стерилизации](https://antonseliverstov.github.io/belovet/blog/nederzhanie-mochi.html) — Урология, волна 3 · проверить: лекарства
+- [ ] [Дерматит складок у собак с лишним весом](https://antonseliverstov.github.io/belovet/blog/dermatit-skladok.html) — Кожа и раны, волна 3 · проверить: лекарства
+- [ ] [Простатит у кобелей](https://antonseliverstov.github.io/belovet/blog/prostatit.html) — Репродуктивная хирургия, волна 3 · проверить: лекарства
+- [ ] [Таблетки от течки: чем опасны](https://antonseliverstov.github.io/belovet/blog/tabletki-ot-techki.html) — Стерилизация и кастрация, волна 3 · проверить: лекарства
+- [ ] [Пиометра культи матки после стерилизации](https://antonseliverstov.github.io/belovet/blog/piometra-kulti.html) — Стерилизация и кастрация, волна 3 · проверить: лекарства
+- [ ] [Вагинит у собак](https://antonseliverstov.github.io/belovet/blog/vaginit.html) — Репродуктивная хирургия, волна 3 · проверить: лекарства
+- [ ] [Разошёлся шов у собаки или кошки](https://antonseliverstov.github.io/belovet/blog/razoshelsya-shov.html) — Уход после операции, волна 3 · проверить: лекарства
+- [ ] [Повязка натёрла или сползла: что делать](https://antonseliverstov.github.io/belovet/blog/povyazka-naterla.html) — Уход после операции, волна 3 · проверить: первая помощь
+- [ ] [Тепловой удар у собаки: первая помощь](https://antonseliverstov.github.io/belovet/blog/teplovoj-udar.html) — Экстренные ситуации, волна 3 · проверить: первая помощь
+- [ ] [Собаку укусила оса: аллергическая реакция](https://antonseliverstov.github.io/belovet/blog/anafilaksiya.html) — Экстренные ситуации, волна 3 · проверить: первая помощь
+
+## 3. Обычные (122)
+
+- [ ] [Кормление после операции на желудке или кишечнике: по дням](https://antonseliverstov.github.io/belovet/blog/pitanie-posle-operacii-na-zheludke.html) — Уход после операции, волна 2 · проверить: сроки, цифры
+- [ ] [Пупочную грыжу можно убрать во время стерилизации](https://antonseliverstov.github.io/belovet/blog/gryzha-i-sterilizaciya.html) — Стерилизация и кастрация, волна 2 · проверить: сроки
+- [ ] [Жировик у кошки: бывает ли липома у кошек](https://antonseliverstov.github.io/belovet/blog/lipoma-u-koshki.html) — Онкология, волна 2 · проверить: сроки
+- [ ] [Метастазы в лимфоузлах у собак: что это меняет в лечении](https://antonseliverstov.github.io/belovet/blog/metastazy-v-limfouzly.html) — Онкология, волна 2 · проверить: сроки
+- [ ] [Гистиоцитома у молодой собаки: красная шишка, которая может пройти сама](https://antonseliverstov.github.io/belovet/blog/gistiocitoma.html) — Онкология, волна 2 · проверить: сроки
+- [ ] [Опухоль во рту у кошки: что важно знать](https://antonseliverstov.github.io/belovet/blog/opuhol-vo-rtu-u-koshki.html) — Онкология, волна 2 · проверить: сроки
+- [ ] [Удалять ли опухоль пожилой собаке](https://antonseliverstov.github.io/belovet/blog/udalyat-li-opuhol-u-staroj-sobaki.html) — Онкология, волна 2 · проверить: сроки
+- [ ] [Реабилитация после операции на крестообразной связке](https://antonseliverstov.github.io/belovet/blog/reabilitaciya-posle-svyazki.html) — Уход после операции, волна 2 · проверить: сроки
+- [ ] [Почему вывих бедра возвращается после вправления](https://antonseliverstov.github.io/belovet/blog/povtornyj-vyvih-bedra.html) — Ортопедия и травмы, волна 2 · проверить: сроки
+- [ ] [Перелом зоны роста у щенка или котёнка: чем опасен](https://antonseliverstov.github.io/belovet/blog/perelom-zony-rosta.html) — Ортопедия и травмы, волна 2 · проверить: сроки
+- [ ] [Перелом локтя у собаки: почему нужна точная операция](https://antonseliverstov.github.io/belovet/blog/perelom-loktya-u-sobaki.html) — Ортопедия и травмы, волна 2 · проверить: сроки
+- [ ] [Кастрация взрослого кота: не поздно ли в 5–10 лет](https://antonseliverstov.github.io/belovet/blog/kastraciya-vzroslogo-kota.html) — Стерилизация и кастрация, волна 2 · проверить: сроки
+- [ ] [Течка у собаки: как проходит и когда к врачу](https://antonseliverstov.github.io/belovet/blog/techka-u-sobaki.html) — Репродуктивная хирургия, волна 2 · проверить: сроки
+- [ ] [Пролежни у лежачей собаки: профилактика и лечение](https://antonseliverstov.github.io/belovet/blog/prolezhni-u-sobaki.html) — Кожа и раны, волна 2 · проверить: сроки
+- [ ] [Отёк после операции у собаки или кошки: когда это норма](https://antonseliverstov.github.io/belovet/blog/otek-posle-operacii.html) — Уход после операции, волна 2 · проверить: сроки
+- [ ] [Кончик хвоста почернел: некроз хвоста у собак и кошек](https://antonseliverstov.github.io/belovet/blog/nekroz-hvosta.html) — Кожа и раны, волна 3 · проверить: сроки
+- [ ] [Ороназальный свищ: выделения из носа после удаления зуба](https://antonseliverstov.github.io/belovet/blog/oronazalnyj-svisch.html) — Кожа и раны, волна 3 · проверить: сроки
+- [ ] [Как кормить котёнка или щенка с расщелиной нёба](https://antonseliverstov.github.io/belovet/blog/kormlenie-malysha-s-rasshchelinoj.html) — Репродуктивная хирургия, волна 3 · проверить: сроки
+- [ ] [Котёнок без мамы: как выкормить](https://antonseliverstov.github.io/belovet/blog/kotenok-iskusstvennik.html) — Репродуктивная хирургия, волна 3 · проверить: сроки
+- [ ] [Щенок или котёнок плохо набирает вес](https://antonseliverstov.github.io/belovet/blog/shchenok-ploho-nabiraet-ves.html) — Репродуктивная хирургия, волна 3 · проверить: сроки
+- [ ] [Чем кормить кошку или собаку после операции во рту](https://antonseliverstov.github.io/belovet/blog/pitanie-posle-operacii-vo-rtu.html) — Уход после операции, волна 3 · проверить: сроки
+- [ ] [Можно ли собаке бегать после еды](https://antonseliverstov.github.io/belovet/blog/begat-posle-edy.html) — Уход после операции, волна 3 · проверить: сроки
+- [ ] [УЗИ брюшной полости собаке или кошке: что покажет](https://antonseliverstov.github.io/belovet/blog/uzi-bryushnoj-polosti.html) — Уход после операции, волна 3 · проверить: сроки
+- [ ] [На УЗИ нашли узлы в печени у собаки](https://antonseliverstov.github.io/belovet/blog/uzly-v-pecheni.html) — Онкология, волна 3 · проверить: сроки
+- [ ] [Грыжа на животе у кошки](https://antonseliverstov.github.io/belovet/blog/gryzha-na-zhivote-u-koshki.html) — Кожа и раны, волна 3 · проверить: сроки
+- [ ] [Опухоль кишечника у собак и кошек](https://antonseliverstov.github.io/belovet/blog/opuhol-kishechnika.html) — Онкология, волна 3 · проверить: сроки
+- [ ] [Разрыв мочевого пузыря после травмы](https://antonseliverstov.github.io/belovet/blog/razryv-mochevogo-puzyrya.html) — Урология, волна 3 · проверить: сроки
+- [ ] [Мошоночная грыжа у кобеля](https://antonseliverstov.github.io/belovet/blog/moshonochnaya-gryzha.html) — Стерилизация и кастрация, волна 3 · проверить: сроки
+- [ ] [Пупочная грыжа у взрослой собаки](https://antonseliverstov.github.io/belovet/blog/pupochnaya-gryzha-u-vzrosloj.html) — Кожа и раны, волна 3 · проверить: сроки
+- [ ] [Как следить за шишками у собаки: карта шишек](https://antonseliverstov.github.io/belovet/blog/karta-shishek.html) — Онкология, волна 3 · проверить: сроки
+- [ ] [Удалить одну шишку или всю железу: как выбирают объём операции](https://antonseliverstov.github.io/belovet/blog/lampektomiya-ili-mastektomiya.html) — Онкология, волна 3 · проверить: сроки
+- [ ] [Как проверять молочные железы собаке и кошке дома](https://antonseliverstov.github.io/belovet/blog/proverka-molochnyh-zhelez.html) — Онкология, волна 3 · проверить: сроки
+- [ ] [Какие бывают биопсии у собак и кошек](https://antonseliverstov.github.io/belovet/blog/vidy-biopsii.html) — Онкология, волна 3 · проверить: сроки
+- [ ] [Цитология не дала ответа: что дальше](https://antonseliverstov.github.io/belovet/blog/citologiya-bez-otveta.html) — Онкология, волна 3 · проверить: сроки
+- [ ] [Шишка у собаки кровоточит: что делать](https://antonseliverstov.github.io/belovet/blog/shishka-krovotochit.html) — Онкология, волна 3 · проверить: сроки
+- [ ] [Как прививать кошку, чтобы снизить риск саркомы](https://antonseliverstov.github.io/belovet/blog/kak-privivat-koshku.html) — Онкология, волна 3 · проверить: цифры
+- [ ] [Опухоль на морде у собаки: как удаляют без потери внешности](https://antonseliverstov.github.io/belovet/blog/opuhol-na-morde.html) — Онкология, волна 3 · проверить: сроки
+- [ ] [Опухоль на лапе: как закрывают рану после удаления](https://antonseliverstov.github.io/belovet/blog/opuhol-na-lape-plastika.html) — Онкология, волна 3 · проверить: сроки
+- [ ] [Как заживает кожный лоскут после операции](https://antonseliverstov.github.io/belovet/blog/kozhnyj-loskut.html) — Уход после операции, волна 3 · проверить: сроки
+- [ ] [Кастрация пожилого кобеля: когда она нужна](https://antonseliverstov.github.io/belovet/blog/kastraciya-pozhilogo-kobelya.html) — Стерилизация и кастрация, волна 3 · проверить: сроки
+- [ ] [Повреждение ахиллова сухожилия у собаки](https://antonseliverstov.github.io/belovet/blog/ahillovo-suhozhilie.html) — Ортопедия и травмы, волна 3 · проверить: сроки
+- [ ] [Перелом таза у кошки](https://antonseliverstov.github.io/belovet/blog/perelom-taza-u-koshki.html) — Ортопедия и травмы, волна 3 · проверить: сроки
+- [ ] [Перелом не срастается: почему так бывает](https://antonseliverstov.github.io/belovet/blog/kost-ne-srastaetsya.html) — Ортопедия и травмы, волна 3 · проверить: сроки
+- [ ] [Разошлась нижняя челюсть у кошки после падения](https://antonseliverstov.github.io/belovet/blog/simfiz-chelyusti-u-koshki.html) — Ортопедия и травмы, волна 3 · проверить: сроки
+- [ ] [Чем кормить питомца после операции на челюсти](https://antonseliverstov.github.io/belovet/blog/kormlenie-posle-operacii-na-chelyusti.html) — Уход после операции, волна 3 · проверить: сроки
+- [ ] [Вывих коленной чашечки у мелких собак](https://antonseliverstov.github.io/belovet/blog/vyvih-kolennoj-chashechki.html) — Ортопедия и травмы, волна 3 · проверить: сроки
+- [ ] [Какие бывают операции при разрыве крестообразной связки](https://antonseliverstov.github.io/belovet/blog/metody-operacii-kks.html) — Ортопедия и травмы, волна 3 · проверить: сроки
+- [ ] [Перелом шейки бедра у кошки](https://antonseliverstov.github.io/belovet/blog/perelom-shejki-bedra.html) — Ортопедия и травмы, волна 3 · проверить: сроки
+- [ ] [Эндопротез или резекция головки бедра: в чём разница](https://antonseliverstov.github.io/belovet/blog/endoprotez-ili-rezekciya.html) — Ортопедия и травмы, волна 3 · проверить: сроки
+- [ ] [Аппарат внешней фиксации у собаки: уход](https://antonseliverstov.github.io/belovet/blog/vneshnij-fiksator.html) — Уход после операции, волна 3 · проверить: сроки
+- [ ] [Вывих бедра у кошки](https://antonseliverstov.github.io/belovet/blog/vyvih-bedra-u-koshki.html) — Ортопедия и травмы, волна 3 · проверить: сроки
+- [ ] [Повязка после вправления вывиха: как ухаживать](https://antonseliverstov.github.io/belovet/blog/povyazka-posle-vpravleniya.html) — Уход после операции, волна 3 · проверить: сроки
+- [ ] [Как срастаются переломы у щенков и котят](https://antonseliverstov.github.io/belovet/blog/srastanie-u-shchenkov.html) — Ортопедия и травмы, волна 3 · проверить: сроки
+- [ ] [Перелом в области колена у собаки](https://antonseliverstov.github.io/belovet/blog/perelom-v-kolene.html) — Ортопедия и травмы, волна 3 · проверить: сроки
+- [ ] [Кастрация и мочекаменная болезнь у котов: есть ли связь](https://antonseliverstov.github.io/belovet/blog/kastraciya-i-mkb.html) — Урология, волна 3 · проверить: цифры
+- [ ] [Анализы на почки у собак и кошек: креатинин, мочевина, SDMA](https://antonseliverstov.github.io/belovet/blog/analizy-na-pochki.html) — Урология, волна 3 · проверить: сроки
+- [ ] [Кот метит после кастрации: почему и что делать](https://antonseliverstov.github.io/belovet/blog/kot-metit-posle-kastracii.html) — Стерилизация и кастрация, волна 3 · проверить: сроки
+- [ ] [Когда кастрировать кобеля крупной породы](https://antonseliverstov.github.io/belovet/blog/kastraciya-krupnyh-porod.html) — Стерилизация и кастрация, волна 3 · проверить: сроки
+- [ ] [У кота одно яичко: что делать](https://antonseliverstov.github.io/belovet/blog/u-kota-odno-yaichko.html) — Стерилизация и кастрация, волна 3 · проверить: сроки
+- [ ] [Семенник в животе: как его находят и удаляют](https://antonseliverstov.github.io/belovet/blog/bryushnoj-kriptorhizm.html) — Стерилизация и кастрация, волна 3 · проверить: сроки
+- [ ] [Стерилизация самки хорька](https://antonseliverstov.github.io/belovet/blog/sterilizaciya-horchihi.html) — Стерилизация и кастрация, волна 3 · проверить: сроки
+- [ ] [Течка у хорька: почему она опасна](https://antonseliverstov.github.io/belovet/blog/techka-u-horka.html) — Стерилизация и кастрация, волна 3 · проверить: сроки
+- [ ] [Сколько длятся роды у собаки и когда пора к врачу](https://antonseliverstov.github.io/belovet/blog/skolko-dlyatsya-rody.html) — Репродуктивная хирургия, волна 3 · проверить: сроки
+- [ ] [Признаки скорых родов у кошки](https://antonseliverstov.github.io/belovet/blog/priznaki-rodov-u-koshki.html) — Репродуктивная хирургия, волна 3 · проверить: сроки
+- [ ] [Полипы влагалища у собаки](https://antonseliverstov.github.io/belovet/blog/polipy-vlagalishcha.html) — Репродуктивная хирургия, волна 3 · проверить: сроки
+- [ ] [Уход после пластики кожи](https://antonseliverstov.github.io/belovet/blog/posle-plastiki-kozhi.html) — Уход после операции, волна 3 · проверить: сроки
+- [ ] [Серома после удаления опухоли](https://antonseliverstov.github.io/belovet/blog/seroma-posle-udaleniya-opuholi.html) — Уход после операции, волна 3 · проверить: сроки
+- [ ] [Как защитить повязку на лапе на прогулке](https://antonseliverstov.github.io/belovet/blog/povyazka-na-lapu.html) — Уход после операции, волна 3 · проверить: сроки
+- [ ] [У котёнка или щенка молоко идёт из носа: причины](https://antonseliverstov.github.io/belovet/blog/moloko-iz-nosa-u-kotenka.html) — Кожа и раны, волна 2
+- [ ] [Новорождённые котята и щенки: что проверить в первые дни](https://antonseliverstov.github.io/belovet/blog/novorozhdennyj-kotenok-osmotr.html) — Репродуктивная хирургия, волна 2
+- [ ] [Жизнь собаки без селезёнки: что нужно знать](https://antonseliverstov.github.io/belovet/blog/sobaka-bez-selezenki.html) — Уход после операции, волна 2
+- [ ] [Диета собаки после панкреатита](https://antonseliverstov.github.io/belovet/blog/dieta-pri-pankreatite.html) — Уход после операции, волна 2
+- [ ] [Шишка в паху у собаки: что это может быть](https://antonseliverstov.github.io/belovet/blog/shishka-v-pahu-u-sobaki.html) — Кожа и раны, волна 2
+- [ ] [Гистология после операции: как читать заключение](https://antonseliverstov.github.io/belovet/blog/kak-chitat-gistologiyu.html) — Онкология, волна 2
+- [ ] [Саркома мягких тканей у собак: почему важны широкие края](https://antonseliverstov.github.io/belovet/blog/sarkoma-myagkih-tkanej.html) — Онкология, волна 2
+- [ ] [У кобеля один семенник больше другого](https://antonseliverstov.github.io/belovet/blog/odin-semennik-bolshe.html) — Стерилизация и кастрация, волна 2
+- [ ] [Собака волочит лапу после травмы: нерв или сустав](https://antonseliverstov.github.io/belovet/blog/sobaka-volochit-lapu.html) — Ортопедия и травмы, волна 2
+- [ ] [Спица выходит или шишка над пластиной после перелома](https://antonseliverstov.github.io/belovet/blog/spica-vylezla.html) — Ортопедия и травмы, волна 2
+- [ ] [Почему пахнет хорёк и помогает ли удаление желёз](https://antonseliverstov.github.io/belovet/blog/zapah-u-horka.html) — Стерилизация и кастрация, волна 2
+- [ ] [Кобель тужится и не может покакать: причины](https://antonseliverstov.github.io/belovet/blog/kobel-tuzhitsya.html) — Репродуктивная хирургия, волна 2
+- [ ] [Не получается вязка: сужение влагалища у собаки](https://antonseliverstov.github.io/belovet/blog/suzhenie-vlagalishha.html) — Репродуктивная хирургия, волна 2
+- [ ] [Перевязки после операции: как часто и можно ли дома](https://antonseliverstov.github.io/belovet/blog/perevyazki-doma.html) — Уход после операции, волна 2
+- [ ] [Ампутация или сохранение лапы: как принимают решение](https://antonseliverstov.github.io/belovet/blog/amputaciya-ili-sohranenie-lapy.html) — Ортопедия и травмы, волна 3
+- [ ] [Как подготовить дом для трёхлапой собаки](https://antonseliverstov.github.io/belovet/blog/dom-dlya-trehlapoj-sobaki.html) — Уход после операции, волна 3
+- [ ] [Шишка или опухоль на хвосте у собаки](https://antonseliverstov.github.io/belovet/blog/opuhol-na-hvoste.html) — Онкология, волна 3
+- [ ] [Ухо сморщилось после гематомы: можно ли исправить](https://antonseliverstov.github.io/belovet/blog/uho-smorshchilos.html) — Кожа и раны, волна 3
+- [ ] [Уход за брахицефалом: морда, глаза, дыхание](https://antonseliverstov.github.io/belovet/blog/brahicefaly-uhod.html) — Кожа и раны, волна 3
+- [ ] [Опухоль носа у собак: признаки и лечение](https://antonseliverstov.github.io/belovet/blog/opuhol-nosa.html) — Онкология, волна 3
+- [ ] [Собака много пьёт и часто писает: причины](https://antonseliverstov.github.io/belovet/blog/sobaka-mnogo-pyet.html) — Онкология, волна 3
+- [ ] [Гемангиосаркома у собак: что важно знать](https://antonseliverstov.github.io/belovet/blog/gemangiosarkoma.html) — Онкология, волна 3
+- [ ] [Паховая грыжа у беременной собаки](https://antonseliverstov.github.io/belovet/blog/gryzha-u-beremennoj-suki.html) — Репродуктивная хирургия, волна 3
+- [ ] [Шишка на пупке: грыжа или жировик](https://antonseliverstov.github.io/belovet/blog/pupochnaya-ili-lipoma.html) — Кожа и раны, волна 3
+- [ ] [Меланома у собак: где бывает и чем опасна](https://antonseliverstov.github.io/belovet/blog/melanoma-u-sobak.html) — Онкология, волна 3
+- [ ] [Липома или мастоцитома: почему нельзя ставить диагноз на ощупь](https://antonseliverstov.github.io/belovet/blog/lipoma-ili-mastocitoma.html) — Онкология, волна 3
+- [ ] [Бородавчатые наросты у пожилой собаки: аденомы сальных желёз](https://antonseliverstov.github.io/belovet/blog/adenomy-salnyh-zhelez.html) — Онкология, волна 3
+- [ ] [После удаления опухоли появились новые шишки](https://antonseliverstov.github.io/belovet/blog/novye-shishki-posle-udaleniya.html) — Онкология, волна 3
+- [ ] [Лимфома у собак: увеличены все лимфоузлы](https://antonseliverstov.github.io/belovet/blog/limfoma-u-sobak.html) — Онкология, волна 3
+- [ ] [Увеличены лимфоузлы у кошки](https://antonseliverstov.github.io/belovet/blog/limfouzly-u-koshki.html) — Онкология, волна 3
+- [ ] [Опухоли кожи у кошек: почему их удаляют без ожидания](https://antonseliverstov.github.io/belovet/blog/opuhol-kozhi-u-koshki.html) — Онкология, волна 3
+- [ ] [Плотная шишка на лапе у собаки](https://antonseliverstov.github.io/belovet/blog/shishka-na-lape.html) — Онкология, волна 3
+- [ ] [Опухоль выросла снова после удаления: что делать](https://antonseliverstov.github.io/belovet/blog/recidiv-opuholi.html) — Онкология, волна 3
+- [ ] [Кастрация и опухоли около ануса у кобелей](https://antonseliverstov.github.io/belovet/blog/kastraciya-i-perianalnye-opuholi.html) — Онкология, волна 3
+- [ ] [Неприятный запах изо рта у собаки: когда это не только зубы](https://antonseliverstov.github.io/belovet/blog/zapah-izo-rta.html) — Онкология, волна 3
+- [ ] [У кобеля увеличились соски и выпадает шерсть](https://antonseliverstov.github.io/belovet/blog/feminizaciya-kobelya.html) — Стерилизация и кастрация, волна 3
+- [ ] [Сломанный зуб у собаки: опасно ли](https://antonseliverstov.github.io/belovet/blog/slomannyj-zub.html) — Ортопедия и травмы, волна 3
+- [ ] [Повреждение мениска у собаки](https://antonseliverstov.github.io/belovet/blog/menisk-u-sobaki.html) — Ортопедия и травмы, волна 3
+- [ ] [Почему щенкам опасно прыгать с высоты](https://antonseliverstov.github.io/belovet/blog/shchenok-prygaet.html) — Ортопедия и травмы, волна 3
+- [ ] [Опухоль почки у собак и кошек](https://antonseliverstov.github.io/belovet/blog/opuhol-pochki.html) — Урология, волна 3
+- [ ] [Как заставить кошку пить больше воды](https://antonseliverstov.github.io/belovet/blog/kak-zastavit-koshku-pit.html) — Урология, волна 3
+- [ ] [Полипы и образования мочевого пузыря](https://antonseliverstov.github.io/belovet/blog/polipy-mochevogo-puzyrya.html) — Урология, волна 3
+- [ ] [Оксалаты у кошек и собак](https://antonseliverstov.github.io/belovet/blog/oksalaty.html) — Урология, волна 3
+- [ ] [Поможет ли кастрация от агрессии у кобеля](https://antonseliverstov.github.io/belovet/blog/kastraciya-i-agressiya.html) — Стерилизация и кастрация, волна 3
+- [ ] [Химическая кастрация кобеля](https://antonseliverstov.github.io/belovet/blog/himicheskaya-kastraciya-sobaki.html) — Стерилизация и кастрация, волна 3
+- [ ] [Крипторхизм и разведение: можно ли вязать](https://antonseliverstov.github.io/belovet/blog/kriptorh-razvedenie.html) — Стерилизация и кастрация, волна 3
+- [ ] [Плановое кесарево сечение у бульдогов и других пород](https://antonseliverstov.github.io/belovet/blog/planovoe-kesarevo.html) — Репродуктивная хирургия, волна 3
+- [ ] [Покраснение и раздражение мошонки у собаки](https://antonseliverstov.github.io/belovet/blog/dermatit-moshonki.html) — Кожа и раны, волна 3
+- [ ] [Когда стерилизовать собаку крупной породы](https://antonseliverstov.github.io/belovet/blog/sterilizaciya-krupnyh-porod.html) — Стерилизация и кастрация, волна 3
+- [ ] [Выделения из петли у стерилизованной собаки](https://antonseliverstov.github.io/belovet/blog/vydeleniya-u-sterilizovannoj.html) — Стерилизация и кастрация, волна 3
+- [ ] [Гранулёма после операции: уплотнение, которое не проходит](https://antonseliverstov.github.io/belovet/blog/granulema-posle-operacii.html) — Уход после операции, волна 3
+- [ ] [Из петли что-то торчит: пролапс или опухоль](https://antonseliverstov.github.io/belovet/blog/prolaps-ili-opuhol.html) — Репродуктивная хирургия, волна 3
+- [ ] [Вязка и роды у собаки с выпадением влагалища](https://antonseliverstov.github.io/belovet/blog/vyazka-pri-prolapse.html) — Репродуктивная хирургия, волна 3
+- [ ] [Рана мокнет под повязкой](https://antonseliverstov.github.io/belovet/blog/rana-moknet.html) — Уход после операции, волна 3

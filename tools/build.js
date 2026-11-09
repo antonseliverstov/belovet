@@ -22,6 +22,8 @@ const LEAD_URL = ''; // адрес функции functions/lead в Yandex Cloud
 // Оператор персональных данных для privacy.html и consent.html. Пустые поля — [заполнить]; с ними LAUNCH не включится
 const OPERATOR = { name: '', status: '', inn: '', ogrnip: '', address: '', email: 'vladislav@belovet.ru', phone: '+7 (939) 255-77-71' };
 const LEGAL_DATE = '8 ноября 2026'; // дата редакции политики и согласия
+// Волны блога, которые индексируются сразу; остальные статьи — только после вычитки врачом (data/blog-reviewed.js)
+const OPEN_WAVES = [1, 2];
 const PHONE = '+7 (939) 255-77-71';
 const PHONE_HREF = 'tel:+79392557771';
 const crypto = require("crypto");
@@ -67,8 +69,9 @@ for (const k of Object.keys(ARTICLES)) if (!slugs.has(k)) throw new Error('Ст�
 
 // ---------- блог ----------
 const FIGMA = require('../data/figma-ops');
+const opSources = p => (p.sources || []).map(s => typeof s === 'string' ? { text: SOURCES[s] } : s).filter(s => s && s.text);
 const UI = require('./ui')({ SITE, ROBOTS, METRIKA_ID, esc, rub, cap, ver, PHONE, PHONE_HREF });
-const BLOG = require('./blog')({ ROOT, SITE, UI, clip, fitTitle, ogTags, iconTags, esc, rub, cap, plural, ver, PROCEDURES, PHONE, PHONE_HREF });
+const BLOG = require('./blog')({ ROOT, SITE, UI, clip, fitTitle, ogTags, iconTags, esc, rub, cap, plural, ver, PROCEDURES, PHONE, PHONE_HREF, SOURCES, LAUNCH, OPEN_WAVES });
 
 // ---------- шаблоны восстановления по типу вмешательства ----------
 const TIMELINES = {
@@ -226,14 +229,14 @@ function pageHtml(p) {
     heroHtml, UI.params(params), introHtml, whenHtml, alertHtml,
     acc && acc.at === 'beforeCost' ? accHtml : '', costHtml, acc && acc.at === 'afterCost' ? accHtml : '',
     prepHtml, howHtml, acc && acc.at === 'afterHow' ? accHtml : '', recHtml, homeHtml, ctrlHtml, pgHtml,
-    UI.faq(faq), moreHtml, UI.book(pre)
+    UI.faq(faq), UI.sources(opSources(p)), moreHtml, UI.book(pre)
   ].filter(Boolean);
 
   const desc = clip(`${p.title} у кошек и собак в Люберцах: ${p.lead.charAt(0).toLowerCase() + p.lead.slice(1)}`);
   const title = fitTitle(`${p.title} в Люберцах — цена, восстановление | beloVET`, `${p.title} в Люберцах — цена | beloVET`, `${p.title} в Люберцах | beloVET`, `${p.title} в Люберцах`);
   const ld = [
     { '@context': 'https://schema.org', '@type': 'MedicalWebPage', name: p.title, description: p.lead, dateModified: UPDATED.iso, inLanguage: 'ru',
-      about: { '@type': 'MedicalProcedure', name: p.title, alternateName: p.aka } },
+      about: { '@type': 'MedicalProcedure', name: p.title, alternateName: p.aka }, citation: opSources(p).map(s => s.text) },
     { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Главная', item: SITE },
       { '@type': 'ListItem', position: 2, name: 'Ветеринарная хирургия', item: SITE + '#prices' },
@@ -481,7 +484,7 @@ ${byCat}
 
 ## Статьи
 
-${BLOG.posts.map(p => `- [${p.title}](${SITE}blog/${p.slug}.html): ${p.lead}`).join('\n')}
+${BLOG.posts.filter(p => p.indexable).map(p => `- [${p.title}](${SITE}blog/${p.slug}.html): ${p.lead}`).join('\n')}
 `);
 
 const rows = PROCEDURES.reduce((n, p) => n + p.prices.length, 0);
