@@ -14,6 +14,8 @@ const env = Object.assign({}, process.env, {
   BV_BLOG: process.env.BV_BLOG || '0',
   BV_FORMS: process.env.BV_FORMS || '0'
 });
+// С формами заявки уходят на свой обработчик на хостинге (functions/lead.php → /api/lead.php)
+if (env.BV_FORMS !== '0') env.BV_LEAD_URL = env.BV_LEAD_URL || '/api/lead.php';
 const BLOG_ON = env.BV_BLOG !== '0';
 
 // 1. Временная копия проекта (без .git, исходников врача, node_modules и прошлой сборки)
@@ -42,6 +44,10 @@ for (const name of PUBLIC) {
   const s = path.join(tmp, name), d = path.join(DIST, name);
   if (!fs.existsSync(s)) throw new Error('Нет файла сборки: ' + name);
   if (fs.statSync(s).isDirectory()) { fs.mkdirSync(d, { recursive: true }); copy(s, d); } else fs.copyFileSync(s, d);
+}
+if (env.BV_FORMS !== '0' && env.BV_LEAD_URL === '/api/lead.php') {
+  fs.mkdirSync(path.join(DIST, 'api'), { recursive: true });
+  fs.copyFileSync(path.join(ROOT, 'functions', 'lead.php'), path.join(DIST, 'api', 'lead.php'));
 }
 
 // 4. .htaccess для Apache на Timeweb: https и домен без www, своя 404, сжатие, кэш статики

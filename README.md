@@ -28,15 +28,13 @@
 4. Заполнить `OPERATOR` и отдать черновики `privacy.html` и `consent.html` юристу; при отправке заявок в Telegram — уведомить Роскомнадзор о трансграничной передаче.
 5. Медицинская вычитка статей врачом.
 
-### Обработчик форм (functions/lead)
+### Обработчик форм (functions/lead.php)
 
-Заявки с трёх форм (запись, экстренно, вопрос врачу) уходят в Telegram и на почту через облачную функцию Yandex Cloud. Ключи хранятся только в настройках функции.
+Заявки с трёх форм (запись, экстренно, вопрос врачу) уходят письмом на vladislav@belovet.ru через PHP-скрипт на том же хостинге Timeweb: данные остаются в России, Telegram и облачные сервисы не используются (решение 10.11.2026; позже — CRM). Пароли не нужны: письмо отправляет mail() хостинга от site@belovet.ru.
 
-1. Telegram: в @BotFather создать бота, сохранить токен. Владислав пишет боту /start; id чата — из https://api.telegram.org/bot<токен>/getUpdates (поле chat.id).
-2. Почта: в Timeweb завести ящик-отправитель, например site@belovet.ru.
-3. Yandex Cloud → Cloud Functions → создать функцию, среда Node.js 18, загрузить `functions/lead/index.js` и `package.json`, точка входа `index.handler`, таймаут 15 с, память 128 МБ.
-4. Переменные окружения: TG_TOKEN, TG_CHAT_IDS, SMTP_HOST=smtp.timeweb.ru, SMTP_PORT=465, SMTP_USER, SMTP_PASS, MAIL_TO=vladislav@belovet.ru, ALLOWED_ORIGINS=https://belovet.ru,https://www.belovet.ru,https://antonseliverstov.github.io
-5. Сделать функцию публичной, скопировать её адрес в `LEAD_URL`, собрать и выложить сайт, отправить тестовую заявку.
+Включение: `BV_FORMS=1 node tools/dist.js` — скрипт ляжет в dist/api/lead.php, формы будут отправлять на /api/lead.php. Перед этим — ответ юриста про уведомление Роскомнадзора. После выкладки отправить тестовую заявку и проверить, что письмо пришло не в спам.
+
+Старый вариант для Yandex Cloud Functions (functions/lead/) не используется.
 
 В Метрике при подключённом счётчике срабатывают цели `lead_book`, `lead_ask`, `lead_urgent` (отправка формы) и `phone` (клик по номеру) — их нужно создать в настройках счётчика как JavaScript-события. В настройках Вебвизора отключить запись содержимого полей.
 

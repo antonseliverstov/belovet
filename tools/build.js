@@ -24,7 +24,8 @@ const SITE = LAUNCH ? `https://${DOMAIN}/` : 'https://antonseliverstov.github.io
 const ROBOTS = LAUNCH ? 'index, follow, max-image-preview:large' : 'noindex, nofollow';
 const METRIKA_ID = ''; // номер счётчика Яндекс Метрики; пусто — счётчик не ставится
 const VERIFY = { yandex: '', google: '' }; // коды подтверждения Вебмастера и Search Console (если не через DNS)
-const LEAD_URL = ''; // адрес функции functions/lead в Yandex Cloud; пусто — формы просят позвонить
+// Адрес обработчика заявок; на боевом сайте — /api/lead.php (functions/lead.php, ставит tools/dist.js). Пусто — формы просят позвонить
+const LEAD_URL = process.env.BV_LEAD_URL || '';
 // Оператор персональных данных для privacy.html и consent.html. Пустые поля — [заполнить]; с ними LAUNCH не включится
 const OPERATOR = { name: 'Белорыбец Владислав Викторович', status: 'самозанятый', inn: '712807539248', ogrnip: '', address: 'vladislav@belovet.ru' /* адрес для обращений = почта (решение 10.11.2026; нужен ли почтовый — уточнить у юриста) */, email: 'vladislav@belovet.ru', phone: '+7 (939) 255-77-71' };
 const LEGAL_DATE = '8 ноября 2026'; // дата редакции политики и согласия
@@ -449,6 +450,7 @@ Disallow: /tools/
 Disallow: /data/
 Disallow: /README.md
 Disallow: /functions/
+Disallow: /api/
 Disallow: /vychitka/
 Clean-param: form /
 
