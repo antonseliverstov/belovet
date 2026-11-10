@@ -45,6 +45,12 @@ for (const name of PUBLIC) {
   if (!fs.existsSync(s)) throw new Error('Нет файла сборки: ' + name);
   if (fs.statSync(s).isDirectory()) { fs.mkdirSync(d, { recursive: true }); copy(s, d); } else fs.copyFileSync(s, d);
 }
+// Файлы подтверждения прав на сайт (Яндекс Вебмастер и др.) — лежат в корне сайта при каждой выкладке
+const VERIFY_FILES = {
+  'yandex_e2b671e1dfd7b31b.html': '<html>\n    <head>\n        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">\n    </head>\n    <body>Verification: e2b671e1dfd7b31b</body>\n</html>\n'
+};
+for (const [name, body] of Object.entries(VERIFY_FILES)) fs.writeFileSync(path.join(DIST, name), body);
+
 // Фото и аватарки из отзывов — только если какой-то отзыв опубликован с согласием автора
 if (!fs.readFileSync(path.join(DIST, 'index.html'), 'utf8').includes('assets/reviews/')) fs.rmSync(path.join(DIST, 'assets', 'reviews'), { recursive: true, force: true });
 // Архив редакций согласия (боевой текст): brand/legal-versions/consent-<редакция>.html.
