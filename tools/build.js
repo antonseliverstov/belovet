@@ -28,7 +28,8 @@ const VERIFY = { yandex: '', google: '' }; // коды подтверждени�
 const LEAD_URL = process.env.BV_LEAD_URL || '';
 // Оператор персональных данных для privacy.html и consent.html. Пустые поля — [заполнить]; с ними LAUNCH не включится
 const OPERATOR = { name: 'Белорыбец Владислав Викторович', status: 'самозанятый', inn: '712807539248', ogrnip: '', address: 'vladislav@belovet.ru' /* адрес для обращений = почта (решение 10.11.2026; нужен ли почтовый — уточнить у юриста) */, email: 'vladislav@belovet.ru', phone: '+7 (939) 255-77-71' };
-const LEGAL_DATE = '8 ноября 2026'; // дата редакции политики и согласия
+const LEGAL_DATE = '11 ноября 2026'; // дата редакции политики и согласия
+const LEGAL_VERSION = '2026-11-11'; // номер редакции согласия: уходит с каждой заявкой в журнал; при изменении текста — новая дата
 // Волны блога, которые индексируются сразу; остальные статьи — только после вычитки врачом (data/blog-reviewed.js)
 const OPEN_WAVES = [1, 2];
 const PHONE = '+7 (939) 255-77-71';
@@ -305,17 +306,23 @@ const REVIEWS = require('../data/reviews');
 // Отзывы по макету Figma: крупная карточка (первый отзыв), две малые справа, остальные — по кнопке «Все отзывы».
 // Полный текст открывается в окне: данные лежат в <script id="rv-data">.
 const RV_QUOTE = 'Владислав тут же'; // с этого места цитата в крупной карточке, как в макете
+// Показываются только отзывы авторов, давших согласие на распространение (data/reviews-consent.js)
+const REVIEWS_CONSENT = require('../data/reviews-consent');
+const SHOWN = REVIEWS.filter(r => REVIEWS_CONSENT[r.name]);
 function reviewsBlock() {
   for (const r of REVIEWS) {
     if (r.slug && !slugs.has(r.slug)) throw new Error('Отзыв ссылается на несуществующую операцию: ' + r.slug);
     for (const ph of r.photos || []) if (!fs.existsSync(path.join(ROOT, 'assets', 'reviews', ph))) throw new Error('Нет файла отзыва: ' + ph);
   }
-  const [main, ...others] = REVIEWS;
+  // Пока согласий нет: остаются заголовок, абзац про Яндекс Карты и кнопка перехода (см. .s-reviews[data-empty])
+  if (!SHOWN.length) return { top: `
+      <script type="application/json" id="rv-data">[]</script>`, rest: '' };
+  const [main, ...others] = SHOWN;
   const quote = main.text.includes(RV_QUOTE) ? main.text.slice(main.text.indexOf(RV_QUOTE)) : main.text;
   const who = r => `${esc(r.name)} · 5 / 5`;
   const top = `
       <article class="a rv rv-main rot hh" style="--x:64.83;--y:413.5;--w:870;--hh:814;--r:1">
-        <img class="a hh" style="--x:36;--y:36;--w:214;--hh:214" src="assets/home/karamelka.jpg" width="182" height="181" alt="Кошка Карамелька" loading="lazy">
+        ${main === REVIEWS[0] ? '<img class="a hh" style="--x:36;--y:36;--w:214;--hh:214" src="assets/home/karamelka.jpg" width="182" height="181" alt="Кошка Карамелька" loading="lazy">' : ''}
         <h3 class="a t o up" style="--x:286;--y:57;--w:540;--fs:58;--lh:63">${esc(main.tag).replace(' ', '<br>')}</h3>
         <p class="a t rv-txt" style="--x:36;--y:290;--w:790;--fs:29;--lh:40">«${esc(quote)}»</p>
         <p class="a t" style="--x:36;--y:677;--w:790;--fs:24;--lh:33">${who(main)}</p>
@@ -333,7 +340,7 @@ function reviewsBlock() {
           <span class="t" style="--fs:19;--lh:26">${esc(r.date)}</span>
           <span class="t rv-txt" style="--fs:22;--lh:30">${esc(r.text.replace(/s+/g, ' '))}</span>
         </button>`).join('');
-  const data = REVIEWS.map(r => ({ n: r.name, d: r.date, t: r.text, tag: r.tag || '', s: r.slug || '' }));
+  const data = SHOWN.map(r => ({ n: r.name, d: r.date, t: r.text, tag: r.tag || '', s: r.slug || '' }));
   return { top: top + `
       <script type="application/json" id="rv-data">${JSON.stringify(data).replace(/</g, '\u003c')}</script>`, rest };
 }
@@ -425,8 +432,9 @@ const ba = index.indexOf(BS), bb = index.indexOf(BE);
 if (ba < 0 || bb < 0) throw new Error('В index.html нет меток BLOG:START / BLOG:END');
 index = index.slice(0, ba + BS.length) + BLOG.homeBlock + '\n        ' + index.slice(bb);
 index = seoHead(index, 'index.html', homeSeo());
+index = index.replace(/<section class="fx s-reviews"[^>]*>/, `<section class="fx s-reviews" id="reviews" aria-labelledby="reviews-h"${SHOWN.length ? '' : ' data-empty'}>`);
 index = index.replace(/(?:<!-- Прототип:[^\n]*-->\n)?<meta name="robots" content="[^"]*">/, UI.robotsTag());
-index = index.replace(/<html lang="ru"[^>]*>/, !FORMS_ON ? '<html lang="ru" data-forms="off">' : LEAD_URL ? `<html lang="ru" data-lead="${LEAD_URL}">` : '<html lang="ru">');
+index = index.replace(/<html lang="ru"[^>]*>/, !FORMS_ON ? '<html lang="ru" data-forms="off">' : LEAD_URL ? `<html lang="ru" data-lead="${LEAD_URL}" data-consent-version="${LEGAL_VERSION}">` : '<html lang="ru">');
 if (!FORMS_ON) index = index.replace(/\s*<div class="consent">[\s\S]*?<\/div>/g, ''); // без ссылок на согласие
 if (!BLOG_ON) {
   index = index.replace(/\s*<!-- 09 \/ Полезное владельцам -->\s*<section class="fx s-blog"[\s\S]*?<\/section>/, '');
@@ -434,12 +442,13 @@ if (!BLOG_ON) {
 }
 index = index.replace(/<div class="proto"( hidden)?>/, LAUNCH ? '<div class="proto" hidden>' : '<div class="proto">');
 fs.writeFileSync(indexPath, UI.fitWords(index));
-const LEGAL = require('./legal')({ SITE, UI, ogTags, iconTags, esc, OPERATOR, LEGAL_DATE, FORMS_ON, METRIKA_ID });
+const LEGAL = require('./legal')({ SITE, UI, ogTags, iconTags, esc, OPERATOR, LEGAL_DATE, LEGAL_VERSION, FORMS_ON, METRIKA_ID });
 if (LAUNCH && FORMS_ON && LEGAL.missing.length) throw new Error('LAUNCH: не заполнены данные оператора в OPERATOR: ' + LEGAL.missing.join(', '));
 if (LAUNCH && FORMS_ON && !LEAD_URL) console.warn('Внимание: LAUNCH без LEAD_URL — формы не отправляют заявки');
 fs.writeFileSync(path.join(ROOT, 'privacy.html'), UI.fitWords(LEGAL.privacy));
 if (FORMS_ON) fs.writeFileSync(path.join(ROOT, 'consent.html'), UI.fitWords(LEGAL.consent));
 else if (fs.existsSync(path.join(ROOT, 'consent.html'))) fs.unlinkSync(path.join(ROOT, 'consent.html'));
+fs.writeFileSync(path.join(ROOT, 'legal-version.txt'), LEGAL_VERSION + '\n'); // для tools/dist.js: архив редакций согласия
 fs.writeFileSync(path.join(ROOT, '404.html'), UI.fitWords(notFoundHtml()));
 fs.writeFileSync(path.join(ROOT, 'robots.txt'), LAUNCH ? `# Сайт открыт для поисковых систем и ИИ-ассистентов (GPTBot, ClaudeBot, PerplexityBot, YandexGPT и др.)
 User-agent: *

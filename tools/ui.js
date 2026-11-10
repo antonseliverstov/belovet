@@ -12,9 +12,9 @@ module.exports = function ui(ctx) {
   // ---------- <head> ----------
   // robots: по умолчанию из переключателя LAUNCH в build.js; страница 404 всегда noindex
   const robotsTag = (r = ROBOTS) => (r.startsWith('noindex') && r === ROBOTS ? '<!-- Прототип: закрыто от индексации до запуска -->\n' : '') + `<meta name="robots" content="${r}">`;
-  // Яндекс Метрика: ставится, только если задан номер счётчика
-  const metrika = () => METRIKA_ID ? `<script>(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");ym(${METRIKA_ID},"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});window.BV_METRIKA=${METRIKA_ID};document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a[href^='tel:']");if(a)ym(${METRIKA_ID},"reachGoal","phone")});</script>
-<noscript><div><img src="https://mc.yandex.ru/watch/${METRIKA_ID}" style="position:absolute;left:-9999px" alt=""></div></noscript>
+  // Яндекс Метрика: только если задан номер счётчика, и запускается лишь после согласия посетителя (assets/consent.js)
+  const metrika = (prefix = '') => METRIKA_ID ? `<script>window.BV_METRIKA=${METRIKA_ID};</script>
+<script src="${prefix}assets/consent.js?v=${ver('assets/consent.js')}" defer></script>
 ` : '';
   function head({ title, desc, url, prefix, type = 'article', ld = [], ogTags, iconTags, robots, preload }) {
     return `<!doctype html>
@@ -25,12 +25,11 @@ module.exports = function ui(ctx) {
 ${robotsTag(robots)}
 <title>${esc(title)}</title>
 ${desc ? `<meta name="description" content="${esc(desc)}">\n` : ''}${url ? `<link rel="canonical" href="${url}">\n` : ''}${ogTags ? ogTags + '\n' : ''}${iconTags}
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat&family=Oswald:wght@700&family=Roboto:wght@400;500;700&display=swap">
+<link rel="preload" href="${prefix}assets/fonts/roboto-cyrillic-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="${prefix}assets/fonts.css?v=${ver('assets/fonts.css')}">
 <link rel="stylesheet" href="${prefix}assets/site.css?v=${ver('assets/site.css')}">
 ${preload ? `<link rel="preload" as="image" href="${preload}">\n` : ''}${ld.map(x => `<script type="application/ld+json">${JSON.stringify(x)}</script>`).join('\n')}
-${metrika()}</head>`;
+${metrika(prefix)}</head>`;
   }
 
   // Заголовки Oswald с длинными словами («Восстановление», «конфиденциальности») на телефоне не влезают в строку:
@@ -85,7 +84,7 @@ ${metrika()}</head>`;
     <div class="foot-text">
       <p class="t" style="${T(24, 33)}">Владислав Белорыбец, ветеринарный врач-хирург.<br>Цены на сайте не являются публичной офертой:<br>итоговая стоимость согласуется после осмотра.</p>
       <a class="t" style="${T(25, 34)}" href="mailto:vladislav@belovet.ru">vladislav@belovet.ru</a>
-      <p class="foot-links t" style="${T(23, 31)}">${blogLink(prefix)}<a href="${prefix}privacy.html">Политика конфиденциальности</a></p>
+      <p class="foot-links t" style="${T(23, 31)}">${blogLink(prefix)}<a href="${prefix}privacy.html">Политика конфиденциальности</a><a href="${prefix}privacy.html#cookie" data-cookie-settings hidden>Настройки cookie</a></p>
     </div>
   </div>
 </footer>`;

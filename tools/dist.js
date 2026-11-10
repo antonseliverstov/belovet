@@ -45,6 +45,19 @@ for (const name of PUBLIC) {
   if (!fs.existsSync(s)) throw new Error('Нет файла сборки: ' + name);
   if (fs.statSync(s).isDirectory()) { fs.mkdirSync(d, { recursive: true }); copy(s, d); } else fs.copyFileSync(s, d);
 }
+// Фото и аватарки из отзывов — только если какой-то отзыв опубликован с согласием автора
+if (!fs.readFileSync(path.join(DIST, 'index.html'), 'utf8').includes('assets/reviews/')) fs.rmSync(path.join(DIST, 'assets', 'reviews'), { recursive: true, force: true });
+// Архив редакций согласия (боевой текст): brand/legal-versions/consent-<редакция>.html.
+// Если текст изменился, а номер редакции прежний — остановка: в журнале заявок редакции должны однозначно указывать на текст.
+if (env.BV_FORMS !== '0') {
+  const ver = fs.readFileSync(path.join(tmp, 'legal-version.txt'), 'utf8').trim();
+  const vdir = path.join(ROOT, 'brand', 'legal-versions'), vfile = path.join(vdir, `consent-${ver}.html`);
+  const body = h => (h.match(/<main>[\s\S]*<\/main>/) || [h])[0].replace(/\?v=[0-9a-f]+/g, '');
+  const cur = fs.readFileSync(path.join(tmp, 'consent.html'), 'utf8');
+  fs.mkdirSync(vdir, { recursive: true });
+  if (fs.existsSync(vfile) && body(fs.readFileSync(vfile, 'utf8')) !== body(cur)) throw new Error(`Текст согласия изменился, а редакция осталась ${ver}: поменяйте LEGAL_VERSION в tools/build.js`);
+  if (!fs.existsSync(vfile)) fs.writeFileSync(vfile, cur);
+}
 if (env.BV_FORMS !== '0' && env.BV_LEAD_URL === '/api/lead.php') {
   fs.mkdirSync(path.join(DIST, 'api'), { recursive: true });
   fs.copyFileSync(path.join(ROOT, 'functions', 'lead.php'), path.join(DIST, 'api', 'lead.php'));

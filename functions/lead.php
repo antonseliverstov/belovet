@@ -1,7 +1,10 @@
 <?php
 // Приём заявок с форм belovet.ru на хостинге Timeweb: JSON от страницы → письмо врачу.
 // Выкладывается как /api/lead.php (tools/dist.js при BV_FORMS=1). Пароли не нужны: письмо уходит через mail() хостинга.
-// Данные не сохраняются на сервере и не передаются третьим лицам; позже вместо/вместе с письмом — отправка в CRM.
+// Данные не передаются третьим лицам; позже вместо/вместе с письмом — отправка в CRM.
+// Доказательство согласия (ч. 3 ст. 9 152-ФЗ): каждая принятая заявка пишется в журнал ~/belovet/private/consents.jsonl —
+// вне папки сайта, по HTTP недоступен. Поля: номер заявки, время, тип формы, отметки, редакция согласия, имя, телефон.
+// Тексты редакций — в репозитории: brand/legal-versions/consent-<редакция>.html. Срок хранения журнала — см. политику, раздел 5.
 
 const MAIL_TO   = 'vladislav@belovet.ru';
 const MAIL_FROM = 'site@belovet.ru';           // адрес на домене сайта, чтобы письмо не попадало в спам
@@ -35,7 +38,9 @@ if (count($hits) >= RATE_MAX) out(429, ['ok' => false, 'error' => 'rate']);
 $name = clean(cut($d['name'] ?? '', 80));
 $phone = clean(cut($d['phone'] ?? '', 40));
 $digits = preg_replace('/\D/', '', $phone);
-if ($name === '' || strlen($digits) !== 11 || empty($d['privacy']) || empty($d['consent'])) out(400, ['ok' => false, 'error' => 'fields']);
+// Сервер сам отклоняет заявку без обеих отметок и без редакции согласия
+$version = preg_replace('/[^0-9-]/', '', (string)($d['consent_version'] ?? ''));
+if ($name === '' || strlen($digits) !== 11 || ($d['privacy'] ?? false) !== true || ($d['consent'] ?? false) !== true || $version === '') out(400, ['ok' => false, 'error' => 'fields']);
 
 $kind = isset(KINDS[$d['kind'] ?? '']) ? $d['kind'] : 'book';
 $pet = clean(cut($d['pet'] ?? '', 80));
@@ -54,10 +59,12 @@ foreach (array_slice(is_array($d['files'] ?? null) ? $d['files'] : [], 0, MAX_FI
 }
 
 date_default_timezone_set('Europe/Moscow');
+$id = date('Ymd-His') . '-' . bin2hex(random_bytes(3));
 $title = KINDS[$kind];
 $rows = array_filter([
   'Имя' => $name, 'Телефон' => $phone, 'Питомец' => $pet, 'Сообщение' => $message,
-  'Файлов' => $files ? (string)count($files) : '', 'Страница' => $page, 'Время' => date('d.m.Y H:i') . ' (МСК)'
+  'Файлов' => $files ? (string)count($files) : '', 'Страница' => $page, 'Время' => date('d.m.Y H:i') . ' (МСК)',
+  'Заявка №' => $id, 'Согласие' => "отметки поставлены, редакция $version"
 ], fn($v) => $v !== '');
 $text = $title . "\n\n";
 foreach ($rows as $k => $v) $text .= "$k: $v\n";
@@ -77,6 +84,13 @@ foreach ($files as [$fname, $type, $bin]) {
     . 'Content-Disposition: attachment; filename="' . $enc($fname) . "\"\r\n\r\n" . chunk_split(base64_encode($bin)) . "\r\n";
 }
 $body .= "--$boundary--\r\n";
+
+// Журнал согласий пишется до отправки письма: без записи в журнал заявку не принимаем
+$logDir = dirname(__DIR__, 2) . '/private';
+if (!is_dir($logDir)) { @mkdir($logDir, 0700, true); @file_put_contents($logDir . '/.htaccess', "Require all denied\n"); }
+$entry = json_encode(['id' => $id, 'at' => date('c'), 'kind' => $kind, 'privacy' => true, 'consent' => true,
+  'consent_version' => $version, 'name' => $name, 'phone' => $phone, 'page' => $page], JSON_UNESCAPED_UNICODE);
+if (@file_put_contents($logDir . '/consents.jsonl', $entry . "\n", FILE_APPEND | LOCK_EX) === false) out(500, ['ok' => false, 'error' => 'log']);
 
 if (!mail(MAIL_TO, $subject, $body, $headers, '-f' . MAIL_FROM)) out(502, ['ok' => false, 'error' => 'delivery']);
 $hits[] = time();
