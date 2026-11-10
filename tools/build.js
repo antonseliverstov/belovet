@@ -22,7 +22,7 @@ const FORMS_ON = process.env.BV_FORMS !== '0';
 const DOMAIN = 'belovet.ru';
 const SITE = LAUNCH ? `https://${DOMAIN}/` : 'https://antonseliverstov.github.io/belovet/';
 const ROBOTS = LAUNCH ? 'index, follow, max-image-preview:large' : 'noindex, nofollow';
-const METRIKA_ID = ''; // номер счётчика Яндекс Метрики; пусто — счётчик не ставится
+const METRIKA_ID = LAUNCH ? '114175805' : ''; // счётчик Яндекс Метрики belovet.ru — только на боевом сайте (в прототипе не ставится); запуск после согласия посетителя (assets/consent.js)
 const VERIFY = { yandex: '', google: '' }; // коды подтверждения Вебмастера и Search Console (если не через DNS)
 // Адрес обработчика заявок; на боевом сайте — /api/lead.php (functions/lead.php, ставит tools/dist.js). Пусто — формы просят позвонить
 const LEAD_URL = process.env.BV_LEAD_URL || '';
