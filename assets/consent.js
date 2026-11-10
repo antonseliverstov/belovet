@@ -30,6 +30,7 @@
   var old = document.getElementById('cookie'); if (old) old.remove();
 
   var css = '.bv-ck{position:fixed;z-index:60;left:16px;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));max-width:760px;margin-inline:auto;background:#0F2B45;color:#fff;border-radius:18px;padding:16px 18px;display:flex;gap:12px 16px;align-items:center;flex-wrap:wrap;box-shadow:0 12px 36px rgba(15,43,69,.3);font:14px/1.45 Roboto,Arial,sans-serif}'
+    + '.bv-ck[hidden]{display:none!important}'
     + '.bv-ck p{flex:1 1 320px;margin:0;color:#E3EBF3}.bv-ck a{color:#fff;text-decoration:underline}'
     + '.bv-ck button{min-height:44px;padding:0 20px;border-radius:999px;border:1px solid #fff;font:500 15px Roboto,Arial,sans-serif;cursor:pointer}'
     + '.bv-ck .yes{background:#FBFF2C;border-color:#FBFF2C;color:#0F2B45}.bv-ck .no{background:transparent;color:#fff}'
