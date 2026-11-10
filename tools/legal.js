@@ -5,7 +5,9 @@ module.exports = function legal(ctx) {
   const { SITE, UI, ogTags, iconTags, esc, OPERATOR, LEGAL_DATE, FORMS_ON = true, METRIKA_ID = '' } = ctx;
   const O = OPERATOR;
   const f = (v, hint) => v ? esc(v) : `<mark class="todo">[${hint}]</mark>`;
-  const who = `${f(O.status, 'статус: ИП или самозанятый')} ${f(O.name, 'ФИО полностью')}`;
+  // Самозанятый — физическое лицо, плательщик налога на профессиональный доход (без ОГРНИП); ИП — «индивидуальный предприниматель ФИО»
+  const STATUS = { 'самозанятый': n => `${n} (плательщик налога на профессиональный доход)`, 'ИП': n => `индивидуальный предприниматель ${n}` };
+  const who = O.status && O.name && STATUS[O.status] ? STATUS[O.status](esc(O.name)) : `${f(O.status, 'статус: ИП или самозанятый')} ${f(O.name, 'ФИО полностью')}`;
   const ids = [O.inn ? `ИНН ${esc(O.inn)}` : `<mark class="todo">[ИНН]</mark>`, O.ogrnip ? `ОГРНИП ${esc(O.ogrnip)}` : ''].filter(Boolean).join(', ');
   const missing = FORMS_ON ? ['name', 'status', 'inn', 'address'].filter(k => !O[k]) : [];
 
