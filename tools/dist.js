@@ -49,7 +49,8 @@ fs.writeFileSync(path.join(DIST, '.htaccess'), `AddDefaultCharset utf-8
 ErrorDocument 404 /404.html
 
 RewriteEngine On
-RewriteCond %{HTTPS} off [OR]
+# На Timeweb https принимает прокси, Apache всегда видит HTTPS=off — смотрим заголовок прокси, иначе будет петля
+RewriteCond %{HTTP:X-Forwarded-Proto} =http [OR]
 RewriteCond %{HTTP_HOST} ^www\\. [NC]
 RewriteRule ^(.*)$ https://belovet.ru/$1 [R=301,L]
 # /index.html → / (канонический адрес главной)
