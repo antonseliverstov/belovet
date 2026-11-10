@@ -29,6 +29,7 @@ ${desc ? `<meta name="description" content="${esc(desc)}">\n` : ''}${url ? `<lin
 <link rel="stylesheet" href="${prefix}assets/fonts.css?v=${ver('assets/fonts.css')}">
 <link rel="stylesheet" href="${prefix}assets/site.css?v=${ver('assets/site.css')}">
 ${preload ? `<link rel="preload" as="image" href="${preload}">\n` : ''}${ld.map(x => `<script type="application/ld+json">${JSON.stringify(x)}</script>`).join('\n')}
+<script src="${prefix}assets/fx.js?v=${ver('assets/fx.js')}" defer></script>
 ${metrika(prefix)}</head>`;
   }
 
@@ -87,7 +88,8 @@ ${metrika(prefix)}</head>`;
       <p class="foot-links t" style="${T(23, 31)}">${blogLink(prefix)}<a href="${prefix}privacy.html">Политика конфиденциальности</a><a href="${prefix}privacy.html#cookie" data-cookie-settings hidden>Настройки cookie</a></p>
     </div>
   </div>
-</footer>`;
+</footer>
+<nav class="mbar" aria-label="Запись"><a class="mbar-book" href="${prefix}index.html?form=book">Записаться</a><a class="mbar-urgent" href="${prefix}index.html?form=urgent">Экстренная запись</a></nav>`;
   }
 
   // ---------- картинка с прозрачностью: JPEG + маска ----------
@@ -305,7 +307,7 @@ ${metrika(prefix)}</head>`;
       <div class="rec-intro"><p class="t o up" style="${T(67, 77)}">Шаг за шагом</p><p class="t" style="${T(25, 35)}">${esc(introText)}</p></div>
     </div>
     <ol class="rec-line">
-      <img class="rec-curve" src="${prefix}assets/op/timeline.svg" width="26" height="1008" alt="">
+      <div class="rec-paws" aria-hidden="true"></div>
       ${rows.map((r, i) => { const [big, small, word] = split(r[0]); return `<li class="rec-r${i % 4}"><span class="rec-when"><b class="t o" style="${word ? T(64, 74) : T(100, 110)}">${esc(cap(big))}</b><small class="t o" style="${T(29, 38)}">${esc(small)}</small></span><img class="rec-dot" src="${prefix}assets/op/dot.svg" width="18" height="18" alt=""><span class="rec-what t" style="${T(28, 40)}">${esc(r[1])}</span></li>`; }).join('')}
     </ol>
     <div class="sx rec-foot"><p class="t" style="${T(22, 31)}">Сроки ориентировочные: врач скорректирует их по ходу восстановления.</p>${doodle(prefix, 'p01-paws.png', '')}</div>

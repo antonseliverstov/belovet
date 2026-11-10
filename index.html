@@ -578,7 +578,9 @@ a.dir:hover h3 { text-decoration: underline; text-underline-offset: .12em; text-
 
   .story-who img { width: 72px; height: 72px; }
   .story-who p { gap: 2px; }
-  .polaroid { display: none; }
+  .polaroid { display: block; position: relative; width: 210px; height: auto; padding: 8px 8px 34px; align-self: center; rotate: 3deg; margin: 6px 0 10px; }
+  .polaroid img { position: static; display: block; width: 100%; height: auto; aspect-ratio: 204 / 301; }
+  .polaroid figcaption { position: absolute; left: 10px; right: 10px; top: auto; bottom: 8px; font-size: 18px; line-height: 1.1; }
   .story-text { gap: 12px; }
 
   .s-trust .fx-box { padding-bottom: 0; }
@@ -668,6 +670,20 @@ a.dir:hover h3 { text-decoration: underline; text-underline-offset: .12em; text-
   .mbar { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px)); background: var(--paper); box-shadow: 0 -4px 20px rgba(15, 43, 69, .08); }
   .mbar .btn { min-height: 48px; padding: 0 12px; font-size: 16px; }
 }
+
+/* ---------- Закреплённая шапка на десктопе (assets/fx.js переносит её в body и добавляет .is-stuck) ---------- */
+@keyframes bv-drop { from { transform: translateY(-100%); } to { transform: none; } }
+@media (min-width: 1024px) {
+  .header.is-stuck { position: fixed; inset: 0 0 auto; max-width: 1613px; margin-inline: auto; z-index: 40; background: rgba(255, 255, 255, .97); box-shadow: 0 8px 28px rgba(0, 28, 69, .12); border-radius: 0 0 22px 22px; animation: bv-drop .25s ease-out; color: var(--ink); }
+}
+@media (min-width: 1024px) { .header.is-stuck .nav a { color: var(--ink); } .header.is-stuck .nav a:hover { color: #008FE9; } }
+@media (prefers-reduced-motion: reduce) { .header.is-stuck { animation: none; } }
+
+/* ---------- «Операция»: собака выезжает снизу по мере прокрутки (assets/fx.js задаёт --rise от 0 до 1) ---------- */
+.s-nose.nose-anim .nose-bg, .s-nose.nose-anim .nose-top { translate: 0 calc((1 - var(--rise, 1)) * 38%); will-change: translate; }
+
+/* ---------- Экстренная запись без форм: блок не короче левой колонки ---------- */
+@media (min-width: 1024px) { html[data-forms="off"] .urgent-box { min-height: calc(1290 * var(--px)); } }
 </style>
 </head>
 <body>
@@ -793,7 +809,7 @@ a.dir:hover h3 { text-decoration: underline; text-underline-offset: .12em; text-
     <div class="fx-box" style="aspect-ratio:1613/1180">
       <div class="a deco card-sky rot" style="--x:759.91;--y:136.67;--w:826;--r:-3" aria-hidden="true"><div class="hh" style="--hh:1050"></div></div>
       <h2 class="a about-name o up" id="about-h" style="--x:72;--y:46;--w:1400"><span class="t" style="--fs:92;--lh:99">Владислав</span> <span class="t o" style="--fs:158;--lh:176;--wl:9">Белорыбец</span></h2>
-      <img class="a about-photo" style="--x:777.75;--y:164;--w:674.52" src="assets/home/doctor-bulldog.jpg" width="1024" height="1536" alt="Владислав Белорыбец с французским бульдогом на руках" loading="lazy">
+      <img class="a about-photo" style="--x:777.75;--y:200;--w:674.52" src="assets/home/doctor-bulldog.jpg" width="1024" height="1536" alt="Владислав Белорыбец с французским бульдогом на руках" loading="lazy">
       <p class="a t o about-role" style="--x:72;--y:357;--w:630;--fs:36;--lh:46;--wl:12">Ветеринарный врач-хирург</p>
       <p class="a t about-lead" style="--x:72;--y:427;--w:600;--fs:28;--lh:38">Плановые и экстренные операции <br>кошкам и собакам.</p>
       <p class="a t about-geo" style="--x:72;--y:526;--w:620;--fs:22;--lh:29">Люберцы · Москва и Московская область</p>
@@ -819,7 +835,7 @@ a.dir:hover h3 { text-decoration: underline; text-underline-offset: .12em; text-
         <b class="a t o" style="--x:30;--y:28;--w:190;--fs:130;--lh:140">01</b>
         <h3 class="a t o" style="--x:219;--y:39;--w:455;--fs:60;--lh:65">Переломы <br>и связки</h3>
         <p class="a t" style="--x:219;--y:238;--w:451;--fs:27;--lh:36">Остеосинтез, разрывы связок, <br>вывихи и суставы.</p>
-        <img class="a deco" style="--x:50.04;--y:297.49;--w:110.92" src="assets/home/paw.png" width="222" height="198" alt="">
+        <img class="a deco" style="--x:50.04;--y:297.49;--w:110.92" src="assets/home/paw-full.png" width="240" height="212" alt="">
       </a>
       <a class="a dir dir-mid hh" style="--x:858;--y:435;--w:683;--hh:212" href="#prices" data-open-cat="Онкологическая хирургия">
         <b class="t o" style="--fs:52;--lh:62">02</b>
@@ -1256,7 +1272,7 @@ a.dir:hover h3 { text-decoration: underline; text-underline-offset: .12em; text-
   <section class="fx s-reviews" id="reviews" aria-labelledby="reviews-h" data-empty>
     <div class="fx-box" style="aspect-ratio:1613/1290">
       <h2 class="a t o up" id="reviews-h" style="--x:68;--y:66;--w:1160;--fs:100;--lh:108;--wl:9">Что пишут <br>владельцы</h2>
-      <img class="a deco rot" style="--x:669.2;--y:54.25;--w:249.59;--r:-9.16" src="assets/home/cat-armchair.png" width="499" height="450" alt="" loading="lazy">
+      <img class="a deco rot" style="--x:669.2;--y:54.25;--w:249.59;--r:-9.16" src="assets/home/cat-armchair-full.png" width="520" height="468" alt="" loading="lazy">
       <p class="a t" style="--x:932;--y:226;--w:610;--fs:25;--lh:34">Отзывы о работе Владислава из карточки <br>клиники «Добрый Доктор» на Яндекс Картах.</p>
       <a class="a cta cta-white" style="--x:1176;--y:88" href="https://yandex.ru/maps/?text=%D0%94%D0%BE%D0%B1%D1%80%D1%8B%D0%B9%20%D0%94%D0%BE%D0%BA%D1%82%D0%BE%D1%80%2C%20%D0%9B%D1%8E%D0%B1%D0%B5%D1%80%D1%86%D1%8B%2C%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%20%D0%92%D0%B5%D1%80%D1%82%D0%BE%D0%BB%D1%91%D1%82%D1%87%D0%B8%D0%BA%D0%BE%D0%B2%2C%2011" target="_blank" rel="noopener">На Яндекс Картах</a>
       <!-- REVIEWS:START -->
@@ -1627,5 +1643,6 @@ document.querySelectorAll('[data-open-cat]').forEach(function (link) {
 <script src="assets/search-data.js?v=7aa0467f"></script>
 <script src="assets/search.js?v=dac72fb8"></script>
 
+<script src="assets/fx.js" defer></script>
 </body>
 </html>
