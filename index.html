@@ -28,7 +28,7 @@
 <link rel="preload" href="assets/fonts/roboto-cyrillic-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/fonts.css">
 
-<link rel="preload" as="image" href="assets/hero-bg.jpg">
+<link rel="preload" as="image" href="assets/hero-bg-2.jpg">
 <style>
 /* Дизайн-система макета Figma «BELOVET.RU»: navy, жёлтые кнопки, голубой, молочный; Oswald + Roboto + Caveat */
 :root {
@@ -119,7 +119,7 @@ html[data-forms="off"] .call-instead .btn, html[data-forms="off"] .call-instead 
 
 /* Первый экран вместе с шапкой — макет Figma «01 / Утверждённый hero», 1613×975.
    На широких экранах всё стоит по координатам макета: --px = один пиксель макета при текущей ширине блока. */
-.stage { --ink: #001C45; --sun: #FBFF2C; position: relative; max-width: 1613px; margin-inline: auto; container-type: inline-size; border-radius: 28px; background: #59B6F7 url(assets/hero-bg.jpg) center bottom / cover no-repeat; overflow-x: clip; }
+.stage { --ink: #001C45; --sun: #FBFF2C; position: relative; max-width: 1613px; margin-inline: auto; container-type: inline-size; border-radius: 28px; background: #59B6F7 url(assets/hero-bg-2.jpg) center bottom / cover no-repeat; overflow-x: clip; }
 .stage > * { --px: calc(100cqw / 1613); }
 .btn-sun { background: var(--sun); color: var(--ink); font-family: "Roboto", Arial, sans-serif; font-weight: 700; }
 .btn-sun:hover { background: #F0F41E; }
@@ -143,17 +143,17 @@ html[data-forms="off"] .call-instead .btn, html[data-forms="off"] .call-instead 
 .header .where-btn .on { color: var(--ink); font-weight: 500; }
 
 /* Заголовок, кошка, кнопка, подпись */
-.hero { position: relative; height: calc(975 * var(--px)); color: #fff; }
+.hero { position: relative; height: clamp(calc(780 * var(--px)), calc(100svh - 24px), calc(975 * var(--px))); color: #fff; } /* не выше окна браузера: кнопка и кот привязаны к низу */
 .hero-eyebrow { position: absolute; left: calc(84 * var(--px)); top: calc(121 * var(--px)); font: 700 calc(17 * var(--px))/1.2 "Roboto", Arial, sans-serif; letter-spacing: calc(0.45 * var(--px)); text-transform: uppercase; }
 .hero h1 { margin: 0; font-family: "Oswald", "Arial Narrow", sans-serif; font-weight: 700; text-transform: uppercase; }
 .hero-big { position: absolute; z-index: 1; left: calc(85 * var(--px)); top: calc(159 * var(--px)); font-size: calc(300 * var(--px)); line-height: calc(208 * var(--px)); letter-spacing: calc(-2 * var(--px)); white-space: nowrap; }
 .hero-sub { position: absolute; z-index: 3; left: calc(85 * var(--px)); top: calc(501 * var(--px)); font-size: calc(74 * var(--px)); line-height: calc(100 * var(--px)); letter-spacing: calc(-1 * var(--px)); color: var(--sun); white-space: nowrap; }
-.hero-cat { position: absolute; z-index: 2; left: calc(497 * var(--px)); top: calc(330 * var(--px)); width: calc(1037.675 * var(--px)); height: calc(615.924 * var(--px)); margin: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+.hero-cat { position: absolute; z-index: 2; left: calc(497 * var(--px)); top: auto; bottom: calc(29 * var(--px)); width: calc(1037.675 * var(--px)); height: calc(615.924 * var(--px)); margin: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
 .hero-cat img { flex: none; width: calc(992 * var(--px)); height: auto; max-width: none; rotate: -5.52deg; animation: cat-leap 3.4s ease-in-out infinite; transform-origin: 55% 60%; }
 /* Кот «в прыжке»: мягко покачивается слева направо и чуть вверх */
 @keyframes cat-leap { 0%, 100% { transform: translate(0, 0) rotate(-2.5deg); } 50% { transform: translate(2.2%, -2.4%) rotate(2.5deg); } }
 @media (prefers-reduced-motion: reduce) { .hero-cat img { animation: none; } }
-.hero-cta { position: absolute; z-index: 3; left: calc(85 * var(--px)); top: calc(862 * var(--px)); width: calc(364 * var(--px)); min-height: 0; height: calc(65 * var(--px)); padding: 0; border-radius: calc(20 * var(--px)); color: #322B16; font-size: calc(23 * var(--px)); }
+.hero-cta { position: absolute; z-index: 3; left: calc(85 * var(--px)); top: auto; bottom: calc(48 * var(--px)); width: calc(364 * var(--px)); min-height: 0; height: calc(65 * var(--px)); padding: 0; border-radius: calc(20 * var(--px)); color: #322B16; font-size: calc(23 * var(--px)); }
 .hero-sign { margin: 0; position: absolute; z-index: 3; left: calc(1182 * var(--px)); top: calc(812 * var(--px)); display: grid; gap: calc(2 * var(--px)); font-family: "Roboto", Arial, sans-serif; line-height: 1.17; }
 .hero-sign b { font-size: calc(28 * var(--px)); font-weight: 700; }
 .hero-sign span { font-size: calc(20 * var(--px)); font-weight: 600; }
@@ -171,7 +171,7 @@ html[data-forms="off"] .call-instead .btn, html[data-forms="off"] .call-instead 
   .header .call { width: auto; height: 48px; padding: 0 22px; border-radius: 16px; font-size: 16px; }
   .nav { display: none; }
   .header .burger { display: grid; flex-shrink: 0; }
-  .hero { height: auto; display: grid; padding: 24px var(--gut) 28px; }
+  .hero { height: auto; display: grid; padding: 24px var(--gut) 84px; }
   .hero-eyebrow, .hero-big, .hero-sub, .hero-cat, .hero-cta, .hero-sign { position: static; }
   .hero-eyebrow { font-size: 14px; letter-spacing: 0.03em; }
   .hero h1 { display: grid; margin-top: 10px; }
