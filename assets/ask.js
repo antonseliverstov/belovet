@@ -81,7 +81,7 @@
   function renderReads(list, reads) {
     list.innerHTML = reads.length ? reads.map(function (r) {
       return '<li><a href="' + esc(r.href) + '" target="_blank" rel="noopener"><small>' + esc(r.cat) + '</small><b>' + esc(r.title) + '</b>' + (r.lead ? '<span>' + esc(r.lead) + '</span>' : '') + '</a></li>';
-    }).join('') : '<li class="ask-done">Готовой статьи точно по вашему вопросу не нашлось — лучше задать его врачу лично.</li>';
+    }).join('') : '<li class="ask-done">Готовой статьи точно по вашему вопросу у меня нет — лучше расскажите мне лично, разберёмся вместе.</li>';
   }
   function loadIndex(cb) {
     if (window.BV_ASK) return cb();
@@ -93,8 +93,8 @@
   var lock = null;
   try { lock = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) {}
   if (lock && lock.day === today()) {
-    card.querySelector('[data-ask-done-title]').textContent = 'Вы уже задали вопрос сегодня';
-    card.querySelector('[data-ask-done-text]').textContent = 'Владислав ответит в часы приёма. Новый вопрос можно задать завтра — так врач успевает ответить каждому.';
+    card.querySelector('[data-ask-done-title]').textContent = 'Вы уже задали мне вопрос сегодня';
+    card.querySelector('[data-ask-done-text]').textContent = 'Я свяжусь с вами, как только появится возможность. Новый вопрос можно задать завтра — так я успеваю ответить каждому.';
     renderReads(steps[3].querySelector('.ask-reads'), lock.reads || []);
     show(4);
     return;
@@ -124,7 +124,7 @@
     e.preventDefault();
     var t = steps[1].querySelector('#ask-text').value.trim();
     if (!state.pet) return err(steps[1], 'Выберите, кошка у вас или собака.');
-    if (t.length < 10) return err(steps[1], 'Опишите, что беспокоит питомца, хотя бы парой предложений.');
+    if (t.length < 10) return err(steps[1], 'Опишите мне, что беспокоит питомца, хотя бы парой предложений.');
     err(steps[1]); state.text = t;
     loadIndex(function () {
       state.reads = pick();
@@ -140,8 +140,8 @@
   if (cf) cf.addEventListener('submit', function (e) {
     e.preventDefault();
     var phone = cf.phone.value.trim(), digits = phone.replace(/\D/g, '');
-    if (digits.length !== 11) return err(cf, 'Введите номер телефона полностью — врач перезвонит на него.');
-    if (!cf.privacy.checked || !cf.consent.checked) return err(cf, 'Отметьте обе галочки: без согласия мы не можем передать вопрос врачу.');
+    if (digits.length !== 11) return err(cf, 'Введите номер телефона полностью — я перезвоню на него.');
+    if (!cf.privacy.checked || !cf.consent.checked) return err(cf, 'Отметьте обе галочки: без вашего согласия я не смогу получить ваш вопрос.');
     err(cf);
     var endpoint = root.dataset.lead;
     var done = function (demo) {
@@ -167,8 +167,8 @@
       if (!r.ok) throw new Error(r.status);
       done(false);
     }).catch(function (x) {
-      err(cf, x && x.message === 'rate' ? 'С этого устройства сегодня уже задавали вопрос. Новый можно задать завтра.' : 'Не получилось отправить. Позвоните, пожалуйста: +7 (939) 255-77-71.');
-      btn.disabled = false; btn.textContent = 'Отправить вопрос врачу';
+      err(cf, x && x.message === 'rate' ? 'Сегодня вы уже задали мне вопрос — новый можно задать завтра.' : 'Не получилось отправить. Позвоните мне, пожалуйста: +7 (939) 255-77-71.');
+      btn.disabled = false; btn.textContent = 'Отправить вопрос';
     });
   });
 })();

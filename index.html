@@ -685,7 +685,7 @@ a.dir:hover h3 { text-decoration: underline; text-underline-offset: .12em; text-
 /* ---------- Экстренная запись без форм: блок не короче левой колонки ---------- */
 @media (min-width: 1024px) { html[data-forms="off"] .urgent-box { min-height: calc(1290 * var(--px)); } }
 
-/* ---------- 04 / Вопрос врачу: пошаговая форма (assets/ask.js?v=3e321e5b) ---------- */
+/* ---------- 04 / Вопрос врачу: пошаговая форма (assets/ask.js?v=0c3c43b8) ---------- */
 .s-ask { --bg: var(--medical); color: var(--milk); }
 .ask-anchor { position: absolute; top: -90px; }
 .ask-box { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: calc(64 * var(--px)); align-items: center; padding: calc(88 * var(--px)) calc(72 * var(--px)); }
@@ -924,7 +924,7 @@ html[data-forms="off"] .ask-call { display: grid; }
     </div>
   </section>
 
-  <!-- 04 / Вопрос врачу: пошаговая форма вместо экстренной записи (логика — assets/ask.js?v=3e321e5b) -->
+  <!-- 04 / Вопрос врачу: пошаговая форма вместо экстренной записи (логика — assets/ask.js?v=0c3c43b8) -->
   <section class="fx s-ask" id="ask" aria-labelledby="ask-h">
     <span id="urgent" class="ask-anchor" aria-hidden="true"></span>
     <div class="ask-box">
@@ -964,12 +964,12 @@ html[data-forms="off"] .ask-call { display: grid; }
         </form>
 
         <div class="ask-step" data-step="3" hidden>
-          <p class="ask-q">Что почитать по вашему вопросу</p>
-          <p class="ask-urgent-note" hidden>Вы отметили вопрос как срочный: в письме врачу он придёт с пометкой «Срочно», и я посмотрю его первым. Если питомцу очень плохо прямо сейчас — обратитесь в ближайшую круглосуточную ветклинику, не дожидаясь ответа.</p>
+          <p class="ask-q">Вот что советую прочитать по вашему вопросу</p>
+          <p class="ask-urgent-note" hidden>Вы отметили вопрос как срочный — я посмотрю его первым. Если питомцу очень плохо прямо сейчас, не ждите моего ответа: поезжайте в ближайшую круглосуточную ветклинику.</p>
           <ul class="ask-reads"></ul>
           <form class="ask-contact" novalidate>
             <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-            <p class="ask-q ask-q-sm">Хотите, чтобы врач ответил лично?</p>
+            <p class="ask-q ask-q-sm">Хотите, чтобы я ответил вам лично? Оставьте телефон — перезвоню.</p>
             <label class="ask-vh" for="ask-phone">Телефон</label>
             <input class="ask-input" id="ask-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" data-phone>
             <div class="ask-checks">
@@ -977,11 +977,11 @@ html[data-forms="off"] .ask-call { display: grid; }
               <label class="check"><input type="checkbox" name="consent"><span>Даю <a href="consent.html" target="_blank">согласие на обработку персональных данных</a></span></label>
             </div>
             <p class="ask-err" role="alert"></p>
-            <div class="ask-row"><button class="ask-link" type="button" data-ask-back="2">← Изменить описание</button><button class="btn btn-primary" type="submit">Отправить вопрос врачу</button></div>
+            <div class="ask-row"><button class="ask-link" type="button" data-ask-back="2">← Изменить описание</button><button class="btn btn-primary" type="submit">Отправить вопрос</button></div>
           </form>
           <div class="ask-call">
-            <p class="ask-q ask-q-sm">Хотите, чтобы врач ответил лично?</p>
-            <p>Позвоните в часы приёма, с 10:00 до 22:00: <a href="tel:+79392557771">+7 (939) 255-77-71</a>. Снимки и анализы можно прислать на <a href="mailto:vladislav@belovet.ru">vladislav@belovet.ru</a>.</p>
+            <p class="ask-q ask-q-sm">Хотите, чтобы я ответил вам лично? Оставьте телефон — перезвоню.</p>
+            <p>Позвоните мне в часы приёма, с 10:00 до 22:00: <a href="tel:+79392557771">+7 (939) 255-77-71</a>. Снимки и анализы можно прислать мне на <a href="mailto:vladislav@belovet.ru">vladislav@belovet.ru</a>.</p>
             <div class="ask-row"><button class="ask-link" type="button" data-ask-back="2">← Изменить описание</button></div>
           </div>
         </div>
@@ -1525,7 +1525,7 @@ var SCHEDULE = {
   window.addEventListener('resize', function () { if (menu.open && innerWidth > 760) menu.close(); });
 })();
 
-// Окна с формами: запись на приём и приглашение хирурга. «Вопрос врачу» — пошаговый блок #ask (assets/ask.js?v=3e321e5b)
+// Окна с формами: запись на приём и приглашение хирурга. «Вопрос врачу» — пошаговый блок #ask (assets/ask.js?v=0c3c43b8)
 (function () {
   var FORMS = {
     book:   { title: 'Записаться на приём', sub: 'Перезвоню и подберу время приёма.' },
@@ -1744,6 +1744,6 @@ document.querySelectorAll('[data-open-cat]').forEach(function (link) {
 <script src="assets/search.js?v=dac72fb8"></script>
 
 <script src="assets/fx.js?v=7ebdec92" defer></script>
-<script src="assets/ask.js?v=3e321e5b" defer></script>
+<script src="assets/ask.js?v=0c3c43b8" defer></script>
 </body>
 </html>
