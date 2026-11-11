@@ -710,9 +710,9 @@ a.dir:hover h3 { text-decoration: underline; text-underline-offset: .12em; text-
 .ask-pets { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 .ask-chip { min-height: 48px; padding: 0 22px; border-radius: 14px; border: 1.5px solid var(--ink); background: #fff; color: var(--ink); font: 500 17px/1 "Roboto", Arial, sans-serif; cursor: pointer; transition: background .15s, color .15s; }
 .ask-chip[aria-pressed="true"] { background: var(--ink); color: #fff; }
-.ask-urgent { border-color: var(--coral, #E8907E); color: #B4412A; margin-left: 8px; }
+.ask-urgent { border-color: var(--coral, #E8907E); color: #B4412A; }
 .ask-urgent[aria-pressed="true"] { background: #E0533A; border-color: #E0533A; color: #fff; }
-.ask-urgent-hint { flex: 1 1 160px; font-size: 14px; line-height: 1.35; color: #4A5A70; }
+.ask-urgent-hint { flex: 0 0 auto; margin-left: 10px; font-size: 14px; line-height: 1.35; color: #4A5A70; text-align: right; }
 .ask-row { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; justify-content: space-between; margin-top: 4px; }
 .ask-row .btn { min-height: 52px; padding: 0 28px; font-size: 17px; }
 .ask-row .btn:only-child { margin-left: auto; }
@@ -743,7 +743,7 @@ html[data-forms="off"] .ask-call { display: grid; }
   .ask-card { padding: 24px 20px 26px; border-radius: 22px; min-height: 0; }
   .ask-dots { margin-bottom: 16px; }
   .ask-q { font-size: 26px; } .ask-q-sm { font-size: 21px; }
-  .ask-urgent { margin-left: 0; }
+  .ask-urgent-hint { margin-left: 0; text-align: left; }
   .ask-row .btn { width: 100%; }
 }
 @media (prefers-reduced-motion: reduce) { .ask-reads a, .ask-chip, .ask-dots li { transition: none; } }
@@ -954,8 +954,8 @@ html[data-forms="off"] .ask-call { display: grid; }
           <div class="ask-pets" role="group" aria-labelledby="ask-pet-q">
             <button class="ask-chip" type="button" data-pet="cat" aria-pressed="false">Кошка</button>
             <button class="ask-chip" type="button" data-pet="dog" aria-pressed="false">Собака</button>
+            <span class="ask-urgent-hint">Нажмите «Срочно»,<br>если нет времени ждать</span>
             <button class="ask-chip ask-urgent" type="button" data-urgent aria-pressed="false">Срочно</button>
-            <span class="ask-urgent-hint">Нажмите «Срочно», если нет времени ждать</span>
           </div>
           <label class="ask-vh" for="ask-text">Что беспокоит питомца</label>
           <textarea class="ask-input ask-text" id="ask-text" name="message" rows="6" maxlength="3000" placeholder="Поделитесь состоянием вашего питомца, и я расскажу, как можно решить эту проблему. Вопрос может быть не только по ветеринарной хирургии."></textarea>
