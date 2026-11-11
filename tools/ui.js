@@ -28,7 +28,7 @@ ${desc ? `<meta name="description" content="${esc(desc)}">\n` : ''}${url ? `<lin
 <link rel="preload" href="${prefix}assets/fonts/roboto-cyrillic-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="${prefix}assets/fonts.css?v=${ver('assets/fonts.css')}">
 <link rel="stylesheet" href="${prefix}assets/site.css?v=${ver('assets/site.css')}">
-${preload ? `<link rel="preload" as="image" href="${preload}">\n` : ''}${ld.map(x => `<script type="application/ld+json">${JSON.stringify(x)}</script>`).join('\n')}
+${preload ? `<link rel="preload" as="image" href="${preload}" fetchpriority="high">\n` : ''}${ld.map(x => `<script type="application/ld+json">${JSON.stringify(x)}</script>`).join('\n')}
 <script src="${prefix}assets/fx.js?v=${ver('assets/fx.js')}" defer></script>
 ${metrika(prefix)}</head>`;
   }

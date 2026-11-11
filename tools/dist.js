@@ -102,7 +102,24 @@ ${BLOG_ON ? '' : '# Блог пока не опубликован: старые 
 </IfModule>
 `);
 
-// 4а. Картинки → WebP (tools/webp.js; нужен npm install). BV_WEBP=0 — собрать без WebP
+// 4а. fonts.css (только @font-face, ~7 КБ) — прямо в <head> каждой страницы: на один блокирующий отрисовку запрос меньше.
+// Пути к шрифтам — от корня сайта (/assets/fonts/), так они верны со страницы любой глубины.
+{
+  const css = fs.readFileSync(path.join(DIST, 'assets', 'fonts.css'), 'utf8')
+    .replace(/\/\*[\s\S]*?\*\//g, '').replace(/url\(fonts\//g, 'url(/assets/fonts/').replace(/\s*\n\s*/g, '\n').trim();
+  (function inline(dir) {
+    for (const name of fs.readdirSync(dir)) {
+      const p = path.join(dir, name);
+      if (fs.statSync(p).isDirectory()) { inline(p); continue; }
+      if (!name.endsWith('.html')) continue;
+      const h = fs.readFileSync(p, 'utf8');
+      const t = h.replace(/<link rel="stylesheet" href="[^"]*assets\/fonts\.css(?:\?v=[0-9a-f]+)?">/, `<style>${css}</style>`);
+      if (t !== h) fs.writeFileSync(p, t);
+    }
+  })(DIST);
+}
+
+// 4б. Картинки → WebP (tools/webp.js; нужен npm install). BV_WEBP=0 — собрать без WebP
 if (process.env.BV_WEBP !== '0') execFileSync(process.execPath, [path.join(__dirname, 'webp.js'), DIST], { stdio: 'inherit' });
 
 // 5. Проверка: нет ссылок на выключенные разделы, на прототип и на несуществующие файлы

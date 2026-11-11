@@ -17,6 +17,13 @@ const DIST = path.resolve(process.argv[2] || 'dist');
 // Не трогаем: иконки сайта и приложения, картинку для соцсетей (VK, Telegram и мессенджеры надёжнее читают JPEG)
 const KEEP = /^(apple-touch-icon|icon-\d+|favicon.*|og-image)\.(png|jpe?g)$/i;
 const TEXT = /\.(html|css|js|json|txt|xml|webmanifest)$/i;
+// Крупные картинки главной — ещё и уменьшенные копии для телефонов (srcset): браузер берёт подходящую по ширине экрана.
+// sizes — ширина картинки на странице: до 1023px вёрстка в одну колонку, шире — координаты макета 1613px (index.html).
+const RESPONSIVE = {
+  // на телефоне кот во всю ширину минус поля по 4vw (--gutter: clamp(16px, 4vw, 48px)) = 92vw
+  'hero-cat': { widths: [480, 720], sizes: '(max-width: 1023px) 92vw, min(61.5vw, 992px)' },            // 992 из 1613
+  'doctor-bulldog': { widths: [480, 840], sizes: '(max-width: 1023px) min(420px, 100vw), min(41.8vw, 675px)' } // 674.5 из 1613
+};
 
 function walk(dir, out = []) {
   for (const name of fs.readdirSync(dir)) {
@@ -50,6 +57,16 @@ function walk(dir, out = []) {
     if (b >= a) { fs.rmSync(out); continue; } // WebP не меньше оригинала — оставляем оригинал
     before += a; after += b;
     renamed.set(path.basename(p), path.basename(out));
+    const resp = RESPONSIVE[path.basename(p).replace(/\.(png|jpe?g)$/i, '')];
+    if (resp) {
+      const { width } = await sharp(p).metadata();
+      resp.full = width;
+      resp.made = [];
+      for (const w of resp.widths.filter(w => w < width)) {
+        await sharp(p).resize({ width: w }).webp(opts).toFile(out.replace(/\.webp$/, `-${w}w.webp`));
+        resp.made.push(w);
+      }
+    }
   }
 
   // Замена ссылок в HTML: …/имя.png|jpg → …/имя.webp, только для сконвертированных файлов
@@ -57,7 +74,16 @@ function walk(dir, out = []) {
   const re = /([\w.\-]+)\.(png|jpe?g)(?=["'\s)?,&])/gi;
   for (const p of html) {
     const s = fs.readFileSync(p, 'utf8');
-    const t = s.replace(re, (m, base, ext) => renamed.get(`${base}.${ext}`) || m);
+    let t = s.replace(re, (m, base, ext) => renamed.get(`${base}.${ext}`) || m);
+    // srcset для <img> с уменьшенными копиями (только теги без своего srcset)
+    t = t.replace(/<img\b[^>]*>/gi, tag => {
+      if (/\ssrcset=/i.test(tag)) return tag;
+      const m = tag.match(/\ssrc="([^"]*?)([\w-]+)\.webp"/);
+      const resp = m && RESPONSIVE[m[2]];
+      if (!resp || !resp.made || !resp.made.length) return tag;
+      const set = [...resp.made.map(w => `${m[1]}${m[2]}-${w}w.webp ${w}w`), `${m[1]}${m[2]}.webp ${resp.full}w`].join(', ');
+      return tag.replace(/\ssrc="/, ` srcset="${set}" sizes="${resp.sizes}" src="`);
+    });
     if (t !== s) fs.writeFileSync(p, t);
   }
 
