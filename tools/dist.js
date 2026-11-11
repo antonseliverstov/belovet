@@ -74,14 +74,15 @@ fs.writeFileSync(path.join(DIST, '.htaccess'), `AddDefaultCharset utf-8
 ErrorDocument 404 /404.html
 
 RewriteEngine On
-# На Timeweb https принимает прокси, Apache всегда видит HTTPS=off — смотрим заголовок прокси, иначе будет петля
-RewriteCond %{HTTP:X-Forwarded-Proto} =http [OR]
+# На Timeweb https принимает прокси, Apache всегда видит HTTPS=off — смотрим заголовок прокси, иначе будет петля.
+# Прокси ставит X-Forwarded-Proto: https только на https-запросах, на http заголовка нет вовсе — поэтому «не https», а не «=http».
+RewriteCond %{HTTP:X-Forwarded-Proto} !=https [OR]
 RewriteCond %{HTTP_HOST} ^www\\. [NC]
 RewriteRule ^(.*)$ https://belovet.ru/$1 [R=301,L]
-# /index.html → / (канонический адрес главной)
+# /index.html → / (канонический адрес главной). Адреса в редиректах — полные: относительный Apache дополнит схемой http
 RewriteCond %{THE_REQUEST} \\s/index\\.html[\\s?]
-RewriteRule ^index\\.html$ / [R=301,L]
-${BLOG_ON ? '' : '# Блог пока не опубликован: старые ссылки на статьи — на главную\nRewriteRule ^blog(/.*)?$ / [R=302,L]\n'}
+RewriteRule ^index\\.html$ https://belovet.ru/ [R=301,L]
+${BLOG_ON ? '' : '# Блог пока не опубликован: старые ссылки на статьи — на главную\nRewriteRule ^blog(/.*)?$ https://belovet.ru/ [R=302,L]\n'}
 <IfModule mod_deflate.c>
   AddOutputFilterByType DEFLATE text/html text/css application/javascript text/javascript application/json image/svg+xml text/plain text/xml application/xml application/manifest+json
 </IfModule>
