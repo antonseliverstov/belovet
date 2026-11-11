@@ -29,7 +29,7 @@ const LEAD_URL = process.env.BV_LEAD_URL || '';
 // Оператор персональных данных для privacy.html и consent.html. Пустые поля — [заполнить]; с ними LAUNCH не включится
 const OPERATOR = { name: 'Белорыбец Владислав Викторович', status: 'самозанятый', inn: '712807539248', ogrnip: '', address: 'vladislav@belovet.ru' /* адрес для обращений = почта (решение 10.11.2026; нужен ли почтовый — уточнить у юриста) */, email: 'vladislav@belovet.ru', phone: '+7 (939) 255-77-71' };
 const LEGAL_DATE = '11 ноября 2026'; // дата редакции политики и согласия
-const LEGAL_VERSION = '2026-11-11'; // номер редакции согласия: уходит с каждой заявкой в журнал; при изменении текста — новая дата
+const LEGAL_VERSION = '2026-11-11-2'; // номер редакции согласия: уходит с каждой заявкой в журнал; при изменении текста — новая дата
 // Волны блога, которые индексируются сразу; остальные статьи — только после вычитки врачом (data/blog-reviewed.js)
 const OPEN_WAVES = [1, 2];
 const PHONE = '+7 (939) 255-77-71';
@@ -361,8 +361,8 @@ function homeSeo() {
       image: SITE + 'assets/og-image.jpg', logo: SITE + 'assets/icon-512.png', description: desc, telephone: tel, email: 'vladislav@belovet.ru',
       address: { '@type': 'PostalAddress', streetAddress: 'ул. Вертолётчиков, 11', addressLocality: 'Люберцы', addressRegion: 'Московская область', addressCountry: 'RU' },
       areaServed: [{ '@type': 'City', name: 'Люберцы' }, { '@type': 'City', name: 'Москва' }, { '@type': 'AdministrativeArea', name: 'Московская область' }],
-      contactPoint: { '@type': 'ContactPoint', contactType: 'экстренная запись на приём', telephone: tel, availableLanguage: 'ru',
-        hoursAvailable: { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], opens: '00:00', closes: '23:59' } },
+      contactPoint: { '@type': 'ContactPoint', contactType: 'запись на приём', telephone: tel, availableLanguage: 'ru',
+        hoursAvailable: { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], opens: '10:00', closes: '22:00' } },
       employee: { '@id': SITE + '#doctor' } },
     { '@type': 'Person', '@id': SITE + '#doctor', name: 'Владислав Викторович Белорыбец', jobTitle: 'Ветеринарный врач-хирург', image: SITE + 'assets/doctor-hero.jpg', worksFor: { '@id': SITE + '#clinic' } },
     { '@type': 'WebSite', '@id': SITE + '#site', name: 'beloVET', url: SITE, inLanguage: 'ru', publisher: { '@id': SITE + '#clinic' } }
@@ -383,12 +383,12 @@ function notFoundHtml() {
   const cards = [
     [`${B}index.html#prices`, 'Операции и цены', 'Поиск по названию операции или симптому', 'Открыть →'],
     BLOG_ON ? [`${B}blog/index.html`, 'Блог для владельцев', 'Подготовка, восстановление, тревожные признаки', 'Читать →'] : [`${B}index.html#contacts`, 'Контакты', 'Адрес клиники, график приёма и как добраться', 'Открыть →'],
-    [`${B}index.html?form=urgent`, 'Экстренная запись', 'Приеду в клинику за 15 минут, даже ночью', FORMS_ON ? 'Оставить заявку →' : 'Позвонить →']
+    [`${B}index.html#ask`, 'Вопрос врачу', 'Опишите, что беспокоит питомца, — подберу статьи и отвечу', 'Задать вопрос →']
   ];
   return `${UI.head({ title, desc: 'Такой страницы нет.', url: '', prefix: B, type: 'website', robots: 'noindex', ogTags: '', iconTags: `<link rel="icon" type="image/png" href="${B}assets/logo-symbol.png">` })}
 <body>
 <main>
-${UI.pageHero(B, [['Главная', B + 'index.html'], ['Ошибка 404', '']], 'Такой страницы нет', `Возможно, адрес изменился. Все операции и цены собраны на главной, там же есть поиск по симптомам. Если питомцу плохо, звоните ${PHONE}: по экстренной записи приеду в клинику за 15 минут в любое время, даже ночью. Тяжёлых пациентов принимаем без очереди.`, null,
+${UI.pageHero(B, [['Главная', B + 'index.html'], ['Ошибка 404', '']], 'Такой страницы нет', `Возможно, адрес изменился. Все операции и цены собраны на главной, там же есть поиск по симптомам. Если питомцу плохо, позвоните ${PHONE} в часы приёма, с 10:00 до 22:00, или задайте вопрос врачу на главной.`, null,
   { sub: 'Ошибка 404', photo: { name: 'terrier', x: 1000, y: 400, w: 566 } })}
 <section class="fx" style="--bg:#fff">
   <div class="sx">
@@ -411,9 +411,24 @@ for (const p of PROCEDURES) fs.writeFileSync(path.join(opsDir, p.slug + '.html')
 fs.writeFileSync(path.join(ROOT, 'assets', 'search-data.js'),
   '// Сгенерировано tools/build.js из data/procedures.js — не редактировать вручную\nwindow.BV_DATA = ' + JSON.stringify(searchData()) + ';\n');
 
+// Индекс статей для блока «Вопрос врачу» (assets/ask.js подбирает статьи по описанию проблемы).
+// Только при включённом блоге; операции ask.js берёт из search-data.js.
+{
+  const { RUBRICS } = require('../data/blog-plan');
+  const species = s => { const t = s.toLowerCase(); const c = /(кош|кот|котён|котен)/.test(t), d = /(собак|щен|кобел|сук[аиу]\b|пёс|пес\b)/.test(t); return c && !d ? 'c' : d && !c ? 'd' : ''; };
+  const short = s => s.length > 130 ? s.slice(0, s.lastIndexOf(' ', 128)) + '…' : s;
+  const posts = BLOG_ON ? BLOG.posts.map(p => ({
+    s: p.slug, t: p.title, r: RUBRICS[p.rubric] || '', u: p.rubric === 'urgent' ? 1 : 0,
+    k: [p.query, ...(p.more || []), ...p.blocks.filter(b => b[0] === 'h2').map(b => b[1]), ...p.faq.map(q => q[0])].join(' | '),
+    l: short(p.lead), a: species(p.title + ' ' + p.query)
+  })) : [];
+  fs.writeFileSync(path.join(ROOT, 'assets', 'ask-data.js'),
+    '// Сгенерировано tools/build.js — индекс статей для блока «Вопрос врачу»\nwindow.BV_ASK = ' + JSON.stringify({ posts }) + ';\n');
+}
+
 const indexPath = path.join(ROOT, 'index.html');
 let index = fs.readFileSync(indexPath, 'utf8');
-index = index.replace(/assets\/(search-data|search)\.js(\?v=[0-9a-f]+)?/g, (m, n) => `assets/${n}.js?v=${ver('assets/' + n + '.js')}`);
+index = index.replace(/assets\/(search-data|search|ask|ask-data|fx)\.js(\?v=[0-9a-f]+)?/g, (m, n) => `assets/${n}.js?v=${ver('assets/' + n + '.js')}`);
 const START = '<!-- SURGERY:START -->', END = '<!-- SURGERY:END -->';
 const a = index.indexOf(START), b = index.indexOf(END);
 if (a < 0 || b < 0) throw new Error('В index.html нет меток SURGERY:START / SURGERY:END');
@@ -436,6 +451,7 @@ index = index.replace(/<section class="fx s-reviews"[^>]*>/, `<section class="fx
 index = index.replace(/(?:<!-- Прототип:[^\n]*-->\n)?<meta name="robots" content="[^"]*">/, UI.robotsTag());
 index = index.replace(/<html lang="ru"[^>]*>/, !FORMS_ON ? '<html lang="ru" data-forms="off">' : LEAD_URL ? `<html lang="ru" data-lead="${LEAD_URL}" data-consent-version="${LEGAL_VERSION}">` : '<html lang="ru">');
 if (!FORMS_ON) index = index.replace(/\s*<div class="consent">[\s\S]*?<\/div>/g, ''); // без ссылок на согласие
+if (!FORMS_ON) index = index.replace(/\s*<form class="ask-contact"[\s\S]*?<\/form>/, ''); // «Вопрос врачу» без отправки: остаются телефон и почта
 if (!BLOG_ON) {
   index = index.replace(/\s*<!-- 09 \/ Полезное владельцам -->\s*<section class="fx s-blog"[\s\S]*?<\/section>/, '');
   index = index.replace(/\s*<a [^>]*href="blog\/"[^>]*>[^<]*<\/a>/g, '');

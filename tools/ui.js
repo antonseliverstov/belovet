@@ -45,7 +45,7 @@ ${metrika(prefix)}</head>`;
 
   // ---------- шапка внутренних страниц (лежит на фоне первого экрана) ----------
   function header(prefix, crumbs) {
-    const nav = `<a href="${prefix}index.html#prices">Операции и цены</a>${blogLink(prefix)}<a href="${prefix}index.html#urgent">Экстренно</a><a href="${prefix}index.html#contacts">Контакты</a>`;
+    const nav = `<a href="${prefix}index.html#prices">Операции и цены</a>${blogLink(prefix)}<a href="${prefix}index.html#ask">Вопрос врачу</a><a href="${prefix}index.html#contacts">Контакты</a>`;
     return `<header class="ih">
       <a class="ih-logo" href="${prefix}index.html"><img src="${prefix}assets/logo-wordmark.png" width="640" height="224" alt="beloVET, ветеринарный врач-хирург"></a>
       <nav class="ih-nav" aria-label="Разделы">${nav}</nav>
@@ -89,7 +89,7 @@ ${metrika(prefix)}</head>`;
     </div>
   </div>
 </footer>
-<nav class="mbar" aria-label="Запись"><a class="mbar-book" href="${prefix}index.html?form=book">Записаться</a><a class="mbar-urgent" href="${prefix}index.html?form=urgent">Экстренная запись</a></nav>`;
+<nav class="mbar" aria-label="Запись"><a class="mbar-book" href="${prefix}index.html?form=book">Записаться</a><a class="mbar-urgent" href="${prefix}index.html#ask">Вопрос врачу</a></nav>`;
   }
 
   // ---------- картинка с прозрачностью: JPEG + маска ----------
@@ -200,7 +200,7 @@ ${metrika(prefix)}</head>`;
       <div class="al-left">
         <p class="t o up" style="${T(52, 62)}">Срочно к врачу</p>
         <p class="t" style="${T(29, 38)}">${symptoms.map(s => esc(cap(s))).join('<br>')}</p>
-        <p class="t" style="${T(29, 30)}">По экстренной записи — буду в клинике за 15 минут, даже ночью.<br>Тяжёлых пациентов принимаем без очереди.</p>
+        <p class="t" style="${T(29, 30)}">Позвоните в часы приёма или задайте <a href="../index.html#ask">вопрос врачу</a> с пометкой «Срочно» — посмотрю его первым.</p>
       </div>
       <div class="al-right">
         <a class="t" style="${T(30, 41)}" href="${PHONE_HREF}">${PHONE}</a>
@@ -438,7 +438,7 @@ ${rest.length ? `    <h3 class="more-sub t o up" style="${T(44, 52)}">Ещё с�
   <div class="sx book">
     <h2 class="t o up" style="${T(114, 126)}">${lines(heading)}</h2>
     <p class="t" style="${T(30, 43)}">${esc(text)}</p>
-    <div class="book-btns"><a class="cta cta-lg" href="${prefix}index.html?form=book">Записаться на приём</a><a class="cta cta-lg cta-white" href="${prefix}index.html?form=ask">Задать вопрос врачу</a></div>
+    <div class="book-btns"><a class="cta cta-lg" href="${prefix}index.html?form=book">Записаться на приём</a><a class="cta cta-lg cta-white" href="${prefix}index.html#ask">Задать вопрос врачу</a></div>
     <img class="book-cat" src="${prefix}assets/home/cat-stretch.png" width="800" height="800" alt="" loading="lazy">
     ${photo(prefix, 'pinscher', 'book-photo', '', '')}
   </div>

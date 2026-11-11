@@ -8,7 +8,9 @@
 
 const MAIL_TO   = 'vladislav@belovet.ru';
 const MAIL_FROM = 'site@belovet.ru';           // адрес на домене сайта, чтобы письмо не попадало в спам
-const KINDS     = ['book' => 'Запись на приём', 'ask' => 'Вопрос врачу', 'urgent' => 'ЭКСТРЕННО'];
+const KINDS     = ['book' => 'Запись на приём', 'ask' => 'Вопрос врачу', 'question' => 'Вопрос врачу', 'invite' => 'Приглашение хирурга', 'urgent' => 'Срочно'];
+const Q_MAX     = 2;                           // «Вопрос врачу» с главной: не больше 2 с одного IP за сутки
+const Q_WIN     = 86400;
 const MAX_FILES = 5;
 const MAX_TOTAL = 2621440;                     // 2,5 МБ вложений
 const RATE_MAX  = 5;                           // не больше 5 заявок с одного IP за 10 минут
@@ -43,6 +45,14 @@ $version = preg_replace('/[^0-9-]/', '', (string)($d['consent_version'] ?? ''));
 if ($name === '' || strlen($digits) !== 11 || ($d['privacy'] ?? false) !== true || ($d['consent'] ?? false) !== true || $version === '') out(400, ['ok' => false, 'error' => 'fields']);
 
 $kind = isset(KINDS[$d['kind'] ?? '']) ? $d['kind'] : 'book';
+$urgent = ($d['urgent'] ?? false) === true || $kind === 'urgent';
+// вопрос врачу: отдельный суточный лимит, чтобы блок не заспамили
+if ($kind === 'question') {
+  $qKey = $ipKey . '_q';
+  $qHits = array_filter(array_map('intval', @file($qKey, FILE_IGNORE_NEW_LINES) ?: []), fn($t) => $t > time() - Q_WIN);
+  if (count($qHits) >= Q_MAX) out(429, ['ok' => false, 'error' => 'rate']);
+}
+$shown = implode('; ', array_map(fn($t) => clean(cut($t, 160)), array_slice(is_array($d['shown'] ?? null) ? $d['shown'] : [], 0, 5)));
 $pet = clean(cut($d['pet'] ?? '', 80));
 $message = cut($d['message'] ?? '', 3000);
 $page = clean(cut($d['page'] ?? '', 300));
@@ -62,7 +72,8 @@ date_default_timezone_set('Europe/Moscow');
 $id = date('Ymd-His') . '-' . bin2hex(random_bytes(3));
 $title = KINDS[$kind];
 $rows = array_filter([
-  'Имя' => $name, 'Телефон' => $phone, 'Питомец' => $pet, 'Сообщение' => $message,
+  'Имя' => $name, 'Телефон' => $phone, 'Питомец' => $pet, 'Срочно' => $urgent ? 'да' : '', 'Сообщение' => $message,
+  'Показали статьи' => $shown,
   'Файлов' => $files ? (string)count($files) : '', 'Страница' => $page, 'Время' => date('d.m.Y H:i') . ' (МСК)',
   'Заявка №' => $id, 'Согласие' => "отметки поставлены, редакция $version"
 ], fn($v) => $v !== '');
@@ -71,7 +82,7 @@ foreach ($rows as $k => $v) $text .= "$k: $v\n";
 $text .= "\nПозвонить: tel:+$digits\n";
 
 $enc = fn($s) => '=?UTF-8?B?' . base64_encode($s) . '?=';
-$subject = $enc(($kind === 'urgent' ? 'ЭКСТРЕННО: ' : $title . ': ') . "$name, $phone");
+$subject = $enc(($urgent ? 'СРОЧНО · ' : '') . $title . ': ' . "$name, $phone" . ($pet ? ", $pet" : ''));
 $boundary = 'bv' . bin2hex(random_bytes(12));
 $headers = implode("\r\n", [
   'From: ' . $enc('Сайт beloVET') . ' <' . MAIL_FROM . '>',
@@ -94,5 +105,7 @@ if (@file_put_contents($logDir . '/consents.jsonl', $entry . "\n", FILE_APPEND |
 
 if (!mail(MAIL_TO, $subject, $body, $headers, '-f' . MAIL_FROM)) out(502, ['ok' => false, 'error' => 'delivery']);
 $hits[] = time();
+if ($kind === 'question') { $qHits[] = time(); @file_put_contents($qKey, implode("
+", $qHits)); }
 @file_put_contents($ipKey, implode("\n", $hits));
 out(200, ['ok' => true]);
