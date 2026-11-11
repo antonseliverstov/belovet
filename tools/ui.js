@@ -89,7 +89,7 @@ ${metrika(prefix)}</head>`;
     </div>
   </div>
 </footer>
-<nav class="mbar" aria-label="Запись"><a class="mbar-book" href="${prefix}index.html?form=book">Записаться</a><a class="mbar-urgent" href="${prefix}index.html#ask">Вопрос врачу</a></nav>`;
+<nav class="mbar" aria-label="Запись"><a class="mbar-book" href="${prefix}index.html?form=book">Записаться</a><a class="mbar-urgent" href="${prefix}index.html#ask">Задать вопрос</a></nav>`;
   }
 
   // ---------- картинка с прозрачностью: JPEG + маска ----------

@@ -752,6 +752,12 @@ html[data-forms="off"] .ask-call { display: grid; }
   .ask-row .btn { width: 100%; }
 }
 @media (prefers-reduced-motion: reduce) { .ask-reads a, .ask-chip, .ask-dots li { transition: none; } }
+
+/* ---------- Телефон: первый экран тянется до нижней полоски «Записаться / Задать вопрос» (зазор 8px) ---------- */
+@media (max-width: 700px) {
+  .stage { display: flex; flex-direction: column; min-height: calc(100svh - var(--stage-top, 0px) - 68px - 8px - env(safe-area-inset-bottom, 0px)); }
+  .stage > .hero { flex: 1 0 auto; align-content: start; padding-bottom: 28px; }
+}
 </style>
 </head>
 <body>
@@ -1420,7 +1426,7 @@ html[data-forms="off"] .ask-call { display: grid; }
 
 <div class="mbar">
   <button class="btn btn-primary" type="button" data-form="book">Записаться</button>
-  <a class="btn btn-dark" href="#ask">Вопрос врачу</a>
+  <a class="btn btn-dark" href="#ask">Задать вопрос</a>
 </div>
 
 <div class="cookie" id="cookie" role="region" aria-label="Уведомление о cookie" hidden>
