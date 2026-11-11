@@ -64,6 +64,7 @@
       return { p: e.p, s: s };
     }).sort(function (a, b) { return b.s - a.s; });
     var top = res.length ? res[0].s : 0;
+    state.top = top;
     res = res.filter(function (r) { return r.s >= 6 && r.s >= top * .45; }).slice(0, 3);
     var reads = res.map(function (r) { return { href: 'blog/' + r.p.s + '.html', cat: r.p.r, title: r.p.t, lead: r.p.l }; });
     // операция по теме — из индекса поиска по операциям (assets/search-data.js)
@@ -128,11 +129,25 @@
     err(steps[1]); state.text = t;
     loadIndex(function () {
       state.reads = pick();
+      logQuestion();
       renderReads(steps[2].querySelector('.ask-reads'), state.reads);
       steps[2].querySelector('.ask-urgent-note').hidden = !state.urgent;
       show(3, true); goal('ask_articles');
     });
   });
+  // Журнал вопросов для идей статей: без имени и телефона (имя вычищается из текста), только при подключённом обработчике
+  function logQuestion() {
+    var endpoint = root.dataset.lead;
+    if (!endpoint) return;
+    state.qid = state.qid || Math.random().toString(36).slice(2, 12);
+    var text = state.text;
+    if (state.name) text = text.split(state.name).join('[имя]');
+    try {
+      fetch(endpoint, { method: 'POST', keepalive: true, headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ kind: 'question_log', qid: state.qid, pet: state.pet === 'c' ? 'кошка' : 'собака', urgent: state.urgent,
+          text: text, shown: state.reads.map(function (x) { return x.href; }), top: state.top || 0 }) }).catch(function () {});
+    } catch (e) {}
+  }
   card.querySelectorAll('[data-ask-back]').forEach(function (b) { b.addEventListener('click', function () { show(+b.dataset.askBack, true); }); });
 
   // ---------- шаг 3: телефон и согласие → письмо врачу ----------
@@ -159,7 +174,7 @@
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         kind: 'question', name: state.name, phone: phone, pet: state.pet === 'c' ? 'кошка' : 'собака', urgent: state.urgent,
-        message: state.text, shown: state.reads.map(function (r) { return r.title; }), page: location.href, website: cf.website.value,
+        message: state.text, qid: state.qid || '', shown: state.reads.map(function (r) { return r.title; }), page: location.href, website: cf.website.value,
         privacy: true, consent: true, consent_version: root.dataset.consentVersion || ''
       })
     }).then(function (r) {

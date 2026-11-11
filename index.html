@@ -685,7 +685,7 @@ a.dir:hover h3 { text-decoration: underline; text-underline-offset: .12em; text-
 /* ---------- Экстренная запись без форм: блок не короче левой колонки ---------- */
 @media (min-width: 1024px) { html[data-forms="off"] .urgent-box { min-height: calc(1290 * var(--px)); } }
 
-/* ---------- 04 / Вопрос врачу: пошаговая форма (assets/ask.js?v=0c3c43b8) ---------- */
+/* ---------- 04 / Вопрос врачу: пошаговая форма (assets/ask.js?v=ab1dfd94) ---------- */
 .s-ask { --bg: var(--medical); color: var(--milk); }
 .ask-anchor { position: absolute; top: -90px; }
 .ask-box { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: calc(64 * var(--px)); align-items: center; padding: calc(88 * var(--px)) calc(72 * var(--px)); }
@@ -717,6 +717,7 @@ a.dir:hover h3 { text-decoration: underline; text-underline-offset: .12em; text-
 .ask-row .btn { min-height: 52px; padding: 0 28px; font-size: 17px; }
 .ask-row .btn:only-child { margin-left: auto; }
 .ask-link { background: none; border: 0; padding: 6px 0; font: 500 15px/1.2 "Roboto", Arial, sans-serif; color: #4A5A70; cursor: pointer; text-decoration: underline; text-underline-offset: .2em; }
+.ask-note { margin: 0; font-size: 13px; line-height: 1.4; color: #4A5A70; }
 .ask-err { margin: 0; min-height: 0; font-size: 15px; color: #B4412A; }
 .ask-err:empty { display: none; }
 .ask-urgent-note { margin: 0; padding: 12px 16px; border-radius: 14px; background: #FDE7E1; font-size: 15px; line-height: 1.45; }
@@ -925,7 +926,7 @@ html[data-forms="off"] .ask-call { display: grid; }
     </div>
   </section>
 
-  <!-- 04 / Вопрос врачу: пошаговая форма вместо экстренной записи (логика — assets/ask.js?v=0c3c43b8) -->
+  <!-- 04 / Вопрос врачу: пошаговая форма вместо экстренной записи (логика — assets/ask.js?v=ab1dfd94) -->
   <section class="fx s-ask" id="ask" aria-labelledby="ask-h">
     <span id="urgent" class="ask-anchor" aria-hidden="true"></span>
     <div class="ask-box">
@@ -961,6 +962,7 @@ html[data-forms="off"] .ask-call { display: grid; }
           <label class="ask-vh" for="ask-text">Что беспокоит питомца</label>
           <textarea class="ask-input ask-text" id="ask-text" name="message" rows="6" maxlength="3000" placeholder="Поделитесь состоянием вашего питомца, и я расскажу, как можно решить эту проблему. Вопрос может быть не только по ветеринарной хирургии."></textarea>
           <p class="ask-err" role="alert"></p>
+          <p class="ask-note">Текст вопроса без имени сохранится — по таким вопросам я пишу статьи.</p>
           <div class="ask-row"><button class="ask-link" type="button" data-ask-back="1">← Назад</button><button class="btn btn-primary" type="submit">Отправить</button></div>
         </form>
 
@@ -1526,7 +1528,7 @@ var SCHEDULE = {
   window.addEventListener('resize', function () { if (menu.open && innerWidth > 760) menu.close(); });
 })();
 
-// Окна с формами: запись на приём и приглашение хирурга. «Вопрос врачу» — пошаговый блок #ask (assets/ask.js?v=0c3c43b8)
+// Окна с формами: запись на приём и приглашение хирурга. «Вопрос врачу» — пошаговый блок #ask (assets/ask.js?v=ab1dfd94)
 (function () {
   var FORMS = {
     book:   { title: 'Записаться на приём', sub: 'Перезвоню и подберу время приёма.' },
@@ -1745,6 +1747,6 @@ document.querySelectorAll('[data-open-cat]').forEach(function (link) {
 <script src="assets/search.js?v=dac72fb8"></script>
 
 <script src="assets/fx.js?v=7ebdec92" defer></script>
-<script src="assets/ask.js?v=0c3c43b8" defer></script>
+<script src="assets/ask.js?v=ab1dfd94" defer></script>
 </body>
 </html>

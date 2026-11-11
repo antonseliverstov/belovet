@@ -32,6 +32,36 @@ $d = json_decode($raw, true);
 if (!is_array($d)) out(400, ['ok' => false, 'error' => 'json']);
 if (!empty($d['website'])) out(200, ['ok' => true]);   // поле-ловушка: заполняют только боты
 
+// ---------- Журнал вопросов для идей статей (блок «Вопрос врачу», шаг с описанием) ----------
+// Без имени, телефона и IP: вид питомца, «Срочно», текст вопроса (телефоны и почта из текста вычищаются),
+// какие статьи предложил сайт и насколько они подошли. Файл ~/belovet/private/questions.jsonl, вне папки сайта.
+// Срок хранения — 1 год (политика, раздел 5). Писем не отправляет, согласия не требует: персональных данных нет.
+function scrub($t) {
+  $t = preg_replace('/[\w.+-]+@[\w-]+\.[\w.-]+/u', '[почта]', $t);
+  $t = preg_replace('/(\+?\d[\d\s()\-]{8,}\d)/u', '[телефон]', $t);
+  return $t;
+}
+$qlogDir = dirname(__DIR__, 2) . '/private';
+if (($d['kind'] ?? '') === 'question_log') {
+  $lk = sys_get_temp_dir() . '/bv_ql_' . hash('sha256', ($_SERVER['REMOTE_ADDR'] ?? '') . 'belovet');
+  $lh = array_filter(array_map('intval', @file($lk, FILE_IGNORE_NEW_LINES) ?: []), fn($t) => $t > time() - 86400);
+  if (count($lh) >= 30) out(429, ['ok' => false, 'error' => 'rate']);
+  $text = scrub(cut($d['text'] ?? '', 3000));
+  if (mb_strlen($text) < 10) out(400, ['ok' => false, 'error' => 'fields']);
+  date_default_timezone_set('Europe/Moscow');
+  $entry = [
+    'q' => preg_replace('/[^a-z0-9]/', '', (string)($d['qid'] ?? '')) ?: bin2hex(random_bytes(6)),
+    'at' => date('c'), 'pet' => in_array($d['pet'] ?? '', ['кошка', 'собака'], true) ? $d['pet'] : '',
+    'urgent' => ($d['urgent'] ?? false) === true, 'text' => $text,
+    'shown' => array_map(fn($s) => cut(preg_replace('/[^a-z0-9\/.-]/', '', (string)$s), 120), array_slice(is_array($d['shown'] ?? null) ? $d['shown'] : [], 0, 5)),
+    'top' => round((float)($d['top'] ?? 0), 2)
+  ];
+  if (!is_dir($qlogDir)) { @mkdir($qlogDir, 0700, true); @file_put_contents($qlogDir . '/.htaccess', "Require all denied\n"); }
+  @file_put_contents($qlogDir . '/questions.jsonl', json_encode($entry, JSON_UNESCAPED_UNICODE) . "\n", FILE_APPEND | LOCK_EX);
+  $lh[] = time(); @file_put_contents($lk, implode("\n", $lh));
+  out(200, ['ok' => true]);
+}
+
 // Ограничение частоты по IP (метка во временной папке, без персональных данных — только хеш)
 $ipKey = sys_get_temp_dir() . '/bv_' . hash('sha256', ($_SERVER['REMOTE_ADDR'] ?? '') . 'belovet');
 $hits = array_filter(array_map('intval', @file($ipKey, FILE_IGNORE_NEW_LINES) ?: []), fn($t) => $t > time() - RATE_WIN);
@@ -105,6 +135,9 @@ if (@file_put_contents($logDir . '/consents.jsonl', $entry . "\n", FILE_APPEND |
 
 if (!mail(MAIL_TO, $subject, $body, $headers, '-f' . MAIL_FROM)) out(502, ['ok' => false, 'error' => 'delivery']);
 $hits[] = time();
+if ($kind === 'question' && ($qid = preg_replace('/[^a-z0-9]/', '', (string)($d['qid'] ?? '')))) // в журнале вопросов: этот вопрос дошёл до врача
+  @file_put_contents($qlogDir . '/questions.jsonl', json_encode(['q' => $qid, 'at' => date('c'), 'sent' => true], JSON_UNESCAPED_UNICODE) . "
+", FILE_APPEND | LOCK_EX);
 if ($kind === 'question') { $qHits[] = time(); @file_put_contents($qKey, implode("
 ", $qHits)); }
 @file_put_contents($ipKey, implode("\n", $hits));
