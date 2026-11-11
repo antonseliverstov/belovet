@@ -151,6 +151,7 @@ html[data-forms="off"] .call-instead .btn, html[data-forms="off"] .call-instead 
 .hero-cat { position: absolute; z-index: 2; left: calc(420 * var(--px)); top: auto; bottom: calc(29 * var(--px)); width: calc(1037.675 * var(--px)); height: calc(615.924 * var(--px)); margin: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
 .hero-cat img { flex: none; width: calc(992 * var(--px)); height: auto; max-width: none; rotate: -5.52deg; animation: cat-leap 3.4s ease-in-out infinite; transform-origin: 55% 60%; }
 /* Кот «в прыжке»: мягко покачивается слева направо и чуть вверх */
+.hero-cat img { -webkit-mask-image: linear-gradient(to right, transparent 0, #000 7%, #000 91%, transparent 100%); mask-image: linear-gradient(to right, transparent 0, #000 7%, #000 91%, transparent 100%); }
 @keyframes cat-leap { 0%, 100% { transform: translate(0, 0) rotate(-2.5deg); } 50% { transform: translate(2.2%, -2.4%) rotate(2.5deg); } }
 @media (prefers-reduced-motion: reduce) { .hero-cat img { animation: none; } }
 .hero-cta { position: absolute; z-index: 3; left: calc(85 * var(--px)); top: calc(50% + 268 * var(--px)); bottom: auto; /* по центру между подзаголовком и низом экрана */ width: calc(364 * var(--px)); min-height: 0; height: calc(65 * var(--px)); padding: 0; border-radius: calc(20 * var(--px)); color: #322B16; font-size: calc(23 * var(--px)); }
@@ -177,9 +178,9 @@ html[data-forms="off"] .call-instead .btn, html[data-forms="off"] .call-instead 
   .hero h1 { display: grid; margin-top: 10px; }
   .hero-big { font-size: calc((100cqw - 2 * var(--gut)) / 4.45); line-height: .8; letter-spacing: -0.01em; }
   .hero-sub { font-size: min(74px, calc((100cqw - 2 * var(--gut)) / 9)); line-height: 1.1; margin-top: 10px; }
-  .hero-cat { width: auto; height: auto; margin: -2cqw -4cqw 0 2cqw; }
+  .hero-cat { width: auto; height: auto; margin: 22px 0 0; }
   .hero-cat img { width: 100%; }
-  .hero-cta { width: min(100%, 364px); height: 60px; border-radius: 18px; font-size: 18px; margin-top: 4px; }
+  .hero-cta { width: min(100%, 364px); height: 60px; border-radius: 18px; font-size: 18px; margin-top: 4px; align-self: center; }
   .hero-sign { margin-top: 18px; gap: 2px; }
   .hero-sign b { font-size: 20px; } .hero-sign span { font-size: 15px; }
 }
@@ -756,7 +757,8 @@ html[data-forms="off"] .ask-call { display: grid; }
 /* ---------- Телефон: первый экран тянется до нижней полоски «Записаться / Задать вопрос» (зазор 8px) ---------- */
 @media (max-width: 700px) {
   .stage { display: flex; flex-direction: column; min-height: calc(100svh - var(--stage-top, 0px) - 68px - 8px - env(safe-area-inset-bottom, 0px)); }
-  .stage > .hero { flex: 1 0 auto; align-content: start; padding-bottom: 28px; }
+  .stage > .hero { flex: 1 0 auto; align-content: stretch; grid-template-rows: auto auto auto 1fr; padding-bottom: 0; }
+  .stage > .hero > .hero-cta { margin-top: 0; } /* кнопка — по центру места между котом и низом */
 }
 </style>
 </head>
