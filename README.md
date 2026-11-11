@@ -10,6 +10,8 @@
 
 DNS belovet.ru остаётся на Timeweb (A-запись 92.53.96.136) — на GitHub Pages его не переключать: формы работают через PHP на хостинге, Pages PHP не выполняет.
 
+Картинки в боевой сборке — WebP: `tools/webp.js` (вызывает `dist.js`) сжимает PNG/JPG из `assets/` и меняет ссылки в HTML; иконки и `og-image.jpg` остаются как есть, маски `*-mask` — без потерь. Исходники в `assets/` не меняются. Нужен модуль sharp: один раз `npm install` в корне проекта; без него — `BV_WEBP=0 node tools/dist.js`.
+
 Сборку делать из клона с `core.autocrlf=false`: иначе на Windows файлы получат CRLF, изменятся метки версий `?v=` и у посетителей заново скачаются все стили и скрипты.
 
 Режим запуска включает сам `dist.js` (`BV_LAUNCH=1`): адреса в canonical, Open Graph, разметке, sitemap и llms.txt — https://belovet.ru/, без `noindex`, `robots.txt` открыт для поисковиков и ИИ-ассистентов, без полосы «Прототип». Настройки в начале `tools/build.js`:

@@ -102,6 +102,9 @@ ${BLOG_ON ? '' : '# Блог пока не опубликован: старые 
 </IfModule>
 `);
 
+// 4а. Картинки → WebP (tools/webp.js; нужен npm install). BV_WEBP=0 — собрать без WebP
+if (process.env.BV_WEBP !== '0') execFileSync(process.execPath, [path.join(__dirname, 'webp.js'), DIST], { stdio: 'inherit' });
+
 // 5. Проверка: нет ссылок на выключенные разделы, на прототип и на несуществующие файлы
 const problems = [];
 function walk(dir) {

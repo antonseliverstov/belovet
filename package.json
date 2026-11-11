@@ -1,0 +1,12 @@
+{
+  "name": "belovet",
+  "private": true,
+  "description": "Сайт ветеринарного хирурга Владислава Белорыбца. Сборка: node tools/build.js (прототип), node tools/dist.js (боевой сайт belovet.ru)",
+  "scripts": {
+    "build": "node tools/build.js",
+    "dist": "node tools/dist.js"
+  },
+  "devDependencies": {
+    "sharp": "0.34.5"
+  }
+}
