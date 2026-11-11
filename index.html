@@ -685,7 +685,7 @@ a.dir:hover h3 { text-decoration: underline; text-underline-offset: .12em; text-
 /* ---------- Экстренная запись без форм: блок не короче левой колонки ---------- */
 @media (min-width: 1024px) { html[data-forms="off"] .urgent-box { min-height: calc(1290 * var(--px)); } }
 
-/* ---------- 04 / Вопрос врачу: пошаговая форма (assets/ask.js?v=72487a03) ---------- */
+/* ---------- 04 / Вопрос врачу: пошаговая форма (assets/ask.js?v=3e321e5b) ---------- */
 .s-ask { --bg: var(--medical); color: var(--milk); }
 .ask-anchor { position: absolute; top: -90px; }
 .ask-box { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: calc(64 * var(--px)); align-items: center; padding: calc(88 * var(--px)) calc(72 * var(--px)); }
@@ -924,7 +924,7 @@ html[data-forms="off"] .ask-call { display: grid; }
     </div>
   </section>
 
-  <!-- 04 / Вопрос врачу: пошаговая форма вместо экстренной записи (логика — assets/ask.js?v=72487a03) -->
+  <!-- 04 / Вопрос врачу: пошаговая форма вместо экстренной записи (логика — assets/ask.js?v=3e321e5b) -->
   <section class="fx s-ask" id="ask" aria-labelledby="ask-h">
     <span id="urgent" class="ask-anchor" aria-hidden="true"></span>
     <div class="ask-box">
@@ -1525,7 +1525,7 @@ var SCHEDULE = {
   window.addEventListener('resize', function () { if (menu.open && innerWidth > 760) menu.close(); });
 })();
 
-// Окна с формами: запись на приём и приглашение хирурга. «Вопрос врачу» — пошаговый блок #ask (assets/ask.js?v=72487a03)
+// Окна с формами: запись на приём и приглашение хирурга. «Вопрос врачу» — пошаговый блок #ask (assets/ask.js?v=3e321e5b)
 (function () {
   var FORMS = {
     book:   { title: 'Записаться на приём', sub: 'Перезвоню и подберу время приёма.' },
@@ -1744,6 +1744,6 @@ document.querySelectorAll('[data-open-cat]').forEach(function (link) {
 <script src="assets/search.js?v=dac72fb8"></script>
 
 <script src="assets/fx.js?v=7ebdec92" defer></script>
-<script src="assets/ask.js?v=72487a03" defer></script>
+<script src="assets/ask.js?v=3e321e5b" defer></script>
 </body>
 </html>
