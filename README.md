@@ -34,7 +34,7 @@ DNS belovet.ru остаётся на Timeweb (A-запись 92.53.96.136) — �
 
 **После каждой выкладки:** `ssh belovet 'php ~/belovet/private/integrity.php --update'` — иначе придёт тревога о вашей же выкладке. Если менялся сам `tools/integrity.php` — сначала скопировать его на хостинг.
 
-Cron (панель Timeweb → Cron, раз в сутки): `/usr/bin/php ~/belovet/private/integrity.php `
+Cron (панель Timeweb → Cron, раз в сутки): `/usr/bin/php /home/c/cu130571/belovet/private/integrity.php` (путь полностью: в cron `~` может не раскрываться)
 
 Ограничение: при краже пароля хостинга злоумышленник может обновить и эталон — от этого защищают пароль и двухфакторная аутентификация Timeweb.
 
