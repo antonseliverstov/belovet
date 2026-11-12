@@ -1,7 +1,7 @@
 // Боевая сборка belovet.ru для хостинга Timeweb: node tools/dist.js
 // Собирает сайт в режиме запуска (BV_LAUNCH=1) во временной копии проекта, чтобы не трогать прототип на GitHub Pages,
 // и кладёт в dist/ только публичные файлы. Разделы выключаются переменными: BV_BLOG=0 (без блога), BV_FORMS=0 (без форм).
-// По умолчанию — как решено при запуске 09.11.2026: без блога и без форм.
+// По умолчанию — без блога, с формами (формы включены 12.11.2026, юрист дал добро). BV_FORMS=0 — собрать без форм.
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
@@ -12,7 +12,7 @@ const DIST = path.join(ROOT, 'dist');
 const env = Object.assign({}, process.env, {
   BV_LAUNCH: '1',
   BV_BLOG: process.env.BV_BLOG || '0',
-  BV_FORMS: process.env.BV_FORMS || '0'
+  BV_FORMS: process.env.BV_FORMS || '1'
 });
 // С формами заявки уходят на свой обработчик на хостинге (functions/lead.php → /api/lead.php)
 if (env.BV_FORMS !== '0') env.BV_LEAD_URL = env.BV_LEAD_URL || '/api/lead.php';
