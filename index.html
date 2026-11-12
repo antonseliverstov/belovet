@@ -802,7 +802,7 @@ html[data-forms="off"] .ask-call { display: grid; }
 
 <dialog class="modal" id="form-dialog" aria-labelledby="fd-title">
   <form class="modal-in lead-form" id="fd-form" novalidate>
-    <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <input class="ym-disable-keys hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
     <button class="x" type="button" data-close-dialog aria-label="Закрыть">×</button>
     <h2 id="fd-title">Записаться на приём</h2>
     <p class="sub" id="fd-sub"></p>
@@ -810,13 +810,13 @@ html[data-forms="off"] .ask-call { display: grid; }
       <a class="btn btn-primary" href="tel:+79392557771">Позвонить: +7 (939) 255-77-71</a>
       <p>Отвечу и запишу на удобное время. Анализы, снимки и заключения можно прислать на <a href="mailto:vladislav@belovet.ru">vladislav@belovet.ru</a>.</p>
     </div>
-    <label class="field"><span>Имя</span><input name="name" autocomplete="name" required placeholder="Как к вам обращаться"></label>
-    <label class="field"><span>Телефон</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="+7 (___) ___-__-__" data-phone></label>
-    <label class="field" data-only="book"><span>Кличка питомца</span><input name="pet" placeholder="Например, Барни"></label>
-    <label class="field" data-only="ask invite"><span id="fd-msg-label">Сообщение</span><textarea name="message" rows="4"></textarea></label>
+    <label class="field"><span>Имя</span><input class="ym-disable-keys" name="name" autocomplete="name" required placeholder="Как к вам обращаться"></label>
+    <label class="field"><span>Телефон</span><input class="ym-disable-keys" name="phone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="+7 (___) ___-__-__" data-phone></label>
+    <label class="field" data-only="book"><span>Кличка питомца</span><input class="ym-disable-keys" name="pet" placeholder="Например, Барни"></label>
+    <label class="field" data-only="ask invite"><span id="fd-msg-label">Сообщение</span><textarea class="ym-disable-keys" name="message" rows="4"></textarea></label>
     <div class="field" data-only="ask invite"><div class="files" data-files>
               <label class="files-drop" for="fd-files">
-                <input id="fd-files" name="files" type="file" multiple accept="image/*,.pdf,.doc,.docx,.dcm,.zip">
+                <input class="ym-disable-keys" id="fd-files" name="files" type="file" multiple accept="image/*,.pdf,.doc,.docx,.dcm,.zip">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.4 11.1-9.2 9.2a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"/></svg>
                 <span><b>Прикрепить файлы</b><small>Анализы, рентген, УЗИ, заключения, фото — перетащите сюда или нажмите</small></span>
               </label>
@@ -955,7 +955,7 @@ html[data-forms="off"] .ask-call { display: grid; }
 
         <form class="ask-step" data-step="1" novalidate>
           <label class="ask-q" for="ask-name">Как вас зовут?</label>
-          <input class="ask-input" id="ask-name" name="name" autocomplete="given-name" maxlength="80" required placeholder="Имя">
+          <input class="ym-disable-keys ask-input" id="ask-name" name="name" autocomplete="given-name" maxlength="80" required placeholder="Имя">
           <p class="ask-err" role="alert"></p>
           <div class="ask-row"><button class="btn btn-primary ask-next" type="submit">Далее</button></div>
         </form>
@@ -969,7 +969,7 @@ html[data-forms="off"] .ask-call { display: grid; }
             <button class="ask-chip ask-urgent" type="button" data-urgent aria-pressed="false">Срочно</button>
           </div>
           <label class="ask-vh" for="ask-text">Что беспокоит питомца</label>
-          <textarea class="ask-input ask-text" id="ask-text" name="message" rows="6" maxlength="3000" placeholder="Поделитесь состоянием вашего питомца, и я расскажу, как можно решить эту проблему. Вопрос может быть не только по ветеринарной хирургии."></textarea>
+          <textarea class="ym-disable-keys ask-input ask-text" id="ask-text" name="message" rows="6" maxlength="3000" placeholder="Поделитесь состоянием вашего питомца, и я расскажу, как можно решить эту проблему. Вопрос может быть не только по ветеринарной хирургии."></textarea>
           <p class="ask-err" role="alert"></p>
           <p class="ask-note">Текст вопроса без имени сохранится — по таким вопросам я пишу статьи.</p>
           <div class="ask-row"><button class="ask-link" type="button" data-ask-back="1">← Назад</button><button class="btn btn-primary" type="submit">Отправить</button></div>
@@ -980,10 +980,10 @@ html[data-forms="off"] .ask-call { display: grid; }
           <p class="ask-urgent-note" hidden>Вы отметили вопрос как срочный — я посмотрю его первым. Если питомцу очень плохо прямо сейчас, не ждите моего ответа: поезжайте в ближайшую круглосуточную ветклинику.</p>
           <ul class="ask-reads"></ul>
           <form class="ask-contact" novalidate>
-            <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <input class="ym-disable-keys hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
             <p class="ask-q ask-q-sm">Хотите, чтобы я ответил вам лично? Оставьте телефон — перезвоню.</p>
             <label class="ask-vh" for="ask-phone">Телефон</label>
-            <input class="ask-input" id="ask-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" data-phone>
+            <input class="ym-disable-keys ask-input" id="ask-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" data-phone>
             <div class="ask-checks">
               <label class="check"><input type="checkbox" name="privacy"><span>Ознакомлен с <a href="privacy.html" target="_blank">политикой конфиденциальности</a></span></label>
               <label class="check"><input type="checkbox" name="consent"><span>Даю <a href="consent.html" target="_blank">согласие на обработку персональных данных</a></span></label>
